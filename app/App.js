@@ -88,7 +88,7 @@ class App extends React.Component {
                     return (
                       <li
                         key={subitemIndex}
-                        onClick={() => this.props.signals.menuClicked({itemIndex: scopedItemIndex, subitemIndex})}
+                        onClick={() => this.props.signals.submenuClicked({itemIndex: scopedItemIndex, subitemIndex})}
                         className={this.props.itemIndex === lastItemIndex && this.props.subitemIndex === subitemIndex ? 'active' : null}>
                         <i className={'icon icon-' + subitem.icon}/> {subitem.label}
                       </li>

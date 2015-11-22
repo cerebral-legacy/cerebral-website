@@ -9,13 +9,32 @@ import React from 'react';
 import {render} from 'react-dom';
 import App from './App';
 import {Container} from 'cerebral-react';
+import Router from 'cerebral-router';
 import controller from './controller';
+
+controller.signal('homeOpened', [
+  function setContent(input, state) {
+    state.merge({
+      itemIndex: 0,
+      subitemIndex: null
+    });
+  }
+]);
 
 controller.signal('menuClicked', [
   function setContent(input, state) {
     state.merge({
-      itemIndex: input.itemIndex,
-      subitemIndex: 'subitemIndex' in input ? input.subitemIndex : null
+      itemIndex: Number(input.itemIndex),
+      subitemIndex: null
+    });
+  }
+]);
+
+controller.signal('submenuClicked', [
+  function setContent(input, state) {
+    state.merge({
+      itemIndex: Number(input.itemIndex),
+      subitemIndex: Number(input.subitemIndex)
     });
   }
 ]);
@@ -52,6 +71,14 @@ controller.signal('videoClosed', [
     });
   }
 ]);
+
+Router(controller, {
+  '/': 'homeOpened',
+  '/:itemIndex': 'menuClicked',
+  '/:itemIndex/:subitemIndex': 'submenuClicked'
+}, {
+  onlyHash: true
+}).trigger();
 
 render(
   <Container controller={controller}>
