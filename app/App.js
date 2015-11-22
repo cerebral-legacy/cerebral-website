@@ -19,6 +19,11 @@ class App extends React.Component {
     signals: React.PropTypes.object,
     videoSrc: React.PropTypes.any
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.itemIndex !== this.props.itemIndex || prevProps.subItemIndex !== this.props.subitemIndex) {
+      this.refs.content.scrollTop = 0;
+    }
+  }
   openGithub() {
     window.open('http://www.github.com/christianalfoni/cerebral');
   }
