@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?l3kx82');
-	src:url('fonts/icomoon.eot?l3kx82#iefix') format('embedded-opentype'),
-		url('fonts/icomoon.ttf?l3kx82') format('truetype'),
-		url('fonts/icomoon.woff?l3kx82') format('woff'),
-		url('fonts/icomoon.svg?l3kx82#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?xeeucv');
+	src:url('fonts/icomoon.eot?xeeucv#iefix') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?xeeucv') format('truetype'),
+		url('fonts/icomoon.woff?xeeucv') format('woff'),
+		url('fonts/icomoon.svg?xeeucv#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -37,6 +37,9 @@
 }
 .icon-play-circle-o:before {
 	content: "\f01d";
+}
+.icon-pencil:before {
+	content: "\f040";
 }
 .icon-compress:before {
 	content: "\f066";
@@ -76,6 +79,12 @@
 }
 .icon-file-text:before {
 	content: "\f15c";
+}
+.icon-graduation-cap:before {
+	content: "\f19d";
+}
+.icon-mortar-board:before {
+	content: "\f19d";
 }
 .icon-database:before {
 	content: "\f1c0";

@@ -31,6 +31,8 @@ import compute from './markdown/compute.md';
 import immutableJS from './markdown/immutableJS.md';
 import faq from './markdown/faq.md';
 import contributors from './markdown/contributors.md';
+import howto from './markdown/howto.md';
+import serverRequests from './markdown/serverRequests.md';
 
 export default [
   {
@@ -83,6 +85,14 @@ export default [
     content: MTRC(getStarted).tree
   },
   {
+    label: 'How to',
+    icon: 'graduation-cap',
+    content: MTRC(howto).tree
+  }, [{
+    label: 'Server requests',
+    content: MTRC(serverRequests).tree
+  }],
+  {
     label: 'FAQ',
     icon: 'question',
     content: MTRC(faq).tree
@@ -95,27 +105,22 @@ export default [
   [
     {
       label: 'Actions',
-      icon: 'file-text',
       content: MTRC(actions).tree
     },
     {
       label: 'Input',
-      icon: 'file-text',
       content: MTRC(input).tree
     },
     {
       label: 'State',
-      icon: 'file-text',
       content: MTRC(state).tree
     },
     {
       label: 'Output',
-      icon: 'file-text',
       content: MTRC(output).tree
     },
     {
       label: 'Async',
-      icon: 'file-text',
       content: MTRC(async).tree
     }
   ],
@@ -127,37 +132,30 @@ export default [
   [
     {
       label: 'Services',
-      icon: 'wrench',
       content: MTRC(services).tree
     },
     {
       label: 'Compute',
-      icon: 'wrench',
       content: MTRC(compute).tree
     },
     {
       label: 'Factories',
-      icon: 'wrench',
       content: MTRC(factories).tree
     },
     {
       label: 'Chains',
-      icon: 'wrench',
       content: MTRC(chains).tree
     },
     {
       label: 'Type checking',
-      icon: 'wrench',
       content: MTRC(typeChecking).tree
     },
     {
       label: 'Events',
-      icon: 'wrench',
       content: MTRC(events).tree
     },
     {
       label: 'Recording',
-      icon: 'wrench',
       content: MTRC(recording).tree
     }
   ],
@@ -168,7 +166,6 @@ export default [
   }, [
     {
       label: 'Transitions',
-      icon: 'compress',
       content: MTRC(transitions).tree
     }
   ],
@@ -179,22 +176,18 @@ export default [
   }, [
     {
       label: 'Structure',
-      icon: 'heart-o',
       content: MTRC(structure).tree
     },
     {
       label: 'Relational data',
-      icon: 'heart-o',
       content: MTRC(relational).tree
     },
     {
       label: 'Props and State',
-      icon: 'heart-o',
       content: MTRC(propsAndState).tree
     },
     {
       label: 'Responsibilities',
-      icon: 'heart-o',
       content: MTRC(responsibilities).tree
     }
   ]

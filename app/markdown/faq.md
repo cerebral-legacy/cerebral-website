@@ -5,5 +5,3 @@ Cerebral depends on multiple projects and it is important the you update to the 
 
 ### How do I handle non-serializable state?
 Normally you will only use plain objects, arrays, strings etc., but sometimes you also need to handle files or other non-serializable state. You will need to handle these inside components. For example uploading some files will have to be done inside the component handling it. That said, you can still use signals to notify your application about files being dropped, being uploaded and successfully uploaded.
-
-### How do I get ajax responses into my store?
