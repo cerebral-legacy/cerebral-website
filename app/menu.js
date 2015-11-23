@@ -33,6 +33,12 @@ import faq from './markdown/faq.md';
 import contributors from './markdown/contributors.md';
 import howto from './markdown/howto.md';
 import serverRequests from './markdown/serverRequests.md';
+import base from './markdown/base.md';
+import hash from './markdown/hash.md';
+import hyperlinks from './markdown/hyperlinks.md';
+import nesting from './markdown/nesting.md';
+import redirect from './markdown/redirect.md';
+import regexp from './markdown/regexp.md';
 
 export default [
   {
@@ -166,6 +172,30 @@ export default [
     icon: 'map-signs',
     content: MTRC(routing).tree,
     subContent: [
+      {
+        label: 'Nesting',
+        content: MTRC(nesting).tree
+      },
+      {
+        label: 'Hash',
+        content: MTRC(hash).tree
+      },
+      {
+        label: 'Base',
+        content: MTRC(base).tree
+      },
+      {
+        label: 'Redirect',
+        content: MTRC(redirect).tree
+      },
+      {
+        label: 'Regexp',
+        content: MTRC(regexp).tree
+      },
+      {
+        label: 'Hyperlinks',
+        content: MTRC(hyperlinks).tree
+      },
       {
         label: 'Transitions',
         content: MTRC(transitions).tree
