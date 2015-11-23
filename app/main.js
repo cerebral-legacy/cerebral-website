@@ -11,15 +11,10 @@ import App from './App';
 import {Container} from 'cerebral-react';
 import Router from 'cerebral-router';
 import controller from './controller';
-import menu from './menu';
-import toPath from './toPath';
 
 controller.signal('homeOpened', [
-  function setContent(input, state) {
-    state.merge({
-      content: toPath(menu[0].label),
-      subContent: null
-    });
+  function setContent(input, state, output, services) {
+    services.router.redirect('/cerebral');
   }
 ]);
 

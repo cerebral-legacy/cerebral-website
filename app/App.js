@@ -95,7 +95,7 @@ class App extends React.Component {
   renderMenu() {
     return (
       <ul className="menu">
-        {menu.map((item, itemIndex) => {
+        {menu.map((item) => {
           const Item = (
             <li
               key={item.label}
@@ -128,9 +128,9 @@ class App extends React.Component {
                 </ul>
               </li>
             ];
-          } else {
-            return Item;
           }
+
+          return Item;
         })}
       </ul>
     );
