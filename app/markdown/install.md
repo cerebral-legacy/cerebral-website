@@ -16,4 +16,4 @@ Look at different packages using the menu and get details on how to install and 
 
 ### The debugger
 
-You can install the Cerebral debugger form the [chrome store](https://chrome.google.com/webstore/detail/cerebral-debugger/ddefoknoniaeoikpgneklcbjlipfedbb).
+You can install the Cerebral debugger from the [chrome store](https://chrome.google.com/webstore/detail/cerebral-debugger/ddefoknoniaeoikpgneklcbjlipfedbb).
