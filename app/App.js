@@ -1,12 +1,13 @@
 import React from 'react';
 import menu from './menu';
 import {Decorator as Cerebral} from 'cerebral-react';
+import toPath from './toPath';
 
 @Cerebral({
   showOverlay: ['showOverlay'],
   displayMenu: ['displayMenu'],
-  itemIndex: ['itemIndex'],
-  subitemIndex: ['subitemIndex'],
+  content: ['content'],
+  subContent: ['subContent'],
   videoSrc: ['videoSrc'],
   transitionVideo: ['transitionVideo']
 })
@@ -14,13 +15,13 @@ class App extends React.Component {
   static propTypes = {
     showOverlay: React.PropTypes.bool,
     displayMenu: React.PropTypes.bool,
-    itemIndex: React.PropTypes.any,
-    subitemIndex: React.PropTypes.any,
+    content: React.PropTypes.string,
+    subContent: React.PropTypes.string,
     signals: React.PropTypes.object,
     videoSrc: React.PropTypes.any
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.itemIndex !== this.props.itemIndex || prevProps.subItemIndex !== this.props.subitemIndex) {
+    if (prevProps.content !== this.props.content || prevProps.subContent !== this.props.subContent) {
       this.refs.content.scrollTop = 0;
     }
   }
@@ -50,11 +51,19 @@ class App extends React.Component {
 
     let Content;
 
-    if (typeof this.props.subitemIndex === 'number') {
-      Content = menu[this.props.itemIndex + 1][this.props.subitemIndex].content;
-    } else {
-      Content = menu[this.props.itemIndex].content;
-    }
+    menu.forEach((item) => {
+      if (toPath(item.label) === this.props.content) {
+        if (this.props.subContent) {
+          item.subContent.forEach((subItem) => {
+            if (toPath(subItem.label) === this.props.subContent) {
+              Content = subItem.content;
+            }
+          });
+        } else {
+          Content = item.content;
+        }
+      }
+    });
 
     Content = typeof Content === 'function' ? <Content openVideo={(videoSrc) => this.props.signals.videoOpened({videoSrc})}/> : <div>{Content}</div>;
 
@@ -84,23 +93,29 @@ class App extends React.Component {
     );
   }
   renderMenu() {
-    let lastItemIndex = null;
-
     return (
       <ul className="menu">
         {menu.map((item, itemIndex) => {
-          if (Array.isArray(item)) {
-            return (
-              <li key={itemIndex}>
-                <ul className="submenu">
-                  {item.map((subitem, subitemIndex) => {
-                    const scopedItemIndex = lastItemIndex;
+          const Item = (
+            <li
+              key={item.label}
+              onClick={() => this.props.signals.menuClicked({content: toPath(item.label)})}
+              className={this.props.content === toPath(item.label) ? this.props.subContent !== null ? 'active head' : 'active' : null}>
+              <i className={'icon icon-' + item.icon}/> {item.label}
+            </li>
+          );
 
+          if (item.subContent) {
+            return [
+              Item,
+              <li key={item.label + '_sub'}>
+                <ul className="submenu">
+                  {item.subContent.map((subitem, subitemIndex) => {
                     return (
                       <li
                         key={subitemIndex}
-                        onClick={() => this.props.signals.submenuClicked({itemIndex: scopedItemIndex, subitemIndex})}
-                        className={this.props.itemIndex === lastItemIndex && this.props.subitemIndex === subitemIndex ? 'active' : null}>
+                        onClick={() => this.props.signals.submenuClicked({content: toPath(item.label), subContent: toPath(subitem.label)})}
+                        className={this.props.content === toPath(item.label) && this.props.subContent === toPath(subitem.label) ? 'active' : null}>
                         {
                           subitem.icon ?
                             <span><i className={'icon icon-' + subitem.icon}/> {subitem.label}</span>
@@ -112,19 +127,10 @@ class App extends React.Component {
                   })}
                 </ul>
               </li>
-            );
+            ];
+          } else {
+            return Item;
           }
-
-          lastItemIndex = itemIndex;
-
-          return (
-            <li
-              key={itemIndex}
-              onClick={() => this.props.signals.menuClicked({itemIndex})}
-              className={this.props.itemIndex === itemIndex ? this.props.subitemIndex !== null ? 'active head' : 'active' : null}>
-              <i className={'icon icon-' + item.icon}/> {item.label}
-            </li>
-          );
         })}
       </ul>
     );

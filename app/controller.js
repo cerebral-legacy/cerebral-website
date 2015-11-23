@@ -2,9 +2,8 @@ import Model from 'cerebral-baobab';
 import Controller from 'cerebral';
 
 const model = Model({
-  itemIndex: 0,
-  subitemIndex: null,
-  currentSubPage: null,
+  content: 0,
+  subContent: null,
   displayMenu: true,
   showOverlay: false,
   videoSrc: null,

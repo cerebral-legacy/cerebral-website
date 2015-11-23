@@ -46,39 +46,40 @@ export default [
   }, {
     label: 'Install',
     icon: 'download',
-    content: MTRC(install).tree
-  }, [
-    {
-      label: 'React',
-      icon: 'television',
-      content: MTRC(react).tree
-    },
-    {
-      label: 'Angular',
-      icon: 'television',
-      content: MTRC(angular).tree
-    },
-    {
-      label: 'Baobab',
-      icon: 'database',
-      content: MTRC(baobab).tree
-    },
-    {
-      label: 'Immutable JS',
-      icon: 'database',
-      content: MTRC(immutableJS).tree
-    },
-    {
-      label: 'Tcomb',
-      icon: 'database',
-      content: MTRC(tcomb).tree
-    },
-    {
-      label: 'Internet Explorer',
-      icon: 'internet-explorer',
-      content: MTRC(internetExplorer).tree
-    }
-  ],
+    content: MTRC(install).tree,
+    subContent: [
+      {
+        label: 'React',
+        icon: 'television',
+        content: MTRC(react).tree
+      },
+      {
+        label: 'Angular',
+        icon: 'television',
+        content: MTRC(angular).tree
+      },
+      {
+        label: 'Baobab',
+        icon: 'database',
+        content: MTRC(baobab).tree
+      },
+      {
+        label: 'Immutable JS',
+        icon: 'database',
+        content: MTRC(immutableJS).tree
+      },
+      {
+        label: 'Tcomb',
+        icon: 'database',
+        content: MTRC(tcomb).tree
+      },
+      {
+        label: 'Internet Explorer',
+        icon: 'internet-explorer',
+        content: MTRC(internetExplorer).tree
+      }
+    ]
+  },
   {
     label: 'Get Started',
     icon: 'power-off',
@@ -87,11 +88,12 @@ export default [
   {
     label: 'How to',
     icon: 'graduation-cap',
-    content: MTRC(howto).tree
-  }, [{
-    label: 'Server requests',
-    content: MTRC(serverRequests).tree
-  }],
+    content: MTRC(howto).tree,
+    subContent: [{
+      label: 'Server requests',
+      content: MTRC(serverRequests).tree
+    }]
+  },
   {
     label: 'FAQ',
     icon: 'question',
@@ -100,95 +102,97 @@ export default [
   {
     label: 'Signals',
     icon: 'file-text',
-    content: MTRC(signals).tree
+    content: MTRC(signals).tree,
+    subContent: [
+      {
+        label: 'Actions',
+        content: MTRC(actions).tree
+      },
+      {
+        label: 'Input',
+        content: MTRC(input).tree
+      },
+      {
+        label: 'State',
+        content: MTRC(state).tree
+      },
+      {
+        label: 'Output',
+        content: MTRC(output).tree
+      },
+      {
+        label: 'Async',
+        content: MTRC(async).tree
+      }
+    ]
   },
-  [
-    {
-      label: 'Actions',
-      content: MTRC(actions).tree
-    },
-    {
-      label: 'Input',
-      content: MTRC(input).tree
-    },
-    {
-      label: 'State',
-      content: MTRC(state).tree
-    },
-    {
-      label: 'Output',
-      content: MTRC(output).tree
-    },
-    {
-      label: 'Async',
-      content: MTRC(async).tree
-    }
-  ],
   {
     label: 'Utilities',
     icon: 'wrench',
-    content: MTRC(utilities).tree
+    content: MTRC(utilities).tree,
+    subContent: [
+      {
+        label: 'Services',
+        content: MTRC(services).tree
+      },
+      {
+        label: 'Compute',
+        content: MTRC(compute).tree
+      },
+      {
+        label: 'Factories',
+        content: MTRC(factories).tree
+      },
+      {
+        label: 'Chains',
+        content: MTRC(chains).tree
+      },
+      {
+        label: 'Type checking',
+        content: MTRC(typeChecking).tree
+      },
+      {
+        label: 'Events',
+        content: MTRC(events).tree
+      },
+      {
+        label: 'Recording',
+        content: MTRC(recording).tree
+      }
+    ]
   },
-  [
-    {
-      label: 'Services',
-      content: MTRC(services).tree
-    },
-    {
-      label: 'Compute',
-      content: MTRC(compute).tree
-    },
-    {
-      label: 'Factories',
-      content: MTRC(factories).tree
-    },
-    {
-      label: 'Chains',
-      content: MTRC(chains).tree
-    },
-    {
-      label: 'Type checking',
-      content: MTRC(typeChecking).tree
-    },
-    {
-      label: 'Events',
-      content: MTRC(events).tree
-    },
-    {
-      label: 'Recording',
-      content: MTRC(recording).tree
-    }
-  ],
   {
     label: 'Routing',
     icon: 'map-signs',
-    content: MTRC(routing).tree
-  }, [
-    {
-      label: 'Transitions',
-      content: MTRC(transitions).tree
-    }
-  ],
+    content: MTRC(routing).tree,
+    subContent: [
+      {
+        label: 'Transitions',
+        content: MTRC(transitions).tree
+      }
+    ]
+  },
   {
     label: 'Best Practices',
     icon: 'heart',
-    content: MTRC(bestPractices).tree
-  }, [
-    {
-      label: 'Structure',
-      content: MTRC(structure).tree
-    },
-    {
-      label: 'Relational data',
-      content: MTRC(relational).tree
-    },
-    {
-      label: 'Props and State',
-      content: MTRC(propsAndState).tree
-    },
-    {
-      label: 'Responsibilities',
-      content: MTRC(responsibilities).tree
-    }
-  ]
+    content: MTRC(bestPractices).tree,
+    subContent: [
+      {
+        label: 'Structure',
+        content: MTRC(structure).tree
+      },
+      {
+        label: 'Relational data',
+        content: MTRC(relational).tree
+      },
+      {
+        label: 'Props and State',
+        content: MTRC(propsAndState).tree
+      },
+      {
+        label: 'Responsibilities',
+        content: MTRC(responsibilities).tree
+      }
+    ]
+  }
 ];

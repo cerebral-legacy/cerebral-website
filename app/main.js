@@ -11,12 +11,14 @@ import App from './App';
 import {Container} from 'cerebral-react';
 import Router from 'cerebral-router';
 import controller from './controller';
+import menu from './menu';
+import toPath from './toPath';
 
 controller.signal('homeOpened', [
   function setContent(input, state) {
     state.merge({
-      itemIndex: 0,
-      subitemIndex: null
+      content: toPath(menu[0].label),
+      subContent: null
     });
   }
 ]);
@@ -24,8 +26,8 @@ controller.signal('homeOpened', [
 controller.signal('menuClicked', [
   function setContent(input, state) {
     state.merge({
-      itemIndex: Number(input.itemIndex),
-      subitemIndex: null
+      content: input.content,
+      subContent: null
     });
   }
 ]);
@@ -33,8 +35,8 @@ controller.signal('menuClicked', [
 controller.signal('submenuClicked', [
   function setContent(input, state) {
     state.merge({
-      itemIndex: Number(input.itemIndex),
-      subitemIndex: Number(input.subitemIndex)
+      content: input.content,
+      subContent: input.subContent
     });
   }
 ]);
@@ -74,8 +76,8 @@ controller.signal('videoClosed', [
 
 Router(controller, {
   '/': 'homeOpened',
-  '/:itemIndex': 'menuClicked',
-  '/:itemIndex/:subitemIndex': 'submenuClicked'
+  '/:content': 'menuClicked',
+  '/:content/:subContent': 'submenuClicked'
 }, {
   onlyHash: true
 }).trigger();
