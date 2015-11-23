@@ -6,7 +6,7 @@
 ### Repo
 [cerebral-angular](https://github.com/christianalfoni/cerebral-angular)
 
-Read more about structuring code, services and extract mutable state from Cerebral.
+Read more about structuring code, services and extracting mutable state from Cerebral.
 
 ### Get started
 
