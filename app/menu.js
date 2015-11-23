@@ -40,6 +40,13 @@ import nesting from './markdown/nesting.md';
 import redirect from './markdown/redirect.md';
 import regexp from './markdown/regexp.md';
 import testing from './markdown/testing.md';
+import addons from './markdown/addons.md';
+import addonsSet from './markdown/addons_set.md';
+import addonsUnset from './markdown/addons_unset.md';
+import addonsToggle from './markdown/addons_toggle.md';
+import addonsWhen from './markdown/addons_when.md';
+import addonsInputToState from './markdown/addons_inputToState.md';
+import addonsStateToOutput from './markdown/addons_stateToOutput.md';
 
 export default [
   {
@@ -169,6 +176,30 @@ export default [
     ]
   },
   {
+    label: 'Addons',
+    icon: 'briefcase',
+    content: MTRC(addons).tree,
+    subContent: [{
+      label: 'Set',
+      content: MTRC(addonsSet).tree
+    }, {
+      label: 'Unset',
+      content: MTRC(addonsUnset).tree
+    }, {
+      label: 'Toggle',
+      content: MTRC(addonsToggle).tree
+    }, {
+      label: 'When',
+      content: MTRC(addonsWhen).tree
+    }, {
+      label: 'Input to state',
+      content: MTRC(addonsInputToState).tree
+    }, {
+      label: 'State to output',
+      content: MTRC(addonsStateToOutput).tree
+    }]
+  },
+  {
     label: 'Routing',
     icon: 'map-signs',
     content: MTRC(routing).tree,
@@ -205,26 +236,8 @@ export default [
   },
   {
     label: 'Testing',
-    icon: 'heart', // tnr: what icon should we use here?
-    content: MTRC(testing).tree,
-    subContent: [
-      // {
-      //   label: 'Structure',
-      //   content: MTRC(structure).tree
-      // },
-      // {
-      //   label: 'Relational data',
-      //   content: MTRC(relational).tree
-      // },
-      // {
-      //   label: 'Props and State',
-      //   content: MTRC(propsAndState).tree
-      // },
-      // {
-      //   label: 'Responsibilities',
-      //   content: MTRC(responsibilities).tree
-      // }
-    ]
+    icon: 'check-circle-o', // tnr: what icon should we use here?
+    content: MTRC(testing).tree
   },
   {
     label: 'Best Practices',

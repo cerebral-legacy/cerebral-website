@@ -36,7 +36,8 @@ pre {
 }
 
 code {
-  background-color: rgb(40, 49, 60);
+  background-color: #EAEAEA;
+  color: #333;
   font-family: monospace;
   line-height: 25px !important;
 }
