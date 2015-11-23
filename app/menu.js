@@ -39,6 +39,7 @@ import hyperlinks from './markdown/hyperlinks.md';
 import nesting from './markdown/nesting.md';
 import redirect from './markdown/redirect.md';
 import regexp from './markdown/regexp.md';
+import testing from './markdown/testing.md';
 
 export default [
   {
@@ -200,6 +201,29 @@ export default [
         label: 'Transitions',
         content: MTRC(transitions).tree
       }
+    ]
+  },
+  {
+    label: 'Testing',
+    icon: 'heart', // tnr: what icon should we use here?
+    content: MTRC(testing).tree,
+    subContent: [
+      // {
+      //   label: 'Structure',
+      //   content: MTRC(structure).tree
+      // },
+      // {
+      //   label: 'Relational data',
+      //   content: MTRC(relational).tree
+      // },
+      // {
+      //   label: 'Props and State',
+      //   content: MTRC(propsAndState).tree
+      // },
+      // {
+      //   label: 'Responsibilities',
+      //   content: MTRC(responsibilities).tree
+      // }
     ]
   },
   {
