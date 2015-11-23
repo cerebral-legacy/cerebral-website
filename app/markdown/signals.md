@@ -1,6 +1,6 @@
 # Signals
 
-The way you think of signals is that something happened in your application. Either in your UI, a router, maybe a websocket connection etc. So the name of a signal should define what happened: *appMounted*, *inputChanged*, *formSubmitted*. The functions in a signal is called **actions**. They are named by their purpose, like *setInputValue*, *postForm* etc. This will make it very easy for you to read and understand the flow of the application.
+The way you think of signals is that something happened in your application. Either in your UI, a router, maybe a websocket connection etc. So the name of a signal should define what happened: *appMounted*, *inputChanged*, *formSubmitted*. The functions in a signal are called **actions**. They are named by their purpose, like *setInputValue*, *postForm* etc. This setup makes it very easy for you to read and understand the flow of the application.
 
 This is a typical signal:
 
@@ -20,7 +20,7 @@ const signal = [
 controller.signal('appMounted', signal);
 ```
 
-As you see there are not only functions that are used to express flow. You also have arrays and objects. Normally array and object literals defines data structure. In a signal it defines behaviour. When an array is an item of an other array it means that its contents will run asynchronously. The *getUser* action will run asynchronously. An object is used to define paths. This means that the execution of an action can result in different outcomes. Paths are also defined as arrays, but they are not asynchronous because they are not items of an array. If you would define an array inside a path though, that would run asynchronous.
+As you can see, there are not only functions that are used to express flow. You also have arrays and objects. Normally arrays and object literals define data structure. Inside a signal however, they define behaviour. An array inside an array means its contents will run asynchronously. The *getUser* action will run asynchronously. An object is used to define paths. This means that the execution of an action can result in different outcomes. Each output path is itself just a normal chain of actions, subject to the same rules as normal. For example, you can define sub-paths within paths and if you want to use an asynchronous action within a path, you'd still need to wrap it in an a second array.
 
 ### Namespace signals
 
@@ -37,9 +37,9 @@ controller.signal('admin.userOpened', signal);
 controller.signals.admin.userOpened();
 ```
 
-### Sync signals
+### Force synchronous UI updates
 
-By default Cerebral will run your signals between animation frames. Sometimes you want to trigger signals synchronously. Typically this is related to inputs.
+By default Cerebral will run your signals between animation frames. Sometimes you want to trigger UI updates synchronously as soon as a signal has finished. Typically this is related to inputs.
 
 ```javascript
 
@@ -64,4 +64,4 @@ class App extends React.Component {
 }
 ```
 
-All signals has a `.sync()` method. Use this with inputs to avoid glitches in UI.
+All signals have a `.sync()` method. Use this with inputs to avoid glitches in UI.

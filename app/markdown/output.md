@@ -1,7 +1,6 @@
 # Output
 
-All actions are able to output values. These values will be merged with the input on
-the next actions.
+All actions are able to output values. All output is merged with previous input before being sent to the next actions. 
 
 ```javascript
 
@@ -28,6 +27,8 @@ controller.signals.somethingHappened({
 });
 
 ```
+Architecting the input/output of actions as a "bus" gives action chains a lot of flexibility and allows for some awesome patterns you can read about at the bottom of this page.
+
 
 In the example above we call *output* directly. When doing so the next item in the signal has to be an action, it can not be an object representing paths.
 
@@ -121,4 +122,27 @@ function myAction (input, state, output) {
 
 myAction.outputs = ['foo', 'bar'];
 myAction.defaultOutput = 'foo';
+```
+
+Because all actions receive the same input as the previous actions in the chain (plus whatever new data has been merged in), adding on extra functionality at the start or end of signals is extremely simple. One example is wrapping certain signals to check for authentication: 
+```javascript
+
+function requireAuth (actionChain) {
+  return [checkAuthenticated, { //action that checks if user is authenticated and outputs success or error
+    success: actionChain, //run the usual action chain 
+    error: [displayNoAuthWarningToUser] //display a warning to the user
+  }]
+}
+
+const signal = [
+  saveDataToDb, //action to save data to DB
+];
+
+
+controller.signal('saveSensitiveDataToDB', requireAuth(signal));
+
+controller.signals.saveSensitiveDataToDB({
+  foo: 'bar'
+});
+
 ```
