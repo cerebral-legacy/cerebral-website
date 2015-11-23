@@ -1,6 +1,6 @@
 # Get Started
 
-This is one example of how you can get started using Cerebral. The article [The ultimate Webpack setup](http://www.christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup) will help you get going with a boilerplate that fits very nicely with Cerebral. It is recommended to use Node from version **4.x.x**.
+This is one example of how you can get started using Cerebral. The article [The ultimate Webpack setup](http://www.christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup) will help you get going with a boilerplate that fits very nicely with Cerebral. This website itself is also built using Cerebral. It is recommended to use Node from version **4.x.x**.
 
 `npm install cerebral cerebral-baobab cerebral-react`
 
@@ -78,8 +78,8 @@ the state of your application. When a signal has finished it will let your UI kn
 it is time to update. There are two main benefits of signals.
 
 1. First of all signals makes it easy to understand complex flows in your application. They are basically just
-a list of functions, where each of them has a specific task. They are declarative, but
-also has functional traits to them. This allows you to easily compose and reuse the functions
+a list of functions, where each one has a specific task. They are declarative, but
+also have functional traits to them. This allows you to easily compose and reuse the functions
 of your signals
 2. The readability of a signal does not only benefit you as a developer though. It also benefits the application
 itself. Cerebral understands what a signals are. It can analyze them and collect data about them when
@@ -91,7 +91,7 @@ Take a look at this illustration.
 
 This explains how Cerebral fits into your application architecture. The signals will be called from your
 UI layer. Each function that runs in the signal has access to the STATE layer. With multiple functions
-in your signal, you might do multiple updates to the state. When all functions has run Cerebral tells
+in your signal, you might do multiple updates to the state. When all functions have run, Cerebral tells
 the UI layer to update itself. This "one way flow" makes it easy for you to reason about your application. It also
 gives Cerebral a predictable flow that it can understand.
 

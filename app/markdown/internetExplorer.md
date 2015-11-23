@@ -1,8 +1,10 @@
 # Internet Explorer
 
-To support IE9 there has been done some basic implementations to the Cerebral Router and its dependencies. To fully support IE9 you will need to support Promises, which Babel takes care of with its *runtime* option, `babel?optional[]=runtime`.
+To fully support IE9, you must implement some basic polyfills/fixes. 
 
-Cerebral also needs **CustomEvent** to work and here is its polyfill:
+Cerebral Router and its dependencies rely on Promises, which Babel takes care of with its *runtime* option, `babel?optional[]=runtime`.
+
+Cerebral itself also needs **CustomEvent** to work. Here is its polyfill:
 
 ```javascript
 

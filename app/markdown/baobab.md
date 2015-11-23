@@ -46,7 +46,7 @@ export default Controller(model, services);
 
 ### Monkeys
 
-Monkeys are a high performant way to map state.
+Monkeys are a high performance way to derive new data from existing state.
 
 ```javascript
 
