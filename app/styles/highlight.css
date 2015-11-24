@@ -1,5 +1,5 @@
 .hljs-keyword, .hljs-literal {
-  color: #286090;
+  color: #30A5D0;
 }
 .hljs-comment {
   color: #999;
@@ -9,5 +9,5 @@
   color: #5CB85C;
 }
 .hljs-string, .hljs-value {
-  color: #F0AD4E;
+  color: rgb(232, 137, 102);
 }

@@ -632,10 +632,12 @@ img {
   background-color: rgb(232, 137, 102);
   font-size: 18px;
   color: #EAEAEA;
+	font-weight: bold;
 }
 
 .menu li.active.head {
   background-color: rgb(90, 100, 110);
+	font-weight: normal;
 }
 
 .menu li.active i {
