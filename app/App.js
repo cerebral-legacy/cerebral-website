@@ -72,16 +72,16 @@ class App extends React.Component {
         <div className="header" style={headerStyle}>
           <i className="icon icon-bars link" onClick={() => this.props.signals.menuToggled()} style={{margin: 10}}></i>
           <div className="github" onClick={() => this.openRepo()}>
-            <i className="icon icon-pencil"> Edit the page</i>
+            <i className="icon icon-pencil"> Edit page</i>
           </div>
           <div className="tweet" onClick={() => this.openGithub()}>
-            <i className="icon icon-github-square"> Github Project</i>
+            <i className="icon icon-github-square"> Project repo</i>
           </div>
           <div className="tweet" onClick={() => this.createTweet()}>
             <i className="icon icon-twitter"> Tweet about Cerebral</i>
           </div>
           <div className="tweet" onClick={() => this.openChat()}>
-            <i className="icon icon-comments"> Talk to us on Gitter</i>
+            <i className="icon icon-comments"> Chat with us</i>
           </div>
         </div>
         <div ref="content" className="content" style={contentStyle}>
