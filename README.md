@@ -10,6 +10,7 @@ Cerebral website
 ## How to run it
 
 1. `npm install`
+2. `npm run serverbuild` (optionally if you work on server files)
 2. `npm start`
 3. Menu changes is in `menu.js`
 4. Add markdown articles to `markdown` folder

@@ -1,9 +1,5 @@
-import './styles/base.css';
-import './styles/base-layout.css';
-import './styles/base-components.css';
 import './styles/highlight.css';
 import './styles/fonts.css';
-import './styles/styles.css';
 
 import React from 'react';
 import {render} from 'react-dom';
@@ -13,8 +9,11 @@ import Router from 'cerebral-router';
 import controller from './controller';
 
 controller.signal('homeOpened', [
-  function setContent(input, state, output, services) {
-    services.router.redirect('/cerebral');
+  function setContent(input, state) {
+    state.merge({
+      content: 'cerebral',
+      subContent: null
+    });
   }
 ]);
 
@@ -73,8 +72,6 @@ Router(controller, {
   '/': 'homeOpened',
   '/:content': 'menuClicked',
   '/:content/:subContent': 'submenuClicked'
-}, {
-  onlyHash: true
 }).trigger();
 
 render(

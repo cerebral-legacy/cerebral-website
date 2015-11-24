@@ -95,11 +95,11 @@ class App extends React.Component {
   renderMenu() {
     return (
       <ul className="menu">
-        {menu.map((item) => {
+        {menu.map((item, index) => {
           const Item = (
             <li
               key={item.label}
-              onClick={() => this.props.signals.menuClicked({content: toPath(item.label)})}
+              onClick={() => index === 0 ? this.props.signals.homeOpened() : this.props.signals.menuClicked({content: toPath(item.label)})}
               className={this.props.content === toPath(item.label) ? this.props.subContent !== null ? 'active head' : 'active' : null}>
               <i className={'icon icon-' + item.icon}/> {item.label}
             </li>

@@ -4,7 +4,6 @@ import install from './markdown/install.md';
 import react from './markdown/react.md';
 import angular from './markdown/angular.md';
 import baobab from './markdown/baobab.md';
-import tcomb from './markdown/tcomb.md';
 import signals from './markdown/signals.md';
 import actions from './markdown/actions.md';
 import input from './markdown/input.md';
@@ -47,6 +46,7 @@ import addonsToggle from './markdown/addons_toggle.md';
 import addonsWhen from './markdown/addons_when.md';
 import addonsInputToState from './markdown/addons_inputToState.md';
 import addonsStateToOutput from './markdown/addons_stateToOutput.md';
+import universal from './markdown/universal.md';
 
 export default [
   {
@@ -81,11 +81,6 @@ export default [
         label: 'Immutable JS',
         icon: 'database',
         content: MTRC(immutableJS).tree
-      },
-      {
-        label: 'Tcomb',
-        icon: 'database',
-        content: MTRC(tcomb).tree
       },
       {
         label: 'Internet Explorer',
@@ -172,6 +167,10 @@ export default [
       {
         label: 'Recording',
         content: MTRC(recording).tree
+      },
+      {
+        label: 'Universal',
+        content: MTRC(universal).tree
       }
     ]
   },
