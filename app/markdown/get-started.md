@@ -1,7 +1,12 @@
 # Get Started
 
-This is one example of how you can get started using Cerebral. The article [The ultimate Webpack setup](http://www.christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup) will help you get going with a boilerplate that fits very nicely with Cerebral. This website itself is also built using Cerebral. It is recommended to use Node from version **4.x.x**.
+It is recommended to use Node from version **4.x.x**.
 
+### Boilerplate
+The basic boilerplate is located [here](https://github.com/cerebral/cerebral-boilerplate). It has React, Cerebral and CSS-Modules ready for you. Using a best practice file structure for scaling up your app.
+
+
+### From scratch
 `npm install cerebral cerebral-baobab cerebral-react`
 
 *controller.js*
