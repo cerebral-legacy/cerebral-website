@@ -8,7 +8,7 @@
 
 When using the Cerebral router you have to leave your previous experience with routers at the doorstep. With all the innovation in state driven applications we can finally start to think about a url as a product of our current state, rather than thinking about a url as something that should display a specific view or tree of views in our applications. **This is really a game changer**.
 
-When you build your Cerebral application you do not have to think about routing at all. You only trigger signals that brings your application into the correct state. Let us imagine an application that can open a messages page, and also open specific messages. We also include the home page.
+When you build your Cerebral application you do not have to think about routing at all. You only trigger signals that brings your application into the correct state. Let us imagine an application that can open a messages page, and also open specific messages.
 
 ```javascript
 
@@ -17,25 +17,15 @@ import homeOpened from './signals/homeOpened';
 import messagesOpened from './signals/messagesOpened';
 import messageOpened from './signals/messageOpened';
 
-controller.signal('homeOpened', homeOpened);
 controller.signal('messagesOpened', messagesOpened);
 controller.signal('messageOpened', messageOpened);
-```
-
-When the **HomeComponent** mounts we fire off the signal:
-
-```javascript
-
-componentDidMount() {
-  this.props.signals.homeOpened();
-}
 ```
 
 When we want to open the messages we call the signal:
 
 ```javascript
 
-componentDidMount() {
+onMessagesClick() {
   this.props.signals.messagesOpened();
 }
 ```
@@ -51,7 +41,7 @@ onMessageClick(id) {
 }
 ```
 
-The signature of a state change is the signal and the payload passed. We can bind this signature to a route. Lets imagine we have implemented our whole application and it works great, we just need to update the addressbar with a url representing the current state of the application.
+The signature of a state change is the signal and the payload passed. We can bind this signature to a route. Lets imagine we have implemented our whole application and it works great, we just need to update the addressbar with a url representing the current state of the application. So let us also add a *homeOpened* signal so that we handle the root url as well.
 
 ```javascript
 
@@ -74,9 +64,9 @@ Router(controller, {
 }).trigger();
 ```
 
-The **trigger** method ensures that we handle the current route when the application loads up. The router checks the url and fires the signal related to the url. The url will be parsed and any payload will be passed on the signal. That means if you go to `example.com/messages/123` it will trigger the `messageOpened` signal with the payload `{id: '123'}`. But if you click a message in the list it will trigger the `messageOpened` signal with the payload `{id: '456'}` and now the url will also update to `example.com/messages/456`. So it works both ways!
+The **trigger** method ensures that we handle the current route when the application loads up. The router checks the url and fires the signal related to the url. The url will be parsed and any payload will be passed on the signal. That means if you go to `example.com/messages/123` it will trigger the `messageOpened` signal with the payload `{id: '123'}`. But if you click a message in the list it will also trigger the `messageOpened` signal with the payload `{id: '456'}` and now the url will also update to `example.com/messages/456`. So it works both ways!
 
-The important thing to understand here is that your application does not trigger urls to change its state. You trigger signals. Then you bind a route to a signal to allow a url change to trigger the same flow. That means:
+The important thing to understand here is that your application does not trigger urls to change its state. It triggers signals. Then you bind a route to a signal to allow a url to trigger the signal as well. That means:
 
 ```javascript
 
