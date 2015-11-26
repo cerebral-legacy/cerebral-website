@@ -69,6 +69,8 @@ Router(controller, {
   '/': 'homeOpened',
   '/messages': 'messagesOpened',
   '/messages/:id': 'messageOpened'
+}, {
+  query: true // Read about this below
 }).trigger();
 ```
 
