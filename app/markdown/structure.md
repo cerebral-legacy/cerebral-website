@@ -6,18 +6,17 @@ Depending on the size of your application there are two main differences in how 
 
 Your project file structure can look something like this:
 
-```javascript
-
-signals
-  | appMounted.js
+```
 actions
   | setLoading.js
-  | unsetLoading.js
   | setUser.js
+  | unsetLoading.js
 chains
   | getUser.js
 factories
   | get.js
+signals
+  | appMounted.js
 controller.js
 main.js
 ```
@@ -54,17 +53,16 @@ export default [
 
 On larger projects you would just put this structure into parent folders. You would probably also need a *common* folder for common actions, chains and factories.
 
-```javascript
-
+```
 admin
-  | signals
-    | appMounted.js
   | actions
     | setLoading.js
-    | unsetLoading.js
     | setUser.js
+    | unsetLoading.js
   | chains
     | getUser.js
+  | signals
+    | appMounted.js
 common
   | factories
     | get.js
