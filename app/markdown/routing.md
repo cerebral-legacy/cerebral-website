@@ -60,11 +60,11 @@ Router(controller, {
   '/messages': 'messagesOpened',
   '/messages/:id': 'messageOpened'
 }, {
-  query: true // Read about this below
-}).trigger();
+  mapper: {query: true} // Read about this below
+});
 ```
 
-The **trigger** method ensures that we handle the current route when the application loads up. The router checks the url and fires the signal related to the url. The url will be parsed and any payload will be passed on the signal. That means if you go to `example.com/messages/123` it will trigger the `messageOpened` signal with the payload `{id: '123'}`. But if you click a message in the list it will also trigger the `messageOpened` signal with the payload `{id: '456'}` and now the url will also update to `example.com/messages/456`. So it works both ways!
+Using the `cerebral-react` or `cerebral-angular` packages will automatically trigger the router, but you can run a `trigger` method manually if you do not use these packages. The router checks the url and fires the signal related to the url. The url will be parsed and any payload will be passed on the signal. That means if you go to `example.com/messages/123` it will trigger the `messageOpened` signal with the payload `{id: '123'}`. But if you click a message in the list it will also trigger the `messageOpened` signal with the payload `{id: '456'}` and now the url will also update to `example.com/messages/456`. So it works both ways!
 
 The important thing to understand here is that your application does not trigger urls to change its state. It triggers signals. Then you bind a route to a signal to allow a url to trigger the signal as well. That means:
 
