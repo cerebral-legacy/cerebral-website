@@ -111,4 +111,4 @@ onMessageClick(id) {
 
 Since this signal is bound to a url Cerebral router will automatically make this part of the query, turning your url into `example.com/messages/123?withComments:true`. That means if you refresh or pass the url to somebody else it will pass `{id: '123', withComments: true}` as the payload to the signal, opening the message in the exact same way, with the comments.
 
-Notice here that we have `withComments:true`, not `withComment=true`. This is because Cerebral router uses the [URLON](https://github.com/vjeux/URLON) project to create serializable queries. As you can see it is very powerful.
+Notice here that we have `withComments:true`, not `withComments=true`. This is because Cerebral router uses the [URLON](https://github.com/vjeux/URLON) project to create serializable queries. As you can see it is very powerful.
