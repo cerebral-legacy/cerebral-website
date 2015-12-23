@@ -16,7 +16,7 @@ class MessagesList extends React.Component {
   render() {
     return (
       <ul>
-        {this.messages.map(this.renderMessage)}
+        {this.props.messages.map(this.renderMessage)}
       </ul>
     );
   }
@@ -50,7 +50,7 @@ class MessagesList extends React.Component {
   render() {
     return (
       <ul>
-        {this.messages.map(this.renderMessage)}
+        {this.props.messages.map(this.renderMessage)}
       </ul>
     );
   }
@@ -81,7 +81,7 @@ class MessagesList extends React.Component {
   render() {
     return (
       <ul>
-        {this.messages.map(this.renderMessage)}
+        {this.props.messages.map(this.renderMessage)}
       </ul>
     );
   }
