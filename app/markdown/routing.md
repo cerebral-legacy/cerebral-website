@@ -91,7 +91,7 @@ Router(controller, {
   '/': 'homeOpened',
   '/messages': 'messagesOpened',
   '/messages/:id': 'messageOpened'
-}).trigger();
+});
 ```
 
 With Cerebral you are already used to composing chains and actions together and this is also effective when creating routes. Now you might say, "I do not want to load my messages every time I open a message!". I completely agree and there are multiple ways to handle this. It depends on when you want to load the messages. But lets say you want to load them whenever you actually go to `/messages`. Inside your *messagesOpened* signal you can just check if there is an ID on the input. If there is an ID it means you are about to open a message, if not it means you are just opening the messages.

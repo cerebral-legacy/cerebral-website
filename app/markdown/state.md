@@ -7,7 +7,7 @@ Let us start with an example:
 
 ```javascript
 
-function myAction (input, state, output) {
+function myAction ({state}) {
 
   state.set('isLoading', false);
 
@@ -21,7 +21,7 @@ use an array.
 
 ```javascript
 
-function myAction (input, state, output) {
+function myAction ({state}) {
 
   state.set(['user', 'isLoading'], false);
 
@@ -35,7 +35,7 @@ strings and arrays here also to be more specific.
 
 ```javascript
 
-function myAction (input, state, output) {
+function myAction ({state}) {
 
   state.get('isLoading'); // false
   state.get(['user', 'isLoading']); // false
@@ -49,7 +49,7 @@ you know from JavaScript. Collection methods however returns the mutated value i
 
 ```javascript
 
-function myAction (input, state, output) {
+function myAction ({state}) {
 
   // Set value on property
   state.set('isLoading', false);
@@ -89,7 +89,7 @@ Accessors are methods that lets you grab state from the state store.
 
 ```javascript
 
-function myAction (input, state, output) {
+function myAction ({state}) {
 
   // Get from the top level of tree
   state.get('isLoading'); // false

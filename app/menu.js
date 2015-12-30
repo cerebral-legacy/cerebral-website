@@ -22,6 +22,7 @@ import structure from './markdown/structure.md';
 import recording from './markdown/recording.md';
 import getStarted from './markdown/get-started.md';
 import utilities from './markdown/utilities.md';
+import modules from './markdown/modules.md';
 import relational from './markdown/relational.md';
 import internetExplorer from './markdown/internetExplorer.md';
 import propsAndState from './markdown/propsAndState.md';
@@ -140,6 +141,10 @@ export default [
     icon: 'wrench',
     content: MTRC(utilities).tree,
     subContent: [
+      {
+        label: 'Modules',
+        content: MTRC(modules).tree
+      },
       {
         label: 'Services',
         content: MTRC(services).tree

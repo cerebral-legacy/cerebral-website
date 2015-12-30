@@ -3,7 +3,7 @@ You can redirect to a different url from within a signal. This will cause a new 
 
 ```javascript
 
-function redirectAction(input, state, output, services) {
+function redirectAction({services}) {
   services.router.redirect('/someurl', {
     replace: false // Default true
   });

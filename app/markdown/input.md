@@ -2,7 +2,7 @@
 
 ```javascript
 
-function myAction (input, state, output) {
+function myAction ({input}) {
   input.foo; // "bar"
 }
 
@@ -26,11 +26,11 @@ The input can be updated in two different ways. Any object passed when you trigg
 
 ```javascript
 
-function myAction (input, state, output) {
+function myAction ({input}) {
   input.foo; // "bar"
 }
 
-function myAction2 (input, state, output) {
+function myAction2 ({input}) {
   input.foo; // "bar"
 }
 
@@ -53,7 +53,7 @@ You can set default inputs to actions.
 
 ```javascript
 
-function myAction (input, state, output) {
+function myAction ({input}) {
   input.foo; // "bar"
 }
 

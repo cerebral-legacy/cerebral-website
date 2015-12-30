@@ -27,7 +27,7 @@ In this example we are exposing [superagent](https://github.com/visionmedia/supe
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction ({services, output}) {
 
   services.request(url, function (err, response) {
 

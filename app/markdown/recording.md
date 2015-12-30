@@ -27,7 +27,7 @@ export default Controller(model);
 
 import controller from './controller.js';
 
-function play (input, state, output, services) {
+function play ({state, services}) {
   state.set(['recorder', 'isPlaying'], true);
 
   // First argument is duration
@@ -41,7 +41,7 @@ const playClicked = [
 
 controller.signal('playClicked', playClicked);
 
-function record (input, state, output, services) {
+function record ({state, services}) {
   state.merge('recorder', {
     isRecording: true,
     hasRecorded: true
@@ -55,7 +55,7 @@ const recordClicked = [
 
 controller.signal('recordClicked', recordClicked);
 
-function stop (input, state, output, services) {
+function stop ({state, services}) {
   state.merge('recorder', {
     isRecording: false,
     isPlaying: false

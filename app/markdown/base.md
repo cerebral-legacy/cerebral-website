@@ -10,5 +10,5 @@ Router(controller, {
   '/messages/:id': 'messageOpened'
 }, {
   baseUrl: '/myapp'
-}).trigger();
+});
 ```

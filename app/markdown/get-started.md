@@ -58,7 +58,7 @@ import {Container} from 'cerebral-react';
 import ReactDOM from 'react-dom';
 import App from './App.js';
 
-function changeTitle (input, state) {
+function changeTitle ({input, state}) {
   state.set('title', input.title);
 }
 

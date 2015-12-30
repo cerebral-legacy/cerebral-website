@@ -6,7 +6,7 @@ When working on large applications you will have a lot of signals and actions. L
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction ({input, state, output, services}) {
 
 }
 
@@ -19,7 +19,7 @@ Cerebral lets you do very basic type checking using the native constructors of J
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction ({input, state, output, services}) {
 
 }
 
@@ -40,7 +40,7 @@ If this type checking does not meet your requirements you can add your own. A ty
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction ({input, state, output, services}) {
 
 }
 
@@ -57,7 +57,7 @@ This allows you to bring in other type checking libraries. An example of that wo
 
 import check from 'check-types';
 
-function myAction (input, state, output, services) {
+function myAction ({input, state, output, services}) {
 
 }
 
@@ -73,7 +73,7 @@ The outputs of an action can also be type checked.
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction ({output}) {
   output({
     foo: 'bar'
   });
@@ -88,7 +88,7 @@ Or with multiple outputs:
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction ({output}) {
   output.a({
     foo: 'string'
   });

@@ -4,10 +4,10 @@ Cerebral will emit events when running signals. Normally you do not need to list
 
 ```javascript
 
-controller.on('change', function () {});
+controller.on('change', function ({signal}) {});
 controller.on('error', function (error) {});
-controller.on('signalStart', function (signal) {});
-controller.on('signalEnd', function (signal) {});
-controller.on('actionStart', function (isAsync) {});
-controller.on('actionEnd', function () {})
+controller.on('signalStart', function ({signal}) {});
+controller.on('signalEnd', function ({signal}) {});
+controller.on('actionStart', function ({signal, action}) {});
+controller.on('actionEnd', function ({signal, action}) {})
 ```

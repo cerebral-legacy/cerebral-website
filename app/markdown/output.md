@@ -1,16 +1,16 @@
 # Output
 
-All actions are able to output values. All output is merged with previous input before being sent to the next actions. 
+All actions are able to output values. All output is merged with previous input before being sent to the next actions.
 
 ```javascript
 
-function actionA (input, state, output) {
+function actionA ({output}) {
     output({
       bip: 'bop'
     });
 }
 
-function actionB (input, state, output) {
+function actionB ({input}) {
   input.foo; // "bar"
   input.bip; // "bop"
 }
@@ -37,7 +37,7 @@ An action might want to take different paths based on some conditional. A exampl
 
 ```javascript
 
-function getItems (input, state, output) {
+function getItems ({output}) {
   fetch('/items')
     .then(function(response) {
       return response.json();
@@ -66,7 +66,7 @@ But you can define your own custom output paths if you want to. Note that action
 
 ```javascript
 
-function getItems (input, state, output) {
+function getItems ({output}) {
   // For simplicities sake
   output.success();
   output.notFound();
@@ -116,7 +116,7 @@ When defining outputs you can also define which one of those outputs are default
 
 ```javascript
 
-function myAction (input, state, output) {
+function myAction ({output}) {
   output(); // Will go to path "foo"
 }
 
@@ -124,12 +124,12 @@ myAction.outputs = ['foo', 'bar'];
 myAction.defaultOutput = 'foo';
 ```
 
-Because all actions receive the same input as the previous actions in the chain (plus whatever new data has been merged in), adding on extra functionality at the start or end of signals is extremely simple. One example is wrapping certain signals to check for authentication: 
+Because all actions receive the same input as the previous actions in the chain (plus whatever new data has been merged in), adding on extra functionality at the start or end of signals is extremely simple. One example is wrapping certain signals to check for authentication:
 ```javascript
 
 function requireAuth (actionChain) {
   return [checkAuthenticated, { //action that checks if user is authenticated and outputs success or error
-    success: actionChain, //run the usual action chain 
+    success: actionChain, //run the usual action chain
     error: [displayNoAuthWarningToUser] //display a warning to the user
   }]
 }

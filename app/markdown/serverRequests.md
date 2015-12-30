@@ -27,7 +27,7 @@ The *setLoadingTodos* and *unsetLoadingTodos* actions are not so important here,
 
 ```javascript
 
-function getTodos(input, state, output, services) {
+function getTodos({services, output}) {
   services.ajax.get('/todos')
     .then((todos) => output.success({todos}))
     .catch((error) => output.error({error}));

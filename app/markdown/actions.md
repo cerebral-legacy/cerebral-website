@@ -1,12 +1,29 @@
 # Actions
 
-An action is just a pure function.
-
 ```javascript
 
-function myAction (input, state, output) {
+function myAction ({input, state, output, services}) {
 
 }
 ```
 
-A pure function means that the functions does not call or reference anything outside itself. Anything and everything you do inside an action is related to its arguments. When you write a test for an action you can mock these arguments to fit your test. This makes it easy to verify that actions run as they should. This also ensures that the test breaks if someone changes the action in a way that affects the expected behavior. On larger teams this is crucial to ensure that the application always runs as expected.
+An action is Cerebral has many of the benefits of a pure function. An action does not call or reference anything outside itself. Anything and everything you do inside an action is related to its one argument. This argument current has four properties, *input*, *state*, *output* and *services*. As you can see we use destructuring to access them. That means:
+
+```javascript
+
+function myAction ({output, services}) {
+
+}
+
+function myAction ({input, output}) {
+
+}
+
+function myAction ({state, input}) {
+
+}
+```
+
+All work.
+
+When you write a test for an action you can mock properties to fit your test. This makes it easy to verify that actions run as they should. This also ensures that the test breaks if someone changes the action in a way that affects the expected behavior. On larger teams this is crucial to ensure that the application always runs as expected.

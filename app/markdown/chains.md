@@ -37,7 +37,7 @@ controller.signal('somethingHappened', signal);
 
 ### Chain factories
 
-An action factory is a function that returns a function, but you can also return chain from a factory. An example of this would be a chain for ajax requests.
+An action factory is a function that returns a function, but you can also return a chain from a factory. An example of this would be a chain for ajax requests.
 
 ```javascript
 
@@ -84,4 +84,4 @@ const signal = [
 controller.signal('somethingHappened', signal);
 ```
 
-You have now created a generic action chain that expresses your intent. It does hide implementation details, but that is something you have to balance. Sometimes it is good to be very specific, other times it just becomes very tedious. When you decide to hide implementation details the debugger will still indicate possible outputs etc.
+You have now created a generic action chain that expresses your intent. It does hide implementation details, but that is something you have to balance. Sometimes it is good to be very specific, other times it just becomes very tedious. When you decide to hide implementation details the debugger will still indicate possible outputs etc. So you never completely hide what is happening.
