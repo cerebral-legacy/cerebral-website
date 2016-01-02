@@ -48,6 +48,7 @@ import addonsWhen from './markdown/addons_when.md';
 import addonsInputToState from './markdown/addons_inputToState.md';
 import addonsStateToOutput from './markdown/addons_stateToOutput.md';
 import universal from './markdown/universal.md';
+import snabbdom from './markdown/snabbdom.md';
 
 export default [
   {
@@ -67,6 +68,11 @@ export default [
         label: 'React',
         icon: 'television',
         content: MTRC(react).tree
+      },
+      {
+        label: 'Snabbdom',
+        icon: 'television',
+        content: MTRC(snabbdom).tree
       },
       {
         label: 'Angular',
