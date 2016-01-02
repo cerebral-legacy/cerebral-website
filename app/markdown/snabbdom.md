@@ -2,7 +2,7 @@
 
 Cerebral Snabbdom makes Cerebral a first class citizen of components. That means you have to do a lot less wiring to build components and Snabbdom is faster than React. Read more about the JSX syntax over at [snabbdom-jsx](https://github.com/yelouafi/snabbdom-jsx), it differs from React.
 
-## Install
+### Install
 `npm install cerebral-snabbdom`
 
 To use JSX syntax you also need Babel with the `transform-react-jsx` package.
@@ -19,7 +19,11 @@ To use JSX syntax you also need Babel with the `transform-react-jsx` package.
 }
 ```
 
-## Render
+### Repo
+[cerebral-snabbdom](https://github.com/cerebral/cerebral-snabbdom)
+
+### Get started
+#### Render
 
 ```javascript
 
@@ -33,7 +37,7 @@ Note that you have to pass a callback to render the initial component, returning
 
 **Note!** `() => <App/>` is the same as `() => { return <App/> }`.
 
-## Component
+#### Component
 
 ```javascript
 
@@ -46,7 +50,7 @@ export default Component(() => (
 ));
 ```
 
-### Use state from state store
+#### Use state from state store
 By default you have access to all the state from your state tree on the `state` property passed into each components.
 
 ```javascript
@@ -86,7 +90,7 @@ export default Component({
 ```
 In this case only *title* and *rows* are available in the component, via the *state* property.
 
-### Use props passed to component
+#### Use props passed to component
 
 *MyComponent.js*
 ```javascript
@@ -107,7 +111,7 @@ import MyComponent from './MyComponent';
 <MyComponent title="whatup!"/>
 ```
 
-### Use signals
+#### Use signals
 
 *MyComponent.js*
 ```javascript
@@ -124,7 +128,7 @@ export default Component(({state, signals}) => (
 ));
 ```
 
-### Optimize
+#### Optimize
 Any component you give a `key` will be optimized under the hood. It will shallow check its properties to decide if a render is necessary.
 
 *MyComponent.js*
@@ -157,7 +161,7 @@ const MyComponent = Component({
 ```
 Now the component will only update if either *title* from props or *version* from the state has changed.
 
-### eslint
+#### eslint
 When using eslint, it may complain about `Component` being unused. You can configure eslint to allow `Component`:
 ```javascript
 

@@ -4,7 +4,7 @@
 `$ npm install cerebral-react`.
 
 ### Repo
-[cerebral-react](https://github.com/christianalfoni/cerebral-react)
+[cerebral-react](https://github.com/cerebral/cerebral-react)
 
 Read more about **decorators**, **hoc**, **mixins** and **stateless/stateful** components.
 
