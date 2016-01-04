@@ -1,5 +1,6 @@
 import MTRC from 'markdown-to-react-components';
 import Home from './Home.js';
+import Contributors from './Contributors.js';
 import install from './markdown/install.md';
 import react from './markdown/react.md';
 import angular from './markdown/angular.md';
@@ -30,7 +31,6 @@ import responsibilities from './markdown/responsibilities.md';
 import compute from './markdown/compute.md';
 import immutableJS from './markdown/immutableJS.md';
 import faq from './markdown/faq.md';
-import contributors from './markdown/contributors.md';
 import howto from './markdown/howto.md';
 import serverRequests from './markdown/serverRequests.md';
 import base from './markdown/base.md';
@@ -58,7 +58,7 @@ export default [
   }, {
     label: 'Contributors',
     icon: 'users',
-    content: MTRC(contributors).tree
+    content: Contributors
   }, {
     label: 'Install',
     icon: 'download',
