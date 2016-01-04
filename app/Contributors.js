@@ -50,7 +50,7 @@ var Contributors = React.createClass({
           <p>
             Andrew has contributed by nailing some bugs "deep down" and cleaning up projects as Cerebral moves on, ensuring a good experience for beginners.
           </p>
-          <a href="https://github.com/bfitch">Github Profile</a>
+          <a href="https://github.com/abalmos">Github Profile</a>
         </div>
         <h3>Everybody else!</h3>
         <p>
