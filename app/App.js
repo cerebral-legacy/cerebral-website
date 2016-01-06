@@ -26,16 +26,16 @@ class App extends React.Component {
     }
   }
   openGithub() {
-    window.open('http://www.github.com/christianalfoni/cerebral');
+    window.open('http://www.github.com/cerebral/cerebral');
   }
   createTweet() {
     window.open('https://twitter.com/share');
   }
   openChat() {
-    window.open('https://gitter.im/christianalfoni/cerebral');
+    window.open('https://discord.gg/0kIweV4bd2bwwsvH');
   }
   openRepo() {
-    window.open('https://github.com/christianalfoni/cerebral-website');
+    window.open('http://www.cerebraljs.com/');
   }
   renderPage() {
     const pageStyle = {
