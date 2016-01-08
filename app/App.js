@@ -78,10 +78,13 @@ class App extends React.Component {
             <i className="icon icon-github-square"> Project repo</i>
           </div>
           <div className="tweet" onClick={() => this.createTweet()}>
-            <i className="icon icon-twitter"> Tweet about Cerebral</i>
+            <i className="icon icon-twitter"> Tweet it!</i>
           </div>
           <div className="tweet" onClick={() => this.openChat()}>
             <i className="icon icon-comments"> Chat with us</i>
+          </div>
+          <div className="tweet" onClick={() => location.href = "/todomvc"}>
+            <i className="icon icon-gamepad"> Demo</i>
           </div>
         </div>
         <div ref="content" className="content" style={contentStyle}>

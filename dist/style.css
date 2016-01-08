@@ -110,6 +110,9 @@
 .icon-th-large:before {
     content: "\f009";
 }
+.icon-gamepad:before {
+    content: "\f11b";
+}
 
 html, body {
     margin: 0;

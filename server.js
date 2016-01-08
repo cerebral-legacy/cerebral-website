@@ -30,6 +30,9 @@ if (isDeveloping) {
 }
 
 app.use(express.static('./dist'));
+app.use('/todomvc', express.static('./todomvc', {
+  index: 'index.html'
+}));
 render(app);
 
 app.listen(port, '0.0.0.0', (err) => {
