@@ -20,7 +20,6 @@ import routing from './markdown/routing.md';
 import transitions from './markdown/transitions.md';
 import bestPractices from './markdown/best-practices.md';
 import structure from './markdown/structure.md';
-import recording from './markdown/recording.md';
 import getStarted from './markdown/get-started.md';
 import utilities from './markdown/utilities.md';
 import modules from './markdown/modules.md';
@@ -167,10 +166,6 @@ export default [
       {
         label: 'Events',
         content: MTRC(events).tree
-      },
-      {
-        label: 'Recording',
-        content: MTRC(recording).tree
       },
       {
         label: 'Universal',
