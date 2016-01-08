@@ -35,7 +35,7 @@ class App extends React.Component {
     window.open('https://discord.gg/0kIweV4bd2bwwsvH');
   }
   openRepo() {
-    window.open('http://www.cerebraljs.com/');
+    window.open('https://github.com/cerebral/cerebral-website/tree/master/app/markdown');
   }
   renderPage() {
     const pageStyle = {
