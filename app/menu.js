@@ -49,6 +49,7 @@ import addonsInputToState from './markdown/addons_inputToState.md';
 import addonsStateToOutput from './markdown/addons_stateToOutput.md';
 import universal from './markdown/universal.md';
 import snabbdom from './markdown/snabbdom.md';
+import moduleRecorder from './markdown/module_recorder.md';
 
 export default [
   {
@@ -148,10 +149,6 @@ export default [
     content: MTRC(utilities).tree,
     subContent: [
       {
-        label: 'Modules',
-        content: MTRC(modules).tree
-      },
-      {
         label: 'Services',
         content: MTRC(services).tree
       },
@@ -184,6 +181,15 @@ export default [
         content: MTRC(universal).tree
       }
     ]
+  },
+  {
+    label: 'Modules',
+    icon: 'th-large',
+    content: MTRC(modules).tree,
+    subContent: [{
+      label: 'Recorder',
+      content: MTRC(moduleRecorder).tree
+    }]
   },
   {
     label: 'Addons',

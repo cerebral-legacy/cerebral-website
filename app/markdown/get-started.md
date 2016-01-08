@@ -7,7 +7,7 @@ The basic boilerplate is located [here](https://github.com/cerebral/cerebral-boi
 
 
 ### From scratch
-`npm install cerebral cerebral-baobab cerebral-react`
+`$ npm install cerebral cerebral-baobab cerebral-react`
 
 *controller.js*
 ```javascript

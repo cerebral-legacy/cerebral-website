@@ -9,7 +9,7 @@ import Router from 'cerebral-router';
 import controller from './controller';
 
 controller.signal('homeOpened', [
-  function setContent(input, state) {
+  function setContent({state}) {
     state.merge({
       content: 'cerebral',
       subContent: null
@@ -18,7 +18,7 @@ controller.signal('homeOpened', [
 ]);
 
 controller.signal('menuClicked', [
-  function setContent(input, state) {
+  function setContent({input, state}) {
     state.merge({
       content: input.content,
       subContent: null
@@ -27,7 +27,7 @@ controller.signal('menuClicked', [
 ]);
 
 controller.signal('submenuClicked', [
-  function setContent(input, state) {
+  function setContent({input, state}) {
     state.merge({
       content: input.content,
       subContent: input.subContent
@@ -36,30 +36,30 @@ controller.signal('submenuClicked', [
 ]);
 
 controller.signal('menuToggled', [
-  function toggleMenu(input, state) {
+  function toggleMenu({state}) {
     state.set(['displayMenu'], !state.get('displayMenu'));
   }
 ]);
 
 controller.signal('videoOpened', [
-  function openVideo(input, state) {
+  function openVideo({input, state}) {
     state.merge({
       videoSrc: input.videoSrc,
       showOverlay: true
     });
   },
   [
-    function timeout(input, state, output) {
+    function timeout({output}) {
       setTimeout(output, 50);
     }
   ],
-  function transition(input, state) {
+  function transition({state}) {
     state.set(['transitionVideo'], true);
   }
 ]);
 
 controller.signal('videoClosed', [
-  function closeVideo(input, state) {
+  function closeVideo({state}) {
     state.merge({
       videoSrc: null,
       showOverlay: false,
@@ -75,6 +75,6 @@ Router(controller, {
 }).trigger();
 
 render(
-  <Container controller={controller}>
+  <Container controller={controller} style={{height: '100vh'}}>
     <App/>
   </Container>, document.querySelector('#app'));

@@ -105,7 +105,7 @@ class App extends React.Component {
             </li>
           );
 
-          if (item.subContent) {
+          if (item.subContent && this.props.content === toPath(item.label)) {
             return [
               Item,
               <li key={item.label + '_sub'}>
@@ -120,7 +120,7 @@ class App extends React.Component {
                           subitem.icon ?
                             <span><i className={'icon icon-' + subitem.icon}/> {subitem.label}</span>
                           :
-                            subitem.label
+                            '• ' + subitem.label
                         }
                       </li>
                     );

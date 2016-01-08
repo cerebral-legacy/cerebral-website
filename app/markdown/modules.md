@@ -1,47 +1,96 @@
-# Modules (EXPERIMENTAL)
+# Modules DRAFT 2 (EXPERIMENTAL)
 
-Cerebral modules is a concept in the making. It is an API with multiple goals:
+Cerebral Modules is still in experimental stage, but we are closing in on the API. This is what modules allows you to do:
 
-1. Allow you to structure your own application, namespacing signals
-2. Allow you to expose services to your application
-3. Share your modules with other Cerebral developers, exposing services, signals and even UI components
+1. Structure your own application by grouping and subgrouping signals, state and services
+2. Share your modules between own project and other Cerebral developers
+3. Use official Cerebral modules that will help you with everything from authentication, to server communication, forms etc.
 
-The vision is to allow you to search for modules on the Cerebral site. These modules can help you with anything from connecting to Firebase, pouchdb, localStorage, forms, UI frameworks etc.
-
-### Using a module
+### Registering a module
 
 ```javascript
 
 import controller from './controller';
 import SomeModule from './SomeModule';
+import RecorderModule from 'cerebral-module-recorder';
 
-controller.register({
+controller.registerModules({
   myModule: SomeModule({
     foo: 'bar'
-  })
+  }),
+  recorder: RecorderModule()
 });
 
 ```
 
-You register one or multiple modules to your existing Cerebral application. You instantiate a module by calling it an passing any options. A module may, as stated, expose signals, services and even components to your application. You name the module yourself, in this case *myModule*, which will namespace signals and services exposes. These are the ways you can access the module, depending on the type of module:
+You register one or multiple modules to your existing Cerebral application. You instantiate a module by calling it and passing any options. A module may, as stated, expose state, signals and services to your application. It may also have related actions, chains and even UI components. You name the module yourself, in this case *myModule* and *recorder*, which will namespace everything related to the module.
 
-#### As a service in an action
+### Creating a module
 
+*MyModule.js*
 ```javascript
 
-function myAction({services}) {
-  services.myModule.someServiceMethod();
+import somethingHappened from './signals/somethingHappened';
+import somethingElseHappened from './signals/somethingElseHappened';
+
+export default (options = {}) => {
+  return (module) => {
+
+    // Set state to your module
+    module.state({
+      foo: 'bar'
+    });
+
+    // Add signals
+    module.signal('somethingHappened', somethingHappened);
+    module.signalSync('somethingElseHappened', somethingElseHappened);
+
+    // Add a service
+    module.service('hello', () => 'hello');
+
+    // Return some META information about the module
+    return {};
+
+  };
 }
 ```
 
-#### As a signal
+### Using a module
+
+#### Actions
 
 ```javascript
 
+function myAction({module, modules, services}) {
+
+  // Access the module where the current signal running is registered
+  module
+
+  // Access any modules registered to the app
+  modules.myModule
+  modules.recorder
+
+  // Access any services registered to the app
+  services.myModule.hello
+
+  // Change and get state
+  module.state.set(['foo'], 'otherBar');
+  modules.recorder.state.get(['isPlaying']);
+
+}
+```
+
+#### In components
+
+```javascript
+
+@Cerebral({
+  foo: ['myModule', 'foo']
+})
 class MyComponent extends React.Component {
   render() {
     return (
-      <button onClick={() => this.props.signals.myModule.someSignal()}>
+      <button onClick={() => this.props.signals.myModule.somethingHappened()}>
         click
       </button>
     );
@@ -49,42 +98,120 @@ class MyComponent extends React.Component {
 }
 ```
 
-#### As other exposed module data
+### Creating a submodule
+
+*MyModule.js*
+```javascript
+
+import SubModule from './modules/SubModule';
+
+export default (options = {}) => {
+  return (module) => {
+
+    module.regiserModules({
+      subModule: SubModule()
+    });
+
+  };
+}
+```
+
+Any modules registered as a submodule will use the namespace of the parent module. That means any state, signals and services created in the *subModule* will be namespaced `myModule.subModule`. Really nothing more to it :-)
+
+### Sharing a module
+There is not much difference in creating your own application specific module and creating a module that can be shared. But the fact that other developers can namespace your module to whatever they want, you need a way to access your module.
+
+*MyModule.js*
+```javascript
+
+import somethingHappened from './signals/somethingHappened';
+
+export default (options = {}) => {
+  return (module) => {
+
+    // Alias is a second namespace you can access the module on
+    // All Cerebral modules should be named "cerebral-module-xxx"
+    module.alias('cerebral-module-myModule');
+
+    module.signal('somethingHappened', somethingHappened);
+    module.service('foo', () => {});
+
+  };
+}
+```
+
+#### Accessing your shared module in actions
+```javascript
+
+function mySharedModuleAction({module}) {
+  module.services.foo;
+}
+```
+Or if you want to access some other shared module, use its alias name:
 
 ```javascript
 
-class MyComponent extends React.Component {
+function mySharedModuleAction({modules}) {
+  modules['cerebral-module-otherModule'].state.get();
+}
+```
+
+#### Accessing your module in components
+```javascript
+
+@Cerebral((props) => ({
+  myModule: props.modules['cerebral-module-myModule'].path
+}))
+class MyModuleComponent extends React.Component {
   render() {
-    const Page = this.props.modules.myModule.Component;
-    return <Page/>;
+    return <div>{this.props.myModule.foo}</div>;
   }
 }
 ```
 
-### Building a module
+This makes it possible for consumers of your shared module to just use your exposed actions and components without
+any configuration:
 
 ```javascript
 
-export default (options) => {
-  return {
-    init({name, controller}) {
-      // Do whatever custom stuff you need with the controller
-      return {
-        metaA: 'foo',
-        metaB: 'bar'
-      };
-    },
-    signals: {
-      mySignal: [] // A normal signal chain
-    },
-    signalsSync: {
-      mySyncSignal: [] // A sync signal chain
-    },
-    services: {
-      myService: {} // Some service or service method
-    }
+import ModuleComponent from 'cerebral-module-myModule/ModuleComponent';
+
+class MyAppComponent extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>I just included a shared module component</h1>
+        <ModuleComponent/>
+      </div>
+    );
   }
-};
+}
 ```
 
-Any signals or services registered are automatically namespaced to the name of the module defined by the user of the module.
+### Multi-instance shared modules
+If a shared module can have multiple instances the developer consuming the module will have to specify the module name.
+
+```javascript
+
+import SharedModuleAction from 'cerebral-module-someModule/actions/SharedModuleAction';
+
+const chain = [
+  SharedModuleAction('mySharedModuleNameSpace')
+];
+```
+
+```javascript
+
+import ModuleComponent from 'cerebral-module-myModule/ModuleComponent';
+
+class MyAppComponent extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>I just included a shared module component</h1>
+        <ModuleComponent module="mySharedModuleNameSpace"/>
+      </div>
+    );
+  }
+}
+```

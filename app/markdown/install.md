@@ -8,9 +8,9 @@ To build a *Cerebral* application you need three parts. A **state** package, a *
 
 `$ npm install cerebral-baobab`
 
-`npm install react`
+`$ npm install react`
 
-`npm install react-dom`
+`$ npm install react-dom`
 
 Look at different packages using the menu and get details on how to install and use them.
 

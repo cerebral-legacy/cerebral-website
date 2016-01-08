@@ -23,7 +23,7 @@ export default (app) => {
     };
     const controller = ServerController(state);
 
-    return renderToString(<Container controller={controller}><App/></Container>);
+    return renderToString(<Container controller={controller} style={{height: '100vh'}}><App/></Container>);
   };
 
   app.get('/', (req, res) => {

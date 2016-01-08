@@ -21,6 +21,9 @@ import request from 'superagent';
 // Any Baobab options
 const options = {
 
+  // Set this option in DEVELOPMENT to log out a
+  // plain representation of state store
+  lazyMonkeys: false
 };
 
 // The initial state of the application
