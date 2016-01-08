@@ -57,10 +57,6 @@ export default [
     icon: 'home',
     content: Home
   }, {
-    label: 'Contributors',
-    icon: 'users',
-    content: Contributors
-  }, {
     label: 'Install',
     icon: 'download',
     content: MTRC(install).tree,
@@ -277,5 +273,9 @@ export default [
         content: MTRC(responsibilities).tree
       }
     ]
+  }, {
+    label: 'Contributors',
+    icon: 'users',
+    content: Contributors
   }
 ];
