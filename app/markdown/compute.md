@@ -28,7 +28,7 @@ You use them the same way as normal state, though just referencing the computed 
 ```javascript
 
 import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-react';
+import {Decorator as Cerebral} from 'cerebral-view-react';
 import displayedMessages from './computed/displayedMessages';
 
 @Cerebral({

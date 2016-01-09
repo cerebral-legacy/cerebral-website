@@ -9,12 +9,14 @@ function redirectAction({services}) {
   });
 }
 
-signal('appMounted', [
-  myConditionalAction, {
-    success: [someOtherAction],
-    error: [redirectAction]
-  }
-]);
+signals({
+  appMounted: [
+    myConditionalAction, {
+      success: [someOtherAction],
+      error: [redirectAction]
+    }
+  ]
+});
 ```
 
 Or you can use the redirect action factory from the router:
@@ -23,10 +25,12 @@ Or you can use the redirect action factory from the router:
 
 import {redirect} from 'cerebral-router';
 
-signal('appMounted', [
-  myConditionalAction, {
-    success: [someOtherAction],
-    error: [redirect('/error')]
-  }
-]);
+signals({
+  appMounted: [
+    myConditionalAction, {
+      success: [someOtherAction],
+      error: [redirect('/error')]
+    }
+  ]
+});
 ```

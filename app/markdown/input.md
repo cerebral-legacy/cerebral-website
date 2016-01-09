@@ -6,13 +6,16 @@ function myAction ({input}) {
   input.foo; // "bar"
 }
 
-const signal = [
+const somethingHappened = [
   myAction
 ];
 
-controller.signal('somethingHappened', signal);
+controller.signals({
+  somethingHappened
+});
 
-controller.signals.somethingHappened({
+// In some Component
+signals.somethingHappened({
   foo: 'bar'
 });
 ```
@@ -34,14 +37,17 @@ function myAction2 ({input}) {
   input.foo; // "bar"
 }
 
-const signal = [
+const somethingHappened = [
   myAction,
   myAction2
 ];
 
-controller.signal('somethingHappened', signal);
+controller.signal({
+  somethingHappened
+});
 
-controller.signals.somethingHappened({
+// In some Component
+signals.somethingHappened({
   foo: 'bar'
 });
 ```

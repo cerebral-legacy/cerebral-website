@@ -4,9 +4,9 @@ To build a *Cerebral* application you need three parts. A **state** package, a *
 
 `$ npm install cerebral`
 
-`$ npm install cerebral-react`
+`$ npm install cerebral-view-react`
 
-`$ npm install cerebral-baobab`
+`$ npm install cerebral-model-baobab`
 
 `$ npm install react`
 

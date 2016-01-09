@@ -1,7 +1,7 @@
 # Immutable JS STATE package
 
 ### Install
-`$ npm install cerebral-immutable-js`
+`$ npm install cerebral-model-immutable-js`
 
 ### Repo
 [cerebral-immutable-js](https://github.com/christianalfoni/cerebral-immutable-js)
@@ -15,8 +15,7 @@ immutable-js. Read more about immutable-js at the [webpage](https://facebook.git
 ```javascript
 
 import Controller from 'cerebral';
-import Model from 'cerebral-immutable-js';
-import request from 'superagent';
+import Model from 'cerebral-model-immutable-js';
 
 // The initial state of the application
 const model = Model({
@@ -25,11 +24,6 @@ const model = Model({
   error: null
 });
 
-// Any utils you want each action to receive
-const services = {
-  request: request
-};
-
 // Instantiate the controller
-export default Controller(model, services);
+export default Controller(model);
 ```

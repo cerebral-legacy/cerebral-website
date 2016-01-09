@@ -15,14 +15,17 @@ function actionB ({input}) {
   input.bip; // "bop"
 }
 
-const signal = [
+const somethingHappened = [
   actionA,
   actionB
 ];
 
-controller.signal('somethingHappened', signal);
+controller.signals({
+  somethingHappened
+});
 
-controller.signals.somethingHappened({
+// In some Component
+signals.somethingHappened({
   foo: 'bar'
 });
 
@@ -48,7 +51,7 @@ function getItems ({output}) {
     });
 }
 
-const signal = [
+const somethingHappened = [
   [
     getItems, {
       success: [setItems],
@@ -57,7 +60,9 @@ const signal = [
   ]
 ];
 
-controller.signal('somethingHappened', signal);
+controller.signals({
+  somethingHappened
+});
 ```
 
 But you can define your own custom output paths if you want to. Note that actions does not know about paths they are currently running on. They only get inputs. The previous action could do an `output({})` or `output.success({})`, or nothing at all. An action always just starts with some input and can itself decide a path to take next.
@@ -81,7 +86,7 @@ getItems.outputs = [
   'error'
 ];
 
-const signal = [
+const somethingHappened = [
   [
     getItems, {
       success: [setItems],
@@ -92,13 +97,15 @@ const signal = [
   ]
 ];
 
-controller.signal('somethingHappened', signal);
+controller.signals({
+  somethingHappened
+});
 ```
 This is a powerful tool to express the flow of your application. This can be combined with *factories* and *chains* to create default behavior in your signals. The new ES6 *spread* operator is also a great tool for signals. An example of that would be:
 
 ```javascript
 
-const signal = [
+const somethingHappened = [
   [
     ...get('/items', {
       success: [setItems]
@@ -106,7 +113,9 @@ const signal = [
   ]
 ];
 
-controller.signal('somethingHappened', signal);
+controller.signal({
+  somethingHappened
+});
 ```
 If this is not perfectly clear to you, do not worry. You will learn more about *factories*, *chains* and the *spread operator*.
 
@@ -134,14 +143,17 @@ function requireAuth (actionChain) {
   }]
 }
 
-const signal = [
-  saveDataToDb, //action to save data to DB
+const saveSensitiveDataToDB = [
+  saveDataToDb //action to save data to DB
 ];
 
 
-controller.signal('saveSensitiveDataToDB', requireAuth(signal));
+controller.signal({
+  saveButtonClicked: requireAuth(saveSensitiveDataToDB)
+});
 
-controller.signals.saveSensitiveDataToDB({
+// In some Component
+signals.saveButtonClicked({
   foo: 'bar'
 });
 

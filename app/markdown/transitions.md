@@ -7,7 +7,7 @@ We are going to look at an example using the *CSSTransitionGroup* plugin from Re
 ```javascript
 
 import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-react';
+import {Decorator as Cerebral} from 'cerebral-view-react';
 import {CSSTransitionGroup} from 'react/addons';
 
 import HomePage from './HomePage.js';

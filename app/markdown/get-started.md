@@ -7,13 +7,13 @@ The basic boilerplate is located [here](https://github.com/cerebral/cerebral-boi
 
 
 ### From scratch
-`$ npm install cerebral cerebral-baobab cerebral-react`
+`$ npm install cerebral cerebral-model-baobab cerebral-view-react`
 
 *controller.js*
 ```javascript
 
 import Controller from 'cerebral';
-import Model from 'cerebral-baobab';
+import Model from 'cerebral-model-baobab';
 
 const model = Model({
   title: 'Hello world'
@@ -26,7 +26,7 @@ export default Controller(model);
 ```javascript
 
 import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-react';
+import {Decorator as Cerebral} from 'cerebral-view-react';
 
 @Cerebral({
   title: ['title']
@@ -54,7 +54,7 @@ export default App;
 
 import React from 'react';
 import controller from './controller.js';
-import {Container} from 'cerebral-react';
+import {Container} from 'cerebral-view-react';
 import ReactDOM from 'react-dom';
 import App from './App.js';
 
@@ -62,11 +62,13 @@ function changeTitle ({input, state}) {
   state.set('title', input.title);
 }
 
-const signal = [
+const titleChanged = [
   changeTitle
 ];
 
-controller.signal('titleChanged', signal);
+controller.signals({
+  titleChanged
+});
 
 ReactDOM.render(
   <Container controller={controller}>

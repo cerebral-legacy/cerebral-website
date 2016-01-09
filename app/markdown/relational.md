@@ -89,7 +89,7 @@ This is how a component could now display this list:
 ```javascript
 
 import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-react';
+import {Decorator as Cerebral} from 'cerebral-view-react';
 
 @Cerebral({
   messages: ['messages', 'list']

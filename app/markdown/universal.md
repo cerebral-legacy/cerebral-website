@@ -6,7 +6,7 @@ To build universal apps you need to render your components on the server. Since 
 
 import React from 'react';
 import {ServerController} from 'cerebral';
-import {Container} from 'cerebral-react';
+import {Container} from 'cerebral-view-react';
 import App from '../src/App.js';
 import {renderToString} from 'react-dom';
 

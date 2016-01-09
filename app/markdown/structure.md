@@ -29,13 +29,15 @@ In your *main.js* file you define all your signals, but bring them in from the *
 import controller from './controller.js';
 import appMounted from './signals/appMounted.js';
 
-controller.signal('appMounted', appMounted);
+controller.signals({
+  appMounted
+});
 
 ```
 
 This makes it easy to reason about what signals can be triggered by just looking at the file structure. The signals are defined as arrays. Looking at *appMounted.js*.
 
-```
+```javascript
 
 import setLoading from './../actions/setLoading.js';
 import unsetLoading from './../actions/unsetLoading.js';
@@ -65,6 +67,7 @@ admin
     | setUser.js
   | chains
     | getUser.js
+  index.js
 common
   | factories
     | get.js

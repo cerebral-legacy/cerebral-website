@@ -1,10 +1,10 @@
 # Baobab STATE package
 
 ### Install
-`$ npm install cerebral-baobab`
+`$ npm install cerebral-model-baobab`
 
 ### Repo
-[cerebral-baobab](https://github.com/christianalfoni/cerebral-baobab)
+[cerebral-model-baobab](https://github.com/christianalfoni/cerebral-model-baobab)
 
 ### Features
 Baobab allows you to use facets to map state. Baobab also allows you to validate any changes
@@ -15,7 +15,7 @@ to the state tree. Read more about Baobab at the [github repo](https://github.co
 ```javascript
 
 import Controller from 'cerebral';
-import Model from 'cerebral-baobab';
+import Model from 'cerebral-model-baobab';
 import request from 'superagent';
 
 // Any Baobab options
@@ -26,25 +26,21 @@ const options = {
   lazyMonkeys: false
 };
 
-// The initial state of the application
-const model = Model({
+const initialState = {
   isLoading: false,
   user: null,
   error: null
-}, options);
+};
+
+const model = Model(initialState, options);
 
 // You have access to the Baobab tree itself
 model.tree.on('invalid', function () {
 
 });
 
-// Any utils you want each action to receive
-const services = {
-  request: request
-};
-
 // Instantiate the controller
-export default Controller(model, services);
+export default Controller(model);
 ```
 
 ### Monkeys
@@ -54,7 +50,7 @@ Monkeys are a high performance way to derive new data from existing state.
 ```javascript
 
 import Controller from 'cerebral';
-import Model from 'cerebral-baobab';
+import Model from 'cerebral-model-baobab';
 
 const VisibleTodos = Model.monkey({
   cursors: {

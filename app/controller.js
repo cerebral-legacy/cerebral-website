@@ -1,4 +1,4 @@
-import Model from 'cerebral-baobab';
+import Model from 'cerebral-model-baobab';
 import Controller from 'cerebral';
 
 const model = Model({

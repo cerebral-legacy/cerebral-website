@@ -17,7 +17,7 @@ function get (url) {
 
 }
 
-const signal = [
+const somethingHappened = [
   [
     get('/items'), {
       success: [setItems],
@@ -26,7 +26,9 @@ const signal = [
   ]
 ];
 
-controller.signal('somethingHappened', signal);
+controller.signals({
+  somethingHappened
+});
 ```
 
 ### Custom action names

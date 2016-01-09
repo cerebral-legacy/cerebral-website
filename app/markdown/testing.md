@@ -120,7 +120,7 @@ By default cerebral does not expose the controller state for direct manipulation
 ```javascript
 
 import Controller from 'cerebral';
-import Model from 'cerebral-baobab';
+import Model from 'cerebral-model-baobab';
 
 // your initial state
 const state = {};

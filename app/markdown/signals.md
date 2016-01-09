@@ -6,7 +6,7 @@ This is a typical signal:
 
 ```javascript
 
-const signal = [
+const appMounted = [
   setLoading,
   [
     getUser, {
@@ -17,25 +17,12 @@ const signal = [
   unsetLoading
 ];
 
-controller.signal('appMounted', signal);
+controller.signals({
+  appMounted
+});
 ```
 
 As you can see, there are not only functions that are used to express flow. You also have arrays and objects. Normally arrays and object literals define data structure. Inside a signal however, they define behaviour. An array inside an array means its contents will run asynchronously. The *getUser* action will run asynchronously. An object is used to define paths. This means that the execution of an action can result in different outcomes. Each output path is itself just a normal chain of actions, subject to the same rules as normal. For example, you can define sub-paths within paths and if you want to use an asynchronous action within a path, you'd still need to wrap it in an a second array.
-
-### Namespace signals
-
-In larger applications it can be convenient to namespace your signals. You do that simply by using dot notation.
-
-```javascript
-
-const signal = [
-  action1
-];
-
-controller.signal('admin.userOpened', signal);
-
-controller.signals.admin.userOpened();
-```
 
 ### Force synchronous UI updates
 
@@ -44,7 +31,7 @@ By default Cerebral will run your signals between animation frames. Sometimes yo
 ```javascript
 
 import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-react';
+import {Decorator as Cerebral} from 'cerebral-view-react';
 
 @Cerebral({
   value: ['inputValue']
@@ -64,4 +51,15 @@ class App extends React.Component {
 }
 ```
 
-All signals have a `.sync()` method. Use this with inputs to avoid glitches in UI.
+All signals have a `.sync()` method. Use this with inputs to avoid glitches in UI. You can also register a signal as sync:
+
+```javascript
+
+const inputChanged = [
+  setInputValue
+];
+
+controller.signalsSync({
+  inputChanged
+});
+```

@@ -14,7 +14,7 @@ import controller from './controller';
 import SomeModule from './SomeModule';
 import RecorderModule from 'cerebral-module-recorder';
 
-controller.registerModules({
+controller.modules({
   myModule: SomeModule({
     foo: 'bar'
   }),
@@ -42,11 +42,20 @@ export default (options = {}) => {
     });
 
     // Add signals
-    module.signal('somethingHappened', somethingHappened);
-    module.signalSync('somethingElseHappened', somethingElseHappened);
+    module.signals({
+      somethingHappened
+    });
 
-    // Add a service
-    module.service('hello', () => 'hello');
+    module.signalsSync({
+      somethingElseHappened
+    });
+
+    // Add services
+    module.services({
+      hello() {
+        return 'hello';
+      }
+    });
 
     // Return some META information about the module
     return {};
@@ -71,7 +80,7 @@ function myAction({module, modules, services}) {
   modules.recorder
 
   // Access any services registered to the app
-  services.myModule.hello
+  services.myModule.hello()
 
   // Change and get state
   module.state.set(['foo'], 'otherBar');
@@ -108,7 +117,7 @@ import SubModule from './modules/SubModule';
 export default (options = {}) => {
   return (module) => {
 
-    module.regiserModules({
+    module.modules({
       subModule: SubModule()
     });
 
@@ -133,8 +142,13 @@ export default (options = {}) => {
     // All Cerebral modules should be named "cerebral-module-xxx"
     module.alias('cerebral-module-myModule');
 
-    module.signal('somethingHappened', somethingHappened);
-    module.service('foo', () => {});
+    module.signals({
+      somethingHappened
+    });
+
+    module.services({
+      foo() {}
+    });
 
   };
 }

@@ -10,29 +10,34 @@ const myChain = [
   action3
 ];
 
-const signal = [
+const somethingHappened = [
   ...myChain
 ];
 
-controller.signal('somethingHappened', signal);
+controller.signals({
+  somethingHappened
+});
 
 // Will run as
-
-controller.signal('somethingHappened', [action1, action2, action3]);
+controller.signals({
+  somethingHappened: [action1, action2, action3]
+});
 ```
 
 The *spread operator* will spread the items of the array. This makes it easy to make changes to your signals. You can put actions between chains, use multiple chains and even create chain factories.
 
 ```javascript
 
-const signal = [
+const somethingHappened = [
   ...chain1,
   myAction1,
   ...chain2,
   myAction2
 ];
 
-controller.signal('somethingHappened', signal);
+controller.signals({
+  somethingHappened
+});
 ```
 
 ### Chain factories
@@ -73,7 +78,7 @@ This factory can now be used as:
 import get from './chains/get.js';
 import setItems from './actions/setItems.js';
 
-const signal = [
+const somethingHappened = [
   [
     ...get('/items', {
       success: [setItems]
@@ -81,7 +86,9 @@ const signal = [
   ]
 ];
 
-controller.signal('somethingHappened', signal);
+controller.signals({
+  somethingHappened
+});
 ```
 
 You have now created a generic action chain that expresses your intent. It does hide implementation details, but that is something you have to balance. Sometimes it is good to be very specific, other times it just becomes very tedious. When you decide to hide implementation details the debugger will still indicate possible outputs etc. So you never completely hide what is happening.

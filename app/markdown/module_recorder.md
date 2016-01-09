@@ -15,7 +15,7 @@ When playing back a recording the signals of Cerebral will actually run exactly 
 import controller from './controller';
 import RecorderModule from 'cerebral-module-recorder';
 
-controller.registerModules({
+controller.modules({
   recorder: RecorderModule()
 });
 ```
@@ -90,6 +90,14 @@ services.{namespace}.pause();
 
 // Manually resume playback
 services.{namespace}.resume();
+```
+
+### Components
+
+#### SimpleRecorder
+```javascript
+
+import SimpleRecorder from 'cerebral-module-recorder/react/SimpleRecorder';
 ```
 
 ### Example

@@ -8,7 +8,7 @@ You might be used to calling a method to toggle a modal. With Cerebral you do th
 ```javascript
 
 import Controller from 'Cerebral';
-import Model from 'cerebral-baobab';
+import Model from 'cerebral-model-baobab';
 
 const model = Model({
   modalA: {
@@ -22,7 +22,7 @@ export default Controller(model);
 *App.js*
 ```javascript
 
-import {Component} from 'cerebral-react';
+import {Component} from 'cerebral-view-react';
 import Modal from './Modal.js';
 
 export default Component({

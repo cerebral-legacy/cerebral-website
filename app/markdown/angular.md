@@ -1,7 +1,7 @@
 # Angular UI package
 
 ### Install
-`$ npm install cerebral-angular`.
+`$ npm install cerebral-view-angular`.
 
 ### Repo
 [cerebral-angular](https://github.com/christianalfoni/cerebral-angular)
@@ -14,7 +14,7 @@ Read more about structuring code, services and extracting mutable state from Cer
 
 ```javascript
 
-import 'cerebral-angular'; // Exposes module
+import 'cerebral-view-angular'; // Exposes module
 import controller from './controller.js';
 
 angular.module('app', ['cerebral'])

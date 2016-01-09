@@ -10,12 +10,14 @@ import homeOpened from './signals/homeOpened';
 import messagesOpened from './signals/messagesOpened';
 import messageOpened from './signals/messageOpened';
 
-controller.signal('homeOpened', homeOpened);
-controller.signal('messagesOpened', messagesOpened);
+controller.signals({
+  homeOpened,
+  messagesOpened,
 
-// We just add the chains that puts the application in
-// "messagesOpened" state
-controller.signal('messageOpened', [...messagesOpened, ...messageOpened]);
+  // We just add the chains that puts the application in
+  // "messagesOpened" state
+  messageOpened: [...messagesOpened, ...messageOpened]
+});
 
 Router(controller, {
   '/': 'homeOpened',
@@ -23,7 +25,7 @@ Router(controller, {
     '/': 'messagesOpened',
     '/:id': 'messageOpened'
   }
-}).trigger();
+});
 ```
 
 When the user goes to **/messages/123** the **messagesOpened** and **messageOpened** chain will run.

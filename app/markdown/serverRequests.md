@@ -7,7 +7,7 @@ Let us look at our signal first:
 
 import controller from './controller.js';
 
-const chain = [
+const appMounted = [
   setLoadingTodos,
   [
     getTodos, {
@@ -18,7 +18,9 @@ const chain = [
   unsetLoadingTodos
 ];
 
-controller.signal('appMounted', chain);
+controller.signals({
+  appMounted
+});
 ```
 
 In this example we will explicitly create all the actions we need. It is certainly possible to make this more dry using factories, but let us leave it at this for now.

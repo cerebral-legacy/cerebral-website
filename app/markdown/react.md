@@ -1,10 +1,10 @@
 # React UI package
 
 ### Install
-`$ npm install cerebral-react`.
+`$ npm install cerebral-view-react`.
 
 ### Repo
-[cerebral-react](https://github.com/cerebral/cerebral-react)
+[cerebral-view-react](https://github.com/cerebral/cerebral-view-react)
 
 Read more about **decorators**, **hoc**, **mixins** and **stateless/stateful** components.
 
@@ -19,7 +19,7 @@ It is encouraged that you put all the state of your application in the Cerebral 
 // Your cerebral instance
 import controller from './controller.js';
 import React from 'react';
-import {Container} from 'cerebral-react';
+import {Container} from 'cerebral-view-react';
 
 // Your main application component
 import App from './components/App.js';
@@ -35,7 +35,7 @@ React.render(
 ```javascript
 
 import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-react';
+import {Decorator as Cerebral} from 'cerebral-view-react';
 
 @Cerebral({
   title: ['title']
@@ -52,7 +52,7 @@ If you are using the `cerebral-router` you can use a component to create links.
 ```javascript
 
 import React from 'react';
-import {Decorator as Cerebral, Link} from 'cerebral-react';
+import {Decorator as Cerebral, Link} from 'cerebral-view-react';
 
 @Cerebral()
 class App extends React.Component {
