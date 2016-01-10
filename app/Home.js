@@ -53,8 +53,8 @@ var Home = React.createClass({
           </div>
 
           <div className="cerebral-column">
-            <Header>Debugger</Header>
-            <div className="clip" onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/QhStJqngBXc')}>
+            <Header>What is Cerebral?</Header>
+            <div className="clip" onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/I9d31fAA-hM')}>
               <i className="icon icon-play-circle-o"/>
             </div>
           </div>
