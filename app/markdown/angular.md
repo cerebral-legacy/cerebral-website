@@ -14,6 +14,7 @@
 
 import 'cerebral-view-angular'; // Exposes module
 import controller from './controller.js';
+import somethingHappened from './signals/somethingHappened.js';
 
 angular.module('app', ['cerebral'])
   .config(function (cerebralProvider) {
@@ -21,6 +22,18 @@ angular.module('app', ['cerebral'])
     // Sets the controller for the application
     cerebralProvider.setController(controller);
   })
+  .run(function (cerebral) {
+
+    // Add signals
+    cerebral.signals({
+      somethingHappened
+    });
+
+    // Add services
+    cerebral.services({
+      myService() {}
+    });
+  });
 ```
 
 #### State and signals
