@@ -4,9 +4,7 @@
 `$ npm install cerebral-view-angular`.
 
 ### Repo
-[cerebral-angular](https://github.com/christianalfoni/cerebral-angular)
-
-Read more about structuring code, services and extracting mutable state from Cerebral.
+[cerebral-view-angular](https://github.com/christianalfoni/cerebral-view-angular)
 
 ### Get started
 
@@ -22,13 +20,12 @@ angular.module('app', ['cerebral'])
 
     // Sets the controller for the application
     cerebralProvider.setController(controller);
-
-    // Defines angular injectable services exposed to actions
-    cerebralProvider.setServices(['$http', '$resource']);
   })
 ```
 
-#### Get state in directive
+#### State and signals
+The Cerebral provider exposes two services, *state* and *signals*.
+
 ```javascript
 
 export default function () {
@@ -36,18 +33,24 @@ export default function () {
     controllerAs: 'myComponent',
     scope: {},
     templateUrl: 'myComponent.html',
-    controller: function ($scope, cerebral) {
+    controller: function ($scope, state, signals) {
 
       // Adds a "list" prop to the $scope which
       // will automatically update when the list
       // updates
-      cerebral.injectState($scope, {
+      state.inject($scope, {
         list: ['list']
+      });
+
+      // Injects a mutable version of the object.
+      // These work with two-way-databinding
+      state.injectMutable($scope, {
+        user: ['user']
       });
 
       // Trigger signals
       $scope.addItemClicked = function () {
-        cerebral.signals.addItemClicked({
+        signals.addItemClicked({
           item: 'foo'
         });
       };
@@ -55,4 +58,14 @@ export default function () {
     }
   };
 };
+```
+
+#### Angular services
+By default the view package exposes the *$http* service as:
+
+```javascript
+
+function MyAction({services}) {
+  services.$http
+}
 ```
