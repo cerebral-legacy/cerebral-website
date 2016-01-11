@@ -1,5 +1,3 @@
-# Type Checking
-
 When working on large applications you will have a lot of signals and actions. Large applications also requires team members that work on the same codebase. It is important to define intents in the code. Intents helps ensuring that the code runs as intended. One such intent is type checking. With Cerebral you can type checking the inputs to an action and its output.
 
 ### Input

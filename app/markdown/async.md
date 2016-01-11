@@ -1,5 +1,3 @@
-# Async
-
 All actions are defined the same way, asynchronous or not. What decides if an action runs asynchronously is the signal. This is done using an array. **Note!** that you can not use the state mutation methods in async actions. Looking at the the *state* page you can see what methods are not available in async actions.
 
 ```javascript

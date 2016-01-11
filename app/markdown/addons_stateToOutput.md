@@ -1,5 +1,3 @@
-# State to output
-
 Grab state from state store and set it as output.
 
 *newAccountCreated.js*

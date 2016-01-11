@@ -1,5 +1,3 @@
-# Actions
-
 ```javascript
 
 function myAction ({input, state, output, services}) {

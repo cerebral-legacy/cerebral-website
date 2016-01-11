@@ -1,5 +1,3 @@
-# Toggle
-
 Toggle a boolean state value at a specific path. Only argument is path.
 
 *agreedClicked.js*

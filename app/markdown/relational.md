@@ -1,5 +1,3 @@
-# Relational Data
-
 Very often your data is structured in such a way that you need to do lookups. An example of this would be messages having authors. You do not store all the authors on the messages, because the same author might appear on many messages. Now we are talking about relational data. We store the *id* of the user on the message and use a lookup.
 
 Let us look at a complex example:

@@ -1,5 +1,3 @@
-# Events
-
 Cerebral will emit events when running signals. Normally you do not need to listen to these events.
 
 ```javascript

@@ -1,5 +1,3 @@
-# Get Started
-
 It is recommended to use Node from version **4.x.x**.
 
 ### Boilerplate

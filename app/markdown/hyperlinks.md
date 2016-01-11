@@ -1,4 +1,3 @@
-### Hyperlinks
 With Cerebral Router we encourage you to use signals, rather than urls. They are more expressive and since the url automatically updates you get the behavior you want. If you have to use a url we would like you to use the `getUrl` helper on the signal. Both examples are shown below.
 
 ```javascript

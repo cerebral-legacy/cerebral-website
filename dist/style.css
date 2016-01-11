@@ -836,3 +836,25 @@ img {
   border-radius: 5px;
   padding: 10px;
 }
+
+.title-video {
+	display: inline-block;
+	height: 55px;
+	width: 150px;
+	border-radius: 3px;
+	line-height: 55px;
+	cursor: pointer;
+}
+
+.title-video span {
+	position: relative;
+	top: -13px;
+	font-size: 0.25em;
+}
+
+.title-video i {
+	color: #333;
+	top: 0;
+	font-size: 0.7em;
+	line-height: normal;
+}

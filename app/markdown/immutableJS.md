@@ -1,5 +1,3 @@
-# Immutable JS STATE package
-
 ### Install
 `$ npm install cerebral-model-immutable-js`
 

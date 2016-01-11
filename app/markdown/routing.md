@@ -1,5 +1,3 @@
-# Routing
-
 ### Install
 
 `npm install cerebral-router`

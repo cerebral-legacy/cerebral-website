@@ -1,5 +1,3 @@
-# Signals
-
 The way you think of signals is that something happened in your application. Either in your UI, a router, maybe a websocket connection etc. So the name of a signal should define what happened: *appMounted*, *inputChanged*, *formSubmitted*. The functions in a signal are called **actions**. They are named by their purpose, like *setInputValue*, *postForm* etc. This setup makes it very easy for you to read and understand the flow of the application.
 
 This is a typical signal:

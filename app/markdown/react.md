@@ -1,5 +1,3 @@
-# React UI package
-
 ### Install
 `$ npm install cerebral-view-react`.
 

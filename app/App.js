@@ -49,23 +49,44 @@ class App extends React.Component {
       paddingRight: this.props.displayMenu ? 240 : 40
     };
 
-    let Content;
+    let page;
 
     menu.forEach((item) => {
       if (toPath(item.label) === this.props.content) {
         if (this.props.subContent) {
           item.subContent.forEach((subItem) => {
             if (toPath(subItem.label) === this.props.subContent) {
-              Content = subItem.content;
+              page = subItem;
             }
           });
         } else {
-          Content = item.content;
+          page = item;
         }
       }
     });
 
-    Content = typeof Content === 'function' ? <Content openVideo={(videoSrc) => this.props.signals.videoOpened({videoSrc})}/> : <div>{Content}</div>;
+    let Content = page.content;
+    if (typeof page.content === 'function') {
+       Content = <Content openVideo={(videoSrc) => this.props.signals.videoOpened({videoSrc})}/>
+    } else {
+      Content = (
+        <div>
+          {
+            page.video ?
+              <h1>
+                {page.label} -
+                <span className="title-video" onClick={() => this.props.signals.videoOpened({videoSrc: page.video})}>
+                    <i className="icon icon-play-circle-o"/>
+                    <span> play video</span>
+                </span>
+              </h1>
+            :
+              <h1>{page.label}</h1>
+          }
+          {Content}
+        </div>
+      );
+    }
 
     return (
       <div className="page" style={pageStyle}>

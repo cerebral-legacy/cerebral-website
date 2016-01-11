@@ -1,5 +1,3 @@
-# When
-
 When can be used to check state for a specific value, truthy or falsy and then run an action chain when the condition is matched.
 
 *reloadData.js*

@@ -1,4 +1,3 @@
-### Redirect
 You can redirect to a different url from within a signal. This will cause a new signal to trigger. Using the debugger you will have to time travel debug to see the initial signal that caused the redirect. To redirect you need to use the exposed router service:
 
 ```javascript

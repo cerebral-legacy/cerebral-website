@@ -1,5 +1,3 @@
-# Structure
-
 Depending on the size of your application there are two main differences in how you structure your application. This is common with most projects. You treat your project as one module or a collection of modules.
 
 ### Normal setup

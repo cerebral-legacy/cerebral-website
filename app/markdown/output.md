@@ -1,5 +1,3 @@
-# Output
-
 All actions are able to output values. All output is merged with previous input before being sent to the next actions.
 
 ```javascript

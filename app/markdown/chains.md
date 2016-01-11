@@ -1,5 +1,3 @@
-# Chains
-
 It is common to express signals and groups of actions as chains. A chain is basically an array with actions and paths. In combination with the *spread operator* you get a powerful concept for composition.
 
 ```javascript

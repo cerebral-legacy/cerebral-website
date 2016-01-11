@@ -1,5 +1,3 @@
-# Server requests
-
 Cerebral does not allow you to set any state in asynchronous actions. So how would you go about actually grabbing data from the server and set it into your state store?
 
 Let us look at our signal first:

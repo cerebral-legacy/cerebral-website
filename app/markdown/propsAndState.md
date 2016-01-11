@@ -1,5 +1,3 @@
-# Props and State
-
 Let us just dive right into an example. You have a list of messages. Inside your state store there are 500 messages and you want to display 50 of them in a list. Would you do this:
 
 ```javascript

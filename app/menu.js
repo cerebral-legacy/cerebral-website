@@ -55,6 +55,12 @@ export default [
     label: 'Cerebral',
     icon: 'home',
     content: Home
+  },
+  {
+    label: 'Get Started',
+    video: 'https://www.youtube.com/embed/dMvMts0nWNs',
+    icon: 'power-off',
+    content: MTRC(getStarted).tree
   }, {
     label: 'Install',
     icon: 'download',
@@ -91,25 +97,6 @@ export default [
         content: MTRC(internetExplorer).tree
       }
     ]
-  },
-  {
-    label: 'Get Started',
-    icon: 'power-off',
-    content: MTRC(getStarted).tree
-  },
-  {
-    label: 'How to',
-    icon: 'graduation-cap',
-    content: MTRC(howto).tree,
-    subContent: [{
-      label: 'Server requests',
-      content: MTRC(serverRequests).tree
-    }]
-  },
-  {
-    label: 'FAQ',
-    icon: 'question',
-    content: MTRC(faq).tree
   },
   {
     label: 'Signals',
@@ -240,6 +227,20 @@ export default [
         content: MTRC(transitions).tree
       }
     ]
+  },
+  {
+    label: 'How to',
+    icon: 'graduation-cap',
+    content: MTRC(howto).tree,
+    subContent: [{
+      label: 'Server requests',
+      content: MTRC(serverRequests).tree
+    }]
+  },
+  {
+    label: 'FAQ',
+    icon: 'question',
+    content: MTRC(faq).tree
   },
   {
     label: 'Testing',

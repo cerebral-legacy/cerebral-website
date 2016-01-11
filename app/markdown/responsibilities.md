@@ -1,5 +1,3 @@
-# Responsibilities
-
 A Cerebral application has three layers:
 
 1. UI and interaction

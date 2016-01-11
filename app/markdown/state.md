@@ -1,5 +1,3 @@
-# State
-
 The state argument is your endpoint to the state store. Think of the state store as a plain
 object and the mutation methods operates on that object.
 

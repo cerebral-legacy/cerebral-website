@@ -1,5 +1,3 @@
-# Modules DRAFT 2 (EXPERIMENTAL)
-
 Cerebral Modules is still in experimental stage, but we are closing in on the API. This is what modules allows you to do:
 
 1. Structure your own application by grouping and subgrouping signals, state and services

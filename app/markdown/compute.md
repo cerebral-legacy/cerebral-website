@@ -1,5 +1,3 @@
-# Compute
-
 Very often it is necessary to compute state. Some libraries do this inside the components, others do it inside the state store. With Cerebral you do it when state is extracted from Cerebral. This allows computed state to be run on any state store, it being Baobab or Immutable JS.
 
 Computed state are just functions with a special `get` function.

@@ -1,5 +1,3 @@
-# Set
-
 Change specific state in your state store. First argument is the path, the second is the value.
 
 *appMounted.js*

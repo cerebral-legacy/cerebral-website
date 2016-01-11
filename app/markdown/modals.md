@@ -1,5 +1,3 @@
-# Modals
-
 You might be used to calling a method to toggle a modal. With Cerebral you do this with state.
 
 ### A simple approach with React

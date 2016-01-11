@@ -1,5 +1,3 @@
-# Angular UI package
-
 ### Install
 `$ npm install cerebral-view-angular`.
 

@@ -1,5 +1,3 @@
-# Snabbdom UI package
-
 Cerebral Snabbdom makes Cerebral a first class citizen of components. That means you have to do a lot less wiring to build components and Snabbdom is faster than React. Read more about the JSX syntax over at [snabbdom-jsx](https://github.com/yelouafi/snabbdom-jsx), it differs from React.
 
 ### Install

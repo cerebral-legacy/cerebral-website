@@ -1,5 +1,3 @@
-# Input
-
 ```javascript
 
 function myAction ({input}) {

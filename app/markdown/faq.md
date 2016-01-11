@@ -1,5 +1,3 @@
-# Frequently Asked Questions
-
 ### Why isn't the debugger working?
 Cerebral depends on multiple projects and it is important the you update to the latest version of all of them. NPM can be a bit problematic when changing to a new 0.x.x version, rather than 0.1.x, so please be sure you have the very latest versions.
 

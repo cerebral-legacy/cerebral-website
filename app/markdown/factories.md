@@ -1,5 +1,3 @@
-# Factories
-
 Factories are a well known concept in the functional world of JavaScript. It is just a function that returns a function. We can use this to empower our actions.
 
 ```javascript

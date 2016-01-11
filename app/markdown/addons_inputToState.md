@@ -1,5 +1,3 @@
-# Input to state
-
 Set value from input to state store.
 
 *settingsOpened.js*

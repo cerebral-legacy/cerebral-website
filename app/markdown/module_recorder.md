@@ -1,5 +1,3 @@
-# Recorder
-
 ## Description
 The Cerebral Recorder allows you to record signals in your application, effectively doing playback of interaction. When you start a recording the recorder will by default extract all the state of the application and use that as "the initial state", when doing the playback. This can be configured to avoid extracting state not related to the recording.
 

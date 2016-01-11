@@ -1,5 +1,3 @@
-# Baobab STATE package
-
 ### Install
 `$ npm install cerebral-model-baobab`
 
