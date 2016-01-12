@@ -70,31 +70,31 @@
 	
 	var _cerebralBaobab2 = _interopRequireDefault(_cerebralBaobab);
 	
-	var _cerebralReact = __webpack_require__(191);
+	var _cerebralViewReact = __webpack_require__(191);
 	
 	var _modulesAppComponentsApp = __webpack_require__(199);
 	
 	var _modulesAppComponentsApp2 = _interopRequireDefault(_modulesAppComponentsApp);
 	
-	var _modulesApp = __webpack_require__(209);
+	var _modulesApp = __webpack_require__(217);
 	
 	var _modulesApp2 = _interopRequireDefault(_modulesApp);
 	
-	var _modulesRefs = __webpack_require__(240);
+	var _modulesRefs = __webpack_require__(248);
 	
 	var _modulesRefs2 = _interopRequireDefault(_modulesRefs);
 	
-	var _cerebralModuleRecorder = __webpack_require__(241);
+	var _cerebralModuleRecorder = __webpack_require__(249);
 	
 	var _cerebralModuleRecorder2 = _interopRequireDefault(_cerebralModuleRecorder);
 	
-	var _modulesRouter = __webpack_require__(242);
+	var _modulesRouter = __webpack_require__(250);
 	
 	var _modulesRouter2 = _interopRequireDefault(_modulesRouter);
 	
 	var controller = (0, _srcIndexJs2['default'])((0, _cerebralBaobab2['default'])({}));
 	
-	controller.registerModules({
+	controller.modules({
 	  app: (0, _modulesApp2['default'])(),
 	
 	  refs: (0, _modulesRefs2['default'])(),
@@ -110,7 +110,7 @@
 	
 	// RENDER
 	_reactDom2['default'].render(_react2['default'].createElement(
-	  _cerebralReact.Container,
+	  _cerebralViewReact.Container,
 	  { controller: controller },
 	  _react2['default'].createElement(_modulesAppComponentsApp2['default'], null)
 	), document.querySelector('#app'));
@@ -20027,6 +20027,10 @@
 	
 	var Controller = function Controller(Model, services) {
 	
+	  if (services) {
+	    console.warn('Passing services to controller is DEPRECATED. Please add them to controller with controller.services({})');
+	  }
+	
 	  var controller = new EventEmitter();
 	  var model = Model(controller);
 	  var compute = Compute(model);
@@ -20052,18 +20056,40 @@
 	    }
 	    return signalMethodPath[signalName] = signalFactory.apply(null, arguments);
 	  };
+	  var service = function service(name, _service) {
+	    var serviceNamePath = name.split('.');
+	    var serviceName = serviceNamePath.pop();
+	    var serviceMethodPath = services;
+	    while (serviceNamePath.length) {
+	      var pathName = serviceNamePath.shift();
+	      serviceMethodPath = serviceMethodPath[pathName] = serviceMethodPath[pathName] || {};
+	    }
+	    return serviceMethodPath[serviceName] = _service;
+	  };
 	
-	  controller.signal = signal;
+	  controller.signal = function () {
+	    console.warn('This method is deprecated, use controller.signals() instead');
+	    signal.apply(null, arguments);
+	  };
 	  controller.signalSync = function () {
+	    console.warn('This method is deprecated, use controller.signals() instead');
 	    var defaultOptions = arguments[2] || {};
 	    defaultOptions.isSync = true;
 	    return signal.apply(null, [arguments[0], arguments[1], defaultOptions]);
 	  };
 	
-	  controller.signals = signals;
-	  controller.services = services;
-	  controller.store = signalStore;
-	  controller.recorder = recorder;
+	  controller.getSignals = function () {
+	    return signals;
+	  };
+	  controller.getServices = function () {
+	    return services;
+	  };
+	  controller.getStore = function () {
+	    return signalStore;
+	  };
+	  controller.getRecorder = function () {
+	    return recorder;
+	  };
 	  controller.get = function () {
 	    if (typeof arguments[0] === 'function') {
 	      return compute.has(arguments[0]) ? compute.getComputedValue(arguments[0]) : compute.register(arguments[0]);
@@ -20071,14 +20097,35 @@
 	    var path = !arguments.length ? [] : typeof arguments[0] === 'string' ? [].slice.call(arguments) : arguments[0];
 	    return model.accessors.get(path);
 	  };
-	  controller.devtools = devtools;
+	  controller.getDevtools = function () {
+	    return devtools;
+	  };
 	  controller.logModel = function () {
 	    return model.logModel();
 	  };
-	  controller.recorder = recorder;
+	  controller.getModules = function () {
+	    return modules;
+	  };
 	
-	  controller.modules = modules;
-	  controller.registerModules = CreateRegisterModules(controller, model);
+	  controller.modules = CreateRegisterModules(controller, model, modules);
+	  controller.signals = function (signals, options) {
+	    Object.keys(signals).forEach(function (key) {
+	      signal(key, signals[key], options);
+	    });
+	  };
+	  controller.signalsSync = function (signals, options) {
+	    Object.keys(signals).forEach(function (key) {
+	      options = options || {};
+	      options.isSync = true;
+	      signal.call(null, key, signals[key], options);
+	    });
+	  };
+	  controller.services = function (newServices) {
+	    Object.keys(newServices).forEach(function (key) {
+	      service(key, newServices[key]);
+	    });
+	    return controller.getServices();
+	  };
 	
 	  return controller;
 	};
@@ -20169,7 +20216,6 @@
 	      // When remembering, the branches with filled out values will be
 	      // passed
 	      var branches = options.branches || tree.branches;
-	
 	      var runSignal = function runSignal() {
 	
 	        // Accumulate the args in one object that will be passed
@@ -20908,8 +20954,12 @@
 	module.exports = function (modules, state, services) {
 	  var modulesArg = {};
 	  Object.keys(modules).forEach(function (key) {
+	
 	    var path = modules[key].path;
-	    var module = {};
+	    var module = {
+	      meta: modules[key].meta
+	    };
+	
 	    module.state = Object.keys(state).reduce(function (module, key) {
 	      module[key] = function () {
 	        var args = [].slice.call(arguments);
@@ -21308,24 +21358,37 @@
 	
 	var utils = __webpack_require__(169);
 	
-	module.exports = function (controller, model) {
+	module.exports = function (controller, model, allModules) {
 	
 	  var initialState = {};
 	
-	  var registerSignal = function registerSignal(moduleName, name, chain) {
-	    return controller.signal(moduleName + '.' + name, chain, {
+	  var registerSignals = function registerSignals(moduleName, signals) {
+	    var scopedSignals = Object.keys(signals).reduce(function (scopedSignals, key) {
+	      scopedSignals[moduleName + '.' + key] = signals[key];
+	      return scopedSignals;
+	    }, {});
+	
+	    return controller.signals(scopedSignals, {
 	      modulePath: moduleName.split('.')
 	    });
 	  };
 	
-	  var registerSignalSync = function registerSignalSync(moduleName, name, chain) {
-	    return controller.signalSync(moduleName + '.' + name, chain, {
+	  var registerSignalsSync = function registerSignalsSync(moduleName, signals) {
+	    var scopedSignals = Object.keys(signals).reduce(function (scopedSignals, key) {
+	      scopedSignals[moduleName + '.' + key] = signals[key];
+	      return scopedSignals;
+	    }, {});
+	    return controller.signalsSync(scopedSignals, {
 	      modulePath: moduleName.split('.')
 	    });
 	  };
 	
-	  var registerService = function registerService(moduleName, name, service) {
-	    utils.setDeep(controller.services, moduleName + '.' + name, service);
+	  var registerServices = function registerServices(moduleName, services) {
+	    var scopedServices = Object.keys(services).reduce(function (scopedServices, key) {
+	      scopedServices[moduleName + '.' + key] = services[key];
+	      return scopedServices;
+	    }, {});
+	    controller.services(scopedServices);
 	  };
 	
 	  var registerInitialState = function registerInitialState(moduleName, state) {
@@ -21348,7 +21411,6 @@
 	      if (parentModuleName) {
 	        moduleName = parentModuleName + '.' + moduleName;
 	      }
-	      var signals = utils.setDeep(controller.signals, moduleName, {});
 	      var moduleExport = {
 	        name: actualName,
 	        path: moduleName.split('.')
@@ -21356,23 +21418,30 @@
 	      var module = {
 	        name: moduleName,
 	        alias: function alias(_alias) {
-	          controller.modules[_alias] = moduleExport;
+	          allModules[_alias] = moduleExport;
 	        },
-	        signal: registerSignal.bind(null, moduleName),
-	        signalSync: registerSignalSync.bind(null, moduleName),
-	        service: registerService.bind(null, moduleName),
+	        signals: registerSignals.bind(null, moduleName),
+	        signalsSync: registerSignalsSync.bind(null, moduleName),
+	        services: registerServices.bind(null, moduleName),
 	        state: registerInitialState.bind(null, moduleName),
-	        signals: signals,
-	        registerModules: registerModules.bind(null, moduleName)
+	        getSignals: function getSignals() {
+	          var signals = controller.getSignals();
+	          var path = moduleName.split('.');
+	          return path.reduce(function (signals, key) {
+	            return signals[key];
+	          }, signals);
+	        },
+	        modules: registerModules.bind(null, moduleName)
 	      };
 	      var constructedModule = moduleConstructor(module, controller);
 	
-	      controller.modules[moduleName] = Object.keys(constructedModule || {}).reduce(function (module, key) {
-	        module[key] = constructedModule[key];
-	        return module;
-	      }, moduleExport);
+	      moduleExport.meta = constructedModule;
+	      module.meta = constructedModule;
+	      allModules[moduleName] = moduleExport;
+	
+	      return moduleExport;
 	    });
-	    return controller.modules;
+	    return allModules;
 	  };
 	};
 
@@ -21522,6 +21591,9 @@
 	  return {
 	    update: update,
 	    start: function start() {
+	      if (window.__CEREBRAL_DEVTOOLS_GLOBAL_HOOK__) {
+	        window.__CEREBRAL_DEVTOOLS_GLOBAL_HOOK__.signals = controller.getSignals();
+	      }
 	      var event = new Event('cerebral.dev.cerebralPing');
 	      window.dispatchEvent(event);
 	    }
@@ -25701,10 +25773,11 @@
 	    controller: React.PropTypes.object
 	  },
 	  componentWillMount: function () {
-	    this.signals = this.context.controller.signals;
-	    this.modules = this.context.controller.modules;
+	    this.signals = this.context.controller.getSignals();
+	    this.modules = this.context.controller.getModules();
 	
-	    if (!this.getStatePaths) {
+	    var statePaths = this.getStatePaths ? this.getStatePaths() : {};
+	    if(!Object.keys(statePaths).length) {
 	      return;
 	    }
 	
@@ -25725,13 +25798,15 @@
 	  },
 	  componentWillUnmount: function () {
 	    this._isUmounting = true;
-	    if (this.getStatePaths) {
+	
+	    var statePaths = this.getStatePaths ? this.getStatePaths() : {};
+	    if(Object.keys(statePaths).length) {
 	      callbacks.splice(callbacks.indexOf(this._update), 1);
 	    }
 	  },
 	  shouldComponentUpdate: function (nextProps, nextState) {
-	    var propKeys = Object.keys(nextProps);
-	    var stateKeys = Object.keys(nextState);
+	    var propKeys = Object.keys(nextProps || {});
+	    var stateKeys = Object.keys(nextState || {});
 	
 	    // props
 	    for (var x = 0; x < propKeys.length; x++) {
@@ -25860,9 +25935,9 @@
 	    controller: React.PropTypes.object.isRequired
 	  },
 	  componentDidMount: function () {
-	    this.props.controller.devtools.start();
-	    if (this.props.controller.services.router) {
-	      this.props.controller.services.router.trigger();
+	    this.props.controller.getDevtools().start();
+	    if (this.props.controller.getServices().router) {
+	      this.props.controller.getServices().router.trigger();
 	    }
 	  },
 	  getChildContext: function () {
@@ -25993,25 +26068,25 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cerebralReact = __webpack_require__(191);
+	var _cerebralViewReact = __webpack_require__(191);
 	
 	var _cerebralModuleRecorderReactSimpleRecorder = __webpack_require__(200);
 	
 	var _cerebralModuleRecorderReactSimpleRecorder2 = _interopRequireDefault(_cerebralModuleRecorderReactSimpleRecorder);
 	
-	var _modulesNewTodoComponentsNewTodo = __webpack_require__(201);
+	var _modulesNewTodoComponentsNewTodo = __webpack_require__(209);
 	
 	var _modulesNewTodoComponentsNewTodo2 = _interopRequireDefault(_modulesNewTodoComponentsNewTodo);
 	
-	var _modulesListComponentsList = __webpack_require__(202);
+	var _modulesListComponentsList = __webpack_require__(210);
 	
 	var _modulesListComponentsList2 = _interopRequireDefault(_modulesListComponentsList);
 	
-	var _modulesFooterComponentsFooter = __webpack_require__(207);
+	var _modulesFooterComponentsFooter = __webpack_require__(215);
 	
 	var _modulesFooterComponentsFooter2 = _interopRequireDefault(_modulesFooterComponentsFooter);
 	
-	var _modulesListComputedVisibleTodosJs = __webpack_require__(206);
+	var _modulesListComputedVisibleTodosJs = __webpack_require__(214);
 	
 	var _modulesListComputedVisibleTodosJs2 = _interopRequireDefault(_modulesListComputedVisibleTodosJs);
 	
@@ -26103,7 +26178,7 @@
 	  }]);
 	
 	  var _App = App;
-	  App = (0, _cerebralReact.Decorator)({
+	  App = (0, _cerebralViewReact.Decorator)({
 	    todos: ['app', 'list', 'todos'],
 	    recorder: ['recorder'],
 	    isSaving: ['app', 'new', 'isSaving'],
@@ -26119,7 +26194,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(9);
-	var Cerebral = __webpack_require__(191).Mixin;
+	var Cerebral = __webpack_require__(201).Mixin;
 	
 	module.exports = React.createClass({
 	  mixins: [Cerebral],
@@ -26214,6 +26289,312 @@
 /* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var mixin = __webpack_require__(202);
+	var decorator = __webpack_require__(203);
+	var hoc = __webpack_require__(205);
+	var container = __webpack_require__(206);
+	var component = __webpack_require__(207);
+	var link = __webpack_require__(208);
+	
+	module.exports = {
+	  Mixin: mixin,
+	  Decorator: decorator,
+	  HOC: hoc,
+	  Container: container,
+	  Component: component,
+	  Link: link
+	};
+
+
+/***/ },
+/* 202 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(9);
+	var callbacks = [];
+	var listener = false;
+	
+	module.exports = {
+	  contextTypes: {
+	    controller: React.PropTypes.object
+	  },
+	  componentWillMount: function () {
+	    this.signals = this.context.controller.getSignals();
+	    this.modules = this.context.controller.getModules();
+	
+	    if (!this.getStatePaths) {
+	      return;
+	    }
+	
+	    if (this.context.controller.isServer) {
+	      return this._update();
+	    }
+	
+	    if (!listener) {
+	      listener = true;
+	      this.context.controller.on('change', function () {
+	        callbacks.forEach(function (cb) {
+	          cb();
+	        });
+	      });
+	    }
+	    callbacks.push(this._update);
+	    this._update();
+	  },
+	  componentWillUnmount: function () {
+	    this._isUmounting = true;
+	    if (this.getStatePaths) {
+	      callbacks.splice(callbacks.indexOf(this._update), 1);
+	    }
+	  },
+	  shouldComponentUpdate: function (nextProps, nextState) {
+	    var propKeys = Object.keys(nextProps);
+	    var stateKeys = Object.keys(nextState);
+	
+	    // props
+	    for (var x = 0; x < propKeys.length; x++) {
+	      var key = propKeys[x];
+	      if (this.props[key] !== nextProps[key]) {
+	        return true;
+	      }
+	    }
+	
+	    // State
+	    for (var x = 0; x < stateKeys.length; x++) {
+	      var key = stateKeys[x];
+	      if (this.state[key] !== nextState[key]) {
+	        return true;
+	      }
+	    }
+	
+	    return false;
+	  },
+	  _update: function () {
+	    if (this._isUmounting) {
+	      return;
+	    }
+	    var statePaths = this.getStatePaths ? this.getStatePaths() : {};
+	    var controller = this.context.controller;
+	    var newState = {};
+	
+	    newState = Object.keys(statePaths).reduce(function (newState, key) {
+	      var value = controller.get(statePaths[key]);
+	      newState[key] = value;
+	      return newState;
+	    }, newState);
+	
+	    this.setState(newState);
+	  }
+	};
+
+
+/***/ },
+/* 203 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(9);
+	var mixin = __webpack_require__(202);
+	var render = __webpack_require__(204);
+	
+	module.exports = function (paths) {
+	  return function (Component) {
+	    return React.createClass({
+	      displayName: Component.name + 'Container',
+	      mixins: [mixin],
+	      getStatePaths: function () {
+	        if (!paths) {
+	          return {};
+	        }
+	        return typeof paths === 'function' ? paths(this.props) : paths;
+	      },
+	      render: render(Component)
+	    });
+	  };
+	};
+
+
+/***/ },
+/* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(9);
+	
+	module.exports = function (Component) {
+	  return function () {
+	    var state = this.state || {};
+	    var props = this.props || {};
+	
+	    var propsToPass = Object.keys(state).reduce(function (props, key) {
+	      props[key] = state[key];
+	      return props;
+	    }, {});
+	
+	    propsToPass = Object.keys(props).reduce(function (propsToPass, key) {
+	      propsToPass[key] = props[key];
+	      return propsToPass;
+	    }, propsToPass);
+	
+	    propsToPass.signals = this.signals;
+	    propsToPass.modules = this.modules;
+	    propsToPass.get = this.get; // Uhm?
+	
+	    return React.createElement(Component, propsToPass);
+	  };
+	};
+
+
+/***/ },
+/* 205 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(9);
+	var mixin = __webpack_require__(202);
+	var render = __webpack_require__(204);
+	
+	module.exports = function (Component, paths) {
+	  return React.createClass({
+	    displayName: Component.name + 'Container',
+	    mixins: [mixin],
+	    getStatePaths: function () {
+	      if (!paths) {
+	        return {};
+	      }
+	      return typeof paths === 'function' ? paths(this.props) : paths;
+	    },
+	    render: render(Component)
+	  });
+	};
+
+
+/***/ },
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(9);
+	
+	module.exports = React.createClass({
+	  displayName: 'CerebralContainer',
+	  childContextTypes: {
+	    controller: React.PropTypes.object.isRequired
+	  },
+	  componentDidMount: function () {
+	    this.props.controller.getDevtools().start();
+	    if (this.props.controller.getServices().router) {
+	      this.props.controller.getServices().router.trigger();
+	    }
+	  },
+	  getChildContext: function () {
+	    return {
+	      controller: this.props.controller
+	    }
+	  },
+	  render: function () {
+	    return this.props.app ? React.createElement(this.props.app) : React.DOM.div(this.props);
+	  }
+	});
+
+
+/***/ },
+/* 207 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(9);
+	var mixin = __webpack_require__(202);
+	var render = __webpack_require__(204);
+	
+	module.exports = function () {
+	
+	  var paths;
+	  var componentDefinition;
+	  var Component = null;
+	
+	  if (arguments.length === 2) {
+	    paths = arguments[0];
+	    componentDefinition = arguments[1];
+	  } else {
+	    paths = {};
+	    componentDefinition = arguments[0];
+	  }
+	
+	  if (typeof componentDefinition === 'function') {
+	    Component = componentDefinition;
+	  } else {
+	    Component = React.createClass(componentDefinition);
+	  }
+	  
+	  return React.createClass({
+	    mixins: [mixin],
+	    getStatePaths: function () {
+	      if (!paths) {
+	        return {};
+	      }
+	      return typeof paths === 'function' ? paths(this.props) : paths;
+	    },
+	    render: render(Component)
+	  });
+	};
+
+
+/***/ },
+/* 208 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(9);
+	
+	module.exports = React.createClass({
+	  contextTypes: {
+	    controller: React.PropTypes.object
+	  },
+	
+	  componentWillMount: function() {
+	    if (typeof this.props.signal === 'string') {
+	      var signalPath = this.props.signal.split('.');
+	      var signalParent = this.context.controller.signals;
+	
+	      while(signalPath.length - 1) {
+	        signalParent = signalParent[signalPath.shift()] || {};
+	      }
+	      this.signal = signalParent[signalPath];
+	    } else {
+	      this.signal = this.props.signal;
+	    }
+	
+	    if (typeof this.signal !== 'function') {
+	      throw new Error('Cerebral React - You have to pass a signal to the Link component');
+	    }
+	
+	  },
+	
+	  onClick: function (e) {
+	
+	    e.preventDefault();
+	    this.signal(this.props.params);
+	
+	  },
+	
+	  render: function () {
+	
+	    var passedProps = this.props;
+	    var props = Object.keys(passedProps).reduce(function (props, key) {
+	      props[key] = passedProps[key];
+	      return props;
+	    }, {});
+	
+	    if (typeof this.signal.getUrl === 'function') {
+	      props.href = this.signal.getUrl(this.props.params || {});
+	    } else {
+	      props.onClick = this.onClick;
+	    }
+	
+	    return React.DOM.a(props, this.props.children);
+	  }
+	});
+
+
+/***/ },
+/* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
@@ -26234,7 +26615,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cerebralReact = __webpack_require__(191);
+	var _cerebralViewReact = __webpack_require__(191);
 	
 	var NewTodo = (function (_React$Component) {
 	  _inherits(NewTodo, _React$Component);
@@ -26283,7 +26664,7 @@
 	  }]);
 	
 	  var _NewTodo = NewTodo;
-	  NewTodo = (0, _cerebralReact.Decorator)({
+	  NewTodo = (0, _cerebralViewReact.Decorator)({
 	    isSaving: ['app', 'new', 'isSaving'],
 	    title: ['app', 'new', 'title']
 	  })(NewTodo) || NewTodo;
@@ -26294,7 +26675,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 202 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26317,17 +26698,17 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Todo = __webpack_require__(203);
+	var _Todo = __webpack_require__(211);
 	
 	var _Todo2 = _interopRequireDefault(_Todo);
 	
-	var _cerebralReact = __webpack_require__(191);
+	var _cerebralViewReact = __webpack_require__(191);
 	
-	var _computedIsAllCheckedJs = __webpack_require__(205);
+	var _computedIsAllCheckedJs = __webpack_require__(213);
 	
 	var _computedIsAllCheckedJs2 = _interopRequireDefault(_computedIsAllCheckedJs);
 	
-	var _computedVisibleTodosJs = __webpack_require__(206);
+	var _computedVisibleTodosJs = __webpack_require__(214);
 	
 	var _computedVisibleTodosJs2 = _interopRequireDefault(_computedVisibleTodosJs);
 	
@@ -26376,7 +26757,7 @@
 	  }]);
 	
 	  var _List = List;
-	  List = (0, _cerebralReact.Decorator)({
+	  List = (0, _cerebralViewReact.Decorator)({
 	    isAllChecked: _computedIsAllCheckedJs2['default'],
 	    todos: _computedVisibleTodosJs2['default']
 	  })(List) || List;
@@ -26387,7 +26768,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 203 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26410,11 +26791,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(204);
+	var _classnames = __webpack_require__(212);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _cerebralReact = __webpack_require__(191);
+	var _cerebralViewReact = __webpack_require__(191);
 	
 	var Todo = (function (_React$Component) {
 	  _inherits(Todo, _React$Component);
@@ -26545,7 +26926,7 @@
 	  }]);
 	
 	  var _Todo = Todo;
-	  Todo = (0, _cerebralReact.Decorator)()(Todo) || Todo;
+	  Todo = (0, _cerebralViewReact.Decorator)()(Todo) || Todo;
 	  return Todo;
 	})(_react2['default'].Component);
 	
@@ -26553,7 +26934,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 204 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -26607,7 +26988,7 @@
 
 
 /***/ },
-/* 205 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26618,7 +26999,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _visibleTodos = __webpack_require__(206);
+	var _visibleTodos = __webpack_require__(214);
 	
 	var _visibleTodos2 = _interopRequireDefault(_visibleTodos);
 	
@@ -26634,7 +27015,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 206 */
+/* 214 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26660,7 +27041,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 207 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26683,9 +27064,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cerebralReact = __webpack_require__(191);
+	var _cerebralViewReact = __webpack_require__(191);
 	
-	var _computedCountsJs = __webpack_require__(208);
+	var _computedCountsJs = __webpack_require__(216);
 	
 	var _computedCountsJs2 = _interopRequireDefault(_computedCountsJs);
 	
@@ -26788,7 +27169,7 @@
 	  }]);
 	
 	  var _TodosFooter = TodosFooter;
-	  TodosFooter = (0, _cerebralReact.Decorator)({
+	  TodosFooter = (0, _cerebralViewReact.Decorator)({
 	    filter: ['app', 'footer', 'filter'],
 	    counts: _computedCountsJs2['default']
 	  })(TodosFooter) || TodosFooter;
@@ -26799,7 +27180,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 208 */
+/* 216 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26835,7 +27216,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 209 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26846,15 +27227,15 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _modulesNewTodo = __webpack_require__(210);
+	var _modulesNewTodo = __webpack_require__(218);
 	
 	var _modulesNewTodo2 = _interopRequireDefault(_modulesNewTodo);
 	
-	var _modulesList = __webpack_require__(220);
+	var _modulesList = __webpack_require__(228);
 	
 	var _modulesList2 = _interopRequireDefault(_modulesList);
 	
-	var _modulesFooter = __webpack_require__(233);
+	var _modulesFooter = __webpack_require__(241);
 	
 	var _modulesFooter2 = _interopRequireDefault(_modulesFooter);
 	
@@ -26863,7 +27244,7 @@
 	
 	  return function (module) {
 	
-	    module.registerModules({
+	    module.modules({
 	      'new': (0, _modulesNewTodo2['default'])(),
 	      list: (0, _modulesList2['default'])(),
 	      footer: (0, _modulesFooter2['default'])()
@@ -26874,7 +27255,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 210 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26885,11 +27266,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _signalsSubmitted = __webpack_require__(211);
+	var _signalsSubmitted = __webpack_require__(219);
 	
 	var _signalsSubmitted2 = _interopRequireDefault(_signalsSubmitted);
 	
-	var _signalsTitleChanged = __webpack_require__(218);
+	var _signalsTitleChanged = __webpack_require__(226);
 	
 	var _signalsTitleChanged2 = _interopRequireDefault(_signalsTitleChanged);
 	
@@ -26903,15 +27284,20 @@
 	      isSaving: false
 	    });
 	
-	    module.signal('submitted', _signalsSubmitted2['default']);
-	    module.signalSync('titleChanged', _signalsTitleChanged2['default']);
+	    module.signalsSync({
+	      titleChanged: _signalsTitleChanged2['default']
+	    });
+	
+	    module.signals({
+	      submitted: _signalsSubmitted2['default']
+	    });
 	  };
 	};
 	
 	module.exports = exports['default'];
 
 /***/ },
-/* 211 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26922,27 +27308,27 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsAddJs = __webpack_require__(212);
+	var _actionsAddJs = __webpack_require__(220);
 	
 	var _actionsAddJs2 = _interopRequireDefault(_actionsAddJs);
 	
-	var _actionsSaveJs = __webpack_require__(213);
+	var _actionsSaveJs = __webpack_require__(221);
 	
 	var _actionsSaveJs2 = _interopRequireDefault(_actionsSaveJs);
 	
-	var _actionsSetSavingJs = __webpack_require__(214);
+	var _actionsSetSavingJs = __webpack_require__(222);
 	
 	var _actionsSetSavingJs2 = _interopRequireDefault(_actionsSetSavingJs);
 	
-	var _actionsUnsetSavingJs = __webpack_require__(215);
+	var _actionsUnsetSavingJs = __webpack_require__(223);
 	
 	var _actionsUnsetSavingJs2 = _interopRequireDefault(_actionsUnsetSavingJs);
 	
-	var _actionsSetJs = __webpack_require__(216);
+	var _actionsSetJs = __webpack_require__(224);
 	
 	var _actionsSetJs2 = _interopRequireDefault(_actionsSetJs);
 	
-	var _actionsSetErrorJs = __webpack_require__(217);
+	var _actionsSetErrorJs = __webpack_require__(225);
 	
 	var _actionsSetErrorJs2 = _interopRequireDefault(_actionsSetErrorJs);
 	
@@ -26953,7 +27339,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 212 */
+/* 220 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26988,7 +27374,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 213 */
+/* 221 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27020,7 +27406,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 214 */
+/* 222 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27039,7 +27425,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 215 */
+/* 223 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27058,7 +27444,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 216 */
+/* 224 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27085,7 +27471,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 217 */
+/* 225 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27113,7 +27499,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 218 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27124,7 +27510,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetTitleJs = __webpack_require__(219);
+	var _actionsSetTitleJs = __webpack_require__(227);
 	
 	var _actionsSetTitleJs2 = _interopRequireDefault(_actionsSetTitleJs);
 	
@@ -27132,7 +27518,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 219 */
+/* 227 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27152,7 +27538,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 220 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27163,27 +27549,27 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _signalsNewTitleChanged = __webpack_require__(221);
+	var _signalsNewTitleChanged = __webpack_require__(229);
 	
 	var _signalsNewTitleChanged2 = _interopRequireDefault(_signalsNewTitleChanged);
 	
-	var _signalsNewTitleSubmitted = __webpack_require__(223);
+	var _signalsNewTitleSubmitted = __webpack_require__(231);
 	
 	var _signalsNewTitleSubmitted2 = _interopRequireDefault(_signalsNewTitleSubmitted);
 	
-	var _signalsRemoveTodoClicked = __webpack_require__(225);
+	var _signalsRemoveTodoClicked = __webpack_require__(233);
 	
 	var _signalsRemoveTodoClicked2 = _interopRequireDefault(_signalsRemoveTodoClicked);
 	
-	var _signalsTodoDoubleClicked = __webpack_require__(227);
+	var _signalsTodoDoubleClicked = __webpack_require__(235);
 	
 	var _signalsTodoDoubleClicked2 = _interopRequireDefault(_signalsTodoDoubleClicked);
 	
-	var _signalsToggleAllChanged = __webpack_require__(229);
+	var _signalsToggleAllChanged = __webpack_require__(237);
 	
 	var _signalsToggleAllChanged2 = _interopRequireDefault(_signalsToggleAllChanged);
 	
-	var _signalsToggleCompletedChanged = __webpack_require__(231);
+	var _signalsToggleCompletedChanged = __webpack_require__(239);
 	
 	var _signalsToggleCompletedChanged2 = _interopRequireDefault(_signalsToggleCompletedChanged);
 	
@@ -27201,19 +27587,24 @@
 	      showNotCompleted: true
 	    });
 	
-	    module.signalSync('newTitleChanged', _signalsNewTitleChanged2['default']);
-	    module.signal('newTitleSubmitted', _signalsNewTitleSubmitted2['default']);
-	    module.signal('removeTodoClicked', _signalsRemoveTodoClicked2['default']);
-	    module.signal('todoDoubleClicked', _signalsTodoDoubleClicked2['default']);
-	    module.signal('toggleAllChanged', _signalsToggleAllChanged2['default']);
-	    module.signal('toggleCompletedChanged', _signalsToggleCompletedChanged2['default']);
+	    module.signalsSync({
+	      newTitleChanged: _signalsNewTitleChanged2['default']
+	    });
+	
+	    module.signals({
+	      newTitleSubmitted: _signalsNewTitleSubmitted2['default'],
+	      removeTodoClicked: _signalsRemoveTodoClicked2['default'],
+	      todoDoubleClicked: _signalsTodoDoubleClicked2['default'],
+	      toggleAllChanged: _signalsToggleAllChanged2['default'],
+	      toggleCompletedChanged: _signalsToggleCompletedChanged2['default']
+	    });
 	  };
 	};
 	
 	module.exports = exports['default'];
 
 /***/ },
-/* 221 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27224,7 +27615,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetTodoNewTitleJs = __webpack_require__(222);
+	var _actionsSetTodoNewTitleJs = __webpack_require__(230);
 	
 	var _actionsSetTodoNewTitleJs2 = _interopRequireDefault(_actionsSetTodoNewTitleJs);
 	
@@ -27232,7 +27623,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 222 */
+/* 230 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27254,7 +27645,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 223 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27265,7 +27656,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsStopEditingTodoJs = __webpack_require__(224);
+	var _actionsStopEditingTodoJs = __webpack_require__(232);
 	
 	var _actionsStopEditingTodoJs2 = _interopRequireDefault(_actionsStopEditingTodoJs);
 	
@@ -27273,7 +27664,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 224 */
+/* 232 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27304,7 +27695,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 225 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27315,7 +27706,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsRemoveTodoJs = __webpack_require__(226);
+	var _actionsRemoveTodoJs = __webpack_require__(234);
 	
 	var _actionsRemoveTodoJs2 = _interopRequireDefault(_actionsRemoveTodoJs);
 	
@@ -27323,7 +27714,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 226 */
+/* 234 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27343,7 +27734,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 227 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27354,7 +27745,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsEditTodoJs = __webpack_require__(228);
+	var _actionsEditTodoJs = __webpack_require__(236);
 	
 	var _actionsEditTodoJs2 = _interopRequireDefault(_actionsEditTodoJs);
 	
@@ -27362,7 +27753,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 228 */
+/* 236 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27387,7 +27778,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 229 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27398,7 +27789,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsToggleAllCheckedJs = __webpack_require__(230);
+	var _actionsToggleAllCheckedJs = __webpack_require__(238);
 	
 	var _actionsToggleAllCheckedJs2 = _interopRequireDefault(_actionsToggleAllCheckedJs);
 	
@@ -27406,7 +27797,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 230 */
+/* 238 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27433,7 +27824,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 231 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27444,7 +27835,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsToggleTodoCompletedJs = __webpack_require__(232);
+	var _actionsToggleTodoCompletedJs = __webpack_require__(240);
 	
 	var _actionsToggleTodoCompletedJs2 = _interopRequireDefault(_actionsToggleTodoCompletedJs);
 	
@@ -27452,7 +27843,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 232 */
+/* 240 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27474,7 +27865,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 233 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27485,15 +27876,15 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _signalsAllTodosClicked = __webpack_require__(234);
+	var _signalsAllTodosClicked = __webpack_require__(242);
 	
 	var _signalsAllTodosClicked2 = _interopRequireDefault(_signalsAllTodosClicked);
 	
-	var _signalsClearCompletedClicked = __webpack_require__(236);
+	var _signalsClearCompletedClicked = __webpack_require__(244);
 	
 	var _signalsClearCompletedClicked2 = _interopRequireDefault(_signalsClearCompletedClicked);
 	
-	var _signalsFilterClicked = __webpack_require__(238);
+	var _signalsFilterClicked = __webpack_require__(246);
 	
 	var _signalsFilterClicked2 = _interopRequireDefault(_signalsFilterClicked);
 	
@@ -27503,21 +27894,21 @@
 	  return function (module) {
 	
 	    module.state({
-	      filter: 'all',
-	      remainingCount: 0,
-	      completedCount: 0
+	      filter: 'all'
 	    });
 	
-	    module.signal('allTodosClicked', _signalsAllTodosClicked2['default']);
-	    module.signalSync('clearCompletedClicked', _signalsClearCompletedClicked2['default']);
-	    module.signalSync('filterClicked', _signalsFilterClicked2['default']);
+	    module.signals({
+	      allTodosClicked: _signalsAllTodosClicked2['default'],
+	      clearCompletedClicked: _signalsClearCompletedClicked2['default'],
+	      filterClicked: _signalsFilterClicked2['default']
+	    });
 	  };
 	};
 	
 	module.exports = exports['default'];
 
 /***/ },
-/* 234 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27528,7 +27919,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsUnsetFilterJs = __webpack_require__(235);
+	var _actionsUnsetFilterJs = __webpack_require__(243);
 	
 	var _actionsUnsetFilterJs2 = _interopRequireDefault(_actionsUnsetFilterJs);
 	
@@ -27536,7 +27927,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 235 */
+/* 243 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27555,7 +27946,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 236 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27566,7 +27957,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsClearCompletedJs = __webpack_require__(237);
+	var _actionsClearCompletedJs = __webpack_require__(245);
 	
 	var _actionsClearCompletedJs2 = _interopRequireDefault(_actionsClearCompletedJs);
 	
@@ -27574,7 +27965,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 237 */
+/* 245 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27598,7 +27989,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 238 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27609,7 +28000,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetFilterJs = __webpack_require__(239);
+	var _actionsSetFilterJs = __webpack_require__(247);
 	
 	var _actionsSetFilterJs2 = _interopRequireDefault(_actionsSetFilterJs);
 	
@@ -27617,7 +28008,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 239 */
+/* 247 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27636,7 +28027,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 240 */
+/* 248 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27656,10 +28047,12 @@
 	      nextRef: 0
 	    });
 	
-	    module.service('next', function (state) {
-	      var nextId = state.get([module.name, 'nextRef']);
-	      state.set([module.name, 'nextRef'], nextId + 1);
-	      return nextId;
+	    module.services({
+	      next: function next(state) {
+	        var nextId = state.get([module.name, 'nextRef']);
+	        state.set([module.name, 'nextRef'], nextId + 1);
+	        return nextId;
+	      }
 	    });
 	  };
 	};
@@ -27667,7 +28060,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 241 */
+/* 249 */
 /***/ function(module, exports) {
 
 	module.exports = function (options) {
@@ -27683,86 +28076,90 @@
 	      hasRecorded: false
 	    });
 	
-	    /*
-	      SIGNALS
-	    */
-	    function play(arg) {
-	      controller.recorder.seek(0);
-	      arg.module.state.merge([], {
-	        isPlaying: true
-	      });
-	      controller.recorder.play();
-	    }
-	    module.signal('played', [play]);
+	    module.signals({
+	      played: [
+	        function play(arg) {
+	          arg.module.services.seek(0);
+	          arg.module.state.merge([], {
+	            isPlaying: true
+	          });
+	          arg.module.services.play();
+	        }
+	      ],
+	      recorded: [
+	        function record(arg) {
+	          arg.module.state.set(['isRecording'], true);
+	          arg.module.services.record({
+	            paths: arg.input.paths
+	          });
+	        }
+	      ],
+	      stopped: [
+	        function stop(arg) {
+	          arg.module.state.merge([], {
+	            isPlaying: false,
+	            isRecording: false,
+	            isPaused: false,
+	            hasRecorded: true
+	          });
+	          arg.module.services.stop();
+	        }
+	      ],
+	      paused: [
+	        function pause(arg) {
+	          arg.module.state.merge([], {
+	            isPlaying: false,
+	            isPaused: true
+	          });
+	          arg.module.services.pause();
+	        }
+	      ],
+	      resumed: [
+	        function resume(arg) {
+	          arg.module.state.merge([], {
+	            isPlaying: true,
+	            isPaused: false
+	          });
+	          arg.module.services.seek(arg.module.services.getCurrentSeek());
+	          arg.module.services.play();
+	        }
+	      ]
+	    });
 	
-	    function record(arg) {
-	      arg.module.state.set(['isRecording'], true);
-	      controller.recorder.record({
-	        paths: arg.input.paths
-	      });
-	    }
-	    module.signal('recorded', [record]);
+	    var recorder = controller.getRecorder();
+	    module.services({
+	      getCurrentSeek: function() {
+	        return recorder.getCurrentSeek();
+	      },
+	      getRecording: function() {
+	        return recorder.getRecording();
+	      },
+	      loadRecording: function(recording) {
+	        return recorder.loadRecording(recording);
+	      },
+	      record: function(options) {
+	        return recorder.record(options);
+	      },
+	      play: function() {
+	        return recorder.play();
+	      },
+	      stop: function() {
+	        return recorder.stop();
+	      },
+	      pause: function() {
+	        return recorder.pause();
+	      },
+	      seek: function(duration) {
+	        return recorder.seek(duration);
+	      }
+	    });
 	
-	    function stop(arg) {
-	      arg.module.state.merge([], {
-	        isPlaying: false,
-	        isRecording: false,
-	        isPaused: false,
-	        hasRecorded: true
-	      });
-	      controller.recorder.stop();
-	    }
-	    module.signal('stopped', [stop]);
-	
-	    function pause(arg) {
-	      arg.module.state.merge([], {
-	        isPlaying: false,
-	        isPaused: true
-	      });
-	      controller.recorder.pause();
-	    }
-	    module.signal('paused', [pause]);
-	
-	    function resume(arg) {
-	      arg.module.state.merge([], {
-	        isPlaying: true,
-	        isPaused: false
-	      });
-	      controller.recorder.seek(controller.recorder.getCurrentSeek());
-	      controller.recorder.play();
-	    }
-	    module.signal('resumed', [resume]);
-	
-	    /*
-	      SERVICES
-	    */
-	    module.service('getRecording', function () {
-	      return controller.recorder.getRecording();
-	    });
-	    module.service('loadRecording', function () {
-	      return controller.recorder.loadRecording();
-	    });
-	    module.service('record', function (options) {
-	      return controller.recorder.record(options);
-	    });
-	    module.service('play', function () {
-	      return controller.recorder.play();
-	    });
-	    module.service('stop', function () {
-	      return controller.recorder.stop();
-	    });
-	    module.service('pause', function () {
-	      return controller.recorder.pause();
-	    });
-	    module.service('seek', function (duration) {
-	      return controller.recorder.seek(duration);
-	    });
 	  };
 	}
 
 
 /***/ },
-/* 242 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27773,7 +28170,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _cerebralRouter = __webpack_require__(243);
+	var _cerebralRouter = __webpack_require__(251);
 	
 	var _cerebralRouter2 = _interopRequireDefault(_cerebralRouter);
 	
@@ -27789,13 +28186,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 243 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Mapper = __webpack_require__(244);
+	var Mapper = __webpack_require__(252);
 	var addressbar;
 	try {
-	  addressbar = __webpack_require__(249);
+	  addressbar = __webpack_require__(257);
 	} catch(e) {
 	  addressbar = {
 	    pathname: '/',
@@ -27849,7 +28246,7 @@
 	
 	      // retrieve actual signal by name
 	      var signalPath = route.signalName.split('.');
-	      var signalParent = controller.signals;
+	      var signalParent = controller.getSignals();
 	      var signal;
 	      while(signalPath.length - 1) {
 	        signalParent = signalParent[signalPath.shift()] || {};
@@ -27887,6 +28284,8 @@
 	      // replace signal on wrapped one in controller
 	      signalParent[signalPath[0]] = wrappedSignal.sync = wrappedSignal;
 	
+	      wrappedSignal.chain = signal.chain;
+	
 	      return routes;
 	
 	  }, {});
@@ -27902,7 +28301,7 @@
 	      url = url + '#/';
 	    }
 	
-	    if (controller.store.isRemembering()) {
+	    if (controller.getStore().isRemembering()) {
 	      return;
 	    }
 	
@@ -27924,13 +28323,13 @@
 	  addressbar.on('change', onUrlChange);
 	
 	  // auto expose router instance to services
-	  return controller.services.router = {
+	  return controller.getServices().router = {
 	    trigger: function (url) {
 	
 	      // If developing, remember signals before
 	      // route trigger
-	      if (controller.store.getSignals().length) {
-	        controller.store.rememberInitial(controller.store.getSignals().length - 1);
+	      if (controller.getStore().getSignals().length) {
+	        controller.getStore().rememberInitial(controller.getStore().getSignals().length - 1);
 	      }
 	
 	      addressbar.value = url || addressbar.value;
@@ -27978,13 +28377,13 @@
 
 
 /***/ },
-/* 244 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var mapper = __webpack_require__(245);
-	var URLON = __webpack_require__(246);
-	var pathToRegexp = __webpack_require__(247);
+	var mapper = __webpack_require__(253);
+	var URLON = __webpack_require__(254);
+	var pathToRegexp = __webpack_require__(255);
 	
 	function compileRoute (route, options) {
 	  var re;
@@ -28071,7 +28470,7 @@
 
 
 /***/ },
-/* 245 */
+/* 253 */
 /***/ function(module, exports) {
 
 	module.exports = function mapper (compileFn, options) {
@@ -28124,7 +28523,7 @@
 
 
 /***/ },
-/* 246 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	URLON = {
@@ -28253,10 +28652,10 @@
 
 
 /***/ },
-/* 247 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isarray = __webpack_require__(248)
+	var isarray = __webpack_require__(256)
 	
 	/**
 	 * Expose `pathToRegexp`.
@@ -28649,7 +29048,7 @@
 
 
 /***/ },
-/* 248 */
+/* 256 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -28658,10 +29057,10 @@
 
 
 /***/ },
-/* 249 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var URL = __webpack_require__(250);
+	/* WEBPACK VAR INJECTION */(function(global) {var URL = __webpack_require__(258);
 	var EventEmitter = __webpack_require__(181).EventEmitter;
 	var instance = null;
 	
@@ -28875,14 +29274,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 250 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var required = __webpack_require__(251)
-	  , lolcation = __webpack_require__(252)
-	  , qs = __webpack_require__(253)
+	var required = __webpack_require__(259)
+	  , lolcation = __webpack_require__(260)
+	  , qs = __webpack_require__(261)
 	  , relativere = /^\/(?!\/)/;
 	
 	/**
@@ -29109,7 +29508,7 @@
 
 
 /***/ },
-/* 251 */
+/* 259 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29153,7 +29552,7 @@
 
 
 /***/ },
-/* 252 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -29183,7 +29582,7 @@
 	 */
 	module.exports = function lolcation(loc) {
 	  loc = loc || global.location || {};
-	  URL = URL || __webpack_require__(250);
+	  URL = URL || __webpack_require__(258);
 	
 	  var finaldestination = {}
 	    , type = typeof loc
@@ -29205,7 +29604,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 253 */
+/* 261 */
 /***/ function(module, exports) {
 
 	'use strict';
