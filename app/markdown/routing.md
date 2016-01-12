@@ -1,6 +1,6 @@
 ### Install
 
-`npm install cerebral-router`
+`npm install cerebral-module-router`
 
 ### How to use
 
@@ -8,16 +8,35 @@ When using the Cerebral router you have to leave your previous experience with r
 
 When you build your Cerebral application you do not have to think about routing at all. You only trigger signals that brings your application into the correct state. Let us imagine an application that can open a messages page, and also open specific messages.
 
+*Messages/index.js*
 ```javascript
 
-import controller from './controller.js';
-import homeOpened from './signals/homeOpened';
-import messagesOpened from './signals/messagesOpened';
+import opened from './signals/opened';
 import messageOpened from './signals/messageOpened';
 
-controller.signals({
-  messagesOpened,
-  messageOpened
+export default (options = {}) => {
+  return (module) => {
+
+    module.signals({
+      opened,
+      messageOpened  
+    });
+
+  }
+}
+```
+
+*main.js*
+```javascript
+
+import Controller from 'cerebral';
+import Model from 'cerebral-model-baobab';
+import Messages from './modules/Messages';
+
+const controller = Controller(Model({}));
+
+controller.modules({
+  messages: Messages()
 });
 ```
 
@@ -26,7 +45,7 @@ When we want to open the messages we call the signal:
 ```javascript
 
 onMessagesClick() {
-  this.props.signals.messagesOpened();
+  this.props.signals.messages.opened();
 }
 ```
 
@@ -35,38 +54,41 @@ When we want to open a single message we call the signal and pass a payload:
 ```javascript
 
 onMessageClick(id) {
-  this.props.signals.messageOpened({
+  this.props.signals.messages.messageOpened({
     id: id
   });
 }
 ```
 
-The signature of a state change is the signal and the payload passed. We can bind this signature to a route. Lets imagine we have implemented our whole application and it works great, we just need to update the addressbar with a url representing the current state of the application. So let us also add a *homeOpened* signal so that we handle the root url as well.
+The signature of a state change is the signal and the payload passed. We can bind this signature to a route. Lets imagine we have implemented our whole application and it works great, we just need to update the addressbar with a url representing the current state of the application. So let us also add a *Home* module so that we handle the root url as well.
 
 ```javascript
 
-import Router from 'cerebral-router';
-import controller from './controller.js';
-import homeOpened from './signals/homeOpened';
-import messagesOpened from './signals/messagesOpened';
-import messageOpened from './signals/messageOpened';
+import Controller from 'cerebral';
+import Model from 'cerebral-model-baobab';
+import Router from 'cerebral-model-router';
+import Home from './modules/Home';
+import Messages from './modules/Messages';
 
-controller.signals({
-  homeOpened,
-  messagesOpened,
-  messageOpened
+const controller = Controller(Model({}));
+
+controller.modules({
+  home: Home(),
+  messages: Messages(),
+
+  router: Router({
+    '/': 'home.opened',
+    '/messages': 'messages.opened',
+    '/messages/:id': 'messages.messageOpened'
+  }, {
+    mapper: {query: true} // Read about this below
+  })
 });
 
-Router(controller, {
-  '/': 'homeOpened',
-  '/messages': 'messagesOpened',
-  '/messages/:id': 'messageOpened'
-}, {
-  mapper: {query: true} // Read about this below
-});
+
 ```
 
-Using the `cerebral-view-react` or `cerebral-angular` packages will automatically trigger the router, but you can run a `trigger` method manually if you do not use these packages. The router checks the url and fires the signal related to the url. The url will be parsed and any payload will be passed on the signal. That means if you go to `example.com/messages/123` it will trigger the `messageOpened` signal with the payload `{id: '123'}`. But if you click a message in the list it will also trigger the `messageOpened` signal with the payload `{id: '456'}` and now the url will also update to `example.com/messages/456`. So it works both ways!
+Using the `cerebral-view-react` or `cerebral-view-angular` packages will automatically trigger the router. The router checks the url and fires the signal related to the url. The url will be parsed and any payload will be passed on the signal. That means if you go to `example.com/messages/123` it will trigger the `messageOpened` signal with the payload `{id: '123'}`. But if you click a message in the list it will also trigger the `messageOpened` signal with the payload `{id: '456'}` and now the url will also update to `example.com/messages/456`. So it works both ways!
 
 The important thing to understand here is that your application does not trigger urls to change its state. It triggers signals. Then you bind a route to a signal to allow a url to trigger the signal as well. That means:
 
@@ -76,7 +98,7 @@ The important thing to understand here is that your application does not trigger
 "example.com/messages/456"
 
 // Is exactly the same as
-this.props.signals.messageOpened({
+this.props.signals.messages.messageOpened({
   id: '456'
 });
 ```
@@ -86,19 +108,22 @@ In the example above, when navigating in the app, you have to go to */messages* 
 
 ```javascript
 
-...
-controller.signals({
-  messageOpened: [...messagesOpened, ...messageOpened]
-});
+import opened from './signals/opened';
+import messageOpened from './signals/messageOpened';
 
-Router(controller, {
-  '/': 'homeOpened',
-  '/messages': 'messagesOpened',
-  '/messages/:id': 'messageOpened'
-});
+export default (options = {}) => {
+  return (module) => {
+
+    module.signals({
+      opened,
+      messageOpened: [...opened, ...messageOpened]  
+    });
+
+  }
+}
 ```
 
-With Cerebral you are already used to composing chains and actions together and this is also effective when creating routes. Now you might say, "I do not want to load my messages every time I open a message!". I completely agree and there are multiple ways to handle this. It depends on when you want to load the messages. But lets say you want to load them whenever you actually go to `/messages`. Inside your *messagesOpened* signal you can just check if there is an ID on the input. If there is an ID it means you are about to open a message, if not it means you are just opening the messages.
+With Cerebral you are already used to composing chains and actions together and this is also effective when creating routes. Now you might say, "I do not want to load my messages every time I open a message!". I completely agree and there are multiple ways to handle this. It depends on when you want to load the messages. But lets say you want to load them whenever you actually go to `/messages`. Inside your *opened* signal you can just check if there is an ID on the input. If there is an ID it means you are about to open a message, if not it means you are just opening the messages.
 
 ### What about queries?
 With Cerebral you get a very powerful way to use queries. But first we have to make a statement together. Queries are produced by your application, not by users. With this perspective we can do some wonderful things. Lets get back to opening our message. Inside the component opening the message we want to pass more than the ID of the message. We want to pass: `{withComments: true}`. So that when we load the message, we load it with comments.
@@ -106,7 +131,7 @@ With Cerebral you get a very powerful way to use queries. But first we have to m
 ```javascript
 
 onMessageClick(id) {
-  this.props.signals.messageOpened({
+  this.props.signals.messages.messageOpened({
     id: id,
     withComments: true
   });

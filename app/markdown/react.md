@@ -14,18 +14,25 @@ It is encouraged that you put all the state of your application in the Cerebral 
 
 ```javascript
 
-// Your cerebral instance
-import controller from './controller.js';
+import Controller from 'cerebral';
+import Model from 'cerebral-model-baobab';
 import React from 'react';
 import {Container} from 'cerebral-view-react';
 
 // Your main application component
-import App from './components/App.js';
+import HomeComponent from './modules/Home/components/Home';
+import Home from './modules/Home';
+
+const controller = Controller(Model({}));
+
+controller.modules({
+  home: Home()
+});
 
 // Render the app
 React.render(
   <Container controller={controller}>
-    <App/>
+    <HomeComponent/>
   </Container>, document.body.querySelector('#app'));
 ```
 
@@ -36,7 +43,7 @@ import React from 'react';
 import {Decorator as Cerebral} from 'cerebral-view-react';
 
 @Cerebral({
-  title: ['title']
+  title: ['home', 'title']
 })
 class App extends React.Component {
   render() {
@@ -46,7 +53,7 @@ class App extends React.Component {
 ```
 
 #### Create hyperlinks
-If you are using the `cerebral-router` you can use a component to create links.
+If you are using the `cerebral-module-router` you can use a component to create links.
 ```javascript
 
 import React from 'react';
@@ -57,7 +64,7 @@ class App extends React.Component {
   render() {
     return (
       <Link
-        signal={this.props.signals.somethingHappened}
+        signal={this.props.signals.home.somethingHappened}
         params={{foo: 'bar'}}
         className="my-class"
       >Click me</Link>

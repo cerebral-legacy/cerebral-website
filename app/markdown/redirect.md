@@ -22,7 +22,7 @@ Or you can use the redirect action factory from the router:
 
 ```javascript
 
-import {redirect} from 'cerebral-router';
+import {redirect} from 'cerebral-module-router';
 
 signals({
   appMounted: [

@@ -12,12 +12,12 @@ const somethingHappened = [
   ...myChain
 ];
 
-controller.signals({
+module.signals({
   somethingHappened
 });
 
 // Will run as
-controller.signals({
+module.signals({
   somethingHappened: [action1, action2, action3]
 });
 ```
@@ -33,7 +33,7 @@ const somethingHappened = [
   myAction2
 ];
 
-controller.signals({
+module.signals({
   somethingHappened
 });
 ```
@@ -84,7 +84,7 @@ const somethingHappened = [
   ]
 ];
 
-controller.signals({
+module.signals({
   somethingHappened
 });
 ```

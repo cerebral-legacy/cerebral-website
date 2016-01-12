@@ -14,7 +14,6 @@ to the state tree. Read more about Baobab at the [github repo](https://github.co
 
 import Controller from 'cerebral';
 import Model from 'cerebral-model-baobab';
-import request from 'superagent';
 
 // Any Baobab options
 const options = {

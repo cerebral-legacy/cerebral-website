@@ -2,7 +2,7 @@ In the in the previous section you might want to force the user to the messages 
 
 ```javascript
 
-import Router from 'cerebral-router';
+import Router from 'cerebral-module-router';
 import controller from './controller.js';
 import homeOpened from './signals/homeOpened';
 import messagesOpened from './signals/messagesOpened';
@@ -17,11 +17,11 @@ controller.signals({
   messageOpened: [...messagesOpened, ...messageOpened]
 });
 
-Router(controller, {
-  '/': 'homeOpened',
+Router({
+  '/': 'home.opened',
   '/messages': {
-    '/': 'messagesOpened',
-    '/:id': 'messageOpened'
+    '/': 'messages.opened',
+    '/:id': 'messages.messageOpened'
   }
 });
 ```

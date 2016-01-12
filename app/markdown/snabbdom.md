@@ -25,15 +25,27 @@ To use JSX syntax you also need Babel with the `transform-react-jsx` package.
 
 ```javascript
 
-import {Component, render} from 'cerebral-view-snabbdom';
-import App from './App';
-import controller from './controller';
 
-render(() => <App/>, document.querySelector('#app'), controller);
+import Controller from 'cerebral';
+import Model from 'cerebral-model-baobab';
+import {Component, render} from 'cerebral-view-snabbdom';
+
+// Your main application component
+import HomeComponent from './modules/Home/components/Home';
+import Home from './modules/Home';
+
+const controller = Controller(Model({}));
+
+controller.modules({
+  home: Home()
+});
+
+render(() => <HomeComponent/>, document.querySelector('#app'), controller);
 ```
+
 Note that you have to pass a callback to render the initial component, returning it. And you also have to pass the controller.
 
-**Note!** `() => <App/>` is the same as `() => { return <App/> }`.
+**Note!** `() => <HomeComponent/>` is the same as `() => { return <HomeComponent/> }`.
 
 #### Component
 
@@ -57,7 +69,7 @@ import {Component} from 'cerebral-view-snabbdom';
 
 export default Component(({state}) => (
 
-  <h1>{state.title}</h1>
+  <h1>{state.home.title}</h1>
 
 ));
 ```
@@ -69,7 +81,7 @@ You can optionally extract specific state and customize its property name:
 import {Component} from 'cerebral-view-snabbdom';
 
 export default Component({
-  title: ['title'],
+  title: ['home', 'title'],
   rows: ['admin', 'users']
 }, ({state}) => {
 
@@ -120,7 +132,7 @@ export default Component(({state, signals}) => (
 
   <div>
     <h1 style={{color: state.color}}>{props.title}</h1>
-    <button on-click={() => signals.colorChanged({color: 'blue'})}>Change color</button>
+    <button on-click={() => signals.home.colorChanged({color: 'blue'})}>Change color</button>
   </div>
 
 ));
@@ -150,7 +162,7 @@ The key has to be **unique**. The component will only render when *title* actual
 import {Component} from 'cerebral-view-snabbdom';
 
 const MyComponent = Component({
-  version: ['version']
+  version: ['home', 'version']
 }, ({props, state}) => (
 
   <h1>{props.title} ({state.version})</h1>

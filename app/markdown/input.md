@@ -8,12 +8,12 @@ const somethingHappened = [
   myAction
 ];
 
-controller.signals({
+module.signals({
   somethingHappened
 });
 
 // In some Component
-signals.somethingHappened({
+signals.module.somethingHappened({
   foo: 'bar'
 });
 ```
@@ -40,12 +40,12 @@ const somethingHappened = [
   myAction2
 ];
 
-controller.signal({
+module.signal({
   somethingHappened
 });
 
 // In some Component
-signals.somethingHappened({
+signals.module.somethingHappened({
   foo: 'bar'
 });
 ```

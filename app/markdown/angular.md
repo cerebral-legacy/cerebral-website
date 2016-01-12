@@ -11,8 +11,12 @@
 ```javascript
 
 import 'cerebral-view-angular'; // Exposes module
-import controller from './controller.js';
-import somethingHappened from './signals/somethingHappened.js';
+import Controller from 'cerebral';
+import Model from 'cerebral-model-baobab';
+import Router from 'cerebral-module-router';
+import Home from './modules/Home';
+
+const controller = Controller(Model({}));
 
 angular.module('app', ['cerebral'])
   .config(function (cerebralProvider) {
@@ -22,15 +26,14 @@ angular.module('app', ['cerebral'])
   })
   .run(function (cerebral) {
 
-    // Add signals
-    cerebral.signals({
-      somethingHappened
+    cerebral.modules({
+      home: Home(),
+
+      router: Router({
+        '/': 'home.routed'
+      })
     });
 
-    // Add services
-    cerebral.services({
-      myService() {}
-    });
   });
 ```
 
@@ -50,18 +53,19 @@ export default function () {
       // will automatically update when the list
       // updates
       state.inject($scope, {
-        list: ['list']
+        list: ['home', 'list'],
+        someComputed: someComputed // Use computed
       });
 
       // Injects a mutable version of the object.
       // These work with two-way-databinding
       state.injectMutable($scope, {
-        user: ['user']
+        user: ['home', 'user']
       });
 
       // Trigger signals
       $scope.addItemClicked = function () {
-        signals.addItemClicked({
+        signals.home.addItemClicked({
           item: 'foo'
         });
       };
@@ -71,12 +75,13 @@ export default function () {
 };
 ```
 
-#### Angular services
+#### Adding Angular services
 By default the view package exposes the *$http* service as:
 
-```javascript
+.run(function (cerebral, $http) {
 
-function MyAction({services}) {
-  services.$http
-}
-```
+  cerebral.services({
+    $http
+  });
+
+});

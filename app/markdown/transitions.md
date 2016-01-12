@@ -12,7 +12,7 @@ import HomePage from './HomePage.js';
 import AdminPage from './AdminPage.js';
 
 @Cerebral({
-  currentPage: ['currentPage']
+  currentPage: ['app', 'currentPage']
 })
 class App extends React.Component {
   renderCurrentPage() {

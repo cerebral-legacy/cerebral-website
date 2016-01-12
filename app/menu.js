@@ -49,6 +49,7 @@ import addonsStateToOutput from './markdown/addons_stateToOutput.md';
 import universal from './markdown/universal.md';
 import snabbdom from './markdown/snabbdom.md';
 import moduleRecorder from './markdown/module_recorder.md';
+import moduleRouter from './markdown/module_router.md';
 
 export default [
   {
@@ -97,6 +98,18 @@ export default [
         content: MTRC(internetExplorer).tree
       }
     ]
+  },
+  {
+    label: 'Modules',
+    icon: 'th-large',
+    content: MTRC(modules).tree,
+    subContent: [{
+      label: 'Recorder',
+      content: MTRC(moduleRecorder).tree
+    }, {
+      label: 'Router',
+      content: MTRC(moduleRouter).tree
+    }]
   },
   {
     label: 'Signals',
@@ -159,15 +172,6 @@ export default [
         content: MTRC(universal).tree
       }
     ]
-  },
-  {
-    label: 'Modules',
-    icon: 'th-large',
-    content: MTRC(modules).tree,
-    subContent: [{
-      label: 'Recorder',
-      content: MTRC(moduleRecorder).tree
-    }]
   },
   {
     label: 'Addons',

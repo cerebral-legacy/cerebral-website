@@ -16,7 +16,7 @@ const appMounted = [
   unsetLoadingTodos
 ];
 
-controller.signals({
+module.signals({
   appMounted
 });
 ```

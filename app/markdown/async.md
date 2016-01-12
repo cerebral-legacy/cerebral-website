@@ -9,7 +9,7 @@ const somethingHappened = [
   ]
 ];
 
-controller.signals({
+module.signals({
   somethingHappened
 });
 ```
@@ -26,7 +26,7 @@ const somethingHappened = [
   ]
 ];
 
-controller.signal({
+module.signal({
   somethingHappened
 });
 ```
@@ -44,7 +44,7 @@ const somethingHappened = [
   afterAsyncsAreDone
 ];
 
-controller.signals({
+module.signals({
   somethingHappened
 });
 ```
@@ -66,7 +66,7 @@ const somethingHappened = [
   runsAfter2000
 ];
 
-controller.signals({
+module.signals({
   somethingHappened
 });
 ```
@@ -95,7 +95,7 @@ const somethingHappened = [
   ]
 ];
 
-controller.signals({
+module.signals({
   somethingHappened
 });
 ```

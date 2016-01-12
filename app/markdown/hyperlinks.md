@@ -6,8 +6,8 @@ With Cerebral Router we encourage you to use signals, rather than urls. They are
 render() {
   return (
     <div>
-      <a onClick={() => this.props.signals.messageOpened({id: this.props.messageId})}>Open</a>
-      <a href={this.props.signals.messageOpened.getUrl({id: this.props.messageId})}>Open</a>
+      <a onClick={() => this.props.signals.messages.messageOpened({id: this.props.messageId})}>Open</a>
+      <a href={this.props.signals.messages.messageOpened.getUrl({id: this.props.messageId})}>Open</a>
     </div>
   )
 }

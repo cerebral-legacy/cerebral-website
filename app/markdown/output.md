@@ -18,12 +18,12 @@ const somethingHappened = [
   actionB
 ];
 
-controller.signals({
+module.signals({
   somethingHappened
 });
 
 // In some Component
-signals.somethingHappened({
+signals.module.somethingHappened({
   foo: 'bar'
 });
 
@@ -58,7 +58,7 @@ const somethingHappened = [
   ]
 ];
 
-controller.signals({
+module.signals({
   somethingHappened
 });
 ```
@@ -95,7 +95,7 @@ const somethingHappened = [
   ]
 ];
 
-controller.signals({
+module.signals({
   somethingHappened
 });
 ```
@@ -111,7 +111,7 @@ const somethingHappened = [
   ]
 ];
 
-controller.signal({
+module.signal({
   somethingHappened
 });
 ```
@@ -146,12 +146,12 @@ const saveSensitiveDataToDB = [
 ];
 
 
-controller.signal({
+module.signal({
   saveButtonClicked: requireAuth(saveSensitiveDataToDB)
 });
 
 // In some Component
-signals.saveButtonClicked({
+signals.module.saveButtonClicked({
   foo: 'bar'
 });
 

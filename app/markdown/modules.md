@@ -1,22 +1,25 @@
-Cerebral Modules is still in experimental stage, but we are closing in on the API. This is what modules allows you to do:
+You build your application using modules. Modules will separate signals, state and services related to a specific part of your application. The good thing about modules though is that they can reach into any other module if necessary. Here are some key points to modules:
 
 1. Structure your own application by grouping and subgrouping signals, state and services
-2. Share your modules between own project and other Cerebral developers
+2. Share your modules between own projects and other Cerebral developers on NPM
 3. Use official Cerebral modules that will help you with everything from authentication, to server communication, forms etc.
 
-### Registering a module
+### Registering a module to the Cerebral controller
 
 ```javascript
 
-import controller from './controller';
-import SomeModule from './SomeModule';
-import RecorderModule from 'cerebral-module-recorder';
+import Controller from 'cerebral';
+import Model from 'cerebral-module-baobab';
+import Home from './modules/Home';
+import Recorder from 'cerebral-module-recorder';
+
+const controller = Controller(Model({}));
 
 controller.modules({
-  myModule: SomeModule({
-    foo: 'bar'
+  home: Home({
+    foo: 'bar' // Some option
   }),
-  recorder: RecorderModule()
+  recorder: Recorder()
 });
 
 ```
@@ -125,8 +128,8 @@ export default (options = {}) => {
 
 Any modules registered as a submodule will use the namespace of the parent module. That means any state, signals and services created in the *subModule* will be namespaced `myModule.subModule`. Really nothing more to it :-)
 
-### Sharing a module
-There is not much difference in creating your own application specific module and creating a module that can be shared. But the fact that other developers can namespace your module to whatever they want, you need a way to access your module.
+### Sharing your module on NPM
+There is not much difference in creating your own application specific module and creating a module that can be shared. But the fact that other developers can namespace your module to whatever they want, you need a way to access your module consistently.
 
 *MyModule.js*
 ```javascript
@@ -134,7 +137,7 @@ There is not much difference in creating your own application specific module an
 import somethingHappened from './signals/somethingHappened';
 
 export default (options = {}) => {
-  return (module) => {
+  return (module, controller) => {
 
     // Alias is a second namespace you can access the module on
     // All Cerebral modules should be named "cerebral-module-xxx"
@@ -147,6 +150,10 @@ export default (options = {}) => {
     module.services({
       foo() {}
     });
+
+    // The second argument to a module is the controller itself. You
+    // might need this to do some special manipulation
+    controller
 
   };
 }
@@ -197,6 +204,24 @@ class MyAppComponent extends React.Component {
       </div>
     );
   }
+}
+```
+
+#### Trigger signals from services
+Sometimes you want a service to trigger a signal. You can pass the signals registered to a module using the `module.getSignals()` method.
+
+```javascript
+
+import CreateSyncMethod from './CreateSyncMethod';
+
+export default (options = {}) => {
+  return (module) => {
+
+    module.services({
+      sync: CreateSyncMethod(module.getSignals())
+    });
+
+  };
 }
 ```
 

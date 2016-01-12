@@ -24,7 +24,7 @@ const somethingHappened = [
   ]
 ];
 
-controller.signals({
+module.signals({
   somethingHappened
 });
 ```

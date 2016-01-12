@@ -2,8 +2,8 @@ You can also use normal regexp to handle routes. This example ensures that the i
 
 ```javascript
 
-Router(controller, {
-  '/': 'homeOpened',
-  '/messages/:id(\\d+)': 'messageOpened'
+Router({
+  '/': 'home.opened',
+  '/messages/:id(\\d+)': 'messages.messageOpened'
 });
 ```

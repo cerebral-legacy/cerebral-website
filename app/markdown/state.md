@@ -25,6 +25,10 @@ function myAction ({state}) {
 
   state.get(); // {{user: {isLoading: false }}
 
+  // You can also use dot notation
+  state.set('user.isLoading', true);
+  state.get('user.isLoading'); // true
+
 }
 ```
 

@@ -3,7 +3,7 @@ Let us just dive right into an example. You have a list of messages. Inside your
 ```javascript
 
 @Cerebral({
-  messages: ['messagesList']
+  messages: ['home', 'messagesList']
 })
 class MessagesList extends React.Component {
   renderMessage(message, index) {
@@ -21,7 +21,7 @@ class MessagesList extends React.Component {
 }
 
 @Cerebral((id) => ({
-  message: ['messages', props.id]
+  message: ['home', 'messages', props.id]
 }))
 class Message extends React.Component {
   render() {
@@ -37,7 +37,7 @@ Or would you:
 ```javascript
 
 @Cerebral({
-  messages: ['messagesList']
+  messages: ['home', 'messagesList']
 })
 class MessagesList extends React.Component {
   renderMessage(message, index) {
@@ -68,7 +68,7 @@ Whenever you register state from Cerebral to a component a callback is registere
 ```javascript
 
 @Cerebral({
-  messages: ['messagesList']
+  messages: ['home', 'messagesList']
 })
 class MessagesList extends React.Component {
   renderMessage(message, index) {
