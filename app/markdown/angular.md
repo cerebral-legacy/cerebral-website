@@ -1,5 +1,5 @@
 ### Install
-`$ npm install cerebral-view-angular`.
+`$ npm install cerebral-view-angular`
 
 ### Repo
 [cerebral-view-angular](https://github.com/christianalfoni/cerebral-view-angular)
@@ -78,6 +78,7 @@ export default function () {
 #### Adding Angular services
 By default the view package exposes the *$http* service as:
 
+```javascript
 .run(function (cerebral, $http) {
 
   cerebral.services({
@@ -85,3 +86,4 @@ By default the view package exposes the *$http* service as:
   });
 
 });
+```
