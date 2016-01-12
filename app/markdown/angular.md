@@ -79,6 +79,7 @@ export default function () {
 By default the view package exposes the *$http* service as:
 
 ```javascript
+
 .run(function (cerebral, $http) {
 
   cerebral.services({
