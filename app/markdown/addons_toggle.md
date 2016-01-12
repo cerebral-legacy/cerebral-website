@@ -6,6 +6,6 @@ Toggle a boolean state value at a specific path. Only argument is path.
 import toggle from 'cerebral-addons/toggle';
 
 export default [
-  toggle(['hasAgreed'])
+  toggle('state:/hasAgreed')
 ];
 ```

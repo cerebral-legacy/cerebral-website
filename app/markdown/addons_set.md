@@ -7,13 +7,13 @@ import set from 'cerebral-addons/set';
 import getOptionsFromServer from '../actions/getOptionsFromServer';
 
 export default [
-  set(['isLoading'], true),
+  set('state:/isLoading', true),
   [
     getOptionsFromServer, {
       success: [],
       error: []
     }
   ],
-  set(['isLoading'], false)
+  set('state:/isLoading', false)
 ];
 ```

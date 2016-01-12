@@ -40,12 +40,11 @@ import redirect from './markdown/redirect.md';
 import regexp from './markdown/regexp.md';
 import testing from './markdown/testing.md';
 import addons from './markdown/addons.md';
+import addonsCopy from './markdown/addons_copy.md';
 import addonsSet from './markdown/addons_set.md';
 import addonsUnset from './markdown/addons_unset.md';
 import addonsToggle from './markdown/addons_toggle.md';
 import addonsWhen from './markdown/addons_when.md';
-import addonsInputToState from './markdown/addons_inputToState.md';
-import addonsStateToOutput from './markdown/addons_stateToOutput.md';
 import universal from './markdown/universal.md';
 import snabbdom from './markdown/snabbdom.md';
 import moduleRecorder from './markdown/module_recorder.md';
@@ -178,6 +177,9 @@ export default [
     icon: 'briefcase',
     content: MTRC(addons).tree,
     subContent: [{
+      label: 'Copy',
+      content: MTRC(addonsCopy).tree
+    }, {
       label: 'Set',
       content: MTRC(addonsSet).tree
     }, {
@@ -189,12 +191,6 @@ export default [
     }, {
       label: 'When',
       content: MTRC(addonsWhen).tree
-    }, {
-      label: 'Input to state',
-      content: MTRC(addonsInputToState).tree
-    }, {
-      label: 'State to output',
-      content: MTRC(addonsStateToOutput).tree
     }]
   },
   {

@@ -1,9 +1,9 @@
-Set value from input to state store.
+Copies a value from input, global state or module state to output, global state or module state.
 
 *settingsOpened.js*
 ```javascript
 
-import inputToState from 'cerebral-addons/inputToState';
+import copy from 'cerebral-addons/copy';
 import getServerSettings from '../actions/getOptionsFromServer';
 
 export default [
@@ -11,7 +11,7 @@ export default [
     [
       getServerSettings, {
         success: [
-          inputToState('response', ['settings'])
+          copy('input:/response', 'state:/settings')
         ]
         error: []
       }

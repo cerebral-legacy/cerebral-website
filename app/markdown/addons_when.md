@@ -8,7 +8,7 @@ import tryAgainLater from '../actions/tryAgainLater';
 import doReload from '../actions/doReload';
 
 export default [
-  when(['isLoading']), {
+  when('state:/isLoading'), {
     isTrue: [tryAgainLater],
     isFalse: [doReload]
   }
@@ -24,7 +24,7 @@ import when from 'cerebral-addons/when';
 import getPageData from '../actions/getPageData';
 import redirectToHome from '../actions/redirectToHome';
 
-const whenUser = when(['user'], { isLoggedIn: when.truthy, isUnknown: when.otherwise });
+const whenUser = when('state:/user', { isLoggedIn: when.truthy, isUnknown: when.otherwise });
 
 export default [
   whenUser, {
@@ -43,7 +43,7 @@ import when from 'cerebral-addons/when';
 import sendToServer from '../actions/sendToServer';
 import showErrorSnackBarMessage from '../actions/showErrorSnackBarMessage';
 
-const whenFormIsValid = when(['form', 'errorMessage'], { valid: 'no errors found', invalid: when.otherwise });
+const whenFormIsValid = when('input:/form.errorMessage', { valid: 'no errors found', invalid: when.otherwise });
 
 export default [
   validateForm,
