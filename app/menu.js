@@ -102,6 +102,7 @@ export default [
     label: 'Modules',
     icon: 'th-large',
     content: MTRC(modules).tree,
+    video: 'https://www.youtube.com/embed/FNB0uIQtGrw',
     subContent: [{
       label: 'Recorder',
       content: MTRC(moduleRecorder).tree
