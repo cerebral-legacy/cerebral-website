@@ -9,7 +9,7 @@ You build your application using modules. Modules will separate signals, state a
 ```javascript
 
 import Controller from 'cerebral';
-import Model from 'cerebral-module-baobab';
+import Model from 'cerebral-model-baobab';
 import Home from './modules/Home';
 import Recorder from 'cerebral-module-recorder';
 
