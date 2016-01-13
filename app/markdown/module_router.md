@@ -26,7 +26,6 @@ controller.modules({
 
 ```javascript
 
-// Gives you the current recording
 services.{namespace}.redirect('/to/some/url');
 ```
 
