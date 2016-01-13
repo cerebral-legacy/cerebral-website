@@ -5,8 +5,9 @@
 [cerebral-immutable-js](https://github.com/christianalfoni/cerebral-immutable-js)
 
 ### Features
-The is Facebook's super high performance immutable library. Note that all values extracted from the state store are extracted as they would be with
-immutable-js. Read more about immutable-js at the [webpage](https://facebook.github.io/immutable-js/).
+The is Facebook's super high performance immutable library. Note that all values extracted from the state store are extracted as they would be with immutable-js. Read more about immutable-js at the [webpage](https://facebook.github.io/immutable-js/).
+
+**NOTE!** All values you extract from the state store will be in the format of an Immutable JS value. That means you use the API of ImmutableJS to operate on and grab actual values inside it.
 
 ### Get started
 

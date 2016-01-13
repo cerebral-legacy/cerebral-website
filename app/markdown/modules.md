@@ -252,3 +252,6 @@ class MyAppComponent extends React.Component {
   }
 }
 ```
+
+### Grab values across model packages
+You can use `state.toJS(path)` to ensure that you get the plain JavaScript representation of values you extract.
