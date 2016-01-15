@@ -14,7 +14,9 @@ import controller from './controller';
 import RecorderModule from 'cerebral-module-recorder';
 
 controller.modules({
-  recorder: RecorderModule()
+  recorder: RecorderModule({
+    state: {foo: 'bar'} // Merge in additional state
+  })
 });
 ```
 
