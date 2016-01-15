@@ -8,14 +8,12 @@ import getServerSettings from '../actions/getOptionsFromServer';
 
 export default [
   [
-    [
-      getServerSettings, {
-        success: [
-          copy('input:/response', 'state:/settings')
-        ]
-        error: []
-      }
-    ]
+    getServerSettings, {
+      success: [
+        copy('input:/response', 'state:/settings')
+      ]
+      error: []
+    }
   ]
 ];
 ```
