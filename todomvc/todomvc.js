@@ -80,15 +80,15 @@
 	
 	var _modulesApp2 = _interopRequireDefault(_modulesApp);
 	
-	var _modulesRefs = __webpack_require__(248);
+	var _modulesRefs = __webpack_require__(250);
 	
 	var _modulesRefs2 = _interopRequireDefault(_modulesRefs);
 	
-	var _cerebralModuleRecorder = __webpack_require__(249);
+	var _cerebralModuleRecorder = __webpack_require__(251);
 	
 	var _cerebralModuleRecorder2 = _interopRequireDefault(_cerebralModuleRecorder);
 	
-	var _modulesRouter = __webpack_require__(250);
+	var _modulesRouter = __webpack_require__(252);
 	
 	var _modulesRouter2 = _interopRequireDefault(_modulesRouter);
 	
@@ -21594,7 +21594,7 @@
 	      if (window.__CEREBRAL_DEVTOOLS_GLOBAL_HOOK__) {
 	        window.__CEREBRAL_DEVTOOLS_GLOBAL_HOOK__.signals = controller.getSignals();
 	      }
-	      var event = new Event('cerebral.dev.cerebralPing');
+	      var event = new CustomEvent('cerebral.dev.cerebralPing');
 	      window.dispatchEvent(event);
 	    }
 	  };
@@ -26807,6 +26807,13 @@
 	  }
 	
 	  _createClass(Todo, [{
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps) {
+	      if (!prevProps.todo.$isEditing && this.props.todo.$isEditing) {
+	        this.refs.edit.focus();
+	      }
+	    }
+	  }, {
 	    key: 'edit',
 	    value: function edit() {
 	      var _this = this;
@@ -26838,7 +26845,9 @@
 	    key: 'onNewTitleSubmit',
 	    value: function onNewTitleSubmit(event) {
 	      event.preventDefault();
-	      this.refs.edit.blur();
+	      this.props.signals.app.list.newTitleSubmitted({
+	        ref: this.props.todo.$ref
+	      });
 	    }
 	  }, {
 	    key: 'onCompletedToggle',
@@ -26857,7 +26866,7 @@
 	  }, {
 	    key: 'onNewTitleBlur',
 	    value: function onNewTitleBlur() {
-	      this.props.signals.app.list.newTitleSubmitted({
+	      this.props.signals.app.list.newTitleAborted({
 	        ref: this.props.todo.$ref
 	      });
 	    }
@@ -27235,7 +27244,7 @@
 	
 	var _modulesList2 = _interopRequireDefault(_modulesList);
 	
-	var _modulesFooter = __webpack_require__(241);
+	var _modulesFooter = __webpack_require__(243);
 	
 	var _modulesFooter2 = _interopRequireDefault(_modulesFooter);
 	
@@ -27557,21 +27566,25 @@
 	
 	var _signalsNewTitleSubmitted2 = _interopRequireDefault(_signalsNewTitleSubmitted);
 	
-	var _signalsRemoveTodoClicked = __webpack_require__(233);
+	var _signalsRemoveTodoClicked = __webpack_require__(234);
 	
 	var _signalsRemoveTodoClicked2 = _interopRequireDefault(_signalsRemoveTodoClicked);
 	
-	var _signalsTodoDoubleClicked = __webpack_require__(235);
+	var _signalsTodoDoubleClicked = __webpack_require__(236);
 	
 	var _signalsTodoDoubleClicked2 = _interopRequireDefault(_signalsTodoDoubleClicked);
 	
-	var _signalsToggleAllChanged = __webpack_require__(237);
+	var _signalsToggleAllChanged = __webpack_require__(238);
 	
 	var _signalsToggleAllChanged2 = _interopRequireDefault(_signalsToggleAllChanged);
 	
-	var _signalsToggleCompletedChanged = __webpack_require__(239);
+	var _signalsToggleCompletedChanged = __webpack_require__(240);
 	
 	var _signalsToggleCompletedChanged2 = _interopRequireDefault(_signalsToggleCompletedChanged);
+	
+	var _signalsNewTitleAborted = __webpack_require__(242);
+	
+	var _signalsNewTitleAborted2 = _interopRequireDefault(_signalsNewTitleAborted);
 	
 	exports['default'] = function () {
 	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
@@ -27596,7 +27609,8 @@
 	      removeTodoClicked: _signalsRemoveTodoClicked2['default'],
 	      todoDoubleClicked: _signalsTodoDoubleClicked2['default'],
 	      toggleAllChanged: _signalsToggleAllChanged2['default'],
-	      toggleCompletedChanged: _signalsToggleCompletedChanged2['default']
+	      toggleCompletedChanged: _signalsToggleCompletedChanged2['default'],
+	      newTitleAborted: _signalsNewTitleAborted2['default']
 	    });
 	  };
 	};
@@ -27656,15 +27670,39 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsStopEditingTodoJs = __webpack_require__(232);
+	var _actionsOverwriteTodoTitleJs = __webpack_require__(232);
+	
+	var _actionsOverwriteTodoTitleJs2 = _interopRequireDefault(_actionsOverwriteTodoTitleJs);
+	
+	var _actionsStopEditingTodoJs = __webpack_require__(233);
 	
 	var _actionsStopEditingTodoJs2 = _interopRequireDefault(_actionsStopEditingTodoJs);
 	
-	exports['default'] = [_actionsStopEditingTodoJs2['default']];
+	exports['default'] = [_actionsOverwriteTodoTitleJs2['default'], _actionsStopEditingTodoJs2['default']];
 	module.exports = exports['default'];
 
 /***/ },
 /* 232 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	function overwriteTodoTitle(_ref) {
+	  var input = _ref.input;
+	  var module = _ref.module;
+	
+	  var todo = ['todos', input.ref];
+	  module.state.set([].concat(todo, ['title']), module.state.get([].concat(todo, ['$newTitle'])));
+	}
+	
+	exports['default'] = overwriteTodoTitle;
+	module.exports = exports['default'];
+
+/***/ },
+/* 233 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27678,24 +27716,23 @@
 	  var module = _ref.module;
 	
 	  var todoPath = ['todos', input.ref];
-	  var todo = state.get(todoPath);
+	  var todo = module.state.get(todoPath);
 	
 	  if (!todo.$newTitle) {
 	    return;
 	  }
 	
-	  state.merge(todoPath, {
-	    $isEditing: false,
-	    title: todo.$newTitle
+	  module.state.merge(todoPath, {
+	    $isEditing: false
 	  });
-	  state.unset([].concat(todoPath, ['$newTitle']));
+	  module.state.unset([].concat(todoPath, ['$newTitle']));
 	};
 	
 	exports['default'] = stopEditingTodo;
 	module.exports = exports['default'];
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27706,7 +27743,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsRemoveTodoJs = __webpack_require__(234);
+	var _actionsRemoveTodoJs = __webpack_require__(235);
 	
 	var _actionsRemoveTodoJs2 = _interopRequireDefault(_actionsRemoveTodoJs);
 	
@@ -27714,7 +27751,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27734,7 +27771,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27745,7 +27782,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsEditTodoJs = __webpack_require__(236);
+	var _actionsEditTodoJs = __webpack_require__(237);
 	
 	var _actionsEditTodoJs2 = _interopRequireDefault(_actionsEditTodoJs);
 	
@@ -27753,7 +27790,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27778,7 +27815,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27789,7 +27826,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsToggleAllCheckedJs = __webpack_require__(238);
+	var _actionsToggleAllCheckedJs = __webpack_require__(239);
 	
 	var _actionsToggleAllCheckedJs2 = _interopRequireDefault(_actionsToggleAllCheckedJs);
 	
@@ -27797,7 +27834,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27824,7 +27861,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27835,7 +27872,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsToggleTodoCompletedJs = __webpack_require__(240);
+	var _actionsToggleTodoCompletedJs = __webpack_require__(241);
 	
 	var _actionsToggleTodoCompletedJs2 = _interopRequireDefault(_actionsToggleTodoCompletedJs);
 	
@@ -27843,7 +27880,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27865,7 +27902,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27876,15 +27913,34 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _signalsAllTodosClicked = __webpack_require__(242);
+	var _actionsStopEditingTodoJs = __webpack_require__(233);
+	
+	var _actionsStopEditingTodoJs2 = _interopRequireDefault(_actionsStopEditingTodoJs);
+	
+	exports['default'] = [_actionsStopEditingTodoJs2['default']];
+	module.exports = exports['default'];
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _signalsAllTodosClicked = __webpack_require__(244);
 	
 	var _signalsAllTodosClicked2 = _interopRequireDefault(_signalsAllTodosClicked);
 	
-	var _signalsClearCompletedClicked = __webpack_require__(244);
+	var _signalsClearCompletedClicked = __webpack_require__(246);
 	
 	var _signalsClearCompletedClicked2 = _interopRequireDefault(_signalsClearCompletedClicked);
 	
-	var _signalsFilterClicked = __webpack_require__(246);
+	var _signalsFilterClicked = __webpack_require__(248);
 	
 	var _signalsFilterClicked2 = _interopRequireDefault(_signalsFilterClicked);
 	
@@ -27908,7 +27964,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 242 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27919,7 +27975,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsUnsetFilterJs = __webpack_require__(243);
+	var _actionsUnsetFilterJs = __webpack_require__(245);
 	
 	var _actionsUnsetFilterJs2 = _interopRequireDefault(_actionsUnsetFilterJs);
 	
@@ -27927,7 +27983,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 243 */
+/* 245 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27946,7 +28002,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 244 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27957,7 +28013,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsClearCompletedJs = __webpack_require__(245);
+	var _actionsClearCompletedJs = __webpack_require__(247);
 	
 	var _actionsClearCompletedJs2 = _interopRequireDefault(_actionsClearCompletedJs);
 	
@@ -27965,7 +28021,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 245 */
+/* 247 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27989,7 +28045,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 246 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28000,7 +28056,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetFilterJs = __webpack_require__(247);
+	var _actionsSetFilterJs = __webpack_require__(249);
 	
 	var _actionsSetFilterJs2 = _interopRequireDefault(_actionsSetFilterJs);
 	
@@ -28008,7 +28064,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 247 */
+/* 249 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28027,7 +28083,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 248 */
+/* 250 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28060,7 +28116,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 249 */
+/* 251 */
 /***/ function(module, exports) {
 
 	module.exports = function (options) {
@@ -28159,7 +28215,7 @@
 
 
 /***/ },
-/* 250 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28170,7 +28226,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _cerebralRouter = __webpack_require__(251);
+	var _cerebralRouter = __webpack_require__(253);
 	
 	var _cerebralRouter2 = _interopRequireDefault(_cerebralRouter);
 	
@@ -28186,13 +28242,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 251 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Mapper = __webpack_require__(252);
+	var Mapper = __webpack_require__(254);
 	var addressbar;
 	try {
-	  addressbar = __webpack_require__(257);
+	  addressbar = __webpack_require__(259);
 	} catch(e) {
 	  addressbar = {
 	    pathname: '/',
@@ -28377,13 +28433,13 @@
 
 
 /***/ },
-/* 252 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var mapper = __webpack_require__(253);
-	var URLON = __webpack_require__(254);
-	var pathToRegexp = __webpack_require__(255);
+	var mapper = __webpack_require__(255);
+	var URLON = __webpack_require__(256);
+	var pathToRegexp = __webpack_require__(257);
 	
 	function compileRoute (route, options) {
 	  var re;
@@ -28470,7 +28526,7 @@
 
 
 /***/ },
-/* 253 */
+/* 255 */
 /***/ function(module, exports) {
 
 	module.exports = function mapper (compileFn, options) {
@@ -28523,7 +28579,7 @@
 
 
 /***/ },
-/* 254 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	URLON = {
@@ -28652,10 +28708,10 @@
 
 
 /***/ },
-/* 255 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isarray = __webpack_require__(256)
+	var isarray = __webpack_require__(258)
 	
 	/**
 	 * Expose `pathToRegexp`.
@@ -29048,7 +29104,7 @@
 
 
 /***/ },
-/* 256 */
+/* 258 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -29057,10 +29113,10 @@
 
 
 /***/ },
-/* 257 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var URL = __webpack_require__(258);
+	/* WEBPACK VAR INJECTION */(function(global) {var URL = __webpack_require__(260);
 	var EventEmitter = __webpack_require__(181).EventEmitter;
 	var instance = null;
 	
@@ -29274,14 +29330,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 258 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var required = __webpack_require__(259)
-	  , lolcation = __webpack_require__(260)
-	  , qs = __webpack_require__(261)
+	var required = __webpack_require__(261)
+	  , lolcation = __webpack_require__(262)
+	  , qs = __webpack_require__(263)
 	  , relativere = /^\/(?!\/)/;
 	
 	/**
@@ -29508,7 +29564,7 @@
 
 
 /***/ },
-/* 259 */
+/* 261 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29552,7 +29608,7 @@
 
 
 /***/ },
-/* 260 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -29582,7 +29638,7 @@
 	 */
 	module.exports = function lolcation(loc) {
 	  loc = loc || global.location || {};
-	  URL = URL || __webpack_require__(258);
+	  URL = URL || __webpack_require__(260);
 	
 	  var finaldestination = {}
 	    , type = typeof loc
@@ -29604,7 +29660,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 261 */
+/* 263 */
 /***/ function(module, exports) {
 
 	'use strict';
