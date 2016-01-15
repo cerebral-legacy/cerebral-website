@@ -27718,10 +27718,6 @@
 	  var todoPath = ['todos', input.ref];
 	  var todo = module.state.get(todoPath);
 	
-	  if (!todo.$newTitle) {
-	    return;
-	  }
-	
 	  module.state.merge(todoPath, {
 	    $isEditing: false
 	  });
