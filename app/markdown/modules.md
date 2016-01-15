@@ -47,6 +47,9 @@ export default (options = {}) => {
       somethingHappened
     });
 
+    // Signals for synchronous UI updates,
+    // typically inputs. Normal signals runs
+    // on animation frame
     module.signalsSync({
       somethingElseHappened
     });
