@@ -1,4 +1,4 @@
-To fully support IE9, you must implement some basic polyfills/fixes. 
+To fully support IE 9, 10, and 11 you must implement some basic polyfills/fixes. 
 
 Cerebral Router and its dependencies rely on Promises, which Babel takes care of with its *runtime* option, `babel?optional[]=runtime`.
 
