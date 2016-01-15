@@ -3,12 +3,12 @@ debounce can be used to throttle signals or parts of signal, for example on keyb
 *fieldChanged.js*
 ```javascript
 
-import set from 'cerebral-addons/set';
+import copy from 'cerebral-addons/copy';
 import debounce from 'cerebral-addons/debounce';
 import validateForm from '../actions/validateForm';
 
 export default [
-  set('input:/value', 'state:/form.field'),
+  copy('input:/value', 'state:/form.field'),
   debounce(500, [
     validateForm
   ])
