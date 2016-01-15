@@ -41,6 +41,7 @@ import regexp from './markdown/regexp.md';
 import testing from './markdown/testing.md';
 import addons from './markdown/addons.md';
 import addonsCopy from './markdown/addons_copy.md';
+import addonsDebounce from './markdown/addons_debounce.md';
 import addonsSet from './markdown/addons_set.md';
 import addonsUnset from './markdown/addons_unset.md';
 import addonsToggle from './markdown/addons_toggle.md';
@@ -180,6 +181,9 @@ export default [
     subContent: [{
       label: 'Copy',
       content: MTRC(addonsCopy).tree
+    }, {
+      label: 'Debounce',
+      content: MTRC(addonsDebounce).tree
     }, {
       label: 'Set',
       content: MTRC(addonsSet).tree
