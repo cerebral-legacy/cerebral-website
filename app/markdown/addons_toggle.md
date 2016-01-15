@@ -9,3 +9,7 @@ export default [
   toggle('state:/hasAgreed')
 ];
 ```
+
+### Options
+
+* `toggle(path, onValue = true, offValue = false)`

@@ -53,3 +53,7 @@ export default [
   }
 ];
 ```
+
+### Options
+
+* `when(path, outputs = { isTrue: truthy, isFalse: otherwise }, emptyObjectsAreFalse = true)`
