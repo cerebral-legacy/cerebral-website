@@ -11,7 +11,3 @@ To build a *Cerebral* application you need three parts. A **state** package, a *
 `$ npm install react-dom`
 
 Look at different packages using the menu and get details on how to install and use them.
-
-### The debugger
-
-You can install the Cerebral debugger from the [chrome store](https://chrome.google.com/webstore/detail/cerebral-debugger/ddefoknoniaeoikpgneklcbjlipfedbb).

@@ -113,6 +113,9 @@
 .icon-gamepad:before {
     content: "\f11b";
 }
+.icon-bug:before {
+    content: "\f188";
+}
 
 html, body {
     margin: 0;

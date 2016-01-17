@@ -50,6 +50,7 @@ import universal from './markdown/universal.md';
 import snabbdom from './markdown/snabbdom.md';
 import moduleRecorder from './markdown/module_recorder.md';
 import moduleRouter from './markdown/module_router.md';
+import theDebugger from './markdown/debugger.md';
 
 export default [
   {
@@ -62,6 +63,11 @@ export default [
     video: 'https://www.youtube.com/embed/dMvMts0nWNs',
     icon: 'power-off',
     content: MTRC(getStarted).tree
+  }, {
+    label: 'Debugger',
+    icon: 'bug',
+    content: MTRC(theDebugger).tree,
+    video: 'https://www.youtube.com/embed/cq1rmXGk59o'
   }, {
     label: 'Install',
     icon: 'download',
