@@ -62,45 +62,54 @@ export default [
     label: 'Get Started',
     video: 'https://www.youtube.com/embed/dMvMts0nWNs',
     icon: 'power-off',
+    text: getStarted,
     content: MTRC(getStarted).tree
   }, {
     label: 'Debugger',
     icon: 'bug',
+    text: theDebugger,
     content: MTRC(theDebugger).tree,
     video: 'https://www.youtube.com/embed/cq1rmXGk59o'
   }, {
     label: 'Install',
     icon: 'download',
+    text: install,
     content: MTRC(install).tree,
     subContent: [
       {
         label: 'React',
         icon: 'television',
+        text: react,
         content: MTRC(react).tree
       },
       {
         label: 'Snabbdom',
         icon: 'television',
+        text: snabbdom,
         content: MTRC(snabbdom).tree
       },
       {
         label: 'Angular',
         icon: 'television',
+        text: angular,
         content: MTRC(angular).tree
       },
       {
         label: 'Baobab',
         icon: 'database',
+        text: baobab,
         content: MTRC(baobab).tree
       },
       {
         label: 'Immutable JS',
         icon: 'database',
+        text: immutableJS,
         content: MTRC(immutableJS).tree
       },
       {
         label: 'Internet Explorer',
         icon: 'internet-explorer',
+        text: internetExplorer,
         content: MTRC(internetExplorer).tree
       }
     ]
@@ -108,39 +117,48 @@ export default [
   {
     label: 'Modules',
     icon: 'th-large',
+    text: modules,
     content: MTRC(modules).tree,
     video: 'https://www.youtube.com/embed/FNB0uIQtGrw',
     subContent: [{
       label: 'Recorder',
+      text: moduleRecorder,
       content: MTRC(moduleRecorder).tree
     }, {
       label: 'Router',
+      text: moduleRouter,
       content: MTRC(moduleRouter).tree
     }]
   },
   {
     label: 'Signals',
     icon: 'file-text',
+    text: signals,
     content: MTRC(signals).tree,
     subContent: [
       {
         label: 'Actions',
+        text: actions,
         content: MTRC(actions).tree
       },
       {
         label: 'Input',
+        text: input,
         content: MTRC(input).tree
       },
       {
         label: 'State',
+        text: state,
         content: MTRC(state).tree
       },
       {
         label: 'Output',
+        text: output,
         content: MTRC(output).tree
       },
       {
         label: 'Async',
+        text: async,
         content: MTRC(async).tree
       }
     ]
@@ -148,34 +166,42 @@ export default [
   {
     label: 'Utilities',
     icon: 'wrench',
+    text: utilities,
     content: MTRC(utilities).tree,
     subContent: [
       {
         label: 'Services',
+        text: services,
         content: MTRC(services).tree
       },
       {
         label: 'Compute',
+        text: compute,
         content: MTRC(compute).tree
       },
       {
         label: 'Factories',
+        text: factories,
         content: MTRC(factories).tree
       },
       {
         label: 'Chains',
+        text: chains,
         content: MTRC(chains).tree
       },
       {
         label: 'Type checking',
+        text: typeChecking,
         content: MTRC(typeChecking).tree
       },
       {
         label: 'Events',
+        text: events,
         content: MTRC(events).tree
       },
       {
         label: 'Universal',
+        text: universal,
         content: MTRC(universal).tree
       }
     ]
@@ -183,58 +209,73 @@ export default [
   {
     label: 'Addons',
     icon: 'briefcase',
+    text: addons,
     content: MTRC(addons).tree,
     subContent: [{
       label: 'Copy',
+      text: addonsCopy,
       content: MTRC(addonsCopy).tree
     }, {
       label: 'Debounce',
+      text: addonsDebounce,
       content: MTRC(addonsDebounce).tree
     }, {
       label: 'Set',
+      text: addonsSet,
       content: MTRC(addonsSet).tree
     }, {
       label: 'Unset',
+      text: addonsUnset,
       content: MTRC(addonsUnset).tree
     }, {
       label: 'Toggle',
+      text: addonsToggle,
       content: MTRC(addonsToggle).tree
     }, {
       label: 'When',
+      text: addonsWhen,
       content: MTRC(addonsWhen).tree
     }]
   },
   {
     label: 'Routing',
     icon: 'map-signs',
+    text: routing,
     content: MTRC(routing).tree,
     subContent: [
       {
         label: 'Nesting',
+        text: nesting,
         content: MTRC(nesting).tree
       },
       {
         label: 'Hash',
+        text: hash,
         content: MTRC(hash).tree
       },
       {
         label: 'Base',
+        text: base,
         content: MTRC(base).tree
       },
       {
         label: 'Redirect',
+        text: redirect,
         content: MTRC(redirect).tree
       },
       {
         label: 'Regexp',
+        text: regexp,
         content: MTRC(regexp).tree
       },
       {
         label: 'Hyperlinks',
+        text: hyperlinks,
         content: MTRC(hyperlinks).tree
       },
       {
         label: 'Transitions',
+        text: transitions,
         content: MTRC(transitions).tree
       }
     ]
@@ -242,41 +283,50 @@ export default [
   {
     label: 'How to',
     icon: 'graduation-cap',
+    text: howto,
     content: MTRC(howto).tree,
     subContent: [{
       label: 'Server requests',
+      text: serverRequests,
       content: MTRC(serverRequests).tree
     }]
   },
   {
     label: 'FAQ',
     icon: 'question',
+    text: faq,
     content: MTRC(faq).tree
   },
   {
     label: 'Testing',
     icon: 'check-circle-o', // tnr: what icon should we use here?
+    text: testing,
     content: MTRC(testing).tree
   },
   {
     label: 'Best Practices',
     icon: 'heart',
+    text: bestPractices,
     content: MTRC(bestPractices).tree,
     subContent: [
       {
         label: 'Structure',
+        text: structure,
         content: MTRC(structure).tree
       },
       {
         label: 'Relational data',
+        text: relational,
         content: MTRC(relational).tree
       },
       {
         label: 'Props and State',
+        text: propsAndState,
         content: MTRC(propsAndState).tree
       },
       {
         label: 'Responsibilities',
+        text: responsibilities,
         content: MTRC(responsibilities).tree
       }
     ]

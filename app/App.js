@@ -20,10 +20,66 @@ class App extends React.Component {
     signals: React.PropTypes.object,
     videoSrc: React.PropTypes.any
   }
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchResults: [],
+      query: ''
+    };
+  }
   componentDidUpdate(prevProps) {
     if (prevProps.content !== this.props.content || prevProps.subContent !== this.props.subContent) {
       this.refs.content.scrollTop = 0;
     }
+  }
+  search(query) {
+    if (query.length < 3) {
+      return this.setState({
+        searchResults: [],
+        query: query
+      });
+    }
+    const searchResults = menu.reduce((results, item) => {
+      const extractHits = (currentItem) => {
+        if (!currentItem.text) {
+          return;
+        }
+        const hits = currentItem.text.match(new RegExp(query, 'g'));
+
+        if (hits && hits.length) {
+          results.push({
+            hitsCount: hits.length,
+            label: currentItem.label,
+            parent: item === currentItem ? null : item.label.toLowerCase()
+          });
+        }
+      };
+
+      extractHits(item);
+
+      if (item.subContent) {
+        item.subContent.forEach(extractHits);
+      }
+
+      return results;
+    }, []);
+
+    searchResults.sort((a, b) => {
+      if (a.hitsCount > b.hitsCount) {
+        return -1;
+      }
+
+      if (a.hitsCount < b.hitsCount) {
+        return 1;
+      }
+
+      return 0;
+    });
+
+    this.setState({
+      searchResults,
+      query
+    });
   }
   openGithub() {
     window.open('http://www.github.com/cerebral/cerebral');
@@ -93,19 +149,46 @@ class App extends React.Component {
         <div className="header" style={headerStyle}>
           <i className="icon icon-bars link" onClick={() => this.props.signals.menuToggled()} style={{margin: 10}}></i>
           <div className="github" onClick={() => this.openRepo()}>
-            <i className="icon icon-pencil"> Edit page</i>
+            <i className="icon icon-pencil"> Edit</i>
           </div>
           <div className="tweet" onClick={() => this.openGithub()}>
-            <i className="icon icon-github-square"> Project repo</i>
+            <i className="icon icon-github-square"> Repo</i>
           </div>
           <div className="tweet" onClick={() => this.createTweet()}>
-            <i className="icon icon-twitter"> Tweet it!</i>
+            <i className="icon icon-twitter"> Tweet</i>
           </div>
           <div className="tweet" onClick={() => this.openChat()}>
-            <i className="icon icon-comments"> Chat with us</i>
+            <i className="icon icon-comments"> Chat</i>
           </div>
           <div className="tweet" onClick={() => location.href = "/todomvc"}>
             <i className="icon icon-gamepad"> Demo</i>
+          </div>
+          <div className="tweet">
+            <i className="icon icon-search"/>
+            <input className="search-input" value={this.state.query} onChange={(e) => this.search(e.target.value)}/>
+            {
+              this.state.searchResults.length ?
+                <ul className="search-results">
+                  {this.state.searchResults.map((result, index) => (
+                    <li key={index} onClick={() => {
+                      if (result.parent) {
+                        this.props.signals.submenuClicked({
+                          content: result.parent,
+                          subContent: result.label.toLowerCase()
+                        });
+                      } else {
+                        this.props.signals.menuClicked({
+                          content: result.label.toLowerCase()
+                        });
+                      }
+                    }}>
+                      {result.label}
+                    </li>
+                  ))}
+                </ul>
+              :
+                null
+            }
           </div>
         </div>
         <div ref="content" className="content" style={contentStyle}>
@@ -168,7 +251,7 @@ class App extends React.Component {
     };
 
     return (
-      <div style={{height: '100%'}}>
+      <div style={{height: '100%'}} onClick={() => this.setState({searchResults: [], query: ''})}>
         {this.renderMenu()}
         {this.renderPage()}
         {

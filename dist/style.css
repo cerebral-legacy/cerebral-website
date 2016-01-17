@@ -23,6 +23,9 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.icon-search:before {
+    content: "\f002";
+}
 .icon-heart:before {
 	content: "\f004";
 }
@@ -764,10 +767,11 @@ img {
 }
 
 .github, .tweet {
+	position: relative;
   float: right;
   cursor: pointer;
   height: 30px;
-  margin: 10px;
+  margin: 10px 10px 10px 0;
 }
 
 .tweet {
@@ -860,4 +864,38 @@ img {
 	top: 0;
 	font-size: 0.7em;
 	line-height: normal;
+}
+
+.search-input {
+	border: 1px solid #DDD;
+	border-radius: 3px;
+	height: 25px;
+	margin-right: 10px;
+	outline: none;
+	font-size: 14px;
+	text-indent: 5px;
+}
+
+.search-results {
+	position: absolute;
+	top: 28px;
+	left: 45px;
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	border-radius: 3px;
+	min-width: 140px;
+	box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+}
+
+.search-results li {
+	padding: 5px;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 0;
+	height: 25px;
+	line-height: 25px;
+}
+
+.search-results li:hover {
+  background-color: #FAFAFA;
 }
