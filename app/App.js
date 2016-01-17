@@ -44,7 +44,7 @@ class App extends React.Component {
         if (!currentItem.text) {
           return;
         }
-        const hits = currentItem.text.match(new RegExp(query, 'g'));
+        const hits = currentItem.text.toLowerCase().match(new RegExp(query, 'g'));
 
         if (hits && hits.length) {
           results.push({
@@ -182,7 +182,7 @@ class App extends React.Component {
                         });
                       }
                     }}>
-                      {result.label}
+                      <strong>{result.label}</strong> ({result.hitsCount} hits)
                     </li>
                   ))}
                 </ul>

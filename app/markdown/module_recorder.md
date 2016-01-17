@@ -7,7 +7,6 @@ When playing back a recording the signals of Cerebral will actually run exactly 
 `$ npm install cerebral-module-recorder`
 
 ### Use
-
 ```javascript
 
 import controller from './controller';
@@ -21,7 +20,6 @@ controller.modules({
 ```
 
 #### State
-
 ```javascript
 
 {
@@ -33,7 +31,6 @@ controller.modules({
 ```
 
 #### Signals
-
 ```javascript
 
 // Will start the recorder. Optionally choose what specific paths in the state
