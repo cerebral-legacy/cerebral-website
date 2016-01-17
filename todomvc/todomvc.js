@@ -66,9 +66,9 @@
 	
 	var _srcIndexJs2 = _interopRequireDefault(_srcIndexJs);
 	
-	var _cerebralBaobab = __webpack_require__(182);
+	var _cerebralModelBaobab = __webpack_require__(182);
 	
-	var _cerebralBaobab2 = _interopRequireDefault(_cerebralBaobab);
+	var _cerebralModelBaobab2 = _interopRequireDefault(_cerebralModelBaobab);
 	
 	var _cerebralViewReact = __webpack_require__(191);
 	
@@ -76,30 +76,30 @@
 	
 	var _modulesAppComponentsApp2 = _interopRequireDefault(_modulesAppComponentsApp);
 	
-	var _modulesApp = __webpack_require__(217);
+	var _modulesApp = __webpack_require__(209);
 	
 	var _modulesApp2 = _interopRequireDefault(_modulesApp);
 	
-	var _modulesRefs = __webpack_require__(250);
+	var _modulesRefs = __webpack_require__(242);
 	
 	var _modulesRefs2 = _interopRequireDefault(_modulesRefs);
 	
-	var _cerebralModuleRecorder = __webpack_require__(251);
+	var _cerebralModuleRecorder = __webpack_require__(243);
 	
 	var _cerebralModuleRecorder2 = _interopRequireDefault(_cerebralModuleRecorder);
 	
-	var _modulesRouter = __webpack_require__(252);
+	var _cerebralModuleRouter = __webpack_require__(244);
 	
-	var _modulesRouter2 = _interopRequireDefault(_modulesRouter);
+	var _cerebralModuleRouter2 = _interopRequireDefault(_cerebralModuleRouter);
 	
-	var controller = (0, _srcIndexJs2['default'])((0, _cerebralBaobab2['default'])({}));
+	var controller = (0, _srcIndexJs2['default'])((0, _cerebralModelBaobab2['default'])({}));
 	
 	controller.modules({
 	  app: (0, _modulesApp2['default'])(),
 	
 	  refs: (0, _modulesRefs2['default'])(),
 	  recorder: (0, _cerebralModuleRecorder2['default'])(),
-	  router: (0, _modulesRouter2['default'])({
+	  router: (0, _cerebralModuleRouter2['default'])({
 	    '/': 'app.footer.allTodosClicked',
 	    '/:filter': 'app.footer.filterClicked'
 	  }, {
@@ -17033,15 +17033,21 @@
 	 * @typechecks
 	 */
 	
+	/* eslint-disable fb-www/typeof-undefined */
+	
 	/**
 	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
 	 * not safe to call document.activeElement if there is nothing focused.
 	 *
-	 * The activeElement will be null only if the document body is not yet defined.
+	 * The activeElement will be null only if the document or document body is not
+	 * yet defined.
 	 */
-	"use strict";
+	'use strict';
 	
 	function getActiveElement() /*?DOMElement*/{
+	  if (typeof document === 'undefined') {
+	    return null;
+	  }
 	  try {
 	    return document.activeElement || document.body;
 	  } catch (e) {
@@ -19040,7 +19046,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.5';
+	module.exports = '0.14.6';
 
 /***/ },
 /* 155 */
@@ -20036,7 +20042,7 @@
 	  var compute = Compute(model);
 	  var signals = {};
 	  var devtools = null;
-	  var signalStore = CreateSignalStore(signals, controller);
+	  var signalStore = CreateSignalStore(controller);
 	  var modules = {};
 	  services = services || {};
 	
@@ -20295,6 +20301,17 @@
 	
 	                currentBranch.forEach(function (action) {
 	
+	                  // If any signals has run with this action, run them
+	                  // as well
+	                  if (action.signals) {
+	                    action.signals.forEach(function (signal) {
+	                      var signalMethodPath = signal.name.split('.').reduce(function (signals, key) {
+	                        return signals[key];
+	                      }, controller.getSignals());
+	                      signalMethodPath(signal.input, { branches: signal.branches });
+	                    });
+	                  }
+	
 	                  utils.merge(signalArgs, action.output);
 	
 	                  if (action.outputPath) {
@@ -20331,7 +20348,7 @@
 	                    utils.verifyInput(action.name, signal.name, actionFunc.input, inputArg);
 	                  }
 	
-	                  signalStore.addAsyncAction();
+	                  signalStore.addAsyncAction(action);
 	
 	                  action.isExecuting = true;
 	                  action.input = utils.merge({}, inputArg);
@@ -20354,7 +20371,7 @@
 	                    action.isExecuting = false;
 	                    action.output = result.arg;
 	                    utils.merge(signalArgs, result.arg);
-	                    signalStore.removeAsyncAction();
+	                    signalStore.removeAsyncAction(action);
 	
 	                    if (recorder.isRecording()) {
 	                      recorderSignal.asyncActionPaths.push(action.path.join('.'));
@@ -20997,7 +21014,7 @@
 	
 	var utils = __webpack_require__(169);
 	
-	module.exports = function (signalMethods, controller) {
+	module.exports = function (controller) {
 	
 	  var signals = [];
 	  var _willKeepState = false;
@@ -21006,6 +21023,8 @@
 	  var currentIndex = signals.length - 1;
 	  var hasRememberedInitial = false;
 	
+	  var asyncActionsRunning = [];
+	
 	  return {
 	
 	    // Flips flag of storing signals or replacing them
@@ -21013,32 +21032,26 @@
 	      _willKeepState = !_willKeepState;
 	    },
 	
-	    addAsyncAction: function addAsyncAction() {
-	      executingAsyncActionsCount++;
+	    addAsyncAction: function addAsyncAction(action) {
+	      asyncActionsRunning.push(action);
 	    },
 	
-	    removeAsyncAction: function removeAsyncAction() {
-	      executingAsyncActionsCount--;
+	    removeAsyncAction: function removeAsyncAction(action) {
+	      asyncActionsRunning.splice(asyncActionsRunning.indexOf(action), 1);
 	    },
 	
 	    addSignal: function addSignal(signal) {
 	
-	      if (utils.isDeveloping()) {
-	        currentIndex++;
+	      if (utils.isDeveloping() && !_isRemembering) {
 	
-	        // When executing signals in EventStore, do not add them again
-	        if (_isRemembering) {
-	          return;
+	        if (asyncActionsRunning.length) {
+	          var currentAction = asyncActionsRunning[asyncActionsRunning.length - 1];
+	          currentAction.signals = currentAction.signals || [];
+	          currentAction.signals.push(signal);
+	        } else {
+	          currentIndex++;
+	          signals.push(signal);
 	        }
-	
-	        // If we have travelled back and start adding new signals the signals not triggered should
-	        // be removed. This effectively "changes history"
-	        if (currentIndex < signals.length) {
-	          signals.splice(currentIndex, signals.length - currentIndex);
-	        }
-	
-	        // Add signal and set the current signal to be the recently added signal
-	        signals.push(signal);
 	      }
 	    },
 	
@@ -21049,7 +21062,8 @@
 	        return;
 	      }
 	
-	      this.remember(signals.length - 1);
+	      currentIndex = signals.length - 1;
+	      this.remember(currentIndex);
 	    },
 	
 	    // Will reset the SignalStore
@@ -21102,12 +21116,9 @@
 	            }
 	
 	            // Trigger signal and then set what has become the current signal
-	            var signalName = signal.name.split('.');
-	            var signalMethodPath = signalMethods;
-	            while (signalName.length) {
-	              signalMethodPath = signalMethodPath[signalName.shift()];
-	            }
-	
+	            var signalMethodPath = signal.name.split('.').reduce(function (signals, key) {
+	              return signals[key];
+	            }, controller.getSignals());
 	            signalMethodPath(signal.input, { branches: signal.branches });
 	            currentIndex = x;
 	          }
@@ -21140,7 +21151,7 @@
 	    },
 	
 	    isExecutingAsync: function isExecutingAsync() {
-	      return !!executingAsyncActionsCount;
+	      return !!asyncActionsRunning.length;
 	    },
 	
 	    isRemembering: function isRemembering() {
@@ -21518,11 +21529,11 @@
 	        window.dispatchEvent(event);
 	      });
 	    } else {
+	      signalStore.setSignals(signals);
+	      signalStore.rememberInitial(signalStore.getSignals().length - 1);
 	      var event = new CustomEvent('cerebral.dev.cerebralPong', {
 	        detail: getDetail()
 	      });
-	      signalStore.setSignals(signals);
-	      signalStore.rememberInitial(signalStore.getSignals().length - 1);
 	      window.dispatchEvent(event);
 	    }
 	  };
@@ -21561,6 +21572,18 @@
 	
 	  window.addEventListener('cerebral.dev.remember', function (event) {
 	    signalStore.remember(event.detail);
+	    update();
+	  });
+	
+	  window.addEventListener('cerebral.dev.rememberNow', function (event) {
+	    signalStore.rememberNow();
+	    update();
+	  });
+	
+	  window.addEventListener('cerebral.dev.rewrite', function (event) {
+	    signalStore.remember(event.detail);
+	    var signals = signalStore.getSignals();
+	    signals.splice(event.detail + 1, signals.length - 1 - event.detail);
 	    update();
 	  });
 	
@@ -22050,6 +22073,9 @@
 	          toJSON: function () {
 	            return tree.toJSON();
 	          },
+	          toJS: function (path) {
+	            return tree.get(path);
+	          },
 	          serialize: function (path) {
 	            return tree.serialize(path);
 	          },
@@ -22362,16 +22388,12 @@
 	        }
 	      };
 	
-	      var register = [];
-	
 	      var walk = function walk(data) {
 	        var p = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
 	
 	        // Should we sit a monkey in the tree?
 	        if (data instanceof _monkey.MonkeyDefinition || data instanceof _monkey.Monkey) {
 	          var monkeyInstance = new _monkey.Monkey(_this2, p, data instanceof _monkey.Monkey ? data.definition : data);
-	
-	          register.push(monkeyInstance);
 	
 	          (0, _update3['default'])(_this2._monkeys, p, { type: 'set', value: monkeyInstance }, {
 	            immutable: false,
@@ -22393,9 +22415,6 @@
 	      // Walking the whole tree
 	      if (!arguments.length) {
 	        walk(this._data);
-	        register.forEach(function (m) {
-	          return m.checkRecursivity();
-	        });
 	      } else {
 	        var monkeysNode = getIn(this._monkeys, path).data;
 	
@@ -22405,9 +22424,6 @@
 	        // Let's walk the tree only from the updated point
 	        if (operation !== 'unset') {
 	          walk(node, path);
-	          register.forEach(function (m) {
-	            return m.checkRecursivity();
-	          });
 	        }
 	      }
 	
@@ -22636,6 +22652,24 @@
 	    }
 	
 	    /**
+	     * Method returning a monkey at the given path or else `null`.
+	     *
+	     * @param  {path}        path - Path of the monkey to retrieve.
+	     * @return {Monkey|null}      - The Monkey instance of `null`.
+	     */
+	  }, {
+	    key: 'getMonkey',
+	    value: function getMonkey(path) {
+	      path = coercePath(path);
+	
+	      var monkey = getIn(this._monkeys, [].concat(path)).data;
+	
+	      if (monkey instanceof _monkey.Monkey) return monkey;
+	
+	      return null;
+	    }
+	
+	    /**
 	     * Method used to watch a collection of paths within the tree. Very useful
 	     * to bind UI components and such to the tree.
 	     *
@@ -22726,7 +22760,7 @@
 	/**
 	 * Version
 	 */
-	Baobab.VERSION = '2.3.0';
+	Baobab.VERSION = '2.3.1';
 	module.exports = exports['default'];
 
 /***/ },
@@ -24276,7 +24310,6 @@
 	    this.tree = tree;
 	    this.path = pathInTree;
 	    this.definition = definition;
-	    this.isRecursive = false;
 	
 	    // Adapting the definition's paths & projection to this monkey's case
 	    var projection = definition.projection,
@@ -24305,9 +24338,9 @@
 	     *
 	     * When the tree writes, this listener will check whether the updated paths
 	     * are of any use to the monkey and, if so, will update the tree's node
-	     * where the monkey sits with a lazy getter.
+	     * where the monkey sits.
 	     */
-	    this.listener = function (_ref) {
+	    this.writeListener = function (_ref) {
 	      var path = _ref.data.path;
 	
 	      if (_this2.state.killed) return;
@@ -24318,63 +24351,70 @@
 	      if (concerned) _this2.update();
 	    };
 	
-	    // Binding listener
-	    this.tree.on('write', this.listener);
+	    /**
+	     * Listener on the tree's `monkey` event.
+	     *
+	     * When another monkey updates, this listener will check whether the
+	     * updated paths are of any use to the monkey and, if so, will update the
+	     * tree's node where the monkey sits.
+	     */
+	    this.recursiveListener = function (_ref2) {
+	      var _ref2$data = _ref2.data;
+	      var monkey = _ref2$data.monkey;
+	      var path = _ref2$data.path;
+	
+	      if (_this2.state.killed) return;
+	
+	      // Breaking if this is the same monkey
+	      if (_this2 === monkey) return;
+	
+	      // Is the monkey affected by the current monkey event?
+	      var concerned = (0, _helpers.solveUpdate)([path], _this2.relatedPaths(false));
+	
+	      if (concerned) _this2.update();
+	    };
+	
+	    // Binding listeners
+	    this.tree.on('write', this.writeListener);
+	    this.tree.on('_monkey', this.recursiveListener);
 	
 	    // Updating relevant node
 	    this.update();
 	  }
 	
 	  /**
-	   * Method triggering a recursivity check.
+	   * Method returning solved paths related to the monkey.
 	   *
-	   * @return {Monkey} - Returns itself for chaining purposes.
+	   * @param  {boolean} recursive - Should we compute recursive paths?
+	   * @return {array}             - An array of related paths.
 	   */
 	
 	  _createClass(Monkey, [{
-	    key: 'checkRecursivity',
-	    value: function checkRecursivity() {
-	      var _this3 = this;
-	
-	      this.isRecursive = this.depPaths.some(function (p) {
-	        return !!_type2['default'].monkeyPath(_this3.tree._monkeys, p);
-	      });
-	
-	      // Putting the recursive monkeys' listeners at the end of the stack
-	      // NOTE: this is a dirty hack and a more thorough solution should be found
-	      if (this.isRecursive) {
-	        this.tree.off('write', this.listener);
-	        this.tree.on('write', this.listener);
-	      }
-	
-	      return this;
-	    }
-	
-	    /**
-	     * Method returning solved paths related to the monkey.
-	     *
-	     * @return {array} - An array of related paths.
-	     */
-	  }, {
 	    key: 'relatedPaths',
 	    value: function relatedPaths() {
-	      var _this4 = this;
+	      var _this3 = this;
+	
+	      var recursive = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
 	
 	      var paths = undefined;
 	
 	      if (this.definition.hasDynamicPaths) paths = this.depPaths.map(function (p) {
-	        return (0, _helpers.getIn)(_this4.tree._data, p).solvedPath;
+	        return (0, _helpers.getIn)(_this3.tree._data, p).solvedPath;
 	      });else paths = this.depPaths;
 	
-	      if (!this.isRecursive) return paths;
+	      var isRecursive = recursive && this.depPaths.some(function (p) {
+	        return !!_type2['default'].monkeyPath(_this3.tree._monkeys, p);
+	      });
+	
+	      if (!isRecursive) return paths;
 	
 	      return paths.reduce(function (accumulatedPaths, path) {
-	        var monkeyPath = _type2['default'].monkeyPath(_this4.tree._monkeys, path);
+	        var monkeyPath = _type2['default'].monkeyPath(_this3.tree._monkeys, path);
 	
 	        if (!monkeyPath) return accumulatedPaths.concat([path]);
 	
 	        // Solving recursive path
-	        var relatedMonkey = (0, _helpers.getIn)(_this4.tree._monkeys, monkeyPath).data;
+	        var relatedMonkey = (0, _helpers.getIn)(_this3.tree._monkeys, monkeyPath).data;
 	
 	        return accumulatedPaths.concat(relatedMonkey.relatedPaths());
 	      }, []);
@@ -24429,6 +24469,9 @@
 	        if ('data' in result) this.tree._data = result.data;
 	      }
 	
+	      // Notifying the monkey's update so we can handle recursivity
+	      this.tree.emit('_monkey', { monkey: this, path: this.path });
+	
 	      return this;
 	    }
 	
@@ -24440,7 +24483,8 @@
 	    value: function release() {
 	
 	      // Unbinding events
-	      this.tree.off('write', this.listener);
+	      this.tree.off('write', this.writeListener);
+	      this.tree.off('_monkey', this.monkeyListener);
 	      this.state.killed = true;
 	
 	      // Deleting properties
@@ -25324,10 +25368,10 @@
 	 * @return {array}   result.solvedPath - The solved path or `null`.
 	 * @return {boolean} result.exists     - Does the path exists in the tree?
 	 */
-	var notFoundObject = { data: undefined, solvedPath: null, exists: false };
+	var NOT_FOUND_OBJECT = { data: undefined, solvedPath: null, exists: false };
 	
 	function getIn(object, path) {
-	  if (!path) return notFoundObject;
+	  if (!path) return NOT_FOUND_OBJECT;
 	
 	  var solvedPath = [];
 	
@@ -25338,23 +25382,27 @@
 	      l = undefined;
 	
 	  for (i = 0, l = path.length; i < l; i++) {
-	    if (!c) return { data: undefined, solvedPath: path, exists: false };
+	    if (!c) return {
+	      data: undefined,
+	      solvedPath: solvedPath.concat(path.slice(i)),
+	      exists: false
+	    };
 	
 	    if (typeof path[i] === 'function') {
-	      if (!_type2['default'].array(c)) return notFoundObject;
+	      if (!_type2['default'].array(c)) return NOT_FOUND_OBJECT;
 	
 	      idx = index(c, path[i]);
-	      if (! ~idx) return notFoundObject;
+	      if (! ~idx) return NOT_FOUND_OBJECT;
 	
 	      solvedPath.push(idx);
 	      c = c[idx];
 	    } else if (typeof path[i] === 'object') {
-	      if (!_type2['default'].array(c)) return notFoundObject;
+	      if (!_type2['default'].array(c)) return NOT_FOUND_OBJECT;
 	
 	      idx = index(c, function (e) {
 	        return compare(e, path[i]);
 	      });
-	      if (! ~idx) return notFoundObject;
+	      if (! ~idx) return NOT_FOUND_OBJECT;
 	
 	      solvedPath.push(idx);
 	      c = c[idx];
@@ -26074,19 +26122,19 @@
 	
 	var _cerebralModuleRecorderReactSimpleRecorder2 = _interopRequireDefault(_cerebralModuleRecorderReactSimpleRecorder);
 	
-	var _modulesNewTodoComponentsNewTodo = __webpack_require__(209);
+	var _modulesNewTodoComponentsNewTodo = __webpack_require__(201);
 	
 	var _modulesNewTodoComponentsNewTodo2 = _interopRequireDefault(_modulesNewTodoComponentsNewTodo);
 	
-	var _modulesListComponentsList = __webpack_require__(210);
+	var _modulesListComponentsList = __webpack_require__(202);
 	
 	var _modulesListComponentsList2 = _interopRequireDefault(_modulesListComponentsList);
 	
-	var _modulesFooterComponentsFooter = __webpack_require__(215);
+	var _modulesFooterComponentsFooter = __webpack_require__(207);
 	
 	var _modulesFooterComponentsFooter2 = _interopRequireDefault(_modulesFooterComponentsFooter);
 	
-	var _modulesListComputedVisibleTodosJs = __webpack_require__(214);
+	var _modulesListComputedVisibleTodosJs = __webpack_require__(206);
 	
 	var _modulesListComputedVisibleTodosJs2 = _interopRequireDefault(_modulesListComputedVisibleTodosJs);
 	
@@ -26194,7 +26242,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(9);
-	var Cerebral = __webpack_require__(201).Mixin;
+	var Cerebral = __webpack_require__(191).Mixin;
 	
 	module.exports = React.createClass({
 	  mixins: [Cerebral],
@@ -26289,312 +26337,6 @@
 /* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var mixin = __webpack_require__(202);
-	var decorator = __webpack_require__(203);
-	var hoc = __webpack_require__(205);
-	var container = __webpack_require__(206);
-	var component = __webpack_require__(207);
-	var link = __webpack_require__(208);
-	
-	module.exports = {
-	  Mixin: mixin,
-	  Decorator: decorator,
-	  HOC: hoc,
-	  Container: container,
-	  Component: component,
-	  Link: link
-	};
-
-
-/***/ },
-/* 202 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(9);
-	var callbacks = [];
-	var listener = false;
-	
-	module.exports = {
-	  contextTypes: {
-	    controller: React.PropTypes.object
-	  },
-	  componentWillMount: function () {
-	    this.signals = this.context.controller.getSignals();
-	    this.modules = this.context.controller.getModules();
-	
-	    if (!this.getStatePaths) {
-	      return;
-	    }
-	
-	    if (this.context.controller.isServer) {
-	      return this._update();
-	    }
-	
-	    if (!listener) {
-	      listener = true;
-	      this.context.controller.on('change', function () {
-	        callbacks.forEach(function (cb) {
-	          cb();
-	        });
-	      });
-	    }
-	    callbacks.push(this._update);
-	    this._update();
-	  },
-	  componentWillUnmount: function () {
-	    this._isUmounting = true;
-	    if (this.getStatePaths) {
-	      callbacks.splice(callbacks.indexOf(this._update), 1);
-	    }
-	  },
-	  shouldComponentUpdate: function (nextProps, nextState) {
-	    var propKeys = Object.keys(nextProps);
-	    var stateKeys = Object.keys(nextState);
-	
-	    // props
-	    for (var x = 0; x < propKeys.length; x++) {
-	      var key = propKeys[x];
-	      if (this.props[key] !== nextProps[key]) {
-	        return true;
-	      }
-	    }
-	
-	    // State
-	    for (var x = 0; x < stateKeys.length; x++) {
-	      var key = stateKeys[x];
-	      if (this.state[key] !== nextState[key]) {
-	        return true;
-	      }
-	    }
-	
-	    return false;
-	  },
-	  _update: function () {
-	    if (this._isUmounting) {
-	      return;
-	    }
-	    var statePaths = this.getStatePaths ? this.getStatePaths() : {};
-	    var controller = this.context.controller;
-	    var newState = {};
-	
-	    newState = Object.keys(statePaths).reduce(function (newState, key) {
-	      var value = controller.get(statePaths[key]);
-	      newState[key] = value;
-	      return newState;
-	    }, newState);
-	
-	    this.setState(newState);
-	  }
-	};
-
-
-/***/ },
-/* 203 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(9);
-	var mixin = __webpack_require__(202);
-	var render = __webpack_require__(204);
-	
-	module.exports = function (paths) {
-	  return function (Component) {
-	    return React.createClass({
-	      displayName: Component.name + 'Container',
-	      mixins: [mixin],
-	      getStatePaths: function () {
-	        if (!paths) {
-	          return {};
-	        }
-	        return typeof paths === 'function' ? paths(this.props) : paths;
-	      },
-	      render: render(Component)
-	    });
-	  };
-	};
-
-
-/***/ },
-/* 204 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(9);
-	
-	module.exports = function (Component) {
-	  return function () {
-	    var state = this.state || {};
-	    var props = this.props || {};
-	
-	    var propsToPass = Object.keys(state).reduce(function (props, key) {
-	      props[key] = state[key];
-	      return props;
-	    }, {});
-	
-	    propsToPass = Object.keys(props).reduce(function (propsToPass, key) {
-	      propsToPass[key] = props[key];
-	      return propsToPass;
-	    }, propsToPass);
-	
-	    propsToPass.signals = this.signals;
-	    propsToPass.modules = this.modules;
-	    propsToPass.get = this.get; // Uhm?
-	
-	    return React.createElement(Component, propsToPass);
-	  };
-	};
-
-
-/***/ },
-/* 205 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(9);
-	var mixin = __webpack_require__(202);
-	var render = __webpack_require__(204);
-	
-	module.exports = function (Component, paths) {
-	  return React.createClass({
-	    displayName: Component.name + 'Container',
-	    mixins: [mixin],
-	    getStatePaths: function () {
-	      if (!paths) {
-	        return {};
-	      }
-	      return typeof paths === 'function' ? paths(this.props) : paths;
-	    },
-	    render: render(Component)
-	  });
-	};
-
-
-/***/ },
-/* 206 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(9);
-	
-	module.exports = React.createClass({
-	  displayName: 'CerebralContainer',
-	  childContextTypes: {
-	    controller: React.PropTypes.object.isRequired
-	  },
-	  componentDidMount: function () {
-	    this.props.controller.getDevtools().start();
-	    if (this.props.controller.getServices().router) {
-	      this.props.controller.getServices().router.trigger();
-	    }
-	  },
-	  getChildContext: function () {
-	    return {
-	      controller: this.props.controller
-	    }
-	  },
-	  render: function () {
-	    return this.props.app ? React.createElement(this.props.app) : React.DOM.div(this.props);
-	  }
-	});
-
-
-/***/ },
-/* 207 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(9);
-	var mixin = __webpack_require__(202);
-	var render = __webpack_require__(204);
-	
-	module.exports = function () {
-	
-	  var paths;
-	  var componentDefinition;
-	  var Component = null;
-	
-	  if (arguments.length === 2) {
-	    paths = arguments[0];
-	    componentDefinition = arguments[1];
-	  } else {
-	    paths = {};
-	    componentDefinition = arguments[0];
-	  }
-	
-	  if (typeof componentDefinition === 'function') {
-	    Component = componentDefinition;
-	  } else {
-	    Component = React.createClass(componentDefinition);
-	  }
-	  
-	  return React.createClass({
-	    mixins: [mixin],
-	    getStatePaths: function () {
-	      if (!paths) {
-	        return {};
-	      }
-	      return typeof paths === 'function' ? paths(this.props) : paths;
-	    },
-	    render: render(Component)
-	  });
-	};
-
-
-/***/ },
-/* 208 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(9);
-	
-	module.exports = React.createClass({
-	  contextTypes: {
-	    controller: React.PropTypes.object
-	  },
-	
-	  componentWillMount: function() {
-	    if (typeof this.props.signal === 'string') {
-	      var signalPath = this.props.signal.split('.');
-	      var signalParent = this.context.controller.signals;
-	
-	      while(signalPath.length - 1) {
-	        signalParent = signalParent[signalPath.shift()] || {};
-	      }
-	      this.signal = signalParent[signalPath];
-	    } else {
-	      this.signal = this.props.signal;
-	    }
-	
-	    if (typeof this.signal !== 'function') {
-	      throw new Error('Cerebral React - You have to pass a signal to the Link component');
-	    }
-	
-	  },
-	
-	  onClick: function (e) {
-	
-	    e.preventDefault();
-	    this.signal(this.props.params);
-	
-	  },
-	
-	  render: function () {
-	
-	    var passedProps = this.props;
-	    var props = Object.keys(passedProps).reduce(function (props, key) {
-	      props[key] = passedProps[key];
-	      return props;
-	    }, {});
-	
-	    if (typeof this.signal.getUrl === 'function') {
-	      props.href = this.signal.getUrl(this.props.params || {});
-	    } else {
-	      props.onClick = this.onClick;
-	    }
-	
-	    return React.DOM.a(props, this.props.children);
-	  }
-	});
-
-
-/***/ },
-/* 209 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
@@ -26653,7 +26395,6 @@
 	          id: 'new-todo',
 	          autoComplete: 'off',
 	          placeholder: 'What needs to be done?',
-	          disabled: this.props.isSaving,
 	          value: this.props.title,
 	          onChange: function (e) {
 	            return _this.onNewTodoTitleChange(e);
@@ -26675,7 +26416,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 210 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26698,17 +26439,17 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Todo = __webpack_require__(211);
+	var _Todo = __webpack_require__(203);
 	
 	var _Todo2 = _interopRequireDefault(_Todo);
 	
 	var _cerebralViewReact = __webpack_require__(191);
 	
-	var _computedIsAllCheckedJs = __webpack_require__(213);
+	var _computedIsAllCheckedJs = __webpack_require__(205);
 	
 	var _computedIsAllCheckedJs2 = _interopRequireDefault(_computedIsAllCheckedJs);
 	
-	var _computedVisibleTodosJs = __webpack_require__(214);
+	var _computedVisibleTodosJs = __webpack_require__(206);
 	
 	var _computedVisibleTodosJs2 = _interopRequireDefault(_computedVisibleTodosJs);
 	
@@ -26768,7 +26509,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 211 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26791,7 +26532,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(212);
+	var _classnames = __webpack_require__(204);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -26943,7 +26684,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 212 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -26997,7 +26738,7 @@
 
 
 /***/ },
-/* 213 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27008,7 +26749,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _visibleTodos = __webpack_require__(214);
+	var _visibleTodos = __webpack_require__(206);
 	
 	var _visibleTodos2 = _interopRequireDefault(_visibleTodos);
 	
@@ -27024,7 +26765,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 214 */
+/* 206 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27050,7 +26791,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 215 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27075,7 +26816,7 @@
 	
 	var _cerebralViewReact = __webpack_require__(191);
 	
-	var _computedCountsJs = __webpack_require__(216);
+	var _computedCountsJs = __webpack_require__(208);
 	
 	var _computedCountsJs2 = _interopRequireDefault(_computedCountsJs);
 	
@@ -27189,7 +26930,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 216 */
+/* 208 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27225,7 +26966,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 217 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27236,15 +26977,15 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _modulesNewTodo = __webpack_require__(218);
+	var _modulesNewTodo = __webpack_require__(210);
 	
 	var _modulesNewTodo2 = _interopRequireDefault(_modulesNewTodo);
 	
-	var _modulesList = __webpack_require__(228);
+	var _modulesList = __webpack_require__(220);
 	
 	var _modulesList2 = _interopRequireDefault(_modulesList);
 	
-	var _modulesFooter = __webpack_require__(243);
+	var _modulesFooter = __webpack_require__(235);
 	
 	var _modulesFooter2 = _interopRequireDefault(_modulesFooter);
 	
@@ -27264,7 +27005,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 218 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27275,11 +27016,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _signalsSubmitted = __webpack_require__(219);
+	var _signalsSubmitted = __webpack_require__(211);
 	
 	var _signalsSubmitted2 = _interopRequireDefault(_signalsSubmitted);
 	
-	var _signalsTitleChanged = __webpack_require__(226);
+	var _signalsTitleChanged = __webpack_require__(218);
 	
 	var _signalsTitleChanged2 = _interopRequireDefault(_signalsTitleChanged);
 	
@@ -27306,7 +27047,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 219 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27317,27 +27058,27 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsAddJs = __webpack_require__(220);
+	var _actionsAddJs = __webpack_require__(212);
 	
 	var _actionsAddJs2 = _interopRequireDefault(_actionsAddJs);
 	
-	var _actionsSaveJs = __webpack_require__(221);
+	var _actionsSaveJs = __webpack_require__(213);
 	
 	var _actionsSaveJs2 = _interopRequireDefault(_actionsSaveJs);
 	
-	var _actionsSetSavingJs = __webpack_require__(222);
+	var _actionsSetSavingJs = __webpack_require__(214);
 	
 	var _actionsSetSavingJs2 = _interopRequireDefault(_actionsSetSavingJs);
 	
-	var _actionsUnsetSavingJs = __webpack_require__(223);
+	var _actionsUnsetSavingJs = __webpack_require__(215);
 	
 	var _actionsUnsetSavingJs2 = _interopRequireDefault(_actionsUnsetSavingJs);
 	
-	var _actionsSetJs = __webpack_require__(224);
+	var _actionsSetJs = __webpack_require__(216);
 	
 	var _actionsSetJs2 = _interopRequireDefault(_actionsSetJs);
 	
-	var _actionsSetErrorJs = __webpack_require__(225);
+	var _actionsSetErrorJs = __webpack_require__(217);
 	
 	var _actionsSetErrorJs2 = _interopRequireDefault(_actionsSetErrorJs);
 	
@@ -27348,7 +27089,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 220 */
+/* 212 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27383,7 +27124,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 221 */
+/* 213 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27415,7 +27156,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 222 */
+/* 214 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27434,7 +27175,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 223 */
+/* 215 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27453,7 +27194,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 224 */
+/* 216 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27480,7 +27221,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 225 */
+/* 217 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27508,7 +27249,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 226 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27519,7 +27260,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetTitleJs = __webpack_require__(227);
+	var _actionsSetTitleJs = __webpack_require__(219);
 	
 	var _actionsSetTitleJs2 = _interopRequireDefault(_actionsSetTitleJs);
 	
@@ -27527,7 +27268,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 227 */
+/* 219 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27547,7 +27288,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 228 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27558,31 +27299,31 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _signalsNewTitleChanged = __webpack_require__(229);
+	var _signalsNewTitleChanged = __webpack_require__(221);
 	
 	var _signalsNewTitleChanged2 = _interopRequireDefault(_signalsNewTitleChanged);
 	
-	var _signalsNewTitleSubmitted = __webpack_require__(231);
+	var _signalsNewTitleSubmitted = __webpack_require__(223);
 	
 	var _signalsNewTitleSubmitted2 = _interopRequireDefault(_signalsNewTitleSubmitted);
 	
-	var _signalsRemoveTodoClicked = __webpack_require__(234);
+	var _signalsRemoveTodoClicked = __webpack_require__(226);
 	
 	var _signalsRemoveTodoClicked2 = _interopRequireDefault(_signalsRemoveTodoClicked);
 	
-	var _signalsTodoDoubleClicked = __webpack_require__(236);
+	var _signalsTodoDoubleClicked = __webpack_require__(228);
 	
 	var _signalsTodoDoubleClicked2 = _interopRequireDefault(_signalsTodoDoubleClicked);
 	
-	var _signalsToggleAllChanged = __webpack_require__(238);
+	var _signalsToggleAllChanged = __webpack_require__(230);
 	
 	var _signalsToggleAllChanged2 = _interopRequireDefault(_signalsToggleAllChanged);
 	
-	var _signalsToggleCompletedChanged = __webpack_require__(240);
+	var _signalsToggleCompletedChanged = __webpack_require__(232);
 	
 	var _signalsToggleCompletedChanged2 = _interopRequireDefault(_signalsToggleCompletedChanged);
 	
-	var _signalsNewTitleAborted = __webpack_require__(242);
+	var _signalsNewTitleAborted = __webpack_require__(234);
 	
 	var _signalsNewTitleAborted2 = _interopRequireDefault(_signalsNewTitleAborted);
 	
@@ -27618,7 +27359,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 229 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27629,7 +27370,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetTodoNewTitleJs = __webpack_require__(230);
+	var _actionsSetTodoNewTitleJs = __webpack_require__(222);
 	
 	var _actionsSetTodoNewTitleJs2 = _interopRequireDefault(_actionsSetTodoNewTitleJs);
 	
@@ -27637,7 +27378,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 230 */
+/* 222 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27659,7 +27400,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 231 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27670,11 +27411,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsOverwriteTodoTitleJs = __webpack_require__(232);
+	var _actionsOverwriteTodoTitleJs = __webpack_require__(224);
 	
 	var _actionsOverwriteTodoTitleJs2 = _interopRequireDefault(_actionsOverwriteTodoTitleJs);
 	
-	var _actionsStopEditingTodoJs = __webpack_require__(233);
+	var _actionsStopEditingTodoJs = __webpack_require__(225);
 	
 	var _actionsStopEditingTodoJs2 = _interopRequireDefault(_actionsStopEditingTodoJs);
 	
@@ -27682,7 +27423,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 232 */
+/* 224 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27702,7 +27443,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 233 */
+/* 225 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27728,7 +27469,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 234 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27739,7 +27480,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsRemoveTodoJs = __webpack_require__(235);
+	var _actionsRemoveTodoJs = __webpack_require__(227);
 	
 	var _actionsRemoveTodoJs2 = _interopRequireDefault(_actionsRemoveTodoJs);
 	
@@ -27747,7 +27488,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 235 */
+/* 227 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27767,7 +27508,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 236 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27778,7 +27519,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsEditTodoJs = __webpack_require__(237);
+	var _actionsEditTodoJs = __webpack_require__(229);
 	
 	var _actionsEditTodoJs2 = _interopRequireDefault(_actionsEditTodoJs);
 	
@@ -27786,7 +27527,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 237 */
+/* 229 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27811,7 +27552,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 238 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27822,7 +27563,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsToggleAllCheckedJs = __webpack_require__(239);
+	var _actionsToggleAllCheckedJs = __webpack_require__(231);
 	
 	var _actionsToggleAllCheckedJs2 = _interopRequireDefault(_actionsToggleAllCheckedJs);
 	
@@ -27830,7 +27571,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 239 */
+/* 231 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27857,7 +27598,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 240 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27868,7 +27609,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsToggleTodoCompletedJs = __webpack_require__(241);
+	var _actionsToggleTodoCompletedJs = __webpack_require__(233);
 	
 	var _actionsToggleTodoCompletedJs2 = _interopRequireDefault(_actionsToggleTodoCompletedJs);
 	
@@ -27876,7 +27617,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 241 */
+/* 233 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27898,7 +27639,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 242 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27909,7 +27650,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsStopEditingTodoJs = __webpack_require__(233);
+	var _actionsStopEditingTodoJs = __webpack_require__(225);
 	
 	var _actionsStopEditingTodoJs2 = _interopRequireDefault(_actionsStopEditingTodoJs);
 	
@@ -27917,7 +27658,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 243 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27928,15 +27669,15 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _signalsAllTodosClicked = __webpack_require__(244);
+	var _signalsAllTodosClicked = __webpack_require__(236);
 	
 	var _signalsAllTodosClicked2 = _interopRequireDefault(_signalsAllTodosClicked);
 	
-	var _signalsClearCompletedClicked = __webpack_require__(246);
+	var _signalsClearCompletedClicked = __webpack_require__(238);
 	
 	var _signalsClearCompletedClicked2 = _interopRequireDefault(_signalsClearCompletedClicked);
 	
-	var _signalsFilterClicked = __webpack_require__(248);
+	var _signalsFilterClicked = __webpack_require__(240);
 	
 	var _signalsFilterClicked2 = _interopRequireDefault(_signalsFilterClicked);
 	
@@ -27960,7 +27701,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 244 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27971,7 +27712,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsUnsetFilterJs = __webpack_require__(245);
+	var _actionsUnsetFilterJs = __webpack_require__(237);
 	
 	var _actionsUnsetFilterJs2 = _interopRequireDefault(_actionsUnsetFilterJs);
 	
@@ -27979,7 +27720,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 245 */
+/* 237 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27998,7 +27739,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 246 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28009,7 +27750,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsClearCompletedJs = __webpack_require__(247);
+	var _actionsClearCompletedJs = __webpack_require__(239);
 	
 	var _actionsClearCompletedJs2 = _interopRequireDefault(_actionsClearCompletedJs);
 	
@@ -28017,7 +27758,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 247 */
+/* 239 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28041,7 +27782,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 248 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28052,7 +27793,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetFilterJs = __webpack_require__(249);
+	var _actionsSetFilterJs = __webpack_require__(241);
 	
 	var _actionsSetFilterJs2 = _interopRequireDefault(_actionsSetFilterJs);
 	
@@ -28060,7 +27801,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 249 */
+/* 241 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28079,7 +27820,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 250 */
+/* 242 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28112,7 +27853,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 251 */
+/* 243 */
 /***/ function(module, exports) {
 
 	module.exports = function (options) {
@@ -28121,12 +27862,13 @@
 	
 	    module.alias('cerebral-module-recorder');
 	
-	    module.state({
-	      isRecording: false,
-	      isPlaying: false,
-	      isPaused: false,
-	      hasRecorded: false
-	    });
+	    var state = options.state || {};
+	    state.isRecording = false;
+	    state.isPlaying = false;
+	    state.isPaused = false;
+	    state.hasRecorded = false;
+	
+	    module.state(state);
 	
 	    module.signals({
 	      played: [
@@ -28211,40 +27953,15 @@
 
 
 /***/ },
-/* 252 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	var MODULE = 'cerebral-module-router';
 	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _cerebralRouter = __webpack_require__(253);
-	
-	var _cerebralRouter2 = _interopRequireDefault(_cerebralRouter);
-	
-	exports['default'] = function () {
-	  var routes = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-	  var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	
-	  return function (module, controller) {
-	    (0, _cerebralRouter2['default'])(controller, routes, options);
-	  };
-	};
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 253 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Mapper = __webpack_require__(254);
+	var Mapper = __webpack_require__(245);
 	var addressbar;
 	try {
-	  addressbar = __webpack_require__(259);
+	  addressbar = __webpack_require__(250);
 	} catch(e) {
 	  addressbar = {
 	    pathname: '/',
@@ -28255,8 +27972,7 @@
 	  };
 	}
 	
-	function router (controller, routesConfig, options) {
-	
+	function Router (routesConfig, options) {
 	  options = options || {};
 	
 	  if(!routesConfig) {
@@ -28271,18 +27987,113 @@
 	
 	  var urlMapper = Mapper(options.mapper);
 	
-	  // prepare routes for url-mapper
-	  // flatten routes and use actual signal for match
-	  var routes = Object.keys(routesConfig)
+	  function createCallback (controller) {
+	    var signals = controller.getSignals();
+	
+	    // Create url based on direct signal input
+	    function getUrl (route, input) {
+	      return options.baseUrl + urlMapper.stringify(route.route, input || {});
+	    }
+	
+	    var routes = wrapSignals(routesConfig, signals, getUrl);
+	
+	    return function onUrlChange (event) {
+	      var matchedRoute;
+	      var url = event ? event.target.value : addressbar.value;
+	      url = url.replace(addressbar.origin, '');
+	
+	      if (options.onlyHash && !~url.indexOf('#')) {
+	        // treat hash absense as root route
+	        url = url + '#/';
+	      }
+	
+	      if (controller.getStore().isRemembering()) {
+	        return;
+	      }
+	
+	      // check if url should be routed
+	      if (url.indexOf(options.baseUrl) === 0) {
+	        event && event.preventDefault();
+	        matchedRoute = urlMapper.map(url.replace(options.baseUrl, ''), routes);
+	
+	        if (matchedRoute) {
+	          matchedRoute.match(matchedRoute.values);
+	        } else {
+	          console.warn('Cerebral router - No route matched "' + url + '" url, navigation was prevented. ' +
+	                       'Please verify url or catch unmatched routes with a "/*" route.');
+	        }
+	      }
+	    };
+	  }
+	
+	  return function init (module, controller) {
+	    var onUrlChange = createCallback(controller);
+	    addressbar.on('change', onUrlChange);
+	    module.alias(MODULE);
+	    module.services({
+	      trigger: trigger,
+	      redirect: redirect,
+	      getUrl: getUrl,
+	      detach: detach
+	    });
+	
+	    function trigger (url) {
+	      // If developing, remember signals before
+	      // route trigger
+	      if (controller.getStore().getSignals().length) {
+	        controller.getStore().rememberInitial(controller.getStore().getSignals().length - 1);
+	      }
+	
+	      addressbar.value = url || addressbar.value;
+	      onUrlChange();
+	    };
+	
+	    function redirect (url, params) {
+	      params = params || {};
+	      params.replace = (typeof params.replace === "undefined") ? true : params.replace;
+	
+	      addressbar.value = {
+	        value: options.baseUrl + url,
+	        replace: params.replace
+	      };
+	
+	      onUrlChange();
+	    };
+	
+	    function getUrl () {
+	      return addressbar.value.replace(addressbar.origin + options.baseUrl, '');
+	    };
+	
+	    function detach (){
+	      addressbar.removeListener('change', onUrlChange);
+	    };
+	  };
+	}
+	
+	Router.redirect = function (url, params) {
+	  function action (args) {
+	    var module = args.modules[MODULE];
+	    return module.services.redirect(url, params);
+	  }
+	
+	  action.displayName = 'redirect(' + url + ')';
+	
+	  return action;
+	};
+	
+	module.exports = Router;
+	
+	function wrapSignals (routesConfig, signals, getUrl) {
+	  // wrap bound signals and return routes map prepared for url-mapper
+	  return Object.keys(routesConfig)
 	    .map(function(route){
 	      return {
 	        route: route,
 	        signalName: routesConfig[route]
 	      };
 	    })
-	    .reduce(function wrapRoutes(routes, route) {
-	
-	      // recursive call for nested definition
+	    .reduce(function wrapSignal (routes, route) {
+	      // recursive call for nested routes definition
 	      if (typeof route.signalName === 'object') {
 	        Object.keys(route.signalName).reduce(function(routes, nestedRoute) {
 	          nestedRoute = {
@@ -28290,7 +28101,7 @@
 	            signalName: route.signalName[nestedRoute]
 	          };
 	
-	          return wrapRoutes(routes, nestedRoute);
+	          return wrapSignal(routes, nestedRoute);
 	        }, routes);
 	
 	        return routes;
@@ -28298,7 +28109,7 @@
 	
 	      // retrieve actual signal by name
 	      var signalPath = route.signalName.split('.');
-	      var signalParent = controller.getSignals();
+	      var signalParent = signals;
 	      var signal;
 	      while(signalPath.length - 1) {
 	        signalParent = signalParent[signalPath.shift()] || {};
@@ -28312,23 +28123,20 @@
 	        throw new Error('Cerebral router - The signal "' + route.signalName + '" has already been bound to route. Create a new signal and reuse actions instead if needed.');
 	      }
 	
-	      // Create url based on direct signal input
-	      function getUrl (input) {
-	        return options.baseUrl + urlMapper.stringify(route.route, input || {});
-	      }
-	
-	      function wrappedSignal(payload, signalOptions) {
-	        addressbar.value = getUrl(payload);
-	
-	        signalOptions = signalOptions || {};
+	      function wrappedSignal (payload, signalOptions) {
+	        // set addressbar url on signal call
+	        addressbar.value = getUrl(route, payload);
 	
 	        // Should always run sync
+	        signalOptions = signalOptions || {};
 	        signalOptions.isSync = true;
+	        signalOptions.isRouted = true;
 	        signal(payload, signalOptions);
 	      }
 	
 	      // expose method for restoring url from params
-	      wrappedSignal.getUrl = getUrl;
+	      wrappedSignal.getUrl = getUrl.bind(null, route);
+	      wrappedSignal.chain = signal.chain;
 	
 	      // pass wrapped signal to url-mapper routes
 	      routes[route.route] = wrappedSignal;
@@ -28336,106 +28144,19 @@
 	      // replace signal on wrapped one in controller
 	      signalParent[signalPath[0]] = wrappedSignal.sync = wrappedSignal;
 	
-	      wrappedSignal.chain = signal.chain;
-	
 	      return routes;
-	
-	  }, {});
-	
-	  function onUrlChange(event) {
-	
-	    var matchedRoute;
-	    var url = event ? event.target.value : addressbar.value;
-	    url = url.replace(addressbar.origin, '');
-	
-	    if (options.onlyHash && !~url.indexOf('#')) {
-	      // treat hash absense as root route
-	      url = url + '#/';
-	    }
-	
-	    if (controller.getStore().isRemembering()) {
-	      return;
-	    }
-	
-	    // check if url should be routed
-	    if (url.indexOf(options.baseUrl) === 0) {
-	      event && event.preventDefault();
-	      matchedRoute = urlMapper.map(url.replace(options.baseUrl, ''), routes);
-	
-	      if (matchedRoute) {
-	        matchedRoute.match(matchedRoute.values);
-	      } else {
-	        console.warn('Cerebral router - No route matched "' + url + '" url, navigation was prevented. ' +
-	                     'Please verify url or catch unmatched routes with a "/*" route.');
-	      }
-	    }
-	
-	  }
-	
-	  addressbar.on('change', onUrlChange);
-	
-	  // auto expose router instance to services
-	  return controller.getServices().router = {
-	    trigger: function (url) {
-	
-	      // If developing, remember signals before
-	      // route trigger
-	      if (controller.getStore().getSignals().length) {
-	        controller.getStore().rememberInitial(controller.getStore().getSignals().length - 1);
-	      }
-	
-	      addressbar.value = url || addressbar.value;
-	      onUrlChange();
-	
-	    },
-	
-	    redirect: function(url, params) {
-	
-	      params = params || {};
-	      params.replace = (typeof params.replace === "undefined") ? true : params.replace;
-	
-	      addressbar.value = {
-	        value: options.baseUrl + url,
-	        replace: params.replace
-	      };
-	
-	      onUrlChange();
-	
-	    },
-	
-	    getUrl: function() {
-	      return addressbar.value.replace(addressbar.origin + options.baseUrl, '');
-	    },
-	
-	    detach: function(){
-	      addressbar.removeListener('change', onUrlChange);
-	    }
-	  };
-	
+	    }, {});
 	}
-	
-	router.redirect = function(url, params) {
-	
-	  function action(input, state, output, services) {
-	    return services.router.redirect(url, params);
-	  }
-	
-	  action.displayName = 'redirect(' + url + ')';
-	
-	  return action;
-	};
-	
-	module.exports = router;
 
 
 /***/ },
-/* 254 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var mapper = __webpack_require__(255);
-	var URLON = __webpack_require__(256);
-	var pathToRegexp = __webpack_require__(257);
+	var mapper = __webpack_require__(246);
+	var URLON = __webpack_require__(247);
+	var pathToRegexp = __webpack_require__(248);
 	
 	function compileRoute (route, options) {
 	  var re;
@@ -28522,7 +28243,7 @@
 
 
 /***/ },
-/* 255 */
+/* 246 */
 /***/ function(module, exports) {
 
 	module.exports = function mapper (compileFn, options) {
@@ -28575,7 +28296,7 @@
 
 
 /***/ },
-/* 256 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	URLON = {
@@ -28704,10 +28425,10 @@
 
 
 /***/ },
-/* 257 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isarray = __webpack_require__(258)
+	var isarray = __webpack_require__(249)
 	
 	/**
 	 * Expose `pathToRegexp`.
@@ -29100,7 +28821,7 @@
 
 
 /***/ },
-/* 258 */
+/* 249 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -29109,10 +28830,10 @@
 
 
 /***/ },
-/* 259 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var URL = __webpack_require__(260);
+	/* WEBPACK VAR INJECTION */(function(global) {var URL = __webpack_require__(251);
 	var EventEmitter = __webpack_require__(181).EventEmitter;
 	var instance = null;
 	
@@ -29326,14 +29047,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 260 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var required = __webpack_require__(261)
-	  , lolcation = __webpack_require__(262)
-	  , qs = __webpack_require__(263)
+	var required = __webpack_require__(252)
+	  , lolcation = __webpack_require__(253)
+	  , qs = __webpack_require__(254)
 	  , relativere = /^\/(?!\/)/;
 	
 	/**
@@ -29560,7 +29281,7 @@
 
 
 /***/ },
-/* 261 */
+/* 252 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29604,7 +29325,7 @@
 
 
 /***/ },
-/* 262 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -29634,7 +29355,7 @@
 	 */
 	module.exports = function lolcation(loc) {
 	  loc = loc || global.location || {};
-	  URL = URL || __webpack_require__(260);
+	  URL = URL || __webpack_require__(251);
 	
 	  var finaldestination = {}
 	    , type = typeof loc
@@ -29656,7 +29377,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 263 */
+/* 254 */
 /***/ function(module, exports) {
 
 	'use strict';
