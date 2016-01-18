@@ -173,12 +173,12 @@ class App extends React.Component {
                     <li key={index} onClick={() => {
                       if (result.parent) {
                         this.props.signals.submenuClicked({
-                          content: result.parent,
-                          subContent: result.label.toLowerCase()
+                          content: result.parent.replace(/\s/g, ''),
+                          subContent: result.label.toLowerCase().replace(/\s/g, '')
                         });
                       } else {
                         this.props.signals.menuClicked({
-                          content: result.label.toLowerCase()
+                          content: result.label.toLowerCase().replace(/\s/g, '')
                         });
                       }
                     }}>
