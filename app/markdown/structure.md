@@ -1,27 +1,48 @@
-Depending on the size of your application there are two main differences in how you structure your application. This is common with most projects. You treat your project as one module or a collection of modules.
+When you develop a Cerebral application you separate your application from your UI. You structure your business logic around domains and concepts of the application itself. Something that makes sense in describing your application in different parts.
+
+You think of your UI differently. You do not think of your UI as parts, but as a complete user experience. With Cerebral you can hook any part of your UI into any part of your application to extract state and trigger state changes. This is a really important point in Cerebrals design. The UI of your application will often change and merge different domains and concepts. That should not be a painful process. With modern applications we also want to reach native devices. When your UI is a completely separate concept it is a lot easier to build multiple UIs for the same application.
+
+You application structure and your UI structure will often look similar, but they will never be restricted by each other.
 
 ### Modules setup
 
-Your project file structure can look something like this:
+Your project file structure can look something like this. Note that we are putting components into their own folders with an `index.js` file. This allows you to point to the folder when doing imports and add other component specific files, like stylesheets.
 
 ```
-modules |
-  SomeModule |
-    actions
+
+- desktop
+  - App
+    - Menu
+      | index.js
+    - Home
+      - NewsFeed
+        | index.js
+      | index.js
+    | index.js
+    | styles.css
+- mobile
+- ios
+- android
+- modules
+  - App
+    - modules
+      - Menu
+      - Home
+    - actions
       | setLoading.js
       | setUser.js
       | unsetLoading.js
-    chains
+    - chains
       | getUser.js
-    components
-      SomeModule
-        | index.js
-    factories
+    - factories
       | get.js
-    signals
+    - signals
       | appMounted.js
-    index.js
-main.js
+    | index.js
+| desktop.js
+| mobile.js
+| ios.js
+| android.js
 ```
 
-The *index.js* file in your module folder is where you define your module. While your *main.js* is the file that brings in all the modules.
+The root files is where you mount your application. If you want you can even mount certain modules for specific UIs. Now you have a file structure that supports your UI and a structure supporting your business logic.
