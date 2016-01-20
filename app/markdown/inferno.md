@@ -1,11 +1,9 @@
-This module provides first-class component support to [Inferno](https://github.com/trueadm/inferno) in regards to [Cerebral](http://www.cerebraljs.com/)'s controller and its state model. Inferno is extremely performant, providing faster initalisation and UI updates many of the other libraries out there (such as React or Snabbdom). 
-
-Furthermore, it has a [JSX Babel Plugin](https://github.com/trueadm/babel-plugin-inferno) for easy consumption of JSX code.
+This module provides first-class component support to [Inferno](https://github.com/trueadm/inferno). With Cerebral and Inferno, you can easily create great UI components with minimal boilerplate, which is great for those who hate wiring up several levels of components to other libraries. Furthermore, Inferno is an extremely performant UI library, providing much faster DOM performance compared to many of the other libraries out there (such as React, Mihtril and Snabbdom). 
 
 ### Install
 `npm install cerebral-view-inferno`
 
-To use JSX syntax you also need Babel with the `babel-plugin-inferno` package.
+To use JSX syntax you also need Babel with the `babel-plugin-inferno` package. This [JSX Babel Plugin](https://github.com/trueadm/babel-plugin-inferno) allows for easy consumption of JSX code within Inferno applications (completely optional though).
 
 `npm install babel-plugin-inferno`
 
