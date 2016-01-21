@@ -48,6 +48,7 @@ import addonsToggle from './markdown/addons_toggle.md';
 import addonsWhen from './markdown/addons_when.md';
 import universal from './markdown/universal.md';
 import snabbdom from './markdown/snabbdom.md';
+import inferno from './markdown/inferno.md';
 import moduleRecorder from './markdown/module_recorder.md';
 import moduleRouter from './markdown/module_router.md';
 import theDebugger from './markdown/debugger.md';
@@ -81,6 +82,12 @@ export default [
         icon: 'television',
         text: react,
         content: MTRC(react).tree
+      },
+      {
+        label: 'Inferno',
+        icon: 'television',
+        text: inferno,
+        content: MTRC(inferno).tree
       },
       {
         label: 'Snabbdom',

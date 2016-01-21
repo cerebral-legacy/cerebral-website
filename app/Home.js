@@ -44,6 +44,7 @@ var Home = React.createClass({
             <ul className="cerebral-list divided">
               <li><i className="icon icon-television"/> React</li>
               <li><i className="icon icon-television"/> Angular</li>
+              <li><i className="icon icon-television"/> Inferno</li>
               <li><i className="icon icon-television"/> Snabbdom</li>
             </ul>
             <ul className="cerebral-list divided">
