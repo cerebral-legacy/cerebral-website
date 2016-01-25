@@ -10,7 +10,7 @@ All cerebral actions have the following signature:
 
 ```javascript
 
-function actionName (input, state, output, services) {
+function actionName ({input, state, output, services}) {
 
 }
 ```
@@ -23,7 +23,7 @@ Lets create an action called `toggleIsLoading` and then we can test it.
 
 ```javascript
 
-export default function toggleIsLoading(input, state) {
+export default function toggleIsLoading({input, state}) {
   state.set('isLoading', input.value);
 }
 ```
@@ -61,7 +61,7 @@ describe('toggleIsLoading()', function () {
     };
 
     // call the action
-    toggleIsLoading(input, state);
+    toggleIsLoading({input, state});
   });
 
 });
@@ -101,7 +101,7 @@ describe('someAsyncAction()', function () {
     };
 
     // call the async action
-    someAsyncAction(input, state, output);
+    someAsyncAction({input, state, output});
   });
 
 });
