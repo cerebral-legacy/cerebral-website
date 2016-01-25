@@ -212,7 +212,7 @@ describe('nameChanged', function () {
     };
 
     // return the promise and mocha will wait for it to resolve
-    return testSignal(controller, controller.signals.nameChanged, signalInput, () => {
+    return testSignal(controller, controller.getSignals().nameChanged, signalInput, () => {
       expect(this.tree.get(['user', 'name'])).to.equal('Christian');
     });
   });
