@@ -110,6 +110,7 @@
 	    '/': 'app.footer.filterClicked'
 	  }, {
 	    autoTrigger: true,
+	    baseUrl: '/todomvc',
 	    mapper: { query: true }
 	  })
 	});
