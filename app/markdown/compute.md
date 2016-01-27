@@ -66,3 +66,23 @@ function myAction({state}) {
   const messages = state.get(displayedMessages);
 }
 ```
+
+### Computed factories
+It is also possible to create functions that returns computed functions. It is important that the caching ability is kept and therefor you need to give the computed function a reference.
+
+```javascript
+
+function myComputedFactory(someDynamicPath) {
+
+  function computed(get) {
+    return get(someDynamicPath);
+  }
+
+  computed.computedRef = JSON.stringify(someDynamicPath);
+
+  return computed;
+
+}
+```
+
+Typically you can just stringify the arguments passed to the factory. That way the computed factories using the same set of arguments will be cached.
