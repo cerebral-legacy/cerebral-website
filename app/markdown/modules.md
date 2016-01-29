@@ -8,14 +8,14 @@ You build your application using modules. Modules will separate signals, state a
 
 ```javascript
 
-import Controller from 'cerebral';
-import Model from 'cerebral-model-baobab';
-import Home from './modules/Home';
-import Recorder from 'cerebral-module-recorder';
+import Controller from 'cerebral'
+import Model from 'cerebral-model-baobab'
+import Home from './modules/Home'
+import Recorder from 'cerebral-module-recorder'
 
 const controller = Controller(Model({}));
 
-controller.modules({
+controller.addModules({
   home: Home({
     foo: 'bar' // Some option
   }),
@@ -31,38 +31,39 @@ You register one or multiple modules to your existing Cerebral application. You 
 *MyModule.js*
 ```javascript
 
-import somethingHappened from './signals/somethingHappened';
-import somethingElseHappened from './signals/somethingElseHappened';
+import somethingHappened from './signals/somethingHappened'
+import somethingElseHappened from './signals/somethingElseHappened'
 
 export default (options = {}) => {
   return (module) => {
 
     // Set state to your module
-    module.state({
+    module.addState({
       foo: 'bar'
-    });
+    })
 
     // Add signals
-    module.signals({
-      somethingHappened
-    });
+    module.addSignals({
+      somethingHappened,
 
-    // Signals for synchronous UI updates,
-    // typically inputs. Normal signals runs
-    // on animation frame
-    module.signalsSync({
-      somethingElseHappened
-    });
+      // Signals for synchronous UI updates,
+      // typically inputs. Normal signals runs
+      // on animation frame
+      somethingElseHappened: {
+        chain: somethingElseHappened,
+        sync: true
+      }
+    })
 
     // Add services
-    module.services({
+    module.addServices({
       hello() {
         return 'hello';
       }
-    });
+    })
 
     // Return some META information about the module
-    return {};
+    return {}
 
   };
 }
@@ -116,12 +117,12 @@ class MyComponent extends React.Component {
 *MyModule.js*
 ```javascript
 
-import SubModule from './modules/SubModule';
+import SubModule from './modules/SubModule'
 
 export default (options = {}) => {
   return (module) => {
 
-    module.modules({
+    module.addModules({
       subModule: SubModule()
     });
 
@@ -137,22 +138,22 @@ There is not much difference in creating your own application specific module an
 *MyModule.js*
 ```javascript
 
-import somethingHappened from './signals/somethingHappened';
+import somethingHappened from './signals/somethingHappened'
 
 export default (options = {}) => {
   return (module, controller) => {
 
     // Alias is a second namespace you can access the module on
     // All Cerebral modules should be named "cerebral-module-xxx"
-    module.alias('cerebral-module-myModule');
+    module.alias('cerebral-module-myModule')
 
-    module.signals({
+    module.addSignals({
       somethingHappened
-    });
+    })
 
-    module.services({
+    module.addServices({
       foo() {}
-    });
+    })
 
     // The second argument to a module is the controller itself. You
     // might need this to do some special manipulation
@@ -166,7 +167,7 @@ export default (options = {}) => {
 ```javascript
 
 function mySharedModuleAction({module}) {
-  module.services.foo;
+  module.services.foo
 }
 ```
 Or if you want to access some other shared module, use its alias name:
@@ -174,7 +175,7 @@ Or if you want to access some other shared module, use its alias name:
 ```javascript
 
 function mySharedModuleAction({modules}) {
-  modules['cerebral-module-otherModule'].state.get();
+  modules['cerebral-module-otherModule'].state.get()
 }
 ```
 
@@ -186,7 +187,7 @@ function mySharedModuleAction({modules}) {
 }))
 class MyModuleComponent extends React.Component {
   render() {
-    return <div>{this.props.myModule.foo}</div>;
+    return <div>{this.props.myModule.foo}</div>
   }
 }
 ```
@@ -196,7 +197,7 @@ any configuration:
 
 ```javascript
 
-import ModuleComponent from 'cerebral-module-myModule/ModuleComponent';
+import ModuleComponent from 'cerebral-module-myModule/ModuleComponent'
 
 class MyAppComponent extends React.Component {
   render() {
@@ -215,16 +216,16 @@ Sometimes you want a service to trigger a signal. You can pass the signals regis
 
 ```javascript
 
-import CreateSyncMethod from './CreateSyncMethod';
+import CreateSyncMethod from './CreateSyncMethod'
 
 export default (options = {}) => {
   return (module) => {
 
-    module.services({
+    module.addServices({
       sync: CreateSyncMethod(module.getSignals())
-    });
+    })
 
-  };
+  }
 }
 ```
 
@@ -233,16 +234,16 @@ If a shared module can have multiple instances the developer consuming the modul
 
 ```javascript
 
-import SharedModuleAction from 'cerebral-module-someModule/actions/SharedModuleAction';
+import SharedModuleAction from 'cerebral-module-someModule/actions/SharedModuleAction'
 
 const chain = [
   SharedModuleAction('mySharedModuleNameSpace')
-];
+]
 ```
 
 ```javascript
 
-import ModuleComponent from 'cerebral-module-myModule/ModuleComponent';
+import ModuleComponent from 'cerebral-module-myModule/ModuleComponent'
 
 class MyAppComponent extends React.Component {
   render() {
@@ -251,7 +252,7 @@ class MyAppComponent extends React.Component {
         <h1>I just included a shared module component</h1>
         <ModuleComponent module="mySharedModuleNameSpace"/>
       </div>
-    );
+    )
   }
 }
 ```

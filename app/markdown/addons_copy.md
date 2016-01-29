@@ -3,8 +3,8 @@ Copies a value from input, global state or module state to output, global state 
 *settingsOpened.js*
 ```javascript
 
-import copy from 'cerebral-addons/copy';
-import getServerSettings from '../actions/getOptionsFromServer';
+import copy from 'cerebral-addons/copy'
+import getServerSettings from '../actions/getOptionsFromServer'
 
 export default [
   [
@@ -15,5 +15,5 @@ export default [
       error: []
     }
   ]
-];
+]
 ```

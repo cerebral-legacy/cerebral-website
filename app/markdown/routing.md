@@ -11,13 +11,13 @@ When you build your Cerebral application you do not have to think about routing 
 *Messages/index.js*
 ```javascript
 
-import opened from './signals/opened';
-import messageOpened from './signals/messageOpened';
+import opened from './signals/opened'
+import messageOpened from './signals/messageOpened'
 
 export default (options = {}) => {
   return (module) => {
 
-    module.signals({
+    module.addSignals({
       opened,
       messageOpened  
     });
@@ -29,13 +29,13 @@ export default (options = {}) => {
 *main.js*
 ```javascript
 
-import Controller from 'cerebral';
-import Model from 'cerebral-model-baobab';
-import Messages from './modules/Messages';
+import Controller from 'cerebral'
+import Model from 'cerebral-model-baobab'
+import Messages from './modules/Messages'
 
 const controller = Controller(Model({}));
 
-controller.modules({
+controller.addModules({
   messages: Messages()
 });
 ```
@@ -45,7 +45,7 @@ When we want to open the messages we call the signal:
 ```javascript
 
 onMessagesClick() {
-  this.props.signals.messages.opened();
+  this.props.signals.messages.opened()
 }
 ```
 
@@ -56,7 +56,7 @@ When we want to open a single message we call the signal and pass a payload:
 onMessageClick(id) {
   this.props.signals.messages.messageOpened({
     id: id
-  });
+  })
 }
 ```
 
@@ -64,13 +64,13 @@ The signature of a state change is the signal and the payload passed. We can bin
 
 ```javascript
 
-import Controller from 'cerebral';
-import Model from 'cerebral-model-baobab';
-import Router from 'cerebral-model-router';
-import Home from './modules/Home';
-import Messages from './modules/Messages';
+import Controller from 'cerebral'
+import Model from 'cerebral-model-baobab'
+import Router from 'cerebral-model-router'
+import Home from './modules/Home'
+import Messages from './modules/Messages'
 
-const controller = Controller(Model({}));
+const controller = Controller(Model({}))
 
 controller.modules({
   home: Home(),
@@ -83,7 +83,7 @@ controller.modules({
   }, {
     mapper: {query: true} // Read about this below
   })
-});
+})
 
 
 ```
@@ -100,7 +100,7 @@ The important thing to understand here is that your application does not trigger
 // Is exactly the same as
 this.props.signals.messages.messageOpened({
   id: '456'
-});
+})
 ```
 
 ### Diving into the app from a url
@@ -108,13 +108,13 @@ In the example above, when navigating in the app, you have to go to */messages* 
 
 ```javascript
 
-import opened from './signals/opened';
-import messageOpened from './signals/messageOpened';
+import opened from './signals/opened'
+import messageOpened from './signals/messageOpened'
 
 export default (options = {}) => {
   return (module) => {
 
-    module.signals({
+    module.addSignals({
       opened,
       messageOpened: [...opened, ...messageOpened]  
     });
@@ -134,7 +134,7 @@ onMessageClick(id) {
   this.props.signals.messages.messageOpened({
     id: id,
     withComments: true
-  });
+  })
 }
 ```
 

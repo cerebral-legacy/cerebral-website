@@ -7,9 +7,9 @@ Let us start with an example:
 
 function myAction ({state}) {
 
-  state.set('isLoading', false);
+  state.set('isLoading', false)
 
-  state.get(); // {isLoading: false}
+  state.get() // {isLoading: false}
 
 }
 ```
@@ -21,13 +21,13 @@ use an array.
 
 function myAction ({state}) {
 
-  state.set(['user', 'isLoading'], false);
+  state.set(['user', 'isLoading'], false)
 
-  state.get(); // {{user: {isLoading: false }}
+  state.get() // {{user: {isLoading: false }}
 
   // You can also use dot notation
-  state.set('user.isLoading', true);
-  state.get('user.isLoading'); // true
+  state.set('user.isLoading', true)
+  state.get('user.isLoading') // true
 
 }
 ```
@@ -39,8 +39,8 @@ strings and arrays here also to be more specific.
 
 function myAction ({state}) {
 
-  state.get('isLoading'); // false
-  state.get(['user', 'isLoading']); // false
+  state.get('isLoading') // false
+  state.get(['user', 'isLoading']) // false
 
 }
 ```
@@ -54,34 +54,34 @@ you know from JavaScript. Collection methods however returns the mutated value i
 function myAction ({state}) {
 
   // Set value on property
-  state.set('isLoading', false);
+  state.set('isLoading', false)
 
   // Remove property
-  state.unset('isLoading');
+  state.unset('isLoading')
 
   // Remove multiple properties
-  state.unset('messages', ['123', '456', '789']);
+  state.unset('messages', ['123', '456', '789'])
 
   // Merge object with object on property
-  state.merge('user', {name: 'foo'});
+  state.merge('user', {name: 'foo'})
 
   // Normal array push
-  state.push('list', 'foo');
+  state.push('list', 'foo')
 
   // Normal array unshift
-  state.unshift('list', 'bar');
+  state.unshift('list', 'bar')
 
   // Normal array pop
-  state.pop('list');
+  state.pop('list')
 
   // Normal array shift
-  state.shift('list');
+  state.shift('list')
 
   // Normal array concat
-  state.concat('list', [1, 2, 3]);
+  state.concat('list', [1, 2, 3])
 
   // Normal array splice
-  state.splice('list', 1, 1, [1]);
+  state.splice('list', 1, 1, [1])
 
 }
 ```
@@ -94,19 +94,19 @@ Accessors are methods that lets you grab state from the state store.
 function myAction ({state}) {
 
   // Get from the top level of tree
-  state.get('isLoading'); // false
+  state.get('isLoading') // false
 
   // Get from nested level of tree
-  state.get(['user', 'isLoading']); // false
+  state.get(['user', 'isLoading']) // false
 
   // Get keys, given state is an object
-  state.keys('messages'); // ["id1", "id2", "id3"]
+  state.keys('messages') // ["id1", "id2", "id3"]
 
   // Get first match given state is an array with objects
-  state.findWhere(['admin', 'users'], {name: 'Jack Frost'});
+  state.findWhere(['admin', 'users'], {name: 'Jack Frost'})
 
   // Exports a guaranteed serializable version of the state store
-  state.export(); // {foo: 'bar'}
+  state.export() // {foo: 'bar'}
 
   // Deep merges data into state store
   state.import({
@@ -114,7 +114,7 @@ function myAction ({state}) {
     admin: {
       isLoading: true
     }
-  }); // {foo: 'bar', somethingElse: 'hey', admin: {isLoading: true, users: []}}
+  }) // {foo: 'bar', somethingElse: 'hey', admin: {isLoading: true, users: []}}
 
 }
 ```

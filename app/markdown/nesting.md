@@ -2,13 +2,13 @@ In the in the previous section you might want to force the user to the messages 
 
 ```javascript
 
-import Router from 'cerebral-module-router';
-import controller from './controller.js';
-import homeOpened from './signals/homeOpened';
-import messagesOpened from './signals/messagesOpened';
-import messageOpened from './signals/messageOpened';
+import Router from 'cerebral-module-router'
+import controller from './controller.js'
+import homeOpened from './signals/homeOpened'
+import messagesOpened from './signals/messagesOpened'
+import messageOpened from './signals/messageOpened'
 
-controller.signals({
+controller.addSignals({
   homeOpened,
   messagesOpened,
 
@@ -23,7 +23,7 @@ Router({
     '/': 'messages.opened',
     '/:id': 'messages.messageOpened'
   }
-});
+})
 ```
 
 When the user goes to **/messages/123** the **messagesOpened** and **messageOpened** chain will run.

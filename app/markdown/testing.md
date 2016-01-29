@@ -24,7 +24,7 @@ Lets create an action called `toggleIsLoading` and then we can test it.
 ```javascript
 
 export default function toggleIsLoading({input, state}) {
-  state.set('isLoading', input.value);
+  state.set('isLoading', input.value)
 }
 ```
 
@@ -35,33 +35,33 @@ In this case we don't need to use `output` or `services` so these parameters not
 // Ideally your assertion library should support counting the number of assertions made,
 // if it does not then you can create a simple wrapper like the one used here.
 // See this gist for details: https://gist.github.com/garth/7367f25e2dee19f9098a
-import counter, { expect, expectCount } from './helpers/chaiCounter';
-import toggleIsLoading from './path/to/action';
+import counter, { expect, expectCount } from './helpers/chaiCounter'
+import toggleIsLoading from './path/to/action'
 
-beforeEach(counter.reset);
-afterEach(counter.check);
+beforeEach(counter.reset)
+afterEach(counter.check)
 
 describe('toggleIsLoading()', function () {
 
   it('should set the isLoading flag on the state', function () {
     // we expect two asserts to be called, if no asserts are made then the test should fail
-    expectCount(2);
+    expectCount(2)
 
     // mock the state object
     const state = {
       set(path, value) {
-        expect(path).to.equal('isLoading');
-        expect(value).to.be.true;
+        expect(path).to.equal('isLoading')
+        expect(value).to.be.true
       }
-    };
+    }
 
     // prepare the input data to pass to the action
     const input = {
       value: true
-    };
+    }
 
     // call the action
-    toggleIsLoading({input, state});
+    toggleIsLoading({input, state})
   });
 
 });
@@ -73,38 +73,38 @@ Asynchronous cerebral actions need to call a method on `output` when complete, s
 
 ```javascript
 
-import counter, { expect, expectCount } from './helpers/chaiCounter';
-import someAsyncAction from './path/to/action';
+import counter, { expect, expectCount } from './helpers/chaiCounter'
+import someAsyncAction from './path/to/action'
 
-beforeEach(counter.reset);
-afterEach(counter.check);
+beforeEach(counter.reset)
+afterEach(counter.check)
 
 describe('someAsyncAction()', function () {
 
   it('should call an output method when done', function (done) {
-    expectCount(1);
+    expectCount(1)
 
-    const input = {};
-    const state = {};
+    const input = {}
+    const state = {}
 
     // mock the output object
     const output = {
       success(data) {
         // since success may be called asynchronously we need to wrap our asserts in a try catch.
         try {
-          expect(data).to.eql({ actionOutput: 'data' });
-          done();
+          expect(data).to.eql({ actionOutput: 'data' })
+          done()
         } catch (e) {
-          done(e);
+          done(e)
         }
       }
-    };
+    }
 
     // call the async action
-    someAsyncAction({input, state, output});
-  });
+    someAsyncAction({input, state, output})
+  })
 
-});
+})
 ```
 
 ## Signal Tests
@@ -117,31 +117,31 @@ By default cerebral does not expose the controller state for direct manipulation
 
 ```javascript
 
-import Controller from 'cerebral';
-import Model from 'cerebral-model-baobab';
+import Controller from 'cerebral'
+import Model from 'cerebral-model-baobab'
 
 // your initial state
-const state = {};
+const state = {}
 
 // your services (passed to each action)
-const services = {};
+const services = {}
 
 // create the central model and controller
-let model = Model(state);
-let controller = Controller(model, services);
+let model = Model(state)
+let controller = Controller(model, services)
 
 // only when testing - expose the model on the controller
 // (webpack will make process.env.NODE_ENV available).
 if (process.env.NODE_ENV === 'test') {
   // DON'T DO THIS IN PRODUCTION
-  controller.model = model;
+  controller.model = model
 
   // optional test helper to rest cerebral state, you may want to put this
   // somewhere else if don't like test methods being deployed to production.
   controller.reset = function () {
-    model.tree.set(state);
-    model.tree.commit();
-  };
+    model.tree.set(state)
+    model.tree.commit()
+  }
 }
 
 export default controller;
@@ -166,15 +166,15 @@ function testSignal(controller, signal, data, test) {
     controller.once('signalEnd', function () {
       if (typeof test === 'function') {
         try {
-          test();
+          test()
         } catch (e) {
-          return reject(e);
+          return reject(e)
         }
       }
-      resolve();
+      resolve()
     });
-    signal(data);
-  });
+    signal(data)
+  })
 }
 
 export default testSignal
@@ -188,34 +188,34 @@ Now that the controller has been patched and we have a wrapper for executing sig
 
 ```javascript
 
-import { expect } from 'chai';
-import testSignal from './helpers/testSignal';
-import controller from './path/to/controller';
+import { expect } from 'chai'
+import testSignal from './helpers/testSignal'
+import controller from './path/to/controller'
 
 // depending your setup the signal may initialise itself or you may need to call a function here to do so.
-import './path/to/signal';
+import './path/to/signal'
 
 describe('nameChanged', function () {
   beforeEach(function () {
-    controller.reset();
-    this.tree = controller.model.tree;
+    controller.reset()
+    this.tree = controller.model.tree
 
     // optionally setup any initial test state here
-    this.tree.set(['user', 'name'], 'unknown person');
-    this.tree.commit();
+    this.tree.set(['user', 'name'], 'unknown person')
+    this.tree.commit()
   });
 
   it('should set the user name', function () {
     // prepare some signal input test data
     const signalInput = {
       name: 'Christian'
-    };
+    }
 
     // return the promise and mocha will wait for it to resolve
     return testSignal(controller, controller.getSignals().nameChanged, signalInput, () => {
       expect(this.tree.get(['user', 'name'])).to.equal('Christian');
-    });
-  });
-});
+    })
+  })
+})
 
 ```

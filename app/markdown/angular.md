@@ -10,31 +10,31 @@
 
 ```javascript
 
-import 'cerebral-view-angular'; // Exposes module
-import Controller from 'cerebral';
-import Model from 'cerebral-model-baobab';
-import Router from 'cerebral-module-router';
-import Home from './modules/Home';
+import 'cerebral-view-angular' // Exposes module
+import Controller from 'cerebral'
+import Model from 'cerebral-model-baobab'
+import Router from 'cerebral-module-router'
+import Home from './modules/Home'
 
-const controller = Controller(Model({}));
+const controller = Controller(Model({}))
 
 angular.module('app', ['cerebral'])
   .config(function (cerebralProvider) {
 
     // Sets the controller for the application
-    cerebralProvider.setController(controller);
+    cerebralProvider.setController(controller)
   })
   .run(function (cerebral) {
 
-    cerebral.modules({
+    cerebral.addModules({
       home: Home(),
 
       router: Router({
         '/': 'home.routed'
       })
-    });
+    })
 
-  });
+  })
 ```
 
 #### State and signals
@@ -82,9 +82,9 @@ By default the view package exposes the *$http* service as:
 
 .run(function (cerebral, $http) {
 
-  cerebral.services({
+  cerebral.addServices({
     $http
-  });
+  })
 
 });
 ```

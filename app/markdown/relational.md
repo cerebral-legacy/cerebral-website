@@ -69,12 +69,12 @@ This is what we call *source data*. It is data contained in your application sta
               return {
                 ...comment,
                 user: data.users[comment.user]
-              };
+              }
 
             })
           }
 
-        });
+        })
       }
     })
   }
@@ -86,8 +86,8 @@ This is how a component could now display this list:
 
 ```javascript
 
-import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-view-react';
+import React from 'react'
+import {Decorator as Cerebral} from 'cerebral-view-react'
 
 @Cerebral({
   messages: ['messages', 'list']
@@ -99,7 +99,7 @@ class Messages extends React.Component {
         <h6>{comment.user.name}</h6>
         <p>{comment.content}</p>
       </div>
-    );  
+    );
   }
   renderMessage(message, index) {
     return (
@@ -107,14 +107,14 @@ class Messages extends React.Component {
         <h4>{message.title}</h4>
         {message.comments.map((comment, index) => this.renderComment(comment, index))}
       </li>
-    );
+    )
   }
   render() {
     return (
       <ul>
         {this.props.messages.map((message, index) => this.renderMessage(message, index)))}
       </ul>
-    );
+    )
   }
 }
 ```

@@ -10,7 +10,7 @@ function myAction ({input, state, output, services}) {
 
 myAction.input = {
   foo: String
-};
+}
 ```
 
 Cerebral lets you do very basic type checking using the native constructors of JavaScript. In the example above we expect that the input reaching *myAction* will have a *foo* property where the value is a string. The following type checks are available.
@@ -29,7 +29,7 @@ myAction.input = {
   e: Array,
   f: null,
   g: undefined
-};
+}
 ```
 
 ### Custom type checking
@@ -44,16 +44,16 @@ function myAction ({input, state, output, services}) {
 
 myAction.input = {
   foo: function (value) {
-    return typeof value === 'string';
+    return typeof value === 'string'
   }
-};
+}
 ```
 
 This allows you to bring in other type checking libraries. An example of that would be:
 
 ```javascript
 
-import check from 'check-types';
+import check from 'check-types'
 
 function myAction ({input, state, output, services}) {
 
@@ -62,7 +62,7 @@ function myAction ({input, state, output, services}) {
 myAction.input = {
   foo: check.number,
   bar: check.array.of.string
-};
+}
 ```
 
 ### Output
@@ -74,12 +74,12 @@ The outputs of an action can also be type checked.
 function myAction ({output}) {
   output({
     foo: 'bar'
-  });
+  })
 }
 
 myAction.output = {
   foo: String
-};
+}
 ```
 
 Or with multiple outputs:
@@ -89,11 +89,11 @@ Or with multiple outputs:
 function myAction ({output}) {
   output.a({
     foo: 'string'
-  });
+  })
   // Or
   output.b({
     bar: 'string'
-  });
+  })
 }
 
 myAction.outputs = {
@@ -103,5 +103,5 @@ myAction.outputs = {
   b: {
     bar: String
   }
-};
+}
 ```

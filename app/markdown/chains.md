@@ -6,20 +6,20 @@ const myChain = [
   action1,
   action2,
   action3
-];
+]
 
 const somethingHappened = [
   ...myChain
-];
+]
 
-module.signals({
+module.addSignals({
   somethingHappened
-});
+})
 
 // Will run as
-module.signals({
+module.addSignals({
   somethingHappened: [action1, action2, action3]
-});
+})
 ```
 
 The *spread operator* will spread the items of the array. This makes it easy to make changes to your signals. You can put actions between chains, use multiple chains and even create chain factories.
@@ -31,11 +31,11 @@ const somethingHappened = [
   myAction1,
   ...chain2,
   myAction2
-];
+]
 
-module.signals({
+module.addSignals({
   somethingHappened
-});
+})
 ```
 
 ### Chain factories
@@ -56,7 +56,7 @@ function get (url, outputs) {
     notFound: [displayNotFoundError],
     notAuthenticated: [displayAuthenticationError]
     error: [setError]
-  });
+  })
 
   // We return a chain where we use an action factory to
   // request the url. That is the first action. The second item
@@ -64,7 +64,7 @@ function get (url, outputs) {
   return [
     request(url),
     chainOutputs
-  ];
+  ]
 
 }
 ```
@@ -73,8 +73,8 @@ This factory can now be used as:
 
 ```javascript
 
-import get from './chains/get.js';
-import setItems from './actions/setItems.js';
+import get from './chains/get.js'
+import setItems from './actions/setItems.js'
 
 const somethingHappened = [
   [
@@ -82,11 +82,11 @@ const somethingHappened = [
       success: [setItems]
     })
   ]
-];
+]
 
 module.signals({
   somethingHappened
-});
+})
 ```
 
 You have now created a generic action chain that expresses your intent. It does hide implementation details, but that is something you have to balance. Sometimes it is good to be very specific, other times it just becomes very tedious. When you decide to hide implementation details the debugger will still indicate possible outputs etc. So you never completely hide what is happening.

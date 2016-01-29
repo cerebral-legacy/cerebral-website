@@ -1,21 +1,21 @@
 ```javascript
 
 function myAction ({input}) {
-  input.foo; // "bar"
+  input.foo // "bar"
 }
 
 const somethingHappened = [
   myAction
-];
+]
 
-module.signals({
+module.addSignals({
   somethingHappened
-});
+})
 
 // In some Component
 signals.module.somethingHappened({
   foo: 'bar'
-});
+})
 ```
 
 The input argument has to be serializable. That means it only supports the base JavaScript types. These are *objects*, *arrays*, *strings*, *numbers*, *booleans* and *null*. Think of it as JSON compatible. There are two reasons for this:
@@ -28,26 +28,26 @@ The input can be updated in two different ways. Any object passed when you trigg
 ```javascript
 
 function myAction ({input}) {
-  input.foo; // "bar"
+  input.foo // "bar"
 }
 
 function myAction2 ({input}) {
-  input.foo; // "bar"
+  input.foo // "bar"
 }
 
 const somethingHappened = [
   myAction,
   myAction2
-];
+]
 
-module.signal({
+module.addSignals({
   somethingHappened
 });
 
 // In some Component
 signals.module.somethingHappened({
   foo: 'bar'
-});
+})
 ```
 
 Look more into outputs to see more examples of how the input updates.
@@ -58,10 +58,10 @@ You can set default inputs to actions.
 ```javascript
 
 function myAction ({input}) {
-  input.foo; // "bar"
+  input.foo // "bar"
 }
 
 myAction.defaultInput = {
   foo: 'bar'
-};
+}
 ```

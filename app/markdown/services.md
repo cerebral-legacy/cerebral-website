@@ -9,12 +9,12 @@ import {get, post} from 'superagent';
 export default (options = {}) => {
   return (module) => {
 
-    module.services({
+    module.addServices({
       get,
       post
     });
 
-  };
+  }
 }
 ```
 
@@ -31,14 +31,14 @@ function myAction ({services, output}) {
     if (err) {
       output.error({
         error: err.toString()
-      });
+      })
     } else {
       output.success({
         result: JSON.stringify(response.text)
-      });
+      })
     }
 
-  });
+  })
 
 }
 

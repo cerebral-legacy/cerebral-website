@@ -5,16 +5,16 @@ Computed state are just functions with a special `get` function.
 
 // Grab values as normal, as if it was an action
 const displayedMessages = function (get) {
-  return get(['displayedMessagesIds']).map((id) => get(['messages', id]));
+  return get(['displayedMessagesIds']).map((id) => get(['messages', id]))
 }
 
 // You can also grab existing computed state
 const foo = function (get) {
-  return 'Wazah!';
+  return 'Wazah!'
 }
 
 const bar = function (get) {
-  return get(foo) + '!!!!';
+  return get(foo) + '!!!!'
 }
 
 ```
@@ -25,9 +25,9 @@ You use them the same way as normal state, though just referencing the computed 
 
 ```javascript
 
-import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-view-react';
-import displayedMessages from './computed/displayedMessages';
+import React from 'react'
+import {Decorator as Cerebral} from 'cerebral-view-react'
+import displayedMessages from './computed/displayedMessages'
 
 @Cerebral({
   title: ['title'],
@@ -39,7 +39,7 @@ class App extends React.Component {
       <li key={index}>
         {message.name}
       </li>
-    );
+    )
   }
   render() {
     return (
@@ -49,21 +49,21 @@ class App extends React.Component {
           {this.props.messages.map(this.renderMessage)}
         </ul>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
 ```
 
 You can also use them inside actions.
 
 ```javascript
 
-import displayedMessages from '../computed/displayedMessages';
+import displayedMessages from '../computed/displayedMessages'
 
 function myAction({state}) {
-  const messages = state.get(displayedMessages);
+  const messages = state.get(displayedMessages)
 }
 ```
 
@@ -75,12 +75,12 @@ It is also possible to create functions that returns computed functions. It is i
 function myComputedFactory(someDynamicPath) {
 
   function computed(get) {
-    return get(someDynamicPath);
+    return get(someDynamicPath)
   }
 
-  computed.computedRef = JSON.stringify(someDynamicPath);
+  computed.computedRef = JSON.stringify(someDynamicPath)
 
-  return computed;
+  return computed
 
 }
 ```

@@ -7,11 +7,11 @@ function get (url) {
 
     services.ajax(url)
       .then(output.success)
-      .catch(output.error);
+      .catch(output.error)
 
   }
 
-  return action;
+  return action
 
 }
 
@@ -22,11 +22,11 @@ const somethingHappened = [
       error: [setItemsError]
     }
   ]
-];
+]
 
-module.signals({
+module.addSignals({
   somethingHappened
-});
+})
 ```
 
 ### Custom action names
@@ -41,13 +41,13 @@ function get (url) {
 
     services.ajax(url)
       .then(output.success)
-      .catch(output.error);
+      .catch(output.error)
 
   }
 
-  action.displayName = 'get(' + url + ')';
+  action.displayName = 'get(' + url + ')'
 
-  return action;
+  return action
 
 }
 ```

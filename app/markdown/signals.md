@@ -17,7 +17,7 @@ const appMounted = [
 
 module.signals({
   appMounted
-});
+})
 ```
 
 As you can see, there are not only functions that are used to express flow. You also have arrays and objects. Normally arrays and object literals define data structure. Inside a signal however, they define behavior. An array inside an array means its contents will run asynchronously. The *getUser* action will run asynchronously. An object is used to define paths. This means that the execution of an action can result in different outcomes. Each output path is itself just a normal chain of actions, subject to the same rules as normal. For example, you can define sub-paths within paths and if you want to use an asynchronous action within a path, you'd still need to wrap it in an a second array.
@@ -28,8 +28,8 @@ By default Cerebral will run your signals between animation frames. Sometimes yo
 
 ```javascript
 
-import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-view-react';
+import React from 'react'
+import {Decorator as Cerebral} from 'cerebral-view-react'
 
 @Cerebral({
   value: ['home', 'inputValue']
@@ -44,7 +44,7 @@ class App extends React.Component {
           onChange={(e) => this.props.signals.home.valueChanged.sync({value: e.target.value})}
         />
       </div>
-    );
+    )
   }
 }
 ```
@@ -55,9 +55,12 @@ All signals have a `.sync()` method. Use this with inputs to avoid glitches in U
 
 const inputChanged = [
   setInputValue
-];
+]
 
-module.signalsSync({
-  inputChanged
-});
+module.addSignals({
+  inputChanged: {
+    chain: inputChanged,
+    sync: true
+  }
+})
 ```

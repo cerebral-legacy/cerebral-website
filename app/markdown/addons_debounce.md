@@ -3,16 +3,16 @@ Debounce can be used to limit the number a times an actionChain is called, for e
 *fieldChanged.js*
 ```javascript
 
-import copy from 'cerebral-addons/copy';
-import debounce from 'cerebral-addons/debounce';
-import validateForm from '../actions/validateForm';
+import copy from 'cerebral-addons/copy'
+import debounce from 'cerebral-addons/debounce'
+import validateForm from '../actions/validateForm'
 
 export default [
   copy('input:/value', 'state:/form.field'),
   debounce(500, [
     validateForm
   ])
-];
+]
 ```
 
 ### Options

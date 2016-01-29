@@ -10,8 +10,8 @@ The basic boilerplate is located [here](https://github.com/cerebral/cerebral-boi
 *App.js*
 ```javascript
 
-import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-view-react';
+import React from 'react'
+import {Decorator as Cerebral} from 'cerebral-view-react'
 
 @Cerebral({
   title: ['home', 'title']
@@ -27,11 +27,11 @@ class App extends React.Component {
           onChange={(e) => this.props.signals.home.titleChanged({title: e.target.value})}
         />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
 ```
 
 *modules/Home/index.js*
@@ -43,16 +43,16 @@ function changeTitle ({input, state}) {
 
 const titleChanged = [
   changeTitle
-];
+]
 
 export default (options = {}) => {
   return (module) => {
 
-    module.state({
+    module.addState({
       title: 'Hello world!'
     });
 
-    module.signals({
+    module.addSignals({
       titleChanged
     });  
 
@@ -63,23 +63,23 @@ export default (options = {}) => {
 *main.js*
 ```javascript
 
-import React from 'react';
-import Controller from 'cerebral';
-import Model from 'cerebral-model-baobab';
-import {Container} from 'cerebral-view-react';
-import ReactDOM from 'react-dom';
-import Home from './modules/Home';
-import HomeComponent from './modules/Home/components/Home';
+import React from 'react'
+import Controller from 'cerebral'
+import Model from 'cerebral-model-baobab'
+import {Container} from 'cerebral-view-react'
+import ReactDOM from 'react-dom'
+import Home from './modules/Home'
+import HomeComponent from './modules/Home/components/Home'
 
-const controller = Controller(Model({}));
+const controller = Controller(Model({}))
 
 controller.modules({
   home: Home()
-});
+})
 
 ReactDOM.render(
   <Container controller={controller}>
     <HomeComponent/>
   </Container>
-, document.querySelector('#app'));
+, document.querySelector('#app'))
 ```

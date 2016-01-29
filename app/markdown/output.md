@@ -5,7 +5,7 @@ All actions are able to output values. All output is merged with previous input 
 function actionA ({output}) {
     output({
       bip: 'bop'
-    });
+    })
 }
 
 function actionB ({input}) {
@@ -18,14 +18,14 @@ const somethingHappened = [
   actionB
 ];
 
-module.signals({
+module.addSignals({
   somethingHappened
-});
+})
 
 // In some Component
 signals.module.somethingHappened({
   foo: 'bar'
-});
+})
 
 ```
 Architecting the input/output of actions as a "bus" gives action chains a lot of flexibility and allows for some awesome patterns you can read about at the bottom of this page.
@@ -41,11 +41,11 @@ An action might want to take different paths based on some conditional. A exampl
 function getItems ({output}) {
   fetch('/items')
     .then(function(response) {
-      return response.json();
+      return response.json()
     }).then(function(json) {
-      output.success({json: json});
+      output.success({json: json})
     }).catch(function(ex) {
-      output.error({ex: ex});
+      output.error({ex: ex})
     });
 }
 
@@ -56,11 +56,11 @@ const somethingHappened = [
       error: [setError]
     }
   ]
-];
+]
 
-module.signals({
+module.addSignals({
   somethingHappened
-});
+})
 ```
 
 But you can define your own custom output paths if you want to. Note that actions does not know about paths they are currently running on. They only get inputs. The previous action could do an `output({})` or `output.success({})`, or nothing at all. An action always just starts with some input and can itself decide a path to take next.
@@ -71,10 +71,10 @@ But you can define your own custom output paths if you want to. Note that action
 
 function getItems ({output}) {
   // For simplicities sake
-  output.success();
-  output.notFound();
-  output.notAuthenticated();
-  output.error();
+  output.success()
+  output.notFound()
+  output.notAuthenticated()
+  output.error()
 }
 
 getItems.outputs = [
@@ -82,7 +82,7 @@ getItems.outputs = [
   'notFound',
   'notAuthenticated',
   'error'
-];
+]
 
 const somethingHappened = [
   [
@@ -93,9 +93,9 @@ const somethingHappened = [
       error: [setError]
     }
   ]
-];
+]
 
-module.signals({
+module.addSignals({
   somethingHappened
 });
 ```
@@ -109,9 +109,9 @@ const somethingHappened = [
       success: [setItems]
     })
   ]
-];
+]
 
-module.signal({
+module.addSignals({
   somethingHappened
 });
 ```
@@ -127,8 +127,8 @@ function myAction ({output}) {
   output(); // Will go to path "foo"
 }
 
-myAction.outputs = ['foo', 'bar'];
-myAction.defaultOutput = 'foo';
+myAction.outputs = ['foo', 'bar']
+myAction.defaultOutput = 'foo'
 ```
 
 Because all actions receive the same input as the previous actions in the chain (plus whatever new data has been merged in), adding on extra functionality at the start or end of signals is extremely simple. One example is wrapping certain signals to check for authentication:
@@ -143,16 +143,16 @@ function requireAuth (actionChain) {
 
 const saveSensitiveDataToDB = [
   saveDataToDb //action to save data to DB
-];
+]
 
 
-module.signal({
+module.addSignals({
   saveButtonClicked: requireAuth(saveSensitiveDataToDB)
-});
+})
 
 // In some Component
 signals.module.saveButtonClicked({
   foo: 'bar'
-});
+})
 
 ```

@@ -10,15 +10,13 @@ The devtools of Cerebral is a module that you add to your application.
 
 ```javascript
 
-import Controller from 'cerebral';
-import Model from 'cerebral-module-baobab';
-import Devtools from 'cerebral-module-devtools';
+import Controller from 'cerebral'
+import Model from 'cerebral-module-baobab'
+import Devtools from 'cerebral-module-devtools'
 
 const controller = Controller(Model({}));
 
-controller.modules({
+controller.addModules({
   devtools: Devtools()
-});
+})
 ```
-
-**Note!** The debugger must be loaded before the router. 

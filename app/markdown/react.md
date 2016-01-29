@@ -14,33 +14,33 @@ It is encouraged that you put all the state of your application in the Cerebral 
 
 ```javascript
 
-import Controller from 'cerebral';
-import Model from 'cerebral-model-baobab';
-import React from 'react';
-import {Container} from 'cerebral-view-react';
+import Controller from 'cerebral'
+import Model from 'cerebral-model-baobab'
+import React from 'react'
+import {Container} from 'cerebral-view-react'
 
 // Your main application component
-import HomeComponent from './modules/Home/components/Home';
+import HomeComponent from './components/Home'
 import Home from './modules/Home';
 
-const controller = Controller(Model({}));
+const controller = Controller(Model({}))
 
 controller.modules({
   home: Home()
-});
+})
 
 // Render the app
 React.render(
   <Container controller={controller}>
     <HomeComponent/>
-  </Container>, document.body.querySelector('#app'));
+  </Container>, document.body.querySelector('#app'))
 ```
 
 #### Get state in component
 ```javascript
 
-import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-view-react';
+import React from 'react'
+import {Decorator as Cerebral} from 'cerebral-view-react'
 
 @Cerebral({
   title: ['home', 'title']
@@ -57,7 +57,7 @@ If you are using the `cerebral-module-router` you can use a component to create 
 ```javascript
 
 import React from 'react';
-import {Decorator as Cerebral, Link} from 'cerebral-view-react';
+import {Decorator as Cerebral, Link} from 'cerebral-view-react'
 
 @Cerebral()
 class App extends React.Component {
@@ -68,7 +68,7 @@ class App extends React.Component {
         params={{foo: 'bar'}}
         className="my-class"
       >Click me</Link>
-    );
+    )
   }
 }
 ```

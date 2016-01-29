@@ -4,12 +4,12 @@ We are going to look at an example using the *CSSTransitionGroup* plugin from Re
 
 ```javascript
 
-import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-view-react';
-import {CSSTransitionGroup} from 'react/addons';
+import React from 'react'
+import {Decorator as Cerebral} from 'cerebral-view-react'
+import {CSSTransitionGroup} from 'react/addons'
 
-import HomePage from './HomePage.js';
-import AdminPage from './AdminPage.js';
+import HomePage from './HomePage.js'
+import AdminPage from './AdminPage.js'
 
 @Cerebral({
   currentPage: ['app', 'currentPage']
@@ -30,7 +30,7 @@ class App extends React.Component {
           {this.renderCurrentPage()}
         </CSSTransitionGroup>
       </div>
-    );  
+    )
   }
 }
 ```

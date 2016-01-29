@@ -9,14 +9,14 @@ When playing back a recording the signals of Cerebral will actually run exactly 
 ### Use
 ```javascript
 
-import controller from './controller';
-import RecorderModule from 'cerebral-module-recorder';
+import controller from './controller'
+import RecorderModule from 'cerebral-module-recorder'
 
-controller.modules({
+controller.addModules({
   recorder: RecorderModule({
     state: {foo: 'bar'} // Merge in additional state
   })
-});
+})
 ```
 
 #### State
@@ -40,19 +40,19 @@ signals.{namespace}.recorded({
     ['namespace1'],
     ['namespace2', 'specificStateBranch']
   ]
-});
+})
 
 // Stop recording
-signals.{namespace}.stopped();
+signals.{namespace}.stopped()
 
 // Start playback of current recording
-signals.{namespace}.played();
+signals.{namespace}.played()
 
 // Pause playback of current recording
-signals.{namespace}.paused();
+signals.{namespace}.paused()
 
 // Resume playback of current recording
-signals.{namespace}.resumed();
+signals.{namespace}.resumed()
 ```
 
 #### Services
@@ -60,10 +60,10 @@ signals.{namespace}.resumed();
 ```javascript
 
 // Gives you the current recording
-services.{namespace}.getRecording();
+services.{namespace}.getRecording()
 
 // Loads up a recording
-services.{namespace}.loadRecording();
+services.{namespace}.loadRecording()
 
 // Manually start recording
 services.{namespace}.record({
@@ -71,22 +71,22 @@ services.{namespace}.record({
     ['namespace1'],
     ['namespace2', 'specificStateBranch']
   ]
-});
+})
 
 // Manually stop recording
-services.{namespace}.stop();
+services.{namespace}.stop()
 
 // Manually seek recording
-services.{namespace}.seek(0);
+services.{namespace}.seek(0)
 
 // Manually play recording
-services.{namespace}.play();
+services.{namespace}.play()
 
 // Manually pause playback
-services.{namespace}.pause();
+services.{namespace}.pause()
 
 // Manually resume playback
-services.{namespace}.resume();
+services.{namespace}.resume()
 ```
 
 ### Components
@@ -94,7 +94,7 @@ services.{namespace}.resume();
 #### SimpleRecorder
 ```javascript
 
-import SimpleRecorder from 'cerebral-module-recorder/react/SimpleRecorder';
+import SimpleRecorder from 'cerebral-module-recorder/react/SimpleRecorder'
 ```
 
 ### Example
@@ -102,19 +102,19 @@ import SimpleRecorder from 'cerebral-module-recorder/react/SimpleRecorder';
 *main.js*
 ```javascript
 
-import controller from './controller';
-import RecorderModule from 'cerebral-module-recorder';
+import controller from './controller'
+import RecorderModule from 'cerebral-module-recorder'
 
-controller.registerModules({
+controller.addModules({
   recorder: RecorderModule()
-});
+})
 ```
 
 *MyAppRecorder.js*
 ```javascript
 
-import React from 'react';
-import SimpleRecorder from 'cerebral-module-recorder/react/SimpleRecorder';
+import React from 'react'
+import SimpleRecorder from 'cerebral-module-recorder/react/SimpleRecorder'
 
 class MyAppRecorder extends React.Component {
   render() {
@@ -123,11 +123,11 @@ class MyAppRecorder extends React.Component {
         <h3>Recorder</h3>
         <SimpleRecorder/>
       </div>
-    );
+    )
   }
 }
 
-export default MyAppRecorder;
+export default MyAppRecorder
 ```
 
 You would create your own signals for grabbing the current recording and saving it.

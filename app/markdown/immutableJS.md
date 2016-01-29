@@ -13,16 +13,16 @@ The is Facebook's super high performance immutable library. Note that all values
 
 ```javascript
 
-import Controller from 'cerebral';
-import Model from 'cerebral-model-immutable-js';
+import Controller from 'cerebral'
+import Model from 'cerebral-model-immutable-js'
 
 // The initial state of the application
 const model = Model({
   isLoading: false,
   user: null,
   error: null
-});
+})
 
 // Instantiate the controller
-export default Controller(model);
+export default Controller(model)
 ```

@@ -5,31 +5,31 @@ You can redirect to a different url from within a signal. This will cause a new 
 function redirectAction({services}) {
   services.router.redirect('/someurl', {
     replace: false // Default true
-  });
+  })
 }
 
-signals({
+module.addSignals({
   appMounted: [
     myConditionalAction, {
       success: [someOtherAction],
       error: [redirectAction]
     }
   ]
-});
+})
 ```
 
 Or you can use the redirect action factory from the router:
 
 ```javascript
 
-import {redirect} from 'cerebral-module-router';
+import {redirect} from 'cerebral-module-router'
 
-signals({
+module.addSignals({
   appMounted: [
     myConditionalAction, {
       success: [someOtherAction],
       error: [redirect('/error')]
     }
   ]
-});
+})
 ```

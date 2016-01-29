@@ -8,5 +8,5 @@ Router({
   '/messages/:id': 'messages.messageOpened'
 }, {
   baseUrl: '/myapp'
-});
+})
 ```

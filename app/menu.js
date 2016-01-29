@@ -51,6 +51,7 @@ import snabbdom from './markdown/snabbdom.md';
 import inferno from './markdown/inferno.md';
 import moduleRecorder from './markdown/module_recorder.md';
 import moduleRouter from './markdown/module_router.md';
+import moduleHttp from './markdown/module_http.md';
 import theDebugger from './markdown/debugger.md';
 
 export default [
@@ -128,13 +129,17 @@ export default [
     content: MTRC(modules).tree,
     video: 'https://www.youtube.com/embed/FNB0uIQtGrw',
     subContent: [{
-      label: 'Recorder',
-      text: moduleRecorder,
-      content: MTRC(moduleRecorder).tree
-    }, {
       label: 'Router',
       text: moduleRouter,
       content: MTRC(moduleRouter).tree
+    }, {
+      label: 'Http',
+      text: moduleHttp,
+      content: MTRC(moduleHttp).tree
+    }, {
+      label: 'Recorder',
+      text: moduleRecorder,
+      content: MTRC(moduleRecorder).tree
     }]
   },
   {

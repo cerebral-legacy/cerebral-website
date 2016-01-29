@@ -16,7 +16,7 @@ class MessagesList extends React.Component {
       <ul>
         {this.props.messages.map(this.renderMessage)}
       </ul>
-    );
+    )
   }
 }
 
@@ -27,7 +27,7 @@ class Message extends React.Component {
   render() {
     return (
       <li>{this.props.message.title}</li>
-    );
+    )
   }
 }
 ```
@@ -43,14 +43,14 @@ class MessagesList extends React.Component {
   renderMessage(message, index) {
     return (
       <Message message={message}/>
-    );
+    )
   }
   render() {
     return (
       <ul>
         {this.props.messages.map(this.renderMessage)}
       </ul>
-    );
+    )
   }
 }
 
@@ -58,7 +58,7 @@ class Message extends React.Component {
   render() {
     return (
       <li>{this.props.message.title}</li>
-    );    
+    )
   }
 }
 ```
@@ -74,14 +74,14 @@ class MessagesList extends React.Component {
   renderMessage(message, index) {
     return (
       <Message message={message}/>
-    );
+    )
   }
   render() {
     return (
       <ul>
         {this.props.messages.map(this.renderMessage)}
       </ul>
-    );
+    )
   }
 }
 
@@ -92,7 +92,7 @@ class Message extends React.Component {
   render() {
     return (
       <li>{this.props.message.title}</li>
-    );    
+    )
   }
 }
 ```
