@@ -1,5 +1,6 @@
 import './styles/highlight.css';
 import './styles/fonts.css';
+import './styles/style.scss';
 
 import React from 'react';
 import {render} from 'react-dom';

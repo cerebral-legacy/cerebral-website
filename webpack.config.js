@@ -36,6 +36,12 @@ module.exports = {
       test: /\.css$/,
       loader: 'style!css'
     }, {
+      test: /\.scss$/,
+      loader: 'style!css!sass'
+    }, {
+      test: /\.woff$/,
+      loader: 'url?limit=100000'
+    }, {
       test: /\.md$/,
       loader: 'raw'
     }]

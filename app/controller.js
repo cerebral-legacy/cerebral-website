@@ -4,7 +4,7 @@ import Controller from 'cerebral';
 const model = Model({
   content: 0,
   subContent: null,
-  displayMenu: true,
+  displayMenu: window.innerWidth > 780,
   showOverlay: false,
   videoSrc: null,
   transitionVideo: false

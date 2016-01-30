@@ -149,19 +149,19 @@ class App extends React.Component {
         <div className="header" style={headerStyle}>
           <i className="icon icon-bars link" onClick={() => this.props.signals.menuToggled()} style={{margin: 10}}></i>
           <div className="github" onClick={() => this.openRepo()}>
-            <i className="icon icon-pencil"> Edit</i>
+            <i className="icon icon-pencil" /> <span className="icon-label">Edit</span>
           </div>
           <div className="tweet" onClick={() => this.openGithub()}>
-            <i className="icon icon-github-square"> Repo</i>
+            <i className="icon icon-github-square" /> <span className="icon-label">Repo</span>
           </div>
           <div className="tweet" onClick={() => this.createTweet()}>
-            <i className="icon icon-twitter"> Tweet</i>
+            <i className="icon icon-twitter" /> <span className="icon-label">Tweet</span>
           </div>
           <div className="tweet" onClick={() => this.openChat()}>
-            <i className="icon icon-comments"> Chat</i>
+            <i className="icon icon-comments" /> <span className="icon-label">Chat</span>
           </div>
           <div className="tweet" onClick={() => location.href = "/todomvc"}>
-            <i className="icon icon-gamepad"> Demo</i>
+            <i className="icon icon-gamepad" /> <span className="icon-label">Demo</span>
           </div>
           <div className="tweet">
             <i className="icon icon-search"/>

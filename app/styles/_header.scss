@@ -1,0 +1,95 @@
+.header {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  height: 50px;
+  top: 0;
+  left: 0;
+  background-color: #FFF;
+  box-shadow: 0px 4px 4px 5px rgba(0, 0, 0, 0.1);
+  z-index: 999999;
+
+  .github, .tweet {
+    position: relative;
+    float: right;
+    cursor: pointer;
+    height: 30px;
+    margin: 10px 10px 10px 0;
+  }
+
+  .github i, .tweet i {
+    padding-right: 5px;
+  }
+
+  .tweet {
+    border-right: 1px solid #DDD;
+    padding: 0 13px;
+  }
+
+  .github {
+    padding-left: 13px;
+  }
+
+  .github:hover i, .tweet:hover i {
+    color: #666;
+  }
+
+  .icon-label {
+    display: none;
+  }
+
+  .search-input {
+    display: none;
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    height: 25px;
+    margin-right: 10px;
+    outline: none;
+    font-size: 14px;
+    text-indent: 5px;
+    margin: 0;
+  }
+
+  .search-results {
+    position: absolute;
+    top: 28px;
+    left: 45px;
+    background-color: #FFF;
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    min-width: 140px;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+  }
+
+  .search-results li {
+    padding: 5px;
+    font-size: 14px;
+    margin: 0;
+    height: 25px;
+    line-height: 25px;
+  }
+
+  .search-results li:hover {
+    background-color: #FAFAFA;
+  }
+
+  .icon.link {
+    padding-left: 10px;
+    line-height: 46px;
+
+    &:hover {
+      color: #555;
+      cursor: pointer;
+    }
+  }
+
+  @media (min-width: 680px) {
+    .search-input {
+      display: inline-block;
+    }
+    .icon-label {
+      display: inline-block;
+    }
+  }
+
+}
