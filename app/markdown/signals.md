@@ -15,7 +15,7 @@ const appMounted = [
   unsetLoading
 ];
 
-module.signals({
+module.addSignals({
   appMounted
 })
 ```
