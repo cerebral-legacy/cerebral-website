@@ -4,9 +4,9 @@ var Header = require('./Header.js');
 var Home = React.createClass({
   render: function () {
     return (
-      <div className="container">
+      <div id="home" className="container">
         <section>
-          <h1 className="center">Cerebral</h1>
+          <h1>Cerebral</h1>
 
           <div className="row">
             <div className="four columns">
@@ -20,12 +20,7 @@ var Home = React.createClass({
               </p>
             </div>
             <div className="four columns">
-              <div style={{
-                backgroundImage: 'url(logo.png)',
-                backgroundSize: 'cover',
-                height: 200,
-                width: 200
-              }} />
+              <div className="main-logo"><img src="./logo.png" /></div>
             </div>
             <div className="four columns">
               <h3>UI</h3>

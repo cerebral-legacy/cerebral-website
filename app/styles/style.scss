@@ -1,6 +1,8 @@
 @import "./normalize";
 @import "./skeleton";
 @import "./header";
+@import "./media-queries";
+@import "./home";
 
 @font-face {
 	font-family: 'icomoon';
@@ -171,12 +173,16 @@ pre code {
 article {
     padding: 2em;
 }
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6 {
     color: #333;
 }
 h1 {
     font-size: 4em;
 }
+h3 {
+  font-size: 2em;
+}
+
 p, ul, ol {
     font-size: 1.5em;
     line-height: 1.8em;
@@ -802,4 +808,14 @@ img {
 	top: 0;
 	font-size: 0.7em;
 	line-height: normal;
+}
+
+.main-logo {
+  display: none;
+}
+
+@media (min-width: 680px) {
+  .main-logo {
+    display: inline-block;
+  }
 }

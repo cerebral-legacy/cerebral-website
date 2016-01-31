@@ -1,0 +1,19 @@
+@import "./media-queries";
+
+#home {
+  h1 {
+    @include min-screen($small-screen) {
+      text-align: center;
+    }
+  }
+
+  .main-logo {
+    /* background-image: url(../images/logo.png); */
+    /* background-size: cover; */
+    width: 100%;
+    height: 100%;
+    /* min-height: 134px; */
+    /* height: 200px; */
+    /* width: 200px; */
+  }
+}

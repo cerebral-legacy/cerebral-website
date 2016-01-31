@@ -148,6 +148,7 @@ class App extends React.Component {
       <div className="page" style={pageStyle}>
         <div className="header" style={headerStyle}>
           <i className="icon icon-bars link" onClick={() => this.props.signals.menuToggled()} style={{margin: 10}}></i>
+          <div className="mobile-icon" />
           <ul>
             <li className="search">
               <i className="icon icon-search"/>
