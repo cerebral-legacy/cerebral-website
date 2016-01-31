@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 
   // Pass in initial state
   const controller = ServerController({foo: 'bar'})
-  res.send(renderToString(<Container controller={controller}><App/></Container>)
+  res.send(renderToString(<Container controller={controller}><App/></Container>))
 })
 ```
 

@@ -20,7 +20,8 @@ var Contributors = React.createClass({
           <p>
             Aleksey always goes straight to the point and there is nothing stopping him from
             bringing new great features into the project. This guy is the reason we have such a
-            great router in Cerebral.
+            great router in Cerebral. He also decoupled the core project into modules and is responsible
+            for structuring all the repos with standards, commitizen and tests
           </p>
           <a href="https://github.com/guria">Github Profile</a>
         </div>
@@ -30,7 +31,8 @@ var Contributors = React.createClass({
           <p>
             Garth has been with us from the start. He was one of the early adopters who bet his new found project on Cerebral.
             He has also built a <a href="https://github.com/garth/material-components">state driven material-ui project</a>.
-            It is really the only React UI library I know of that controls all its components state using props.
+            It is really the only React UI library I know of that controls all its components state using props. Garth also works on
+            the addons package for Cerebral and other modules.
           </p>
           <a href="https://github.com/garth">Github Profile</a>
         </div>
@@ -48,9 +50,28 @@ var Contributors = React.createClass({
           <h3>Andrew</h3>
           <img src="andrew.jpeg" style={contributorImageStyle}/>
           <p>
-            Andrew has contributed by nailing some bugs "deep down" and cleaning up projects as Cerebral moves on, ensuring a good experience for beginners.
+            Andrew has contributed by nailing some bugs "deep down" and cleaning up projects as Cerebral moves on, ensuring a good experience for beginners. Andrew
+            also contributes to modules, specifically the forms module for Cerebral.
           </p>
           <a href="https://github.com/abalmos">Github Profile</a>
+        </div>
+        <div style={contributorStyle}>
+          <h3>Delaney</h3>
+          <img src="delaney.jpeg" style={contributorImageStyle}/>
+          <p>
+            Delaney has been working hard on the Falcor module, giving a cutting edge experience with data driven applications. He is also part
+            of day to day discussions on where the project is heading.
+          </p>
+          <a href="https://github.com/delaneyj">Github Profile</a>
+        </div>
+        <div style={contributorStyle}>
+          <h3>Adam</h3>
+          <img src="adam.png" style={contributorImageStyle}/>
+          <p>
+            Adam has solved some core issues with the Chrome Extension and generally involves himself in supporting developers of Cerebral and other
+            discussions on new modules and the core project.
+          </p>
+          <a href="https://github.com/NervosaX">Github Profile</a>
         </div>
         <h3>Everybody else!</h3>
         <p>
