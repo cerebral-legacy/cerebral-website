@@ -148,48 +148,50 @@ class App extends React.Component {
       <div className="page" style={pageStyle}>
         <div className="header" style={headerStyle}>
           <i className="icon icon-bars link" onClick={() => this.props.signals.menuToggled()} style={{margin: 10}}></i>
-          <div className="github" onClick={() => this.openRepo()}>
-            <i className="icon icon-pencil" /> <span className="icon-label">Edit</span>
-          </div>
-          <div className="tweet" onClick={() => this.openGithub()}>
-            <i className="icon icon-github-square" /> <span className="icon-label">Repo</span>
-          </div>
-          <div className="tweet" onClick={() => this.createTweet()}>
-            <i className="icon icon-twitter" /> <span className="icon-label">Tweet</span>
-          </div>
-          <div className="tweet" onClick={() => this.openChat()}>
-            <i className="icon icon-comments" /> <span className="icon-label">Chat</span>
-          </div>
-          <div className="tweet" onClick={() => location.href = "/todomvc"}>
-            <i className="icon icon-gamepad" /> <span className="icon-label">Demo</span>
-          </div>
-          <div className="tweet">
-            <i className="icon icon-search"/>
-            <input className="search-input" value={this.state.query} onChange={(e) => this.search(e.target.value)}/>
-            {
-              this.state.searchResults.length ?
-                <ul className="search-results">
-                  {this.state.searchResults.map((result, index) => (
-                    <li key={index} onClick={() => {
-                      if (result.parent) {
-                        this.props.signals.submenuClicked({
-                          content: result.parent.replace(/\s/g, ''),
-                          subContent: result.label.toLowerCase().replace(/\s/g, '')
-                        });
-                      } else {
-                        this.props.signals.menuClicked({
-                          content: result.label.toLowerCase().replace(/\s/g, '')
-                        });
-                      }
-                    }}>
-                      <strong>{result.label}</strong> ({result.hitsCount} hits)
-                    </li>
-                  ))}
-                </ul>
-              :
-                null
-            }
-          </div>
+          <ul>
+            <li className="search">
+              <i className="icon icon-search"/>
+              <input className="search-input" value={this.state.query} onChange={(e) => this.search(e.target.value)}/>
+              {
+                this.state.searchResults.length ?
+                  <ul className="search-results">
+                    {this.state.searchResults.map((result, index) => (
+                      <li key={index} onClick={() => {
+                        if (result.parent) {
+                          this.props.signals.submenuClicked({
+                            content: result.parent.replace(/\s/g, ''),
+                            subContent: result.label.toLowerCase().replace(/\s/g, '')
+                          });
+                        } else {
+                          this.props.signals.menuClicked({
+                            content: result.label.toLowerCase().replace(/\s/g, '')
+                          });
+                        }
+                      }}>
+                        <strong>{result.label}</strong> ({result.hitsCount} hits)
+                      </li>
+                    ))}
+                  </ul>
+                :
+                  null
+              }
+            </li>
+            <li className="demo" onClick={() => location.href = "/todomvc"}>
+              <i className="icon icon-gamepad" /> <span className="icon-label">Demo</span>
+            </li>
+            <li className="chat" onClick={() => this.openChat()}>
+              <i className="icon icon-comments" /> <span className="icon-label">Chat</span>
+            </li>
+            <li className="twitter" onClick={() => this.createTweet()}>
+              <i className="icon icon-twitter" /> <span className="icon-label">Tweet</span>
+            </li>
+            <li className="github" onClick={() => this.openGithub()}>
+              <i className="icon icon-github-square" /> <span className="icon-label">Github</span>
+            </li>
+            <li className="edit" onClick={() => this.openRepo()}>
+              <i className="icon icon-pencil" /> <span className="icon-label">Edit</span>
+            </li>
+          </ul>
         </div>
         <div ref="content" className="content" style={contentStyle}>
           <div className="content-wrapper">

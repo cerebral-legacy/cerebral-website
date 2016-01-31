@@ -1,3 +1,6 @@
+@import "./media-queries";
+@import "./globals";
+
 .header {
   position: absolute;
   box-sizing: border-box;
@@ -9,45 +12,69 @@
   box-shadow: 0px 4px 4px 5px rgba(0, 0, 0, 0.1);
   z-index: 999999;
 
-  .github, .tweet {
-    position: relative;
+  ul {
     float: right;
-    cursor: pointer;
-    height: 30px;
-    margin: 10px 10px 10px 0;
-  }
+    padding: 6px 0px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    height: 50px;
 
-  .github i, .tweet i {
-    padding-right: 5px;
-  }
+    li {
+      &.edit {
+        display: none;
 
-  .tweet {
-    border-right: 1px solid #DDD;
-    padding: 0 13px;
-  }
+        @include min-screen($small-screen) {
+          display: inline-block;
+        }
+      }
 
-  .github {
-    padding-left: 13px;
-  }
+      &:first-child {
+        border-left: none;
+      }
 
-  .github:hover i, .tweet:hover i {
-    color: #666;
+      @include min-screen($small-screen) {
+        border-left: 1px solid #DDD;
+      }
+
+      font-size: 16px;
+      position: relative;
+      float: left;
+      cursor: pointer;
+
+      padding: 0 10px;
+      margin: 0;
+
+      i {
+        padding-right: 5px;
+      }
+    }
   }
 
   .icon-label {
     display: none;
+
+    @include min-screen($small-screen) {
+      display: inline-block;
+    }
   }
 
-  .search-input {
+  .search {
     display: none;
-    border: 1px solid #DDD;
-    border-radius: 3px;
-    height: 25px;
-    margin-right: 10px;
-    outline: none;
-    font-size: 14px;
-    text-indent: 5px;
-    margin: 0;
+
+    @include min-screen($small-screen) {
+      display: inline-block;
+    }
+
+    .search-input {
+      border: 1px solid #DDD;
+      border-radius: 3px;
+      height: 25px;
+      margin-right: 10px;
+      outline: none;
+      font-size: 14px;
+      text-indent: 5px;
+      margin: 0;
+    }
   }
 
   .search-results {
@@ -75,20 +102,11 @@
 
   .icon.link {
     padding-left: 10px;
-    line-height: 46px;
+    line-height: 50px;
 
     &:hover {
       color: #555;
       cursor: pointer;
-    }
-  }
-
-  @media (min-width: 680px) {
-    .search-input {
-      display: inline-block;
-    }
-    .icon-label {
-      display: inline-block;
     }
   }
 
