@@ -20201,11 +20201,11 @@
 	  }
 	
 	  controller.signal = function () {
-	    console.warn('Cerebral: controller.signal() is deprecated, use controller.signals() instead')
+	    console.warn('Cerebral: controller.signal() is DEPRECATED. Please use controller.addSignals() instead')
 	    signal.apply(null, arguments)
 	  }
 	  controller.signalSync = function () {
-	    console.warn('Cerebral: controller.signalSync() is deprecated, use controller.signals() instead')
+	    console.warn('Cerebral: controller.signalSync() is DEPRECATED. Please use controller.addSignals({mySignal: {chain: [], sync: true}}) instead')
 	    var defaultOptions = arguments[2] || {}
 	    defaultOptions.isSync = true
 	    return signal(arguments[0], arguments[1], defaultOptions)
@@ -20231,24 +20231,51 @@
 	    return modules
 	  }
 	
-	  controller.modules = CreateRegisterModules(controller, model, modules)
-	  controller.signals = function (signals, options) {
+	  controller.addModules = CreateRegisterModules(controller, model, modules)
+	  controller.modules = function () {
+	    console.warn('Cerebral: controller.modules() is DEPRECATED. Please use controller.addModules() instead')
+	    controller.addModules.apply(controller, arguments)
+	  }
+	
+	  controller.addSignals = function (signals, options) {
 	    Object.keys(signals).forEach(function (key) {
-	      signal(key, signals[key], options)
+	      if (signals[key].chain) {
+	        options = Object.keys(signals[key]).reduce(function (options, configKey) {
+	          if (configKey !== 'chain') {
+	            options[configKey] = signals[key][configKey]
+	          }
+	          if (configKey === 'sync') {
+	            options.isSync = signals[key][configKey]
+	          }
+	          return options
+	        }, options || {})
+	        signal(key, signals[key].chain, options)
+	      } else {
+	        signal(key, signals[key], options)
+	      }
 	    })
 	  }
+	  controller.signals = function () {
+	    console.warn('Cerebral: controller.signals() is DEPRECATED. Please use controller.addSignals() instead')
+	    controller.addSignals.apply(controller, arguments)
+	  }
 	  controller.signalsSync = function (signals, options) {
+	    console.warn('Cerebral: controller.signalsSync() is DEPRECATED. Please use controller.addSignals({mySignal: {chain: [], sync: true}}) instead')
 	    Object.keys(signals).forEach(function (key) {
 	      options = options || {}
 	      options.isSync = true
 	      signal(key, signals[key], options)
 	    })
 	  }
-	  controller.services = function (newServices) {
+	  controller.addServices = function (newServices) {
 	    Object.keys(newServices).forEach(function (key) {
 	      service(key, newServices[key])
 	    })
 	    return controller.getServices()
+	  }
+	  controller.services = function (newServices) {
+	    console.warn('Cerebral: controller.services() is DEPRECATED. Please use controller.addServices() instead')
+	    controller.addServices(newServices)
 	  }
 	
 	  // emulate loading recorder
@@ -20346,6 +20373,7 @@
 	        signal.isSync = true
 	        signal.branches = options.branches
 	        isPredefinedExecution = true
+	        controller.emit('predefinedSignal', { signal: signal })
 	      } else {
 	        controller.emit('signalTrigger', { signal: signal })
 	      }
@@ -20427,7 +20455,7 @@
 	                controller.emit('actionStart', {action: action, signal: signal})
 	                var actionFunc = actions[action.actionIndex]
 	                var inputArg = actionFunc.defaultInput ? utils.merge({}, actionFunc.defaultInput, signalArgs) : signalArgs
-	                var actionArgs = createActionArgs.async(action, inputArg, model, compute)
+	                var actionArgs = createActionArgs.async(action, inputArg, model, compute, services, Object.keys(modules))
 	
 	                if (utils.isDeveloping() && actionFunc.input) {
 	                  utils.verifyInput(action.name, signal.name, actionFunc.input, inputArg)
@@ -20436,22 +20464,39 @@
 	                action.isExecuting = true
 	                action.input = utils.merge({}, inputArg)
 	                var next = createNext.async(actionFunc, signal.name)
-	                var modulesArg = createModulesArg(modules, actionArgs[1], services)
-	                actionFunc({
+	                var modulesArg = createModulesArg(modules, actionArgs[1], actionArgs[2])
+	                var actionArg = {
 	                  input: actionArgs[0],
 	                  state: actionArgs[1],
 	                  output: next.fn,
-	                  services: services,
+	                  services: actionArgs[2],
 	                  modules: modulesArg,
 	                  module: defaultOptions.modulePath.reduce(function (modules, key) {
 	                    return modules[key]
 	                  }, modulesArg)
-	                })
+	                }
+	
+	                if (utils.isDeveloping()) {
+	                  try {
+	                    actionFunc(actionArg)
+	                  } catch (e) {
+	                    action.error = {
+	                      name: e.name,
+	                      message: e.message,
+	                      stack: actionFunc.toString()
+	                    }
+	                    controller.emit('signalError', {action: action, signal: signal})
+	                    controller.emit('change', {signal: signal})
+	                    throw e
+	                  }
+	                } else {
+	                  actionFunc(actionArg)
+	                }
 	
 	                return next.promise.then(function (result) {
 	                  action.hasExecuted = true
 	                  action.isExecuting = false
-	                  action.output = result.arg
+	                  action.output = utils.merge({}, result.arg)
 	                  utils.merge(signalArgs, result.arg)
 	
 	                  controller.emit('actionEnd', {action: action, signal: signal})
@@ -20492,7 +20537,7 @@
 	
 	              var actionFunc = actions[action.actionIndex]
 	              var inputArg = actionFunc.defaultInput ? utils.merge({}, actionFunc.defaultInput, signalArgs) : signalArgs
-	              var actionArgs = createActionArgs.sync(action, inputArg, model, compute)
+	              var actionArgs = createActionArgs.sync(action, inputArg, model, compute, services, Object.keys(modules))
 	
 	              if (utils.isDeveloping() && actionFunc.input) {
 	                utils.verifyInput(action.name, signal.name, actionFunc.input, inputArg)
@@ -20502,18 +20547,35 @@
 	              action.input = utils.merge({}, inputArg)
 	
 	              var next = createNext.sync(actionFunc, signal.name)
-	              var modulesArg = createModulesArg(modules, actionArgs[1], services)
+	              var modulesArg = createModulesArg(modules, actionArgs[1], actionArgs[2])
 	
-	              actionFunc({
+	              var actionArg = {
 	                input: actionArgs[0],
 	                state: actionArgs[1],
 	                output: next,
-	                services: services,
+	                services: actionArgs[2],
 	                modules: modulesArg,
 	                module: defaultOptions.modulePath.reduce(function (exportedModule, key) {
 	                  return exportedModule[key]
 	                }, modulesArg)
-	              })
+	              }
+	
+	              if (utils.isDeveloping()) {
+	                try {
+	                  actionFunc(actionArg)
+	                } catch (e) {
+	                  action.error = {
+	                    name: e.name,
+	                    message: e.message,
+	                    stack: e.stack
+	                  }
+	                  controller.emit('signalError', {action: action, signal: signal})
+	                  controller.emit('change', {signal: signal})
+	                  throw e
+	                }
+	              } else {
+	                actionFunc(actionArg)
+	              }
 	
 	              // TODO: Also add input here
 	
@@ -20522,7 +20584,7 @@
 	
 	              action.isExecuting = false
 	              action.hasExecuted = true
-	              action.output = result.arg
+	              action.output = utils.merge({}, result.arg)
 	
 	              if (!branch[index + 1] || Array.isArray(branch[index + 1])) {
 	                action.duration = Date.now() - start
@@ -20785,17 +20847,54 @@
 	  return state
 	}
 	
+	var createServicesArg = function (action, services, moduleKeys) {
+	  var path = []
+	
+	  var convertServices = function (moduleServices) {
+	    return Object.keys(moduleServices).reduce(function (newModuleServices, key) {
+	      path.push(key)
+	      if (typeof moduleServices[key] === 'function') {
+	        var servicePath = path.slice()
+	        var method = servicePath.pop()
+	        newModuleServices[key] = function () {
+	          action.serviceCalls.push({
+	            name: servicePath.join('.'),
+	            method: method,
+	            args: [].slice.call(arguments)
+	          })
+	          return moduleServices[key].apply(moduleServices[key], arguments)
+	        }
+	      } else if (typeof moduleServices[key] === 'object' && !Array.isArray(moduleServices[key]) && moduleServices[key] !== null) {
+	        newModuleServices[key] = convertServices(moduleServices[key])
+	      } else {
+	        newModuleServices[key] = moduleServices[key]
+	      }
+	      path.pop(key)
+	      return newModuleServices
+	    }, {})
+	  }
+	
+	  return Object.keys(services).reduce(function (newServices, key) {
+	    path.push(key)
+	    newServices[key] = convertServices(services[key], key)
+	    path.pop(key)
+	    return newServices
+	  }, {})
+	}
+	
 	module.exports = {
-	  sync: function (action, signalArgs, model, compute) {
+	  sync: function (action, signalArgs, model, compute, services, moduleKeys) {
 	    return [
 	      signalArgs,
-	      createStateArg(action, model, false, compute)
+	      createStateArg(action, model, false, compute),
+	      createServicesArg(action, services, moduleKeys)
 	    ]
 	  },
-	  async: function (action, signalArgs, model, compute) {
+	  async: function (action, signalArgs, model, compute, services, moduleKeys) {
 	    return [
 	      signalArgs,
-	      createStateArg(action, model, true, compute)
+	      createStateArg(action, model, true, compute),
+	      createServicesArg(action, services, moduleKeys)
 	    ]
 	  }
 	}
@@ -21025,6 +21124,7 @@
 	      output: null,
 	      duration: 0,
 	      mutations: [],
+	      serviceCalls: [],
 	      isAsync: !isSync,
 	      outputPath: null,
 	      isExecuting: false,
@@ -21112,7 +21212,7 @@
 	      return scopedSignals
 	    }, {})
 	
-	    return controller.signals(scopedSignals, {
+	    return controller.addSignals(scopedSignals, {
 	      modulePath: moduleName.split('.')
 	    })
 	  }
@@ -21132,7 +21232,7 @@
 	      scopedServices[moduleName + '.' + key] = services[key]
 	      return scopedServices
 	    }, {})
-	    controller.services(scopedServices)
+	    controller.addServices(scopedServices)
 	  }
 	
 	  var registerInitialState = function (moduleName, state) {
@@ -21146,7 +21246,7 @@
 	      parentModuleName = null
 	
 	      // TODO: remove after devtools extracted to external module
-	      if (utils.isDeveloping() && !modules.devtools) {
+	      if (utils.isDeveloping() && !modules.devtools && !controller.getModules().devtools) {
 	        modules.devtools = Devtools()
 	      }
 	    }
@@ -21154,6 +21254,10 @@
 	    Object.keys(modules).forEach(function (moduleName) {
 	      registerModule(moduleName, parentModuleName, modules)
 	    })
+	
+	    if (arguments.length === 1) {
+	      controller.emit('modulesLoaded', { modules: allModules })
+	    }
 	
 	    return allModules
 	  }
@@ -21173,10 +21277,25 @@
 	      alias: function (alias) {
 	        allModules[alias] = moduleExport
 	      },
-	      signals: registerSignals.bind(null, moduleName),
-	      signalsSync: registerSignalsSync.bind(null, moduleName),
-	      services: registerServices.bind(null, moduleName),
-	      state: registerInitialState.bind(null, moduleName),
+	      addSignals: registerSignals.bind(null, moduleName),
+	      signals: function () {
+	        console.warn('Cerebral: module.signals() is DEPRECATED. Please use controller.addSignals() instead')
+	        module.addSignals.apply(module, arguments)
+	      },
+	      signalsSync: function () {
+	        console.warn('Cerebral: module.signalsSync() is DEPRECATED. Please use module.addSignals({mySignal: {chain: [], sync: true}}) instead')
+	        registerSignalsSync.apply(module, [moduleName].concat([].slice.call(arguments)))
+	      },
+	      addServices: registerServices.bind(null, moduleName),
+	      services: function () {
+	        console.warn('Cerebral: module.services() is DEPRECATED. Please use module.addServices() instead')
+	        return module.addServices.apply(module, arguments)
+	      },
+	      addState: registerInitialState.bind(null, moduleName),
+	      state: function () {
+	        console.warn('Cerebral: module.state() is DEPRECATED. Please use module.addState() instead')
+	        module.addState.apply(module, arguments)
+	      },
 	      getSignals: function () {
 	        var signals = controller.getSignals()
 	        var path = moduleName.split('.')
@@ -21184,7 +21303,11 @@
 	          return signals[key]
 	        }, signals)
 	      },
-	      modules: registerModules.bind(null, moduleName)
+	      addModules: registerModules.bind(null, moduleName),
+	      modules: function () {
+	        console.warn('Cerebral: module.modules() is DEPRECATED. Please use module.addModules() instead')
+	        module.addModules.apply(module, arguments)
+	      }
 	    }
 	    var constructedModule = moduleConstructor(module, controller)
 	
@@ -21575,9 +21698,15 @@
 	
 	    var get = function (path) {
 	      var value
-	
 	      if (typeof path === 'function') {
-	        value = currentState['COMPUTED_' + registered.indexOf(path)] = getComputedValue(path)
+	        if (!has(path)) {
+	          registered.push(path)
+	          if (path.computedRef) {
+	            cachedByRef[path.computedRef] = path
+	          }
+	          computed.push(createMapper(path))
+	        }
+	        value = currentState['COMPUTED_' + (path.computedRef ? path.computedRef : registered.indexOf(path))] = getComputedValue(path)
 	      } else {
 	        value = currentState[path.join('.%.')] = model.accessors.get(path)
 	      }
@@ -21591,7 +21720,8 @@
 	          return true
 	        }
 	        if (key.indexOf('COMPUTED') === 0) {
-	          return getComputedValue(registered[key.split('_')[1]]) !== currentState[key]
+	          var index = key.split('_')[1]
+	          return getComputedValue(registered[index] || cachedByRef[index]) !== currentState[key]
 	        } else {
 	          return model.accessors.get(key.split('.%.')) !== currentState[key]
 	        }
@@ -26223,13 +26353,16 @@
 	
 	    if (typeof this.props.signal === 'function') {
 	      this.signal = this.props.signal
-	      this.signalName = this.signal.name
+	      this.signalName = this.signal.signalName
 	    } else {
 	      this.signalName = this.props.signal
 	      this.signal = get(controller.getSignals(), this.signalName)
 	    }
 	
-	    this.router = get(controller.getServices(), controller.getModules()['cerebral-module-router'].name)
+	    var routerMeta = controller.getModules()['cerebral-module-router']
+	    if (routerMeta) {
+	      this.router = get(controller.getServices(), routerMeta.name)
+	    }
 	
 	    if (typeof this.signal !== 'function') {
 	      throw new Error('Cerebral React - You have to pass a signal or signal name to the Link component')
@@ -26248,11 +26381,12 @@
 	      return props
 	    }, {})
 	
-	    if (typeof this.router.getSignalUrl === 'function') {
-	      props.href = this.router.getSignalUrl(this.signalName, this.props.params)
+	    if (this.router && typeof this.router.getSignalUrl === 'function') {
+	      props.href = this.router.getSignalUrl(this.signalName, this.props.params) || undefined
 	    } else if (typeof this.signal.getUrl === 'function') {
 	      props.href = this.signal.getUrl(this.props.params || {})
-	    } else {
+	    }
+	    if (!props.href) {
 	      props.onClick = this.onClick
 	    }
 	
@@ -26266,7 +26400,7 @@
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
-	 * lodash 4.0.0 (Custom Build) <https://lodash.com/>
+	 * lodash 4.0.1 (Custom Build) <https://lodash.com/>
 	 * Build: `lodash modularize exports="npm" -o ./`
 	 * Copyright 2012-2016 The Dojo Foundation <http://dojofoundation.org/>
 	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -26298,11 +26432,11 @@
 	var objectToString = objectProto.toString;
 	
 	/** Built-in value references. */
-	var _Symbol = global.Symbol;
+	var Symbol = global.Symbol;
 	
 	/** Used to convert symbols to primitives and strings. */
-	var symbolProto = _Symbol ? _Symbol.prototype : undefined,
-	    symbolToString = _Symbol ? symbolProto.toString : undefined;
+	var symbolProto = Symbol ? Symbol.prototype : undefined,
+	    symbolToString = Symbol ? symbolProto.toString : undefined;
 	
 	/**
 	 * The base implementation of `_.get` without support for default values.
@@ -26470,7 +26604,7 @@
 	    return '';
 	  }
 	  if (isSymbol(value)) {
-	    return _Symbol ? symbolToString.call(value) : '';
+	    return Symbol ? symbolToString.call(value) : '';
 	  }
 	  var result = (value + '');
 	  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
@@ -28225,9 +28359,8 @@
 	var utils = __webpack_require__(245)
 	
 	module.exports = function Devtools () {
-	  if (typeof window === 'undefined') {
-	    return function () {}
-	  }
+	  if (typeof window === 'undefined') { return function () {} }
+	  if (typeof window.chrome === 'undefined') { return function () {} }
 	
 	  return function init (module, controller) {
 	    module.alias(MODULE)
@@ -28425,6 +28558,12 @@
 	      }
 	    })
 	
+	    document.addEventListener('visibilitychange', function () {
+	      if (!document.hidden) {
+	        updateSettings()
+	      }
+	    })
+	
 	    var services = {
 	      update: update,
 	      start: function () {
@@ -28439,12 +28578,24 @@
 	      return services
 	    }
 	
-	    if (window.__CEREBRAL_DEVTOOLS_GLOBAL_HOOK__) {
-	      window.__CEREBRAL_DEVTOOLS_GLOBAL_HOOK__.signals = controller.getSignals()
+	    function start () {
+	      if (window.__CEREBRAL_DEVTOOLS_GLOBAL_HOOK__) {
+	        window.__CEREBRAL_DEVTOOLS_GLOBAL_HOOK__.signals = controller.getSignals()
+	      }
+	
+	      var event = new CustomEvent('cerebral.dev.cerebralPing')
+	      window.dispatchEvent(event)
+	
+	      console.assert(controller.listeners('modulesLoaded')[0] === start, 'Cerebral devtools: Please do not place any listeners to `modulesLoaded` event before devtools\'s one.')
 	    }
 	
-	    var event = new CustomEvent('cerebral.dev.cerebralPing')
-	    window.dispatchEvent(event)
+	    var listeners = controller.listeners('modulesLoaded')
+	    controller.removeAllListeners('modulesLoaded')
+	
+	    controller.on('modulesLoaded', start)
+	    listeners.forEach(function (listener) {
+	      controller.on('modulesLoaded', listener)
+	    })
 	
 	    controller.on('change', updateSignals)
 	  }
@@ -28923,10 +29074,12 @@
 	  options = options || {}
 	
 	  if (!routesConfig) {
-	    throw new Error("Cerebral router - Routes configuration wasn't provided.")
+	    throw new Error('Cerebral router - Routes configuration wasn\'t provided.')
 	  } else {
 	    routesConfig = flattenConfig(routesConfig)
 	  }
+	
+	  if (options.autoTrigger) console.warn('Cerebral router - autoTrigger option can be safely removed.')
 	
 	  if (!options.baseUrl && options.onlyHash) {
 	    // autodetect baseUrl
@@ -28942,6 +29095,13 @@
 	
 	  return function init (module, controller) {
 	    var signals = getRoutableSignals(routesConfig, controller.getSignals(), _getUrl)
+	    var rememberedUrl
+	    var initialSignals = []
+	
+	    function setRememberedUrl () {
+	      addressbar.value = rememberedUrl
+	      rememberedUrl = null
+	    }
 	
 	    function onUrlChange (event) {
 	      var url = event ? event.target.value : addressbar.value
@@ -28966,17 +29126,55 @@
 	      }
 	    }
 	
+	    function onPredefinedSignal (event) {
+	      var signal = signals[event.signal.name]
+	      if (signal) {
+	        if (!rememberedUrl) setTimeout(setRememberedUrl)
+	
+	        var route = signal.route
+	        var input = event.signal.input || {}
+	        rememberedUrl = options.baseUrl + urlMapper.stringify(route, input)
+	      }
+	    }
+	
 	    function onSignalTrigger (event) {
 	      var signal = signals[event.signal.name]
-	      if (signal) event.signal.isSync = true
+	      if (signal) {
+	        event.signal.isSync = true
+	        event.signal.isRouted = true
+	      }
 	    }
 	
 	    function onSignalStart (event) {
+	      if (Array.isArray(initialSignals)) {
+	        initialSignals.push(event.signal)
+	      }
+	
 	      var signal = signals[event.signal.name]
 	      if (signal) {
 	        var route = signal.route
 	        var input = event.signal.input || {}
 	        addressbar.value = options.baseUrl + urlMapper.stringify(route, input)
+	      }
+	    }
+	
+	    function onSignalEnd (event) {
+	      if (Array.isArray(initialSignals)) {
+	        initialSignals.splice(initialSignals.indexOf(event.signal), 1)
+	
+	        if (initialSignals.length === 0) {
+	          controller.removeListener('signalEnd', onSignalEnd)
+	          initialSignals = null
+	          if (typeof rememberedUrl === 'undefined') setTimeout(onUrlChange)
+	        }
+	      }
+	    }
+	
+	    function onModulesLoaded (event) {
+	      if (rememberedUrl) return
+	      if (Array.isArray(initialSignals) && initialSignals.length === 0) {
+	        setTimeout(onUrlChange)
+	        initialSignals = null
 	      }
 	    }
 	
@@ -28994,9 +29192,13 @@
 	        return addressbar.value.replace(addressbar.origin + options.baseUrl, '')
 	      },
 	
-	      getSignalUrl: function getUrl (signalName, input) {
-	        var route = signals[signalName].route
-	        return options.baseUrl + urlMapper.stringify(route, input || {})
+	      getSignalUrl: function getSignalUrl (signalName, input) {
+	        if (signals[signalName]) {
+	          var route = signals[signalName].route
+	          return options.baseUrl + urlMapper.stringify(route, input || {})
+	        } else {
+	          return false
+	        }
 	      },
 	
 	      redirect: function redirect (url, params) {
@@ -29008,17 +29210,27 @@
 	          replace: params.replace
 	        }
 	
-	        onUrlChange()
+	        setTimeout(onUrlChange)
+	      },
+	
+	      redirectToSignal: function redirectToSignal (signalName, payload) {
+	        var signal = get(signals, signalName)
+	        if (signal) {
+	          setTimeout(signal.signal.bind(null, payload))
+	        } else {
+	          console.warn('Cerebral router - signal ' + signalName + ' is not bound to route. Redirect wouldn\'t happen.')
+	        }
 	      }
 	    }
 	
 	    module.alias(MODULE)
-	    module.services(services)
+	    module.addServices(services)
 	    addressbar.on('change', onUrlChange)
+	    controller.on('predefinedSignal', onPredefinedSignal)
 	    controller.on('signalTrigger', onSignalTrigger)
 	    controller.on('signalStart', onSignalStart)
-	
-	    if (options.autoTrigger) services.trigger()
+	    controller.on('signalEnd', onSignalEnd)
+	    if (!options.preventAutostart) controller.on('modulesLoaded', onModulesLoaded)
 	  }
 	}
 	
@@ -29055,7 +29267,8 @@
 	    var signal = get(signals, config[route])
 	    if (!signal) {
 	      throw new Error('Cerebral router - The signal "' + config[route] +
-	      '" for the route "' + route + '" does not exist.')
+	      '" for the route "' + route + '" does not exist. ' +
+	      'Make sure that ' + MODULE + 'loaded after all modules with routable signals.')
 	    }
 	    if (routableSignals[config[route]]) {
 	      throw new Error('Cerebral router - The signal "' + config[route] +

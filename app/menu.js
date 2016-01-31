@@ -71,7 +71,7 @@ export default [
     icon: 'bug',
     text: theDebugger,
     content: MTRC(theDebugger).tree,
-    video: 'https://www.youtube.com/embed/cq1rmXGk59o'
+    video: 'https://www.youtube.com/embed/ZMXcSRiq6fU'
   }, {
     label: 'Install',
     icon: 'download',
