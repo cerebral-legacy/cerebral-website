@@ -18,16 +18,14 @@
 
 .submenu {
   color: #EAEAEA;
+  margin: 0;
 }
 
 .submenu > li {
-  height: 25px;
-  padding: 5px 0 5px 10px;
-  cursor: pointer;
-  line-height: 25px;
   font-size: 16px;
   color: rgb(150, 155, 160);
   margin: 0;
+  margin-left: 10px;
 }
 
 .menu > li {

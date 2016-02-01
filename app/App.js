@@ -190,7 +190,7 @@ class App extends React.Component {
     return (
       <div className="page">
         <div ref="content" className="content">
-          <div className="content-wrapper">
+          <div className="content-wrapper container">
             {Content}
           </div>
         </div>
