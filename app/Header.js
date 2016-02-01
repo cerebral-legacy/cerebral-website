@@ -19,7 +19,7 @@ var Header = React.createClass({
   render: function () {
     return (
       <div style={WrapperStyle}>
-        <h6 style={HeaderStyle}>{this.props.children}</h6>
+        <h4 style={HeaderStyle}>{this.props.children}</h4>
       </div>
     );
   }

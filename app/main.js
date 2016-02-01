@@ -1,6 +1,5 @@
 import './styles/highlight.css';
 import './styles/fonts.css';
-import './styles/style.scss';
 
 import React from 'react';
 import {render} from 'react-dom';
@@ -9,52 +8,30 @@ import {Container} from 'cerebral-react';
 import Router from 'cerebral-router';
 import controller from './controller';
 
-function isSmallScreen() {
-  return window.innerWidth <= 700;
-}
-
 controller.signal('homeOpened', [
   function setContent({state}) {
-    const options = {
+    state.merge({
       content: 'cerebral',
       subContent: null
-    };
-
-    if (isSmallScreen()) {
-      options.displayMenu = false;
-    }
-
-    state.merge(options);
+    });
   }
 ]);
 
 controller.signal('menuClicked', [
   function setContent({input, state}) {
-    const options = {
+    state.merge({
       content: input.content,
       subContent: null
-    };
-
-    if (isSmallScreen()) {
-      options.displayMenu = false;
-    }
-
-    state.merge(options);
+    });
   }
 ]);
 
 controller.signal('submenuClicked', [
   function setContent({input, state}) {
-    const options = {
+    state.merge({
       content: input.content,
       subContent: input.subContent
-    };
-
-    if (isSmallScreen()) {
-      options.displayMenu = false;
-    }
-
-    state.merge(options);
+    });
   }
 ]);
 
