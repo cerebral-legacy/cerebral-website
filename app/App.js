@@ -44,7 +44,7 @@ class App extends React.Component {
         if (!currentItem.text) {
           return;
         }
-        const hits = currentItem.text.toLowerCase().match(new RegExp(query, 'g'));
+        const hits = currentItem.text.toLowerCase().match(new RegExp(query.toLowerCase(), 'g'));
 
         if (hits && hits.length) {
           results.push({

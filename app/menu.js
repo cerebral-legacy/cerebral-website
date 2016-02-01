@@ -64,60 +64,60 @@ export default [
     label: 'Get Started',
     video: 'https://www.youtube.com/embed/dMvMts0nWNs',
     icon: 'power-off',
-    text: getStarted,
+    text: getStarted.toLowerCase(),
     content: MTRC(getStarted).tree
   }, {
     label: 'Debugger',
     icon: 'bug',
-    text: theDebugger,
+    text: theDebugger.toLowerCase(),
     content: MTRC(theDebugger).tree,
     video: 'https://www.youtube.com/embed/ZMXcSRiq6fU'
   }, {
     label: 'Install',
     icon: 'download',
-    text: install,
+    text: install.toLowerCase(),
     content: MTRC(install).tree,
     subContent: [
       {
         label: 'React',
         icon: 'television',
-        text: react,
+        text: react.toLowerCase(),
         content: MTRC(react).tree
       },
       {
         label: 'Inferno',
         icon: 'television',
-        text: inferno,
+        text: inferno.toLowerCase(),
         content: MTRC(inferno).tree
       },
       {
         label: 'Snabbdom',
         icon: 'television',
-        text: snabbdom,
+        text: snabbdom.toLowerCase(),
         content: MTRC(snabbdom).tree
       },
       {
         label: 'Angular',
         icon: 'television',
-        text: angular,
+        text: angular.toLowerCase(),
         content: MTRC(angular).tree
       },
       {
         label: 'Baobab',
         icon: 'database',
-        text: baobab,
+        text: baobab.toLowerCase(),
         content: MTRC(baobab).tree
       },
       {
         label: 'Immutable JS',
         icon: 'database',
-        text: immutableJS,
+        text: immutableJS.toLowerCase(),
         content: MTRC(immutableJS).tree
       },
       {
         label: 'Internet Explorer',
         icon: 'internet-explorer',
-        text: internetExplorer,
+        text: internetExplorer.toLowerCase(),
         content: MTRC(internetExplorer).tree
       }
     ]
@@ -125,52 +125,52 @@ export default [
   {
     label: 'Modules',
     icon: 'th-large',
-    text: modules,
+    text: modules.toLowerCase(),
     content: MTRC(modules).tree,
     video: 'https://www.youtube.com/embed/FNB0uIQtGrw',
     subContent: [{
       label: 'Router',
-      text: moduleRouter,
+      text: moduleRouter.toLowerCase(),
       content: MTRC(moduleRouter).tree
     }, {
       label: 'Http',
-      text: moduleHttp,
+      text: moduleHttp.toLowerCase(),
       content: MTRC(moduleHttp).tree
     }, {
       label: 'Recorder',
-      text: moduleRecorder,
+      text: moduleRecorder.toLowerCase(),
       content: MTRC(moduleRecorder).tree
     }]
   },
   {
     label: 'Signals',
     icon: 'file-text',
-    text: signals,
+    text: signals.toLowerCase(),
     content: MTRC(signals).tree,
     subContent: [
       {
         label: 'Actions',
-        text: actions,
+        text: actions.toLowerCase(),
         content: MTRC(actions).tree
       },
       {
         label: 'Input',
-        text: input,
+        text: input.toLowerCase(),
         content: MTRC(input).tree
       },
       {
         label: 'State',
-        text: state,
+        text: state.toLowerCase(),
         content: MTRC(state).tree
       },
       {
         label: 'Output',
-        text: output,
+        text: output.toLowerCase(),
         content: MTRC(output).tree
       },
       {
         label: 'Async',
-        text: async,
+        text: async.toLowerCase(),
         content: MTRC(async).tree
       }
     ]
@@ -178,42 +178,42 @@ export default [
   {
     label: 'Utilities',
     icon: 'wrench',
-    text: utilities,
+    text: utilities.toLowerCase(),
     content: MTRC(utilities).tree,
     subContent: [
       {
         label: 'Services',
-        text: services,
+        text: services.toLowerCase(),
         content: MTRC(services).tree
       },
       {
         label: 'Compute',
-        text: compute,
+        text: compute.toLowerCase(),
         content: MTRC(compute).tree
       },
       {
         label: 'Factories',
-        text: factories,
+        text: factories.toLowerCase(),
         content: MTRC(factories).tree
       },
       {
         label: 'Chains',
-        text: chains,
+        text: chains.toLowerCase(),
         content: MTRC(chains).tree
       },
       {
         label: 'Type checking',
-        text: typeChecking,
+        text: typeChecking.toLowerCase(),
         content: MTRC(typeChecking).tree
       },
       {
         label: 'Events',
-        text: events,
+        text: events.toLowerCase(),
         content: MTRC(events).tree
       },
       {
         label: 'Universal',
-        text: universal,
+        text: universal.toLowerCase(),
         content: MTRC(universal).tree
       }
     ]
@@ -221,23 +221,23 @@ export default [
   {
     label: 'Addons',
     icon: 'briefcase',
-    text: addons,
+    text: addons.toLowerCase(),
     content: MTRC(addons).tree,
     subContent: [{
       label: 'Copy',
-      text: addonsCopy,
+      text: addonsCopy.toLowerCase(),
       content: MTRC(addonsCopy).tree
     }, {
       label: 'Debounce',
-      text: addonsDebounce,
+      text: addonsDebounce.toLowerCase(),
       content: MTRC(addonsDebounce).tree
     }, {
       label: 'Set',
-      text: addonsSet,
+      text: addonsSet.toLowerCase(),
       content: MTRC(addonsSet).tree
     }, {
       label: 'Unset',
-      text: addonsUnset,
+      text: addonsUnset.toLowerCase(),
       content: MTRC(addonsUnset).tree
     }, {
       label: 'Toggle',
@@ -245,49 +245,49 @@ export default [
       content: MTRC(addonsToggle).tree
     }, {
       label: 'When',
-      text: addonsWhen,
+      text: addonsWhen.toLowerCase(),
       content: MTRC(addonsWhen).tree
     }]
   },
   {
     label: 'Routing',
     icon: 'map-signs',
-    text: routing,
+    text: routing.toLowerCase(),
     content: MTRC(routing).tree,
     subContent: [
       {
         label: 'Nesting',
-        text: nesting,
+        text: nesting.toLowerCase(),
         content: MTRC(nesting).tree
       },
       {
         label: 'Hash',
-        text: hash,
+        text: hash.toLowerCase(),
         content: MTRC(hash).tree
       },
       {
         label: 'Base',
-        text: base,
+        text: base.toLowerCase(),
         content: MTRC(base).tree
       },
       {
         label: 'Redirect',
-        text: redirect,
+        text: redirect.toLowerCase(),
         content: MTRC(redirect).tree
       },
       {
         label: 'Regexp',
-        text: regexp,
+        text: regexp.toLowerCase(),
         content: MTRC(regexp).tree
       },
       {
         label: 'Hyperlinks',
-        text: hyperlinks,
+        text: hyperlinks.toLowerCase(),
         content: MTRC(hyperlinks).tree
       },
       {
         label: 'Transitions',
-        text: transitions,
+        text: transitions.toLowerCase(),
         content: MTRC(transitions).tree
       }
     ]
@@ -295,7 +295,7 @@ export default [
   {
     label: 'How to',
     icon: 'graduation-cap',
-    text: howto,
+    text: howto.toLowerCase(),
     content: MTRC(howto).tree,
     subContent: [{
       label: 'Server requests',
@@ -306,39 +306,39 @@ export default [
   {
     label: 'FAQ',
     icon: 'question',
-    text: faq,
+    text: faq.toLowerCase(),
     content: MTRC(faq).tree
   },
   {
     label: 'Testing',
     icon: 'check-circle-o', // tnr: what icon should we use here?
-    text: testing,
+    text: testing.toLowerCase(),
     content: MTRC(testing).tree
   },
   {
     label: 'Best Practices',
     icon: 'heart',
-    text: bestPractices,
+    text: bestPractices.toLowerCase(),
     content: MTRC(bestPractices).tree,
     subContent: [
       {
         label: 'Structure',
-        text: structure,
+        text: structure.toLowerCase(),
         content: MTRC(structure).tree
       },
       {
         label: 'Relational data',
-        text: relational,
+        text: relational.toLowerCase(),
         content: MTRC(relational).tree
       },
       {
         label: 'Props and State',
-        text: propsAndState,
+        text: propsAndState.toLowerCase(),
         content: MTRC(propsAndState).tree
       },
       {
         label: 'Responsibilities',
-        text: responsibilities,
+        text: responsibilities.toLowerCase(),
         content: MTRC(responsibilities).tree
       }
     ]
