@@ -32,7 +32,7 @@ var Contributors = React.createClass({
             Garth has been with us from the start. He was one of the early adopters who bet his new found project on Cerebral.
             He has also built a <a href="https://github.com/garth/material-components">state driven material-ui project</a>.
             It is really the only React UI library I know of that controls all its components state using props. Garth also works on
-            the addons package for Cerebral and other modules.
+            the addons package for Cerebral, fuse and other modules.
           </p>
           <a href="https://github.com/garth">Github Profile</a>
         </div>
@@ -69,7 +69,7 @@ var Contributors = React.createClass({
           <img src="adam.png" style={contributorImageStyle}/>
           <p>
             Adam has solved some core issues with the Chrome Extension and generally involves himself in supporting developers of Cerebral and other
-            discussions on new modules and the core project.
+            discussions on new modules and the core project. He also made the website mobile friendly!
           </p>
           <a href="https://github.com/NervosaX">Github Profile</a>
         </div>
@@ -83,15 +83,3 @@ var Contributors = React.createClass({
 });
 
 module.exports = Contributors;
-
-/*
-### Brian
-![brian](brian.jpeg)
-
-Not the guy with most code contributions, but he compensates with great spirit. He refers to himself as the Cerebral cheerleader. That said, Brian is a reflected and smart guy who always brings great insights and perspectives to our discussions!
-
-[Github Profile](https://github.com/bfitch)
-
-#### Everbody else
-
-*/
