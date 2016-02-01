@@ -759,3 +759,25 @@ img {
 
   }
 }
+
+.mobile-overlay {
+  display: none;
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: black;
+  z-index: 1000;
+  opacity: 0.4;
+
+  &.active {
+    display: block;
+  }
+
+  @media (min-width: 680px) {
+    &.active {
+      display: none;
+    }
+  }
+}

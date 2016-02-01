@@ -256,9 +256,14 @@ class App extends React.Component {
       'menu-open': this.props.displayMenu
     });
 
+    const overlayMenuClasses = classnames('mobile-overlay', {
+      active: this.props.displayMenu
+    });
+
     return (
       <div onClick={() => this.setState({searchResults: [], query: ''})}>
         {this.renderHeader()}
+        <div className={overlayMenuClasses} onClick={() => this.props.signals.menuToggled()}></div>
         <div className="navigation-container">{this.renderMenu()}</div>
         <div className={classes}>{this.renderPage()}</div>
         {this.props.showOverlay ? (

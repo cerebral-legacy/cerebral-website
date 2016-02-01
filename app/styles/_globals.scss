@@ -1,4 +1,4 @@
-$small-screen: 635px;
+$small-screen: 700px;
 
 @mixin transition($args...) {
   -webkit-transition: $args;
