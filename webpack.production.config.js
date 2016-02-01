@@ -3,6 +3,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var StatsPlugin = require('stats-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -26,10 +27,18 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    })
+    }),
+    new ExtractTextPlugin("styles.css")
   ],
   module: {
     loaders: [{
+      test: /\.css$/,
+      loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+    },
+    {
+      test: /\.scss$/,
+      loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader")
+    }, {
       test: /\.js?$/,
       exclude: /node_modules/,
       loader: 'babel'
@@ -39,9 +48,6 @@ module.exports = {
     }, {
       test: /\.md$/,
       loader: 'raw'
-    }, {
-      test: /\.css$/,
-      loader: 'style!css'
     }]
   },
   postcss: [

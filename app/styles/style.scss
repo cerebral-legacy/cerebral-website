@@ -8,7 +8,7 @@
 @font-face {
 	font-family: 'icomoon';
 	/* src:url('fonts/icomoon.eot?3pojfg'); */
-  src:url('fonts/icomoon.woff') format('woff');
+  src:url('/fonts/icomoon.woff') format('woff');
 	/* src:url('fonts/icomoon.eot?3pojfg#iefix') format('embedded-opentype'), */
 	/* 	url('fonts/icomoon.ttf?3pojfg') format('truetype'), */
 	/* 	url('fonts/icomoon.woff?3pojfg') format('woff'), */
@@ -179,9 +179,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 h1 {
     font-size: 4em;
+		@include max-screen($small-screen) {
+			font-size: 2em;
+		}
 }
+
 h3 {
   font-size: 2em;
+	@include max-screen($small-screen) {
+		font-size: 1.5em;
+		margin-bottom: 10px;
+	}
 }
 
 p, ul, ol {
@@ -710,26 +718,35 @@ img {
   padding: 10px;
 }
 
+@media (max-width: 1000px) {
+	.videoframe {
+		margin-top: -84.5px;
+	  margin-left: -160px;
+	}
+}
+
 .title-video {
-	display: inline-block;
-	height: 55px;
-	width: 150px;
+	display: inline-flex;
 	border-radius: 3px;
-	line-height: 55px;
+	margin-left: 10px;
+	vertical-align: middle;
 	cursor: pointer;
+	align-items: center;
 }
 
 .title-video span {
-	position: relative;
-	top: -13px;
+	vertical-align: middle;
+	padding-left: 5px;
+	white-space: nowrap;
 	font-size: 0.25em;
+	padding-bottom: -10px;
+	flex: 1;
 }
 
 .title-video i {
 	color: #333;
-	top: 0;
 	font-size: 0.7em;
-	line-height: normal;
+	flex: 1;
 }
 
 .main-logo {

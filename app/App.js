@@ -271,7 +271,7 @@ class App extends React.Component {
         ) : null}
         {this.props.showOverlay ? (
           <div className="videoframe" style={VideoStyle}>
-            <iframe width="900" height="506" src={this.props.videoSrc + '?autoplay=1'} frameBorder="0" allowFullscreen></iframe>
+            <iframe width={document.body.offsetWidth > 1000 ? 900 : 300} height={document.body.offsetWidth > 1000 ? 506 : 169} src={this.props.videoSrc + '?autoplay=1'} frameBorder="0" allowFullscreen></iframe>
           </div>
         ) : null}
       </div>
