@@ -609,6 +609,7 @@ img {
     top: 0px;
     bottom: 0px;
     overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
     padding: 30px 0;
   }
 }
