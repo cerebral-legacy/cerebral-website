@@ -2,7 +2,6 @@ import React from 'react';
 import menu from './menu';
 import {Decorator as Cerebral} from 'cerebral-react';
 import toPath from './toPath';
-import classnames from 'classnames';
 
 @Cerebral({
   showOverlay: ['showOverlay'],
@@ -94,60 +93,18 @@ class App extends React.Component {
   openRepo() {
     window.open('https://github.com/cerebral/cerebral-website/tree/master/app/markdown');
   }
-  renderHeader() {
-    return (
-      <div className="header">
-        <i className="icon icon-bars link" onClick={() => this.props.signals.menuToggled()} style={{margin: 10}}></i>
-        <div className="mobile-icon" />
-        <ul>
-          <li className="search">
-            <i className="icon icon-search"/>
-            <input className="search-input" value={this.state.query} onChange={(e) => this.search(e.target.value)}/>
-            {
-              this.state.searchResults.length ?
-                <ul className="search-results">
-                  {this.state.searchResults.map((result, index) => (
-                    <li key={index} onClick={() => {
-                      if (result.parent) {
-                        this.props.signals.submenuClicked({
-                          content: result.parent.replace(/\s/g, ''),
-                          subContent: result.label.toLowerCase().replace(/\s/g, '')
-                        });
-                      } else {
-                        this.props.signals.menuClicked({
-                          content: result.label.toLowerCase().replace(/\s/g, '')
-                        });
-                      }
-                    }}>
-                      <strong>{result.label}</strong> ({result.hitsCount} hits)
-                    </li>
-                  ))}
-                </ul>
-              :
-                null
-            }
-          </li>
-          <li className="demo" onClick={() => location.href = "/todomvc"}>
-            <i className="icon icon-gamepad" /> <span className="icon-label">Demo</span>
-          </li>
-          <li className="chat" onClick={() => this.openChat()}>
-            <i className="icon icon-comments" /> <span className="icon-label">Chat</span>
-          </li>
-          <li className="twitter" onClick={() => this.createTweet()}>
-            <i className="icon icon-twitter" /> <span className="icon-label">Tweet</span>
-          </li>
-          <li className="github" onClick={() => this.openGithub()}>
-            <i className="icon icon-github-square" /> <span className="icon-label">Github</span>
-          </li>
-          <li className="edit" onClick={() => this.openRepo()}>
-            <i className="icon icon-pencil" /> <span className="icon-label">Edit</span>
-          </li>
-        </ul>
-      </div>
-    );
-  }
-
   renderPage() {
+    const pageStyle = {
+      transform: 'translate3d(' + (this.props.displayMenu ? '200px' : '0') + ', 0, 0)',
+      WebkitTransform: 'translate3d(' + (this.props.displayMenu ? '200px' : '0') + ', 0, 0)'
+    };
+    const headerStyle = {
+      paddingRight: this.props.displayMenu ? 200 : 0
+    };
+    const contentStyle = {
+      paddingRight: this.props.displayMenu ? 240 : 40
+    };
+
     let page;
 
     menu.forEach((item) => {
@@ -188,9 +145,54 @@ class App extends React.Component {
     }
 
     return (
-      <div className="page">
-        <div ref="content" className="content">
-          <div className="content-wrapper container">
+      <div className="page" style={pageStyle}>
+        <div className="header" style={headerStyle}>
+          <i className="icon icon-bars link" onClick={() => this.props.signals.menuToggled()} style={{margin: 10}}></i>
+          <div className="github" onClick={() => this.openRepo()}>
+            <i className="icon icon-pencil"> Edit</i>
+          </div>
+          <div className="tweet" onClick={() => this.openGithub()}>
+            <i className="icon icon-github-square"> Repo</i>
+          </div>
+          <div className="tweet" onClick={() => this.createTweet()}>
+            <i className="icon icon-twitter"> Tweet</i>
+          </div>
+          <div className="tweet" onClick={() => this.openChat()}>
+            <i className="icon icon-comments"> Chat</i>
+          </div>
+          <div className="tweet" onClick={() => location.href = "/todomvc"}>
+            <i className="icon icon-gamepad"> Demo</i>
+          </div>
+          <div className="tweet">
+            <i className="icon icon-search"/>
+            <input className="search-input" value={this.state.query} onChange={(e) => this.search(e.target.value)}/>
+            {
+              this.state.searchResults.length ?
+                <ul className="search-results">
+                  {this.state.searchResults.map((result, index) => (
+                    <li key={index} onClick={() => {
+                      if (result.parent) {
+                        this.props.signals.submenuClicked({
+                          content: result.parent.replace(/\s/g, ''),
+                          subContent: result.label.toLowerCase().replace(/\s/g, '')
+                        });
+                      } else {
+                        this.props.signals.menuClicked({
+                          content: result.label.toLowerCase().replace(/\s/g, '')
+                        });
+                      }
+                    }}>
+                      <strong>{result.label}</strong> ({result.hitsCount} hits)
+                    </li>
+                  ))}
+                </ul>
+              :
+                null
+            }
+          </div>
+        </div>
+        <div ref="content" className="content" style={contentStyle}>
+          <div className="content-wrapper">
             {Content}
           </div>
         </div>
@@ -198,12 +200,8 @@ class App extends React.Component {
     );
   }
   renderMenu() {
-    const classes = classnames('menu', {
-      active: this.props.displayMenu
-    });
-
     return (
-      <ul className={classes}>
+      <ul className="menu">
         {menu.map((item, index) => {
           const Item = (
             <li
@@ -252,28 +250,24 @@ class App extends React.Component {
       opacity: this.props.transitionVideo ? '1' : '0'
     };
 
-    const classes = classnames('page-container', {
-      'menu-open': this.props.displayMenu
-    });
-
-    const overlayMenuClasses = classnames('mobile-overlay', {
-      active: this.props.displayMenu
-    });
-
     return (
-      <div onClick={() => this.setState({searchResults: [], query: ''})}>
-        {this.renderHeader()}
-        <div className={overlayMenuClasses} onClick={() => this.props.signals.menuToggled()}></div>
-        <div className="navigation-container">{this.renderMenu()}</div>
-        <div className={classes}>{this.renderPage()}</div>
-        {this.props.showOverlay ? (
-          <div className="overlay" style={VideoWrapperStyle} onClick={() => this.props.signals.videoClosed()}></div>
-        ) : null}
-        {this.props.showOverlay ? (
-          <div className="videoframe" style={VideoStyle}>
-            <iframe width="900" height="506" src={this.props.videoSrc + '?autoplay=1'} frameBorder="0" allowFullscreen></iframe>
-          </div>
-        ) : null}
+      <div style={{height: '100%'}} onClick={() => this.setState({searchResults: [], query: ''})}>
+        {this.renderMenu()}
+        {this.renderPage()}
+        {
+          this.props.showOverlay ?
+            <div className="overlay" style={VideoWrapperStyle} onClick={() => this.props.signals.videoClosed()}></div>
+          :
+            null
+        }
+        {
+          this.props.showOverlay ?
+            <div className="videoframe" style={VideoStyle}>
+              <iframe width="900" height="506" src={this.props.videoSrc + '?autoplay=1'} frameBorder="0" allowFullscreen></iframe>
+            </div>
+          :
+            null
+        }
       </div>
     );
   }
