@@ -1,0 +1,73 @@
+.menu {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  color: #EAEAEA;
+  width: 200px;
+  left: -200px;
+  overflow-y: scroll;
+  background-color: rgb(40, 49, 60);
+  -webkit-overflow-scrolling: touch;
+  z-index: 1000;
+  @include transition(all 0.3s ease-out);
+
+  &.active {
+    left: 0px;
+  }
+}
+
+.submenu {
+  color: #EAEAEA;
+  margin: 0;
+}
+
+.submenu > li {
+  font-size: 16px;
+  color: rgb(150, 155, 160);
+  margin: 0;
+  margin-left: 10px;
+}
+
+.menu > li {
+  min-height: 30px;
+  padding: 5px;
+  cursor: pointer;
+  line-height: 30px;
+  font-size: 18px;
+  color: rgb(150, 155, 160);
+  margin: 0;
+}
+
+.menu > li .icon {
+  color: rgb(150, 155, 160);
+}
+
+.menu li:hover {
+  color: rgb(90, 100, 110);
+}
+
+.menu li.active {
+  background-color: rgb(232, 137, 102);
+  font-size: 18px;
+  color: #EAEAEA;
+	font-weight: bold;
+}
+
+.menu li.active.head {
+  background-color: rgb(90, 100, 110);
+	font-weight: normal;
+}
+
+.menu li.active i {
+  color: #EAEAEA;
+}
+
+.submenu li.active i {
+  color: rgb(150, 155, 160);
+}
+
+.submenu li.active {
+  background-color: transparent;
+  font-size: 16px;
+  color: rgb(232, 137, 102);
+}
