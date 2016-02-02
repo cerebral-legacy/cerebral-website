@@ -13,7 +13,6 @@ It is encouraged that you put all the state of your application in the Cerebral 
 #### Render application
 
 ```javascript
-
 import Controller from 'cerebral'
 import Model from 'cerebral-model-baobab'
 import React from 'react'
@@ -38,7 +37,6 @@ React.render(
 
 #### Get state in component
 ```javascript
-
 import React from 'react'
 import {Decorator as Cerebral} from 'cerebral-view-react'
 
@@ -55,7 +53,6 @@ class App extends React.Component {
 #### Create hyperlinks
 If you are using the `cerebral-module-router` you can use a component to create links.
 ```javascript
-
 import React from 'react';
 import {Decorator as Cerebral, Link} from 'cerebral-view-react'
 

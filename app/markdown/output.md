@@ -1,7 +1,6 @@
 All actions are able to output values. All output is merged with previous input before being sent to the next actions.
 
 ```javascript
-
 function actionA ({output}) {
     output({
       bip: 'bop'
@@ -37,7 +36,6 @@ In the example above we call *output* directly. When doing so the next item in t
 An action might want to take different paths based on some conditional. A example of this would be:
 
 ```javascript
-
 function getItems ({output}) {
   fetch('/items')
     .then(function(response) {
@@ -68,7 +66,6 @@ But you can define your own custom output paths if you want to. Note that action
 ### Custom outputs
 
 ```javascript
-
 function getItems ({output}) {
   // For simplicities sake
   output.success()
@@ -102,7 +99,6 @@ module.addSignals({
 This is a powerful tool to express the flow of your application. This can be combined with *factories* and *chains* to create default behavior in your signals. The new ES6 *spread* operator is also a great tool for signals. An example of that would be:
 
 ```javascript
-
 const somethingHappened = [
   [
     ...get('/items', {
@@ -122,7 +118,6 @@ If this is not perfectly clear to you, do not worry. You will learn more about *
 When defining outputs you can also define which one of those outputs are default.
 
 ```javascript
-
 function myAction ({output}) {
   output(); // Will go to path "foo"
 }
@@ -132,8 +127,8 @@ myAction.defaultOutput = 'foo'
 ```
 
 Because all actions receive the same input as the previous actions in the chain (plus whatever new data has been merged in), adding on extra functionality at the start or end of signals is extremely simple. One example is wrapping certain signals to check for authentication:
-```javascript
 
+```javascript
 function requireAuth (actionChain) {
   return [checkAuthenticated, { //action that checks if user is authenticated and outputs success or error
     success: actionChain, //run the usual action chain
@@ -154,5 +149,4 @@ module.addSignals({
 signals.module.saveButtonClicked({
   foo: 'bar'
 })
-
 ```

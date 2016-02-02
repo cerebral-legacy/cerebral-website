@@ -9,7 +9,6 @@
 #### Render application
 
 ```javascript
-
 import 'cerebral-view-angular' // Exposes module
 import Controller from 'cerebral'
 import Model from 'cerebral-model-baobab'
@@ -41,7 +40,6 @@ angular.module('app', ['cerebral'])
 The Cerebral provider exposes two services, *state* and *signals*.
 
 ```javascript
-
 export default function () {
   return {
     controllerAs: 'myComponent',
@@ -79,7 +77,6 @@ export default function () {
 By default the view package exposes the *$http* service as:
 
 ```javascript
-
 .run(function (cerebral, $http) {
 
   cerebral.addServices({

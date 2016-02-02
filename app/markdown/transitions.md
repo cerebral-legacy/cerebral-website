@@ -3,7 +3,6 @@ With the Cerebral router you handle route transitions like any other transitions
 We are going to look at an example using the *CSSTransitionGroup* plugin from React. It is inspired by *ng-animate* which you can use with Angular. You can create even better effects with other transition libraries like [react-motion](https://github.com/chenglou/react-motion) etc.
 
 ```javascript
-
 import React from 'react'
 import {Decorator as Cerebral} from 'cerebral-view-react'
 import {CSSTransitionGroup} from 'react/addons'

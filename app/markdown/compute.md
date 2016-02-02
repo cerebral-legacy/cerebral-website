@@ -2,7 +2,6 @@ Very often it is necessary to compute state. Some libraries do this inside the c
 
 Computed state are just functions with a special `get` function.
 ```javascript
-
 // Grab values as normal, as if it was an action
 const displayedMessages = function (get) {
   return get(['displayedMessagesIds']).map((id) => get(['messages', id]))
@@ -24,7 +23,6 @@ The compute functions are very smart. They will automatically run when needed by
 You use them the same way as normal state, though just referencing the computed function.
 
 ```javascript
-
 import React from 'react'
 import {Decorator as Cerebral} from 'cerebral-view-react'
 import displayedMessages from './computed/displayedMessages'
@@ -59,7 +57,6 @@ export default App
 You can also use them inside actions.
 
 ```javascript
-
 import displayedMessages from '../computed/displayedMessages'
 
 function myAction({state}) {
@@ -71,7 +68,6 @@ function myAction({state}) {
 It is also possible to create functions that returns computed functions. It is important that the caching ability is kept and therefor you need to give the computed function a reference.
 
 ```javascript
-
 function myComputedFactory(someDynamicPath) {
 
   function computed(get) {

@@ -3,7 +3,6 @@ When working on large applications you will have a lot of signals and actions. L
 ### Input
 
 ```javascript
-
 function myAction ({input, state, output, services}) {
 
 }
@@ -16,7 +15,6 @@ myAction.input = {
 Cerebral lets you do very basic type checking using the native constructors of JavaScript. In the example above we expect that the input reaching *myAction* will have a *foo* property where the value is a string. The following type checks are available.
 
 ```javascript
-
 function myAction ({input, state, output, services}) {
 
 }
@@ -37,7 +35,6 @@ myAction.input = {
 If this type checking does not meet your requirements you can add your own. A type check can also be a function.
 
 ```javascript
-
 function myAction ({input, state, output, services}) {
 
 }
@@ -52,7 +49,6 @@ myAction.input = {
 This allows you to bring in other type checking libraries. An example of that would be:
 
 ```javascript
-
 import check from 'check-types'
 
 function myAction ({input, state, output, services}) {
@@ -70,7 +66,6 @@ myAction.input = {
 The outputs of an action can also be type checked.
 
 ```javascript
-
 function myAction ({output}) {
   output({
     foo: 'bar'
@@ -85,7 +80,6 @@ myAction.output = {
 Or with multiple outputs:
 
 ```javascript
-
 function myAction ({output}) {
   output.a({
     foo: 'string'

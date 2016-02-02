@@ -7,7 +7,6 @@ With [Axios](https://github.com/mzabriskie/axios) under the hood you got all you
 ### Get started
 
 ```javascript
-
 import Controller from 'cerebral'
 import Model from 'cerebral-model-baobab'
 import Http from 'cerebral-module-http'
@@ -30,7 +29,6 @@ For other options go to [axios repo](https://github.com/mzabriskie/axios).
 The module exposes a services with all HTTP methods: `get, post, put, delete, patch`. You access these inside actions.
 
 ```javascript
-
 function postTodo({state, output, services}) {
   const todo = state.get(['newTodo'])
   services.http.post('/todos', todo)
@@ -47,7 +45,6 @@ The service returns a promise. Results of the http requests will be passed on an
 This module also exposes some action factories to express request directly in a signal. You got `get, post, put, patch, delete` available to you.
 
 ```javascript
-
 import httpGet from 'cerebral-module-http/get'
 import copy from 'cerebral-addons/copy'
 
@@ -68,7 +65,6 @@ export default [
 It is also possible to use url-scheme on the action factories to build up the url.
 
 ```javascript
-
 import httpPatch from 'cerebral-module-http/patch'
 import httpDelete from 'cerebral-module-http/delete'
 import copy from 'cerebral-addons/copy'

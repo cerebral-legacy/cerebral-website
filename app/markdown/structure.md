@@ -9,7 +9,6 @@ You application structure and your UI structure will often look similar, but the
 Your project file structure can look something like this. Note that we are putting components into their own folders with an `index.js` file. This allows you to point to the folder when doing imports and add other component specific files, like stylesheets.
 
 ```
-
 - desktop
   - App
     - Menu

@@ -12,7 +12,6 @@ The is Facebook's super high performance immutable library. Note that all values
 ### Get started
 
 ```javascript
-
 import Controller from 'cerebral'
 import Model from 'cerebral-model-immutable-js'
 

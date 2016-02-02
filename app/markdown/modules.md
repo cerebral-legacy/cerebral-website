@@ -7,7 +7,6 @@ You build your application using modules. Modules will separate signals, state a
 ### Registering a module to the Cerebral controller
 
 ```javascript
-
 import Controller from 'cerebral'
 import Model from 'cerebral-model-baobab'
 import Home from './modules/Home'
@@ -21,7 +20,6 @@ controller.addModules({
   }),
   recorder: Recorder()
 });
-
 ```
 
 You register one or multiple modules to your existing Cerebral application. You instantiate a module by calling it and passing any options. A module may, as stated, expose state, signals and services to your application. It may also have related actions, chains and even UI components. You name the module yourself, in this case *myModule* and *recorder*, which will namespace everything related to the module.
@@ -30,7 +28,6 @@ You register one or multiple modules to your existing Cerebral application. You 
 
 *MyModule.js*
 ```javascript
-
 import somethingHappened from './signals/somethingHappened'
 import somethingElseHappened from './signals/somethingElseHappened'
 
@@ -74,7 +71,6 @@ export default (options = {}) => {
 #### Actions
 
 ```javascript
-
 function myAction({module, modules, services}) {
 
   // Access the module where the current signal running is registered
@@ -97,7 +93,6 @@ function myAction({module, modules, services}) {
 #### In components
 
 ```javascript
-
 @Cerebral({
   foo: ['myModule', 'foo']
 })
@@ -116,7 +111,6 @@ class MyComponent extends React.Component {
 
 *MyModule.js*
 ```javascript
-
 import SubModule from './modules/SubModule'
 
 export default (options = {}) => {
@@ -137,7 +131,6 @@ There is not much difference in creating your own application specific module an
 
 *MyModule.js*
 ```javascript
-
 import somethingHappened from './signals/somethingHappened'
 
 export default (options = {}) => {
@@ -165,7 +158,6 @@ export default (options = {}) => {
 
 #### Accessing your shared module in actions
 ```javascript
-
 function mySharedModuleAction({module}) {
   module.services.foo
 }
@@ -173,7 +165,6 @@ function mySharedModuleAction({module}) {
 Or if you want to access some other shared module, use its alias name:
 
 ```javascript
-
 function mySharedModuleAction({modules}) {
   modules['cerebral-module-otherModule'].state.get()
 }
@@ -181,7 +172,6 @@ function mySharedModuleAction({modules}) {
 
 #### Accessing your module in components
 ```javascript
-
 @Cerebral((props) => ({
   myModule: props.modules['cerebral-module-myModule'].path
 }))
@@ -196,7 +186,6 @@ This makes it possible for consumers of your shared module to just use your expo
 any configuration:
 
 ```javascript
-
 import ModuleComponent from 'cerebral-module-myModule/ModuleComponent'
 
 class MyAppComponent extends React.Component {
@@ -215,7 +204,6 @@ class MyAppComponent extends React.Component {
 Sometimes you want a service to trigger a signal. You can pass the signals registered to a module using the `module.getSignals()` method.
 
 ```javascript
-
 import CreateSyncMethod from './CreateSyncMethod'
 
 export default (options = {}) => {
@@ -233,7 +221,6 @@ export default (options = {}) => {
 If a shared module can have multiple instances the developer consuming the module will have to specify the module name.
 
 ```javascript
-
 import SharedModuleAction from 'cerebral-module-someModule/actions/SharedModuleAction'
 
 const chain = [
@@ -242,7 +229,6 @@ const chain = [
 ```
 
 ```javascript
-
 import ModuleComponent from 'cerebral-module-myModule/ModuleComponent'
 
 class MyAppComponent extends React.Component {

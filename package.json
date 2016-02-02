@@ -45,7 +45,7 @@
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "json-loader": "^0.5.3",
-    "markdown-to-react-components": "^0.1.3",
+    "markdown-to-react-components": "^0.2.0",
     "postcss-loader": "^0.6.0",
     "raw-loader": "^0.5.1",
     "react": "^0.14.3",

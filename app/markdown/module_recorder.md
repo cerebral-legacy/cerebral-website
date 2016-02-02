@@ -8,7 +8,6 @@ When playing back a recording the signals of Cerebral will actually run exactly 
 
 ### Use
 ```javascript
-
 import controller from './controller'
 import RecorderModule from 'cerebral-module-recorder'
 
@@ -21,7 +20,6 @@ controller.addModules({
 
 #### State
 ```javascript
-
 {
   isRecording: Bool,
   isPlaying: Bool,
@@ -32,7 +30,6 @@ controller.addModules({
 
 #### Signals
 ```javascript
-
 // Will start the recorder. Optionally choose what specific paths in the state
 // tree to use as initial state when playing back recording
 signals.{namespace}.recorded({
@@ -58,7 +55,6 @@ signals.{namespace}.resumed()
 #### Services
 
 ```javascript
-
 // Gives you the current recording
 services.{namespace}.getRecording()
 
@@ -93,7 +89,6 @@ services.{namespace}.resume()
 
 #### SimpleRecorder
 ```javascript
-
 import SimpleRecorder from 'cerebral-module-recorder/react/SimpleRecorder'
 ```
 
@@ -101,7 +96,6 @@ import SimpleRecorder from 'cerebral-module-recorder/react/SimpleRecorder'
 
 *main.js*
 ```javascript
-
 import controller from './controller'
 import RecorderModule from 'cerebral-module-recorder'
 
@@ -112,7 +106,6 @@ controller.addModules({
 
 *MyAppRecorder.js*
 ```javascript
-
 import React from 'react'
 import SimpleRecorder from 'cerebral-module-recorder/react/SimpleRecorder'
 

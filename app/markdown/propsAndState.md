@@ -1,7 +1,6 @@
 Let us just dive right into an example. You have a list of messages. Inside your state store there are 500 messages and you want to display 50 of them in a list. Would you do this:
 
 ```javascript
-
 @Cerebral({
   messages: ['home', 'messagesList']
 })
@@ -35,7 +34,6 @@ class Message extends React.Component {
 Or would you:
 
 ```javascript
-
 @Cerebral({
   messages: ['home', 'messagesList']
 })
@@ -66,7 +64,6 @@ class Message extends React.Component {
 Whenever you register state from Cerebral to a component a callback is registered inside Cerebral. This callback is called on all signal updates to verify if its related component needs to update. The less callbacks that are registered, that faster your app will run from a Cerebral standpoint. That said, in the second example all messages will rerender on any "messages" change. A convention in React is to check the need for a render using `shouldComponentUpdate`:
 
 ```javascript
-
 @Cerebral({
   messages: ['home', 'messagesList']
 })

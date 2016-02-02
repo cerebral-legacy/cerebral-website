@@ -1,7 +1,6 @@
 Cerebral will emit events when running signals. Normally you do not need to listen to these events.
 
 ```javascript
-
 controller.on('change', function ({signal}) {})
 controller.on('error', function (error) {})
 controller.on('signalStart', function ({signal}) {})

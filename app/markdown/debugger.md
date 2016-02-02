@@ -9,7 +9,6 @@ The devtools of Cerebral is a module that you add to your application.
 `npm install cerebral-module-devtools`
 
 ```javascript
-
 import Controller from 'cerebral'
 import Model from 'cerebral-module-baobab'
 import Devtools from 'cerebral-module-devtools'

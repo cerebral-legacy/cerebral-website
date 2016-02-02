@@ -1,7 +1,6 @@
 It is common to express signals and groups of actions as chains. A chain is basically an array with actions and paths. In combination with the *spread operator* you get a powerful concept for composition.
 
 ```javascript
-
 const myChain = [
   action1,
   action2,
@@ -25,7 +24,6 @@ module.addSignals({
 The *spread operator* will spread the items of the array. This makes it easy to make changes to your signals. You can put actions between chains, use multiple chains and even create chain factories.
 
 ```javascript
-
 const somethingHappened = [
   ...chain1,
   myAction1,
@@ -43,7 +41,6 @@ module.addSignals({
 An action factory is a function that returns a function, but you can also return a chain from a factory. An example of this would be a chain for ajax requests.
 
 ```javascript
-
 function get (url, outputs) {
 
   // We override any default outputs with outputs passed to the
@@ -72,7 +69,6 @@ function get (url, outputs) {
 This factory can now be used as:
 
 ```javascript
-
 import get from './chains/get.js'
 import setItems from './actions/setItems.js'
 

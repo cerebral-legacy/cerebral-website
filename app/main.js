@@ -1,4 +1,5 @@
-import './styles/highlight.css';
+import './styles/prism.css';
+import './prism';
 import './styles/fonts.css';
 import './styles/style.scss';
 

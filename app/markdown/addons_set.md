@@ -2,7 +2,6 @@ Change specific state in your state store. First argument is the path, the secon
 
 *appMounted.js*
 ```javascript
-
 import set from 'cerebral-addons/set'
 import getOptionsFromServer from '../actions/getOptionsFromServer'
 

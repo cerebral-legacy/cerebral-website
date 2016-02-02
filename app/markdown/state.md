@@ -4,7 +4,6 @@ object and the mutation methods operates on that object.
 Let us start with an example:
 
 ```javascript
-
 function myAction ({state}) {
 
   state.set('isLoading', false)
@@ -18,7 +17,6 @@ This will change the state at the top level of the object. To change nested valu
 use an array.
 
 ```javascript
-
 function myAction ({state}) {
 
   state.set(['user', 'isLoading'], false)
@@ -36,7 +34,6 @@ As you can see we are using the *get* method to grab state from the state store.
 strings and arrays here also to be more specific.
 
 ```javascript
-
 function myAction ({state}) {
 
   state.get('isLoading') // false
@@ -50,7 +47,6 @@ The methods you use to change the state of your application are typical mutation
 you know from JavaScript. Collection methods however returns the mutated value instead of the value the corresponding Array.prototype method returns. **Note!** These methods are not available when an action runs asynchronously.
 
 ```javascript
-
 function myAction ({state}) {
 
   // Set value on property
@@ -90,7 +86,6 @@ function myAction ({state}) {
 Accessors are methods that lets you grab state from the state store.
 
 ```javascript
-
 function myAction ({state}) {
 
   // Get from the top level of tree

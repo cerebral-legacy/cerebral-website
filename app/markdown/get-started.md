@@ -36,7 +36,6 @@ export default App
 
 *modules/Home/index.js*
 ```javascript
-
 function changeTitle ({input, state}) {
   state.set('title', input.title);
 }
@@ -62,7 +61,6 @@ export default (options = {}) => {
 
 *main.js*
 ```javascript
-
 import React from 'react'
 import Controller from 'cerebral'
 import Model from 'cerebral-model-baobab'

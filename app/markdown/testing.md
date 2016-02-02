@@ -9,7 +9,6 @@ Both synchronous and asynchronous actions in cerebral should be pure functions, 
 All cerebral actions have the following signature:
 
 ```javascript
-
 function actionName ({input, state, output, services}) {
 
 }
@@ -22,7 +21,6 @@ Cerebral encourages you to put your actions into individual files. Exporting act
 Lets create an action called `toggleIsLoading` and then we can test it.
 
 ```javascript
-
 export default function toggleIsLoading({input, state}) {
   state.set('isLoading', input.value)
 }
@@ -31,7 +29,6 @@ export default function toggleIsLoading({input, state}) {
 In this case we don't need to use `output` or `services` so these parameters not declared. We expect that the `input` will have a `value` property set to either `true` or `false` which will then be set on the cerebral controller state via the given `state` object. So to test this we simply need to mock the `state` object and pass in the `input` data to the action. Because our `state` object is mocked there is no central state to test, so we're going to put our asserts inside the mock `set` method instead.
 
 ```javascript
-
 // Ideally your assertion library should support counting the number of assertions made,
 // if it does not then you can create a simple wrapper like the one used here.
 // See this gist for details: https://gist.github.com/garth/7367f25e2dee19f9098a
@@ -72,7 +69,6 @@ describe('toggleIsLoading()', function () {
 Asynchronous cerebral actions need to call a method on `output` when complete, so to test these methods we also need to mock the `output` parameter. We also need to let our test runner know that the test is async so that it will wait until the `output` methods are called, how you do this depends on your testing framework of choice.
 
 ```javascript
-
 import counter, { expect, expectCount } from './helpers/chaiCounter'
 import someAsyncAction from './path/to/action'
 
@@ -116,7 +112,6 @@ Signal tests are higher level test than action tests and require a little setup 
 By default cerebral does not expose the controller state for direct manipulation which is correct (state changes are managed by cerebral). But for testing we need to bypass this. In your cerebral controller you can add the following:
 
 ```javascript
-
 import Controller from 'cerebral'
 import Model from 'cerebral-model-baobab'
 
@@ -150,7 +145,6 @@ export default controller;
 Ensure that when you run your tests you also set the NODE_ENV:
 
 ```javascript
-
 NODE_ENV=test mocha --compilers js:babel-core/register
 ```
 
@@ -159,7 +153,6 @@ NODE_ENV=test mocha --compilers js:babel-core/register
 Since we are going to be calling signals directly and our tests need to know when the signal has finished, it can be useful to wrap a signal in a `Promise`. Here is a sample helper that wraps a signal in a promise and also executes a test function when the signal is done.
 
 ```javascript
-
 // helper function to wrap a signal in a promise and optionally run a test when the signal is done
 function testSignal(controller, signal, data, test) {
   return new Promise(function (resolve, reject) {
@@ -187,7 +180,6 @@ Note that the helper is not aware of concurrent signals, so be sure to only use 
 Now that the controller has been patched and we have a wrapper for executing signals we are ready to make a signal test. Lets test a signal called `nameChanged` which should accept a name and apply it to the central cerebral state.
 
 ```javascript
-
 import { expect } from 'chai'
 import testSignal from './helpers/testSignal'
 import controller from './path/to/controller'
@@ -217,5 +209,4 @@ describe('nameChanged', function () {
     })
   })
 })
-
 ```

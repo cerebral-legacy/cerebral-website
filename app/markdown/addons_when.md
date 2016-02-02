@@ -2,7 +2,6 @@ When can be used to check state for a specific value, truthy or falsy and then r
 
 *reloadData.js*
 ```javascript
-
 import when from 'cerebral-addons/when'
 import tryAgainLater from '../actions/tryAgainLater'
 import doReload from '../actions/doReload'
@@ -19,7 +18,6 @@ You can also create custom outputs.
 
 *securePageOpened.js*
 ```javascript
-
 import when from 'cerebral-addons/when'
 import getPageData from '../actions/getPageData'
 import redirectToHome from '../actions/redirectToHome'
@@ -38,7 +36,6 @@ You can also check for specific values.
 
 *formSubmitted.js*
 ```javascript
-
 import when from 'cerebral-addons/when'
 import sendToServer from '../actions/sendToServer'
 import showErrorSnackBarMessage from '../actions/showErrorSnackBarMessage'

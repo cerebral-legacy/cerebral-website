@@ -1,7 +1,6 @@
 To build universal apps you need to render your components on the server. Since your components requires state from Cerebral to render you need to expose it. You do that with the **ServerController**. It is basically just a "dummy controller" which allows you pass in the state needed to render the UI correctly.
 
 ```javascript
-
 import React from 'react'
 import {ServerController} from 'cerebral'
 import {Container} from 'cerebral-view-react'

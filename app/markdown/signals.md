@@ -3,7 +3,6 @@ The way you think of signals is that something happened in your application. Eit
 This is a typical signal:
 
 ```javascript
-
 const appMounted = [
   setLoading,
   [
@@ -27,7 +26,6 @@ As you can see, there are not only functions that are used to express flow. You 
 By default Cerebral will run your signals between animation frames. Sometimes you want to trigger UI updates synchronously as soon as a signal has finished. Typically this is related to inputs.
 
 ```javascript
-
 import React from 'react'
 import {Decorator as Cerebral} from 'cerebral-view-react'
 
@@ -52,7 +50,6 @@ class App extends React.Component {
 All signals have a `.sync()` method. Use this with inputs to avoid glitches in UI. You can also register a signal as sync:
 
 ```javascript
-
 const inputChanged = [
   setInputValue
 ]

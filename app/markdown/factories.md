@@ -34,7 +34,6 @@ module.addSignals({
 Actions created by factories has the same name in the debugger. That can be a bit confusing. To increase readability you can give custom names to actions.
 
 ```javascript
-
 function get (url) {
 
   function action ({services, output}) {

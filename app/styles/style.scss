@@ -142,35 +142,6 @@ img {
   max-width: 100%;
   border-radius: 5px;
 }
-pre {
-    position: relative;
-    background-color: #F7F7F7;
-    padding: 0 2em 2em 2em;
-    border-radius: 0.5em;
-}
-pre {
-  margin-top: 0;
-  overflow-x: auto;
-}
-code {
-    position: relative;
-    font-family: Consolas, Inconsolata, Verdana;
-    font-size: 0.75em;
-    background-color: #555;
-    color: #EAEAEA;
-    padding: 6px 15px;
-    top: -2px;
-    border-radius: 3px;
-    white-space: nowrap;
-}
-pre code {
-    font-family: Consolas, Inconsolata, Verdana;
-    font-size: 1.25em;
-    background-color: transparent;
-    line-height: 1.25em;
-    color: #555;
-    white-space: pre;
-}
 article {
     padding: 2em;
 }
@@ -188,6 +159,12 @@ h3 {
   font-size: 2em;
 	@include max-screen($small-screen) {
 		font-size: 1.5em;
+		margin-bottom: 10px;
+	}
+}
+
+h4 {
+	@include max-screen($small-screen) {
 		margin-bottom: 10px;
 	}
 }

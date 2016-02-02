@@ -3,7 +3,6 @@ Very often your data is structured in such a way that you need to do lookups. An
 Let us look at a complex example:
 
 ```javascript
-
 {
   messages: {
     '123': {
@@ -28,7 +27,6 @@ Let us look at a complex example:
 This is what we call *source data*. It is data contained in your application state, but not necessarily what is displayed in the UI at this point. Using objects to define source data is really great because it makes it very easy to do lookups. Let us look at how we would display a list of messages with all this data using Baobab Monkeys.
 
 ```javascript
-
 {
   data: {
     messages: {
@@ -85,7 +83,6 @@ Now you can safely update any comments, messages and users in the source data an
 This is how a component could now display this list:
 
 ```javascript
-
 import React from 'react'
 import {Decorator as Cerebral} from 'cerebral-view-react'
 

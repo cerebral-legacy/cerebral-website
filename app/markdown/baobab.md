@@ -11,7 +11,6 @@ to the state tree. Read more about Baobab at the [github repo](https://github.co
 ### Get started
 
 ```javascript
-
 import Controller from 'cerebral'
 import Model from 'cerebral-model-baobab'
 
@@ -45,7 +44,6 @@ export default Controller(model)
 Monkeys are a high performance way to derive new data from existing state.
 
 ```javascript
-
 import Controller from 'cerebral'
 import Model from 'cerebral-model-baobab'
 

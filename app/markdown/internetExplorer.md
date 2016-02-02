@@ -5,7 +5,6 @@ Cerebral Router and its dependencies rely on Promises, which Babel takes care of
 Cerebral itself also needs **CustomEvent** to work. Here is its polyfill:
 
 ```javascript
-
 (function () {
   function CustomEvent ( event, params ) {
     params = params || { bubbles: false, cancelable: false, detail: undefined }

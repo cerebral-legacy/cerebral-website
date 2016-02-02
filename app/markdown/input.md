@@ -1,5 +1,4 @@
 ```javascript
-
 function myAction ({input}) {
   input.foo // "bar"
 }
@@ -26,7 +25,6 @@ The input argument has to be serializable. That means it only supports the base 
 The input can be updated in two different ways. Any object passed when you trigger a signal will be merged with the input. Also any outputs from an action will be merged with the input. Take notice that the input is available to all actions in the signal.
 
 ```javascript
-
 function myAction ({input}) {
   input.foo // "bar"
 }
@@ -56,7 +54,6 @@ Look more into outputs to see more examples of how the input updates.
 You can set default inputs to actions.
 
 ```javascript
-
 function myAction ({input}) {
   input.foo // "bar"
 }

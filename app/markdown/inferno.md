@@ -8,7 +8,6 @@ To use JSX syntax you also need Babel with the `babel-plugin-inferno` package. T
 `npm install babel-plugin-inferno`
 
 ```javascript
-
 {
   "presets": ["es2015"],
   "plugins": ["babel-plugin-inferno"]
@@ -22,8 +21,6 @@ To use JSX syntax you also need Babel with the `babel-plugin-inferno` package. T
 #### Render
 
 ```javascript
-
-
 import Controller from 'cerebral'
 import Model from 'cerebral-model-baobab'
 import Inferno from 'inferno'

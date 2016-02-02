@@ -1,7 +1,6 @@
 In the in the previous section you might want to force the user to the messages page when you open a message. With the Cerebral router you handle these situations with chains.
 
 ```javascript
-
 import Router from 'cerebral-module-router'
 import controller from './controller.js'
 import homeOpened from './signals/homeOpened'

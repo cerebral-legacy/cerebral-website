@@ -1,7 +1,6 @@
 All actions are defined the same way, asynchronous or not. What decides if an action runs asynchronously is the signal. This is done using an array. **Note!** that you can not use the state mutation methods in async actions. Looking at the the *state* page you can see what methods are not available in async actions.
 
 ```javascript
-
 const somethingHappened = [
   syncAction,
   [
@@ -17,7 +16,6 @@ module.addSignals({
 If you define multiple actions in the same array they will run in parallel.
 
 ```javascript
-
 const somethingHappened = [
   syncAction,
   [
@@ -34,7 +32,6 @@ module.addSignals({
 Actions defined after an asynchronous array will run after all the actions inside the array are done.
 
 ```javascript
-
 const somethingHappened = [
   syncAction,
   [
@@ -52,7 +49,6 @@ module.addSignals({
 Even though the actions run in parallel they also have individual behavior. This is related to paths. In the following example the success path of each action will run when it outputs.
 
 ```javascript
-
 const somethingHappened = [
   syncAction,
   [
@@ -74,7 +70,6 @@ module.addSignals({
 Sometimes you want to track the progress of parallel async operations. You achieve this simply by using actions.
 
 ```javascript
-
 function resetProgress ({state}) {
   state.set('progress', 0)
 }

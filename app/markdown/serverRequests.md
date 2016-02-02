@@ -2,7 +2,6 @@ Cerebral does not allow you to set any state in asynchronous actions. So how wou
 
 Let us look at our signal first:
 ```javascript
-
 import controller from './controller.js'
 
 const appMounted = [
@@ -26,7 +25,6 @@ In this example we will explicitly create all the actions we need. It is certain
 The *setLoadingTodos* and *unsetLoadingTodos* actions are not so important here, so let us look at the others. We have our *getTodos* action which will run asynchronously since it is an item of an array inside a chain. Lets look at it:
 
 ```javascript
-
 function getTodos({services, output}) {
   services.ajax.get('/todos')
     .then((todos) => output.success({todos}))
@@ -41,7 +39,6 @@ Our action just grabs the todos using a custom service. If it is a success it ou
 Now this information is available on our signal and we can grab it in our next *setTodos* action:
 
 ```javascript
-
 function setTodos(input, state) {
   state.set(['todos'], input.todos)
 }
