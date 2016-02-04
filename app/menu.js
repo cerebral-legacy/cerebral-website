@@ -53,6 +53,7 @@ import moduleRecorder from './markdown/module_recorder.md';
 import moduleRouter from './markdown/module_router.md';
 import moduleHttp from './markdown/module_http.md';
 import theDebugger from './markdown/debugger.md';
+import sharedModules from './markdown/shared_modules.md';
 
 export default [
   {
@@ -129,6 +130,10 @@ export default [
     content: MTRC(modules).tree,
     video: 'https://www.youtube.com/embed/FNB0uIQtGrw',
     subContent: [{
+      label: 'Shared modules',
+      text: sharedModules.toLowerCase(),
+      content: MTRC(sharedModules).tree
+    }, {
       label: 'Router',
       text: moduleRouter.toLowerCase(),
       content: MTRC(moduleRouter).tree
