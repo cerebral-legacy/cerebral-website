@@ -5,11 +5,23 @@ var Home = React.createClass({
   render: function () {
     return (
       <div id="home" className="container">
+        <h1>Cerebral</h1>
+        <div className="main-logo"><img src="./logo.png" /></div>
         <section>
-          <h1>Cerebral</h1>
-
+          <h3 className="center">Express your application flow with signals</h3>
           <div className="row">
-            <div className="four columns">
+            <div className="twelve columns">
+              <Header>What is Cerebral?</Header>
+              <div className="clip" onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/kx8XoX_hV5s')}>
+                <i className="icon icon-play-circle-o"/>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className="row">
+            <div className="six columns">
               <h3>State</h3>
               <p className="text-small">
                 Applications are stateful. The application needs to know what page to display,
@@ -19,10 +31,7 @@ var Home = React.createClass({
                 the client.
               </p>
             </div>
-            <div className="four columns">
-              <div className="main-logo"><img src="./logo.png" /></div>
-            </div>
-            <div className="four columns">
+            <div className="six columns">
               <h3>UI</h3>
               <p className="text-small">
                 The UI is produced using the application state. It is passed to a render function or exposed
@@ -34,10 +43,9 @@ var Home = React.createClass({
           </div>
         </section>
 
-        <section>
-          <h2 className="center">Express your application flow with signals</h2>
+        <section className="packages">
           <div className="row">
-            <div className="four columns">
+            <div className="six columns">
               <Header>Packages</Header>
               <div className="row">
                 <div className="six columns">
@@ -56,13 +64,7 @@ var Home = React.createClass({
                 </div>
               </div>
             </div>
-            <div className="four columns">
-              <Header>What is Cerebral?</Header>
-              <div className="clip" onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/kx8XoX_hV5s')}>
-                <i className="icon icon-play-circle-o"/>
-              </div>
-            </div>
-            <div className="four columns">
+            <div className="six columns">
               <Header>Introductions</Header>
               <ul className="cerebral-list">
                 <li>

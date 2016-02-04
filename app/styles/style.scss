@@ -657,6 +657,10 @@ img {
   width: 100%;
   margin-top: 10px;
   border-radius: 5px;
+
+  @include min-screen(550px) {
+    height: 300px;
+  }
 }
 
 .clip .icon {
