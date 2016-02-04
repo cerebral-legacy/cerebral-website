@@ -135,6 +135,7 @@ export default (options = {}) => {
 
     // Alias is a second namespace you can access the module on
     // All Cerebral modules should be named "cerebral-module-xxx"
+    // You only use this if your module will only have one instance
     module.alias('cerebral-module-myModule')
 
     module.addSignals({
@@ -220,7 +221,7 @@ export default (options = {}) => {
 ```
 
 ### Multi-instance shared modules
-If a shared module can have multiple instances you will need to construct your signals in a way that makes them know which instance they should talk to.
+If a shared module can have multiple instances you will need to construct your signals in a way that makes them know which instance they should talk to. Multi instance modules does no use an `alias`, they pass the path of the module to factories to produce signals that talks to the correct instance.
 
 ```javascript
 
