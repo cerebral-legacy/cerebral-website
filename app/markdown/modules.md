@@ -220,7 +220,7 @@ export default (options = {}) => {
 ```
 
 ### Multi-instance shared modules
-If a shared module can have multiple instances you will need to construct your signals in a way that makes them now which instance they should talk to.
+If a shared module can have multiple instances you will need to construct your signals in a way that makes them know which instance they should talk to.
 
 ```javascript
 
@@ -263,7 +263,7 @@ import signalA from 'genericModule/signals/signalA'
 
 export default [
   myAction,
-  ...signalA(['app.genericA'])
+  ...signalA(['app', 'genericA'])
 ]
 ```
 
