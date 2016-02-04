@@ -1,4 +1,4 @@
-Copies a value from input, global state or module state to output, global state or module state.
+Copies a value from input or state to output or state.
 
 *settingsOpened.js*
 ```javascript

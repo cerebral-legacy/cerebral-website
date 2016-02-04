@@ -22,7 +22,7 @@ controller.addModules({
 });
 ```
 
-You register one or multiple modules to your existing Cerebral application. You instantiate a module by calling it and passing any options. A module may, as stated, expose state, signals and services to your application. It may also have related actions, chains and even UI components. You name the module yourself, in this case *myModule* and *recorder*, which will namespace everything related to the module.
+You register one or multiple modules to your existing Cerebral application. You instantiate a module by calling it and passing any options. A module may, as stated, expose state, signals and services to your application. Shared modules from Cerebral ecosystem may also have related actions, chains and even UI components. You name the module yourself, in this case *myModule* and *recorder*, which will namespace everything related to the module.
 
 ### Creating a module
 
@@ -71,21 +71,18 @@ export default (options = {}) => {
 #### Actions
 
 ```javascript
-function myAction({module, modules, services}) {
-
-  // Access the module where the current signal running is registered
-  module
-
-  // Access any modules registered to the app
-  modules.myModule
-  modules.recorder
+function myAction({state, services}) {
 
   // Access any services registered to the app
   services.myModule.hello()
 
   // Change and get state
-  module.state.set(['foo'], 'otherBar');
-  modules.recorder.state.get(['isPlaying']);
+  state.set(['myModule', 'foo'], 'bar')
+  state.get(['recorder', 'isPlaying'])
+
+  // Create a cursor
+  const module = state.select('myModule')
+  module.set('foo', 'newBar')
 
 }
 ```
@@ -158,19 +155,24 @@ export default (options = {}) => {
 
 #### Accessing your shared module in actions
 ```javascript
-function mySharedModuleAction({module}) {
-  module.services.foo
-}
-```
-Or if you want to access some other shared module, use its alias name:
+function mySharedModuleAction({state, modules, services}) {
+  const module = modules['cerebral-module-myModule']
 
-```javascript
-function mySharedModuleAction({modules}) {
-  modules['cerebral-module-otherModule'].state.get()
+  // Change its state
+  const cursor = state.select(module.path)
+  cursor.set('foo', 'bar')
+
+  // Access its service
+  const service = module.path.reduce((service, key) => service[key], services)
+  service.foo()
+
+
 }
 ```
 
 #### Accessing your module in components
+All Cerebral decorated components gets the modules as a property.
+
 ```javascript
 @Cerebral((props) => ({
   myModule: props.modules['cerebral-module-myModule'].path

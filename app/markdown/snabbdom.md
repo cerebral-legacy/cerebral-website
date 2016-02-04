@@ -33,7 +33,7 @@ import Home from './modules/Home'
 
 const controller = Controller(Model({}))
 
-controller.modules({
+controller.addModules({
   home: Home()
 })
 

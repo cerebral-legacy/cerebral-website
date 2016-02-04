@@ -7,15 +7,14 @@ The `cerebral-addons` project gives you a set of default factories and helpers. 
 
 cerebral-addons allow you to set, copy, unset or check values across multiple data sources and destinations. To simplify the mechanism of addressing these values cerebral-addons uses URLs.
 
-`scheme:[//host]/path`
+`scheme:/path`
 
 where `scheme` can be one of:
 
 * `input` - (readonly)
 * `state` - (readwrite)
 * `output` - (writeonly)
-
-the optional `host` is the module name (only applicable to the `state` scheme). To address the current module where the name may not be known `//.` can be used, for example: `state://./fooState`. Alternatively the module's alias could be used.
+.
 
 the `path` is the relative data location to get or set.
 
@@ -30,14 +29,6 @@ user name from the input (readonly) `{ user: { name: 'Brian' } }`
 user name from the root of the store
 
 `state:/user.name`
-
-user name within a `users` module area of the store
-
-`state://users/user.name`
-
-users name within the current module's area of the store
-
-`state://./user.name`
 
 user name to the output (writeonly)
 

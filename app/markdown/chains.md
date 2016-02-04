@@ -80,7 +80,7 @@ const somethingHappened = [
   ]
 ]
 
-module.signals({
+module.addSignals({
   somethingHappened
 })
 ```

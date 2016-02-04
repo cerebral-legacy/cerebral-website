@@ -4,7 +4,7 @@ function myAction ({input, state, output, services}) {
 }
 ```
 
-An action is Cerebral has many of the benefits of a pure function. An action does not call or reference anything outside itself. Anything and everything you do inside an action is related to its one argument. This argument current has four properties, *input*, *state*, *output* and *services*. As you can see we use destructuring to access them. That means:
+An action is Cerebral has many of the benefits of a pure function. An action does not call or reference anything outside itself. Anything and everything you do inside an action is related to its one argument. This argument currently has four properties, *input*, *state*, *output* and *services*. As you can see we use destructuring to access them. That means:
 
 ```javascript
 function myAction ({output, services}) {
