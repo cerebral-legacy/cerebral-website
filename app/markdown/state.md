@@ -94,6 +94,10 @@ function myAction ({state}) {
   // Get from nested level of tree
   state.get(['user', 'isLoading']) // false
 
+  // Create a cursor
+  const cursor = state.select(['user'])
+  cursor.get('isLoading') // false
+
   // Get keys, given state is an object
   state.keys('messages') // ["id1", "id2", "id3"]
 
