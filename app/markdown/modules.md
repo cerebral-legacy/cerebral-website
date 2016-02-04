@@ -220,29 +220,51 @@ export default (options = {}) => {
 ```
 
 ### Multi-instance shared modules
-If a shared module can have multiple instances the developer consuming the module will have to specify the module name.
+If a shared module can have multiple instances you will need to construct your signals in a way that makes them now which instance they should talk to.
 
 ```javascript
-import SharedModuleAction from 'cerebral-module-someModule/actions/SharedModuleAction'
 
-const chain = [
-  SharedModuleAction('mySharedModuleNameSpace')
-]
-```
-
-```javascript
-import ModuleComponent from 'cerebral-module-myModule/ModuleComponent'
-
-class MyAppComponent extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>I just included a shared module component</h1>
-        <ModuleComponent module="mySharedModuleNameSpace"/>
-      </div>
-    )
+function actionA(path) {
+  return function action({state}) {
+    const module = state.select(path)
+    module.set('foo', 'bar')
   }
 }
+
+function actionB(path) {
+  return function action({services}) {
+    const service = path.reduce((service, key) => service[key], services)
+    service.doSomething()
+  }
+}
+
+function signalA(path) {
+  return [
+    actionA(path),
+    actionB(path)
+  ]
+}
+
+export default (options = {}) => {
+  return (module) => {
+
+    module.addSignals({
+      signalA: signalA(module.path)
+    })
+
+  }
+}
+```
+
+So you use factories to make your modules generic. This also allows other modules to reuse the signals of your generic module. For example some signal in an application might want to use the signal from the `genericModule` instance at path `app.genericA`:
+
+```javascript
+import signalA from 'genericModule/signals/signalA'
+
+export default [
+  myAction,
+  ...signalA(['app.genericA'])
+]
 ```
 
 ### Grab values across model packages
