@@ -55,6 +55,11 @@ All Cerebral decorated components gets the modules as a property.
   myModule: props.modules['cerebral-module-myModule'].path
 }))
 class MyModuleComponent extends React.Component {
+  componentWillMount() {
+    const path = this.props.modules['cerebral-module-myModule'].path
+    const signals = path.reduce((signal, key) => signal[key], this.props.signals)
+    signals.mounted()
+  }
   render() {
     return <div>{this.props.myModule.foo}</div>
   }
