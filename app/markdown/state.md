@@ -44,7 +44,12 @@ function myAction ({state}) {
 
 ### Mutation methods
 The methods you use to change the state of your application are typical mutation methods
-you know from JavaScript. Collection methods however returns the mutated value instead of the value the corresponding Array.prototype method returns. **Note!** These methods are not available when an action runs asynchronously.
+you know from JavaScript. Collection methods however returns the mutated value instead of the value the corresponding Array.prototype method returns.
+
+A couple of things to note:
+
+1. These methods are not available when in asynchronous actions. You always use synchronous actions to change the state of your application
+2. All the methods changes the state store immediately, which means you can grab the changed state right after a change 
 
 ```javascript
 function myAction ({state}) {
