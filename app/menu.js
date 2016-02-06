@@ -54,6 +54,7 @@ import moduleRouter from './markdown/module_router.md';
 import moduleHttp from './markdown/module_http.md';
 import theDebugger from './markdown/debugger.md';
 import sharedModules from './markdown/shared_modules.md';
+import angular2 from './markdown/angular2.md';
 
 export default [
   {
@@ -102,6 +103,12 @@ export default [
         icon: 'television',
         text: angular.toLowerCase(),
         content: MTRC(angular).tree
+      },
+      {
+        label: 'Angular2',
+        icon: 'television',
+        text: angular2.toLowerCase(),
+        content: MTRC(angular2).tree
       },
       {
         label: 'Baobab',
