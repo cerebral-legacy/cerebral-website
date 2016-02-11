@@ -22,11 +22,11 @@ controller.addModules({
 });
 ```
 
-You register one or multiple modules to your existing Cerebral application. You instantiate a module by calling it and passing any options. A module may, as stated, expose state, signals and services to your application. Shared modules from Cerebral ecosystem may also have related actions, chains and even UI components. You name the module yourself, in this case *myModule* and *recorder*, which will namespace everything related to the module.
+You register one or multiple modules to your existing Cerebral application. You instantiate a module by calling it and passing any options. A module may, as stated, expose state, signals and services to your application. Shared modules from Cerebral ecosystem may also have related actions, chains and even UI components. You name the module yourself, in this case *home* and *recorder*, which will namespace everything related to the module.
 
 ### Creating a module
 
-*MyModule.js*
+*modules/Home.js*
 ```javascript
 import somethingHappened from './signals/somethingHappened'
 import somethingElseHappened from './signals/somethingElseHappened'
@@ -74,14 +74,14 @@ export default (options = {}) => {
 function myAction({state, services}) {
 
   // Access any services registered to the app
-  services.myModule.hello()
+  services.home.hello()
 
   // Change and get state
-  state.set(['myModule', 'foo'], 'bar')
+  state.set(['home', 'foo'], 'bar')
   state.get(['recorder', 'isPlaying'])
 
   // Create a cursor
-  const module = state.select('myModule')
+  const module = state.select('home')
   module.set('foo', 'newBar')
 
 }
@@ -91,12 +91,12 @@ function myAction({state, services}) {
 
 ```javascript
 @Cerebral({
-  foo: ['myModule', 'foo']
+  foo: ['home', 'foo']
 })
 class MyComponent extends React.Component {
   render() {
     return (
-      <button onClick={() => this.props.signals.myModule.somethingHappened()}>
+      <button onClick={() => this.props.signals.home.somethingHappened()}>
         click
       </button>
     );
@@ -106,7 +106,7 @@ class MyComponent extends React.Component {
 
 ### Creating a submodule
 
-*MyModule.js*
+*modules/Home.js*
 ```javascript
 import SubModule from './modules/SubModule'
 
@@ -121,4 +121,4 @@ export default (options = {}) => {
 }
 ```
 
-Any modules registered as a submodule will use the namespace of the parent module. That means any state, signals and services created in the *subModule* will be namespaced `myModule.subModule`. Really nothing more to it :-)
+Any modules registered as a submodule will use the namespace of the parent module. That means any state, signals and services created in the *subModule* will be namespaced `home.subModule`. Really nothing more to it :-)
