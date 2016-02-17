@@ -27,6 +27,7 @@ export default getTodos
 
 All *async* actions has to call the output or the signal will not continue.
 
+### Parallel actions
 
 If you want *async* actions to run in parallel you are able to group them with an array. This forces the actions to run asynchronously.
 
@@ -60,6 +61,8 @@ module.addSignals({
   somethingHappened
 })
 ```
+
+### Outputs
 
 Even though the actions run in parallel they also have individual behavior. This is related to paths. In the following example the success path of each action will run when it outputs.
 
@@ -111,3 +114,16 @@ module.addSignals({
 ```
 
 You could of course create a factory to make this more dynamic.
+
+### Async/await
+If you are already using the new async/await syntax through Babel (or others), you still have to define the function as async. When async/await becomes natively available in the browser we will be able to identify it as async.
+
+```js
+async function action() {
+
+}
+
+action.async = true // still need this
+
+export default action
+```
