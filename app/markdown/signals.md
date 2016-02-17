@@ -17,7 +17,7 @@ module.addSignals({
 })
 ```
 
-As you can see, there are not only functions that are used to express flow. You also have arrays and objects. Normally arrays and object literals define data structure. Inside a signal however, they define behavior. An array inside an array means its contents will run asynchronously. The *getUser* action will run asynchronously. An object is used to define paths. This means that the execution of an action can result in different outcomes. Each output path is itself just a normal chain of actions, subject to the same rules as normal. For example, you can define sub-paths within paths and if you want to use an asynchronous action within a path, you'd still need to wrap it in an a second array.
+As you can see, there are not only functions that are used to express flow. You also have arrays and objects. Arrays are used to define a chain of actions. An object is used to define paths. This means that the execution of an action can result in different outcomes. Each output path is itself just a normal chain of actions.
 
 ### Force synchronous UI updates
 
@@ -45,7 +45,7 @@ class App extends React.Component {
 }
 ```
 
-All signals have a `.sync()` method. Use this with inputs to avoid glitches in UI. You can also register a signal as sync:
+All signals have a `.sync()` method. Use this with when you want to trigger a signal and a UI update completely synchronous. You can also set this on signal definition:
 
 ```javascript
 const inputChanged = [
