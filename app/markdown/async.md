@@ -1,11 +1,9 @@
-All actions are defined the same way, asynchronous or not. What decides if an action runs asynchronously is the signal. This is done using an array. **Note!** that you can not use the state mutation methods in async actions. Looking at the the *state* page you can see what methods are not available in async actions.
+Actions can run synchronously or asynchronously. When they run *sync* they are able to change the state of the application. When they run async they are not. An async action is only able to grab data and output it to the signal where the next action in line is able to change the state again.
 
 ```javascript
 const somethingHappened = [
   syncAction,
-  [
-    asyncAction
-  ]
+  asyncAction
 ]
 
 module.addSignals({
@@ -13,7 +11,24 @@ module.addSignals({
 })
 ```
 
-If you define multiple actions in the same array they will run in parallel.
+To define an action as asynchronous you attach a property to it.
+
+```javascript
+function getTodos({services, output}) {
+  services.http.get('/todos')
+    .then(output.success)
+    .catch(output.error)
+}
+
+getTodos.async = true
+
+export default getTodos
+```
+
+All *async* actions has to call the output or the signal will not continue.
+
+
+If you want *async* actions to run in parallel you are able to group them with an array. This forces the actions to run asynchronously.
 
 ```javascript
 const somethingHappened = [

@@ -40,5 +40,7 @@ function myAction ({services, output}) {
 
 }
 
+myAction.async = true
+
 return action;
 ```

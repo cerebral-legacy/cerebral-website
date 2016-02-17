@@ -7,12 +7,10 @@ import getOptionsFromServer from '../actions/getOptionsFromServer'
 
 export default [
   set('state:/isLoading', true),
-  [
-    getOptionsFromServer, {
-      success: [],
-      error: []
-    }
-  ],
+  getOptionsFromServer, {
+    success: [],
+    error: []
+  },
   set('state:/isLoading', false)
 ]
 ```

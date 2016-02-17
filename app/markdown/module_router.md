@@ -33,11 +33,9 @@ services.{namespace}.redirect('/to/some/url')
 import {redirect} from 'cerebral-module-router'
 
 export default [
-  [
-    getSomething, {
-      success: [setSomething],
-      error: [redirect('/error')]
-    }
-  ]
+  getSomething, {
+    success: [setSomething],
+    error: [redirect('/error')]
+  }
 ]
 ```

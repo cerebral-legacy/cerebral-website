@@ -32,9 +32,11 @@ The module exposes a services with all HTTP methods: `get, post, put, delete, pa
 function postTodo({state, output, services}) {
   const todo = state.get(['newTodo'])
   services.http.post('/todos', todo)
-    .then(output.succes)
+    .then(output.success)
     .catch(output.error)
 }
+
+postTodo.async = true;
 
 export default getUser;
 ```
@@ -49,16 +51,14 @@ import httpGet from 'cerebral-module-http/get'
 import copy from 'cerebral-addons/copy'
 
 export default [
-  [
-    httpGet('/users'), {
-      success: [
-        copy('input:/result', 'state:/users')
-      ],
-      error: [
-        copy('input:/result.message', 'state:/errorMessage')
-      ]
-    }    
-  ]  
+  httpGet('/users'), {
+    success: [
+      copy('input:/result', 'state:/users')
+    ],
+    error: [
+      copy('input:/result.message', 'state:/errorMessage')
+    ]
+  }   
 ]
 ```
 
@@ -70,11 +70,9 @@ import httpDelete from 'cerebral-module-http/delete'
 import copy from 'cerebral-addons/copy'
 
 export default [
-  [
-    // The array builds up the url, the last argument grabs
-    // the data to be passed on the patch request
-    httpPatch(['/users/', 'input:/id'], 'state:/updatedUser'),
-    httpDelete(['/todos/', 'input:/id'])
-  ]  
+  // The array builds up the url, the last argument grabs
+  // the data to be passed on the patch request
+  httpPatch(['/users/', 'input:/id'], 'state:/updatedUser'),
+  httpDelete(['/todos/', 'input:/id']) 
 ]
 ```

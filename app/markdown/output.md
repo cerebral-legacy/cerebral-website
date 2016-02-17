@@ -47,13 +47,13 @@ function getItems ({output}) {
     });
 }
 
+getItems.async = true;
+
 const somethingHappened = [
-  [
-    getItems, {
-      success: [setItems],
-      error: [setError]
-    }
-  ]
+  getItems, {
+    success: [setItems],
+    error: [setError]
+  }
 ]
 
 module.addSignals({
@@ -82,14 +82,12 @@ getItems.outputs = [
 ]
 
 const somethingHappened = [
-  [
-    getItems, {
-      success: [setItems],
-      notFound: [displayNotFoundError],
-      notAuthenticated: [displayAuthenticationError]
-      error: [setError]
-    }
-  ]
+  getItems, {
+    success: [setItems],
+    notFound: [displayNotFoundError],
+    notAuthenticated: [displayAuthenticationError]
+    error: [setError]
+  }
 ]
 
 module.addSignals({
@@ -100,11 +98,9 @@ This is a powerful tool to express the flow of your application. This can be com
 
 ```javascript
 const somethingHappened = [
-  [
-    ...get('/items', {
-      success: [setItems]
-    })
-  ]
+  ...get('/items', {
+    success: [setItems]
+  })
 ]
 
 module.addSignals({

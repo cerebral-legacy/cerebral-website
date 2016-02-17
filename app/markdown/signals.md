@@ -5,12 +5,10 @@ This is a typical signal:
 ```javascript
 const appMounted = [
   setLoading,
-  [
-    getUser, {
-      success: [setUser],
-      error: [setUserError]
-    }
-  ],
+  getUser, {
+    success: [setUser],
+    error: [setUserError]
+  },
   unsetLoading
 ];
 

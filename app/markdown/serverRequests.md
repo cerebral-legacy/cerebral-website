@@ -6,12 +6,10 @@ import controller from './controller.js'
 
 const appMounted = [
   setLoadingTodos,
-  [
-    getTodos, {
-      success: [setTodos],
-      error: [setTodosError]
-    }
-  ],
+  getTodos, {
+    success: [setTodos],
+    error: [setTodosError]
+  },
   unsetLoadingTodos
 ];
 
@@ -30,6 +28,8 @@ function getTodos({services, output}) {
     .then((todos) => output.success({todos}))
     .catch((error) => output.error({error}))
 }
+
+getTodos.async = true
 
 export default getTodos
 ```

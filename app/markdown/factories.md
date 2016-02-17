@@ -5,23 +5,23 @@ function get (url) {
 
   function action ({services, output}) {
 
-    services.ajax(url)
+    services.http.get(url)
       .then(output.success)
       .catch(output.error)
 
   }
+
+  action.async = true;
 
   return action
 
 }
 
 const somethingHappened = [
-  [
-    get('/items'), {
-      success: [setItems],
-      error: [setItemsError]
-    }
-  ]
+  get('/items'), {
+    success: [setItems],
+    error: [setItemsError]
+  }
 ]
 
 module.addSignals({
@@ -38,12 +38,13 @@ function get (url) {
 
   function action ({services, output}) {
 
-    services.ajax(url)
+    services.http.get(url)
       .then(output.success)
       .catch(output.error)
 
   }
 
+  action.async = true;
   action.displayName = 'get(' + url + ')'
 
   return action

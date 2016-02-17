@@ -55,7 +55,7 @@ function get (url, outputs) {
     error: [setError]
   })
 
-  // We return a chain where we use an action factory to
+  // We return a chain where we use an action factory, returning an async action, to
   // request the url. That is the first action. The second item
   // in the array are the outputs
   return [
@@ -73,11 +73,9 @@ import get from './chains/get.js'
 import setItems from './actions/setItems.js'
 
 const somethingHappened = [
-  [
-    ...get('/items', {
-      success: [setItems]
-    })
-  ]
+  ...get('/items', {
+    success: [setItems]
+  })
 ]
 
 module.addSignals({
