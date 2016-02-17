@@ -196,6 +196,16 @@ blockquote {
     padding-left: 1em;
 }
 
+.icon.link {
+	padding-left: 10px;
+	line-height: 50px;
+	cursor: pointer;
+
+	&:hover {
+		color: #555;
+	}
+}
+
 .clear {
     clear: both;
 }
@@ -643,6 +653,14 @@ img {
   padding-top: 15px;
   box-sizing: border-box;
   font-size: 14px;
+	li {
+		height: 30px;
+		line-height: 30px;
+		margin-bottom: 0;
+	}
+	.icon.link {
+		line-height: 30px;
+	}
 }
 
 .cerebral-list.divided {

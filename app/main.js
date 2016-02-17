@@ -1,6 +1,6 @@
-import './styles/prism.css';
+import './styles/prism.scss';
 import './prism';
-import './styles/fonts.css';
+import './styles/fonts.scss';
 import './styles/style.scss';
 
 import React from 'react';

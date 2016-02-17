@@ -68,6 +68,11 @@ var Home = React.createClass({
             <div className="six columns">
               <Header>Introductions</Header>
               <ul className="cerebral-list">
+              <li>
+                <i
+                  className="icon icon-file-text link"
+                  onClick={() => window.open('https://github.com/cerebral/cerebral-reference-app')}> A real life big Cerebral project</i>
+              </li>
                 <li>
                   <i
                     className="icon icon-file-text link"

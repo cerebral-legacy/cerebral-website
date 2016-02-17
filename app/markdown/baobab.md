@@ -2,7 +2,7 @@
 `$ npm install cerebral-model-baobab`
 
 ### Repo
-[cerebral-model-baobab](https://github.com/christianalfoni/cerebral-model-baobab)
+[cerebral-model-baobab](https://github.com/cerebral/cerebral-model-baobab)
 
 ### Features
 Baobab allows you to use facets to map state. Baobab also allows you to validate any changes

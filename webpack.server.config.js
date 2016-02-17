@@ -37,6 +37,9 @@ module.exports = {
     }, {
       test: /\.md$/,
       loader: 'raw'
+    }, {
+      test: /\.css?$/,
+      loader: 'css-loader/locals?modules&localIdentName=[name]---[local]---[hash:base64:5]'
     }]
   }
 };
