@@ -1,12 +1,14 @@
 It is recommended to use Node from version **4.x.x**.
 
 ### Boilerplate
+
+#### Basic
 The basic boilerplate is located [here](https://github.com/cerebral/cerebral-boilerplate). It has React, Cerebral and CSS-Modules ready for you. Using a best practice file structure for scaling up your app.
 
-You can also use a **universal** boilerplate if you prefer that, located right [here](https://github.com/cerebral/cerebral-boilerplate-universal).
+#### Express
+The express boilerplate is located [here](https://github.com/cerebral/cerebral-boilerplate-express) and includes the same setup as the *basic* version. In addition it is running an express app with hot reloading.
 
-
-### From scratch
+### Your own project from scratch
 `$ npm install cerebral cerebral-model-baobab cerebral-view-react`
 
 *App.js*
