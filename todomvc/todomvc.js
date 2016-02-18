@@ -68,25 +68,25 @@
 	
 	var _cerebral2 = _interopRequireDefault(_cerebral);
 	
-	var _cerebralModelBaobab = __webpack_require__(185);
+	var _cerebralModelBaobab = __webpack_require__(183);
 	
 	var _cerebralModelBaobab2 = _interopRequireDefault(_cerebralModelBaobab);
 	
-	var _cerebralViewReact = __webpack_require__(194);
+	var _cerebralViewReact = __webpack_require__(192);
 	
-	var _modulesAppComponentsApp = __webpack_require__(204);
+	var _modulesAppComponentsApp = __webpack_require__(202);
 	
 	var _modulesAppComponentsApp2 = _interopRequireDefault(_modulesAppComponentsApp);
 	
-	var _modulesApp = __webpack_require__(214);
+	var _modulesApp = __webpack_require__(212);
 	
 	var _modulesApp2 = _interopRequireDefault(_modulesApp);
 	
-	var _modulesRefs = __webpack_require__(245);
+	var _modulesRefs = __webpack_require__(243);
 	
 	var _modulesRefs2 = _interopRequireDefault(_modulesRefs);
 	
-	var _cerebralModuleDevtools = __webpack_require__(246);
+	var _cerebralModuleDevtools = __webpack_require__(244);
 	
 	var _cerebralModuleDevtools2 = _interopRequireDefault(_cerebralModuleDevtools);
 	
@@ -20163,11 +20163,11 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var CreateSignalFactory = __webpack_require__(169)
-	var CreateRegisterModules = __webpack_require__(179)
-	var Compute = __webpack_require__(182)
-	var EventEmitter = __webpack_require__(183).EventEmitter
+	var CreateRegisterModules = __webpack_require__(177)
+	var Compute = __webpack_require__(180)
+	var EventEmitter = __webpack_require__(181).EventEmitter
 	
-	var Recorder = __webpack_require__(184)
+	var Recorder = __webpack_require__(182)
 	
 	var Controller = function (Model, services) {
 	  if (services) {
@@ -20330,7 +20330,6 @@
 	var analyze = __webpack_require__(174)
 	var staticTree = __webpack_require__(175)
 	var createModulesArg = __webpack_require__(176)
-	var uuid = __webpack_require__(177)
 	
 	var requestAnimationFrame = global.requestAnimationFrame || function (cb) {
 	  setTimeout(cb, 0)
@@ -20364,7 +20363,6 @@
 	      var actions = tree.actions
 	
 	      var signal = {
-	        id: uuid.v4(),
 	        name: signalName,
 	        start: null,
 	        isSync: defaultOptions.isSync || options.isSync,
@@ -20399,7 +20397,7 @@
 	      var runSignal = function () {
 	        // Accumulate the args in one object that will be passed
 	        // to each action
-	        var signalArgs = payload || {}
+	        var signalArgs = utils.merge({}, payload || {})
 	
 	        // Test payload
 	        if (utils.isDeveloping()) {
@@ -20879,7 +20877,7 @@
 	      typeof services[key] === 'function' &&
 	      services[key].constructor.name === 'Function' &&
 	      !Object.keys(services[key]).length &&
-	      !Object.keys(services[key].prototype).length
+	      (!services[key].prototype || !Object.keys(services[key].prototype).length)
 	    ) {
 	      var servicePath = path.slice()
 	      var method = servicePath.pop()
@@ -21244,236 +21242,9 @@
 /* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
-	//     uuid.js
-	//
-	//     Copyright (c) 2010-2012 Robert Kieffer
-	//     MIT License - http://opensource.org/licenses/mit-license.php
-	
-	// Unique ID creation requires a high quality random # generator.  We feature
-	// detect to determine the best RNG source, normalizing to a function that
-	// returns 128-bits of randomness, since that's what's usually required
-	var _rng = __webpack_require__(178);
-	
-	// Maps for number <-> hex string conversion
-	var _byteToHex = [];
-	var _hexToByte = {};
-	for (var i = 0; i < 256; i++) {
-	  _byteToHex[i] = (i + 0x100).toString(16).substr(1);
-	  _hexToByte[_byteToHex[i]] = i;
-	}
-	
-	// **`parse()` - Parse a UUID into it's component bytes**
-	function parse(s, buf, offset) {
-	  var i = (buf && offset) || 0, ii = 0;
-	
-	  buf = buf || [];
-	  s.toLowerCase().replace(/[0-9a-f]{2}/g, function(oct) {
-	    if (ii < 16) { // Don't overflow!
-	      buf[i + ii++] = _hexToByte[oct];
-	    }
-	  });
-	
-	  // Zero out remaining bytes if string was short
-	  while (ii < 16) {
-	    buf[i + ii++] = 0;
-	  }
-	
-	  return buf;
-	}
-	
-	// **`unparse()` - Convert UUID byte array (ala parse()) into a string**
-	function unparse(buf, offset) {
-	  var i = offset || 0, bth = _byteToHex;
-	  return  bth[buf[i++]] + bth[buf[i++]] +
-	          bth[buf[i++]] + bth[buf[i++]] + '-' +
-	          bth[buf[i++]] + bth[buf[i++]] + '-' +
-	          bth[buf[i++]] + bth[buf[i++]] + '-' +
-	          bth[buf[i++]] + bth[buf[i++]] + '-' +
-	          bth[buf[i++]] + bth[buf[i++]] +
-	          bth[buf[i++]] + bth[buf[i++]] +
-	          bth[buf[i++]] + bth[buf[i++]];
-	}
-	
-	// **`v1()` - Generate time-based UUID**
-	//
-	// Inspired by https://github.com/LiosK/UUID.js
-	// and http://docs.python.org/library/uuid.html
-	
-	// random #'s we need to init node and clockseq
-	var _seedBytes = _rng();
-	
-	// Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
-	var _nodeId = [
-	  _seedBytes[0] | 0x01,
-	  _seedBytes[1], _seedBytes[2], _seedBytes[3], _seedBytes[4], _seedBytes[5]
-	];
-	
-	// Per 4.2.2, randomize (14 bit) clockseq
-	var _clockseq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3fff;
-	
-	// Previous uuid creation time
-	var _lastMSecs = 0, _lastNSecs = 0;
-	
-	// See https://github.com/broofa/node-uuid for API details
-	function v1(options, buf, offset) {
-	  var i = buf && offset || 0;
-	  var b = buf || [];
-	
-	  options = options || {};
-	
-	  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
-	
-	  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
-	  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
-	  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
-	  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
-	  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
-	
-	  // Per 4.2.1.2, use count of uuid's generated during the current clock
-	  // cycle to simulate higher resolution clock
-	  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
-	
-	  // Time since last uuid creation (in msecs)
-	  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
-	
-	  // Per 4.2.1.2, Bump clockseq on clock regression
-	  if (dt < 0 && options.clockseq === undefined) {
-	    clockseq = clockseq + 1 & 0x3fff;
-	  }
-	
-	  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
-	  // time interval
-	  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
-	    nsecs = 0;
-	  }
-	
-	  // Per 4.2.1.2 Throw error if too many uuids are requested
-	  if (nsecs >= 10000) {
-	    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
-	  }
-	
-	  _lastMSecs = msecs;
-	  _lastNSecs = nsecs;
-	  _clockseq = clockseq;
-	
-	  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
-	  msecs += 12219292800000;
-	
-	  // `time_low`
-	  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
-	  b[i++] = tl >>> 24 & 0xff;
-	  b[i++] = tl >>> 16 & 0xff;
-	  b[i++] = tl >>> 8 & 0xff;
-	  b[i++] = tl & 0xff;
-	
-	  // `time_mid`
-	  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
-	  b[i++] = tmh >>> 8 & 0xff;
-	  b[i++] = tmh & 0xff;
-	
-	  // `time_high_and_version`
-	  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
-	  b[i++] = tmh >>> 16 & 0xff;
-	
-	  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
-	  b[i++] = clockseq >>> 8 | 0x80;
-	
-	  // `clock_seq_low`
-	  b[i++] = clockseq & 0xff;
-	
-	  // `node`
-	  var node = options.node || _nodeId;
-	  for (var n = 0; n < 6; n++) {
-	    b[i + n] = node[n];
-	  }
-	
-	  return buf ? buf : unparse(b);
-	}
-	
-	// **`v4()` - Generate random UUID**
-	
-	// See https://github.com/broofa/node-uuid for API details
-	function v4(options, buf, offset) {
-	  // Deprecated - 'format' argument, as supported in v1.2
-	  var i = buf && offset || 0;
-	
-	  if (typeof(options) == 'string') {
-	    buf = options == 'binary' ? new Array(16) : null;
-	    options = null;
-	  }
-	  options = options || {};
-	
-	  var rnds = options.random || (options.rng || _rng)();
-	
-	  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-	  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-	  rnds[8] = (rnds[8] & 0x3f) | 0x80;
-	
-	  // Copy bytes to buffer, if provided
-	  if (buf) {
-	    for (var ii = 0; ii < 16; ii++) {
-	      buf[i + ii] = rnds[ii];
-	    }
-	  }
-	
-	  return buf || unparse(rnds);
-	}
-	
-	// Export public API
-	var uuid = v4;
-	uuid.v1 = v1;
-	uuid.v4 = v4;
-	uuid.parse = parse;
-	uuid.unparse = unparse;
-	
-	module.exports = uuid;
-
-
-/***/ },
-/* 178 */
-/***/ function(module, exports) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {
-	var rng;
-	
-	if (global.crypto && crypto.getRandomValues) {
-	  // WHATWG crypto-based RNG - http://wiki.whatwg.org/wiki/Crypto
-	  // Moderately fast, high quality
-	  var _rnds8 = new Uint8Array(16);
-	  rng = function whatwgRNG() {
-	    crypto.getRandomValues(_rnds8);
-	    return _rnds8;
-	  };
-	}
-	
-	if (!rng) {
-	  // Math.random()-based (RNG)
-	  //
-	  // If all else fails, use Math.random().  It's fast, but is of unspecified
-	  // quality.
-	  var  _rnds = new Array(16);
-	  rng = function() {
-	    for (var i = 0, r; i < 16; i++) {
-	      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
-	      _rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
-	    }
-	
-	    return _rnds;
-	  };
-	}
-	
-	module.exports = rng;
-	
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 179 */
-/***/ function(module, exports, __webpack_require__) {
-
 	var utils = __webpack_require__(170)
 	
-	var Devtools = __webpack_require__(180)
+	var Devtools = __webpack_require__(178)
 	
 	module.exports = function (controller, model, allModules) {
 	  var initialState = {}
@@ -21600,12 +21371,12 @@
 
 
 /***/ },
-/* 180 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* eslint-env browser*/
 	var MODULE = 'cerebral-module-devtools'
-	var SignalStore = __webpack_require__(181)
+	var SignalStore = __webpack_require__(179)
 	var utils = __webpack_require__(170)
 	
 	module.exports = function Devtools () {
@@ -21780,7 +21551,7 @@
 
 
 /***/ },
-/* 181 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -21956,7 +21727,7 @@
 
 
 /***/ },
-/* 182 */
+/* 180 */
 /***/ function(module, exports) {
 
 	module.exports = function (model) {
@@ -22051,7 +21822,7 @@
 
 
 /***/ },
-/* 183 */
+/* 181 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -22355,7 +22126,7 @@
 
 
 /***/ },
-/* 184 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var utils = __webpack_require__(170)
@@ -22547,10 +22318,10 @@
 
 
 /***/ },
-/* 185 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Baobab = __webpack_require__(186);
+	var Baobab = __webpack_require__(184);
 	function deepmerge(target, src) {
 	   var array = Array.isArray(src);
 	   var dst = array && [] || {};
@@ -22672,18 +22443,22 @@
 	            });
 	          },
 	          pop: function (path) {
+	            var val;
 	            tree.apply(path, function (existingValue) {
 	              var copy = existingValue.slice();
-	              copy.pop();
+	              val = copy.pop();
 	              return copy;
 	            });
+	            return val;
 	          },
 	          shift: function (path) {
+	            var val;
 	            tree.apply(path, function (existingValue) {
 	              var copy = existingValue.slice();
-	              copy.shift();
+	              val = copy.shift();
 	              return copy;
 	            });
+	            return val;
 	          },
 	          unshift: function (path, value) {
 	            tree.unshift(path, value);
@@ -22706,7 +22481,7 @@
 
 
 /***/ },
-/* 186 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22733,29 +22508,29 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _emmett = __webpack_require__(187);
+	var _emmett = __webpack_require__(185);
 	
 	var _emmett2 = _interopRequireDefault(_emmett);
 	
-	var _cursor = __webpack_require__(188);
+	var _cursor = __webpack_require__(186);
 	
 	var _cursor2 = _interopRequireDefault(_cursor);
 	
-	var _monkey = __webpack_require__(189);
+	var _monkey = __webpack_require__(187);
 	
-	var _watcher = __webpack_require__(193);
+	var _watcher = __webpack_require__(191);
 	
 	var _watcher2 = _interopRequireDefault(_watcher);
 	
-	var _type = __webpack_require__(190);
+	var _type = __webpack_require__(188);
 	
 	var _type2 = _interopRequireDefault(_type);
 	
-	var _update2 = __webpack_require__(191);
+	var _update2 = __webpack_require__(189);
 	
 	var _update3 = _interopRequireDefault(_update2);
 	
-	var _helpers = __webpack_require__(192);
+	var _helpers = __webpack_require__(190);
 	
 	var helpers = _interopRequireWildcard(_helpers);
 	
@@ -23315,7 +23090,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 187 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function() {
@@ -23874,7 +23649,7 @@
 
 
 /***/ },
-/* 188 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -23899,17 +23674,17 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _emmett = __webpack_require__(187);
+	var _emmett = __webpack_require__(185);
 	
 	var _emmett2 = _interopRequireDefault(_emmett);
 	
-	var _monkey = __webpack_require__(189);
+	var _monkey = __webpack_require__(187);
 	
-	var _type = __webpack_require__(190);
+	var _type = __webpack_require__(188);
 	
 	var _type2 = _interopRequireDefault(_type);
 	
-	var _helpers = __webpack_require__(192);
+	var _helpers = __webpack_require__(190);
 	
 	/**
 	 * Traversal helper function for dynamic cursors. Will throw a legible error
@@ -24764,7 +24539,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 189 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24785,15 +24560,15 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _type = __webpack_require__(190);
+	var _type = __webpack_require__(188);
 	
 	var _type2 = _interopRequireDefault(_type);
 	
-	var _update2 = __webpack_require__(191);
+	var _update2 = __webpack_require__(189);
 	
 	var _update3 = _interopRequireDefault(_update2);
 	
-	var _helpers = __webpack_require__(192);
+	var _helpers = __webpack_require__(190);
 	
 	/**
 	 * Monkey Definition class
@@ -25059,7 +24834,7 @@
 	exports.Monkey = Monkey;
 
 /***/ },
-/* 190 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25076,7 +24851,7 @@
 	  value: true
 	});
 	
-	var _monkey = __webpack_require__(189);
+	var _monkey = __webpack_require__(187);
 	
 	var type = {};
 	
@@ -25314,7 +25089,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 191 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25334,11 +25109,11 @@
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 	
-	var _type = __webpack_require__(190);
+	var _type = __webpack_require__(188);
 	
 	var _type2 = _interopRequireDefault(_type);
 	
-	var _helpers = __webpack_require__(192);
+	var _helpers = __webpack_require__(190);
 	
 	function err(operation, expectedTarget, path) {
 	  return (0, _helpers.makeError)('Baobab.update: cannot apply the "' + operation + '" on ' + ('a non ' + expectedTarget + ' (path: /' + path.join('/') + ').'), { path: path });
@@ -25551,7 +25326,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 192 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/* eslint eqeqeq: 0 */
@@ -25583,9 +25358,9 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _monkey = __webpack_require__(189);
+	var _monkey = __webpack_require__(187);
 	
-	var _type = __webpack_require__(190);
+	var _type = __webpack_require__(188);
 	
 	var _type2 = _interopRequireDefault(_type);
 	
@@ -26171,7 +25946,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 193 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26197,19 +25972,19 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _emmett = __webpack_require__(187);
+	var _emmett = __webpack_require__(185);
 	
 	var _emmett2 = _interopRequireDefault(_emmett);
 	
-	var _cursor = __webpack_require__(188);
+	var _cursor = __webpack_require__(186);
 	
 	var _cursor2 = _interopRequireDefault(_cursor);
 	
-	var _type = __webpack_require__(190);
+	var _type = __webpack_require__(188);
 	
 	var _type2 = _interopRequireDefault(_type);
 	
-	var _helpers = __webpack_require__(192);
+	var _helpers = __webpack_require__(190);
 	
 	/**
 	 * Watcher class.
@@ -26354,15 +26129,15 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 194 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var mixin = __webpack_require__(195)
-	var decorator = __webpack_require__(196)
-	var hoc = __webpack_require__(197)
-	var container = __webpack_require__(198)
-	var component = __webpack_require__(199)
-	var link = __webpack_require__(200)
+	var mixin = __webpack_require__(193)
+	var decorator = __webpack_require__(194)
+	var hoc = __webpack_require__(195)
+	var container = __webpack_require__(196)
+	var component = __webpack_require__(197)
+	var link = __webpack_require__(198)
 	
 	module.exports = {
 	  Mixin: mixin,
@@ -26375,7 +26150,7 @@
 
 
 /***/ },
-/* 195 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(10)
@@ -26478,10 +26253,10 @@
 
 
 /***/ },
-/* 196 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Hoc = __webpack_require__(197)
+	var Hoc = __webpack_require__(195)
 	
 	module.exports = function (paths) {
 	  return function (Component) {
@@ -26491,11 +26266,11 @@
 
 
 /***/ },
-/* 197 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(10)
-	var mixin = __webpack_require__(195)
+	var mixin = __webpack_require__(193)
 	
 	module.exports = function (Component, paths) {
 	  return React.createClass({
@@ -26515,7 +26290,7 @@
 
 
 /***/ },
-/* 198 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(10)
@@ -26541,11 +26316,11 @@
 
 
 /***/ },
-/* 199 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(10)
-	var Hoc = __webpack_require__(197)
+	var Hoc = __webpack_require__(195)
 	
 	module.exports = function () {
 	  var paths
@@ -26571,11 +26346,11 @@
 
 
 /***/ },
-/* 200 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(10)
-	var get = __webpack_require__(201)
+	var get = __webpack_require__(199)
 	
 	module.exports = React.createClass({
 	  contextTypes: {
@@ -26639,7 +26414,7 @@
 
 
 /***/ },
-/* 201 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26650,7 +26425,7 @@
 	 * Copyright 2009-2016 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var toString = __webpack_require__(202);
+	var toString = __webpack_require__(200);
 	
 	/** Used to match property names within property paths. */
 	var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
@@ -26781,7 +26556,7 @@
 
 
 /***/ },
-/* 202 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -26949,10 +26724,10 @@
 	
 	module.exports = toString;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(203)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(201)(module), (function() { return this; }())))
 
 /***/ },
-/* 203 */
+/* 201 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -26968,7 +26743,7 @@
 
 
 /***/ },
-/* 204 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26987,25 +26762,25 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cerebralViewReact = __webpack_require__(194);
+	var _cerebralViewReact = __webpack_require__(192);
 	
-	var _cerebralModuleRecorderReactSimpleRecorder = __webpack_require__(205);
+	var _cerebralModuleRecorderReactSimpleRecorder = __webpack_require__(203);
 	
 	var _cerebralModuleRecorderReactSimpleRecorder2 = _interopRequireDefault(_cerebralModuleRecorderReactSimpleRecorder);
 	
-	var _modulesNewTodoComponentsNewTodo = __webpack_require__(206);
+	var _modulesNewTodoComponentsNewTodo = __webpack_require__(204);
 	
 	var _modulesNewTodoComponentsNewTodo2 = _interopRequireDefault(_modulesNewTodoComponentsNewTodo);
 	
-	var _modulesListComponentsList = __webpack_require__(207);
+	var _modulesListComponentsList = __webpack_require__(205);
 	
 	var _modulesListComponentsList2 = _interopRequireDefault(_modulesListComponentsList);
 	
-	var _modulesFooterComponentsFooter = __webpack_require__(212);
+	var _modulesFooterComponentsFooter = __webpack_require__(210);
 	
 	var _modulesFooterComponentsFooter2 = _interopRequireDefault(_modulesFooterComponentsFooter);
 	
-	var _modulesListComputedVisibleTodosJs = __webpack_require__(211);
+	var _modulesListComputedVisibleTodosJs = __webpack_require__(209);
 	
 	var _modulesListComputedVisibleTodosJs2 = _interopRequireDefault(_modulesListComputedVisibleTodosJs);
 	
@@ -27109,11 +26884,11 @@
 	module.exports = App;
 
 /***/ },
-/* 205 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(10)
-	var Cerebral = __webpack_require__(194).Mixin
+	var Cerebral = __webpack_require__(192).Mixin
 	
 	module.exports = React.createClass({
 	  mixins: [Cerebral],
@@ -27207,7 +26982,7 @@
 
 
 /***/ },
-/* 206 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27230,7 +27005,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cerebralViewReact = __webpack_require__(194);
+	var _cerebralViewReact = __webpack_require__(192);
 	
 	var NewTodo = (function (_React$Component) {
 	  _inherits(NewTodo, _React$Component);
@@ -27289,7 +27064,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 207 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27312,17 +27087,17 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Todo = __webpack_require__(208);
+	var _Todo = __webpack_require__(206);
 	
 	var _Todo2 = _interopRequireDefault(_Todo);
 	
-	var _cerebralViewReact = __webpack_require__(194);
+	var _cerebralViewReact = __webpack_require__(192);
 	
-	var _computedIsAllCheckedJs = __webpack_require__(210);
+	var _computedIsAllCheckedJs = __webpack_require__(208);
 	
 	var _computedIsAllCheckedJs2 = _interopRequireDefault(_computedIsAllCheckedJs);
 	
-	var _computedVisibleTodosJs = __webpack_require__(211);
+	var _computedVisibleTodosJs = __webpack_require__(209);
 	
 	var _computedVisibleTodosJs2 = _interopRequireDefault(_computedVisibleTodosJs);
 	
@@ -27382,7 +27157,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 208 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27405,11 +27180,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(209);
+	var _classnames = __webpack_require__(207);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _cerebralViewReact = __webpack_require__(194);
+	var _cerebralViewReact = __webpack_require__(192);
 	
 	var Todo = (function (_React$Component) {
 	  _inherits(Todo, _React$Component);
@@ -27557,7 +27332,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 209 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -27611,7 +27386,7 @@
 
 
 /***/ },
-/* 210 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27622,7 +27397,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _visibleTodos = __webpack_require__(211);
+	var _visibleTodos = __webpack_require__(209);
 	
 	var _visibleTodos2 = _interopRequireDefault(_visibleTodos);
 	
@@ -27638,7 +27413,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 211 */
+/* 209 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27664,7 +27439,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 212 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27687,9 +27462,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cerebralViewReact = __webpack_require__(194);
+	var _cerebralViewReact = __webpack_require__(192);
 	
-	var _computedCountsJs = __webpack_require__(213);
+	var _computedCountsJs = __webpack_require__(211);
 	
 	var _computedCountsJs2 = _interopRequireDefault(_computedCountsJs);
 	
@@ -27795,7 +27570,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 213 */
+/* 211 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27831,7 +27606,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 214 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27842,15 +27617,15 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _modulesNewTodo = __webpack_require__(215);
+	var _modulesNewTodo = __webpack_require__(213);
 	
 	var _modulesNewTodo2 = _interopRequireDefault(_modulesNewTodo);
 	
-	var _modulesList = __webpack_require__(225);
+	var _modulesList = __webpack_require__(223);
 	
 	var _modulesList2 = _interopRequireDefault(_modulesList);
 	
-	var _modulesFooter = __webpack_require__(240);
+	var _modulesFooter = __webpack_require__(238);
 	
 	var _modulesFooter2 = _interopRequireDefault(_modulesFooter);
 	
@@ -27870,7 +27645,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 215 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27881,11 +27656,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _signalsSubmitted = __webpack_require__(216);
+	var _signalsSubmitted = __webpack_require__(214);
 	
 	var _signalsSubmitted2 = _interopRequireDefault(_signalsSubmitted);
 	
-	var _signalsTitleChanged = __webpack_require__(223);
+	var _signalsTitleChanged = __webpack_require__(221);
 	
 	var _signalsTitleChanged2 = _interopRequireDefault(_signalsTitleChanged);
 	
@@ -27909,7 +27684,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 216 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27920,27 +27695,27 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsAddJs = __webpack_require__(217);
+	var _actionsAddJs = __webpack_require__(215);
 	
 	var _actionsAddJs2 = _interopRequireDefault(_actionsAddJs);
 	
-	var _actionsSaveJs = __webpack_require__(218);
+	var _actionsSaveJs = __webpack_require__(216);
 	
 	var _actionsSaveJs2 = _interopRequireDefault(_actionsSaveJs);
 	
-	var _actionsSetSavingJs = __webpack_require__(219);
+	var _actionsSetSavingJs = __webpack_require__(217);
 	
 	var _actionsSetSavingJs2 = _interopRequireDefault(_actionsSetSavingJs);
 	
-	var _actionsUnsetSavingJs = __webpack_require__(220);
+	var _actionsUnsetSavingJs = __webpack_require__(218);
 	
 	var _actionsUnsetSavingJs2 = _interopRequireDefault(_actionsUnsetSavingJs);
 	
-	var _actionsUpdateTodoJs = __webpack_require__(221);
+	var _actionsUpdateTodoJs = __webpack_require__(219);
 	
 	var _actionsUpdateTodoJs2 = _interopRequireDefault(_actionsUpdateTodoJs);
 	
-	var _actionsSetErrorJs = __webpack_require__(222);
+	var _actionsSetErrorJs = __webpack_require__(220);
 	
 	var _actionsSetErrorJs2 = _interopRequireDefault(_actionsSetErrorJs);
 	
@@ -27951,7 +27726,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 217 */
+/* 215 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27984,7 +27759,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 218 */
+/* 216 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28015,7 +27790,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 219 */
+/* 217 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28033,7 +27808,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 220 */
+/* 218 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28051,7 +27826,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 221 */
+/* 219 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28075,7 +27850,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 222 */
+/* 220 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28100,7 +27875,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 223 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28111,7 +27886,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetTitleJs = __webpack_require__(224);
+	var _actionsSetTitleJs = __webpack_require__(222);
 	
 	var _actionsSetTitleJs2 = _interopRequireDefault(_actionsSetTitleJs);
 	
@@ -28122,7 +27897,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 224 */
+/* 222 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28141,7 +27916,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 225 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28152,31 +27927,31 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _signalsNewTitleChanged = __webpack_require__(226);
+	var _signalsNewTitleChanged = __webpack_require__(224);
 	
 	var _signalsNewTitleChanged2 = _interopRequireDefault(_signalsNewTitleChanged);
 	
-	var _signalsNewTitleSubmitted = __webpack_require__(228);
+	var _signalsNewTitleSubmitted = __webpack_require__(226);
 	
 	var _signalsNewTitleSubmitted2 = _interopRequireDefault(_signalsNewTitleSubmitted);
 	
-	var _signalsRemoveTodoClicked = __webpack_require__(231);
+	var _signalsRemoveTodoClicked = __webpack_require__(229);
 	
 	var _signalsRemoveTodoClicked2 = _interopRequireDefault(_signalsRemoveTodoClicked);
 	
-	var _signalsTodoDoubleClicked = __webpack_require__(233);
+	var _signalsTodoDoubleClicked = __webpack_require__(231);
 	
 	var _signalsTodoDoubleClicked2 = _interopRequireDefault(_signalsTodoDoubleClicked);
 	
-	var _signalsToggleAllChanged = __webpack_require__(235);
+	var _signalsToggleAllChanged = __webpack_require__(233);
 	
 	var _signalsToggleAllChanged2 = _interopRequireDefault(_signalsToggleAllChanged);
 	
-	var _signalsToggleCompletedChanged = __webpack_require__(237);
+	var _signalsToggleCompletedChanged = __webpack_require__(235);
 	
 	var _signalsToggleCompletedChanged2 = _interopRequireDefault(_signalsToggleCompletedChanged);
 	
-	var _signalsNewTitleAborted = __webpack_require__(239);
+	var _signalsNewTitleAborted = __webpack_require__(237);
 	
 	var _signalsNewTitleAborted2 = _interopRequireDefault(_signalsNewTitleAborted);
 	
@@ -28208,7 +27983,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 226 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28219,7 +27994,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetTodoNewTitleJs = __webpack_require__(227);
+	var _actionsSetTodoNewTitleJs = __webpack_require__(225);
 	
 	var _actionsSetTodoNewTitleJs2 = _interopRequireDefault(_actionsSetTodoNewTitleJs);
 	
@@ -28230,7 +28005,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 227 */
+/* 225 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28251,7 +28026,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 228 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28262,11 +28037,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsOverwriteTodoTitleJs = __webpack_require__(229);
+	var _actionsOverwriteTodoTitleJs = __webpack_require__(227);
 	
 	var _actionsOverwriteTodoTitleJs2 = _interopRequireDefault(_actionsOverwriteTodoTitleJs);
 	
-	var _actionsStopEditingTodoJs = __webpack_require__(230);
+	var _actionsStopEditingTodoJs = __webpack_require__(228);
 	
 	var _actionsStopEditingTodoJs2 = _interopRequireDefault(_actionsStopEditingTodoJs);
 	
@@ -28274,7 +28049,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 229 */
+/* 227 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28294,7 +28069,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 230 */
+/* 228 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28318,7 +28093,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 231 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28329,7 +28104,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsRemoveTodoJs = __webpack_require__(232);
+	var _actionsRemoveTodoJs = __webpack_require__(230);
 	
 	var _actionsRemoveTodoJs2 = _interopRequireDefault(_actionsRemoveTodoJs);
 	
@@ -28337,7 +28112,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 232 */
+/* 230 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28356,7 +28131,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 233 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28367,7 +28142,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsEditTodoJs = __webpack_require__(234);
+	var _actionsEditTodoJs = __webpack_require__(232);
 	
 	var _actionsEditTodoJs2 = _interopRequireDefault(_actionsEditTodoJs);
 	
@@ -28375,7 +28150,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 234 */
+/* 232 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28398,7 +28173,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 235 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28409,7 +28184,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsToggleAllCheckedJs = __webpack_require__(236);
+	var _actionsToggleAllCheckedJs = __webpack_require__(234);
 	
 	var _actionsToggleAllCheckedJs2 = _interopRequireDefault(_actionsToggleAllCheckedJs);
 	
@@ -28417,7 +28192,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 236 */
+/* 234 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28443,7 +28218,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 237 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28454,7 +28229,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsToggleTodoCompletedJs = __webpack_require__(238);
+	var _actionsToggleTodoCompletedJs = __webpack_require__(236);
 	
 	var _actionsToggleTodoCompletedJs2 = _interopRequireDefault(_actionsToggleTodoCompletedJs);
 	
@@ -28462,7 +28237,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 238 */
+/* 236 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28482,7 +28257,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 239 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28493,7 +28268,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsStopEditingTodoJs = __webpack_require__(230);
+	var _actionsStopEditingTodoJs = __webpack_require__(228);
 	
 	var _actionsStopEditingTodoJs2 = _interopRequireDefault(_actionsStopEditingTodoJs);
 	
@@ -28501,7 +28276,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 240 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28512,11 +28287,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _signalsClearCompletedClicked = __webpack_require__(241);
+	var _signalsClearCompletedClicked = __webpack_require__(239);
 	
 	var _signalsClearCompletedClicked2 = _interopRequireDefault(_signalsClearCompletedClicked);
 	
-	var _signalsFilterClicked = __webpack_require__(243);
+	var _signalsFilterClicked = __webpack_require__(241);
 	
 	var _signalsFilterClicked2 = _interopRequireDefault(_signalsFilterClicked);
 	
@@ -28539,7 +28314,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 241 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28550,7 +28325,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsClearCompletedJs = __webpack_require__(242);
+	var _actionsClearCompletedJs = __webpack_require__(240);
 	
 	var _actionsClearCompletedJs2 = _interopRequireDefault(_actionsClearCompletedJs);
 	
@@ -28558,7 +28333,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 242 */
+/* 240 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28582,7 +28357,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 243 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28593,7 +28368,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetFilterJs = __webpack_require__(244);
+	var _actionsSetFilterJs = __webpack_require__(242);
 	
 	var _actionsSetFilterJs2 = _interopRequireDefault(_actionsSetFilterJs);
 	
@@ -28601,7 +28376,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 244 */
+/* 242 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28620,7 +28395,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 245 */
+/* 243 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28653,13 +28428,14 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 246 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* eslint-env browser*/
 	var MODULE = 'cerebral-module-devtools'
-	var SignalStore = __webpack_require__(247)
+	var SignalStore = __webpack_require__(245)
 	var utils = __webpack_require__(248)
+	var requestAnimationFrame = requestAnimationFrame || function (cb) { setTimeout(cb) }
 	
 	module.exports = function Devtools () {
 	  if (typeof window === 'undefined') { return function () {} }
@@ -28686,19 +28462,61 @@
 	    var hasInitialPayload = false
 	    var disableDebugger = false
 	    var willKeepState = false
-	    var lastExecutedSignalIndex = 0
 	    var APP_ID = String(Date.now())
 	    var VERSION = 'v2'
+	    var isAwaitingFrame = false
+	    var nextSignalInLine = 0
 	
-	    var getExecutingSignals = function (signals) {
-	      var executingSignals = []
-	      for (var x = signals.length - 1; x >= 0; x--) {
-	        if (!signals[x].isExecuting) {
-	          break
-	        }
-	        executingSignals.unshift(signals[x])
+	    var hasExecutingSignal = function (signal) {
+	      function traverseSignals (signals) {
+	        return signals.reduce(function (hasExecutingSignal, signal) {
+	          if (hasExecutingSignal || signal.isExecuting) {
+	            return true
+	          }
+	
+	          return traverseChain(signal.branches)
+	        }, false)
 	      }
-	      return executingSignals
+	
+	      function traverseChain (chain) {
+	        return chain.reduce(function (hasExecutingSignal, action) {
+	          if (hasExecutingSignal) {
+	            return true
+	          }
+	
+	          if (Array.isArray(action)) {
+	            return traverseChain(action)
+	          }
+	
+	          return traverseAction(action)
+	        }, false)
+	      }
+	
+	      function traverseAction (action) {
+	        var hasExecutingSignal = false
+	        if (action.outputPath) {
+	          hasExecutingSignal = traverseChain(action.outputs[action.outputPath])
+	        }
+	        if (action.signals) {
+	          hasExecutingSignal = hasExecutingSignal || traverseSignals(action.signals)
+	        }
+	        return hasExecutingSignal
+	      }
+	
+	      if (signal.isExecuting) {
+	        return true
+	      }
+	
+	      return traverseChain(signal.branches)
+	    }
+	
+	    var getOldestExecutingSignalIndex = function (signals, fromIndex) {
+	      for (var x = fromIndex; x < signals.length; x++) {
+	        if (hasExecutingSignal(signals[x])) {
+	          return x
+	        }
+	      }
+	      return signals.length - 1
 	    }
 	
 	    var update = function (signalType, data, forceUpdate) {
@@ -28721,9 +28539,7 @@
 	
 	    var getInit = function () {
 	      var signals = signalStore.getSignals()
-	      var executingSignals = getExecutingSignals(signals)
-	
-	      lastExecutedSignalIndex = signals.indexOf(executingSignals[0])
+	      nextSignalInLine = signals.length ? getOldestExecutingSignalIndex(signals, nextSignalInLine) : 0
 	      hasInitialPayload = true
 	      return {
 	        initialModel: controller.get(),
@@ -28738,18 +28554,25 @@
 	      update('init', getInit())
 	    }
 	
-	    var updateSignals = function (arg) {
-	      var signals = signalStore.getSignals()
-	      var executingSignals = getExecutingSignals(signals)
+	    var updateSignals = function () {
+	      if (isAwaitingFrame) {
+	        return
+	      }
 	
-	      // In case last executed signal is now done
-	      update('signals', {
-	        signals: signals.slice(lastExecutedSignalIndex),
-	        isExecutingAsync: signalStore.isExecutingAsync()
+	      isAwaitingFrame = true
+	      requestAnimationFrame(function () {
+	        var signals = signalStore.getSignals()
+	
+	        // In case last executed signal is now done
+	        update('signals', {
+	          signals: signals.slice(nextSignalInLine),
+	          isExecutingAsync: signalStore.isExecutingAsync()
+	        })
+	
+	        // Set new last executed signal
+	        nextSignalInLine = signals.length ? getOldestExecutingSignalIndex(signals, nextSignalInLine) : 0
+	        isAwaitingFrame = false
 	      })
-	
-	      // Set new last executed signal
-	      lastExecutedSignalIndex = signals.indexOf(executingSignals[0])
 	    }
 	
 	    var updateSettings = function () {
@@ -28906,7 +28729,7 @@
 
 
 /***/ },
-/* 247 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -28915,7 +28738,7 @@
 	  is able to reset state and travel to a "specific point in time" by playing back the signals up to a certain
 	  signal.
 	*/
-	var uuid = __webpack_require__(177)
+	var uuid = __webpack_require__(246)
 	
 	module.exports = function SignalStore () {
 	  return function (module, controller) {
@@ -29081,6 +28904,233 @@
 	  }
 	}
 
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//     uuid.js
+	//
+	//     Copyright (c) 2010-2012 Robert Kieffer
+	//     MIT License - http://opensource.org/licenses/mit-license.php
+	
+	// Unique ID creation requires a high quality random # generator.  We feature
+	// detect to determine the best RNG source, normalizing to a function that
+	// returns 128-bits of randomness, since that's what's usually required
+	var _rng = __webpack_require__(247);
+	
+	// Maps for number <-> hex string conversion
+	var _byteToHex = [];
+	var _hexToByte = {};
+	for (var i = 0; i < 256; i++) {
+	  _byteToHex[i] = (i + 0x100).toString(16).substr(1);
+	  _hexToByte[_byteToHex[i]] = i;
+	}
+	
+	// **`parse()` - Parse a UUID into it's component bytes**
+	function parse(s, buf, offset) {
+	  var i = (buf && offset) || 0, ii = 0;
+	
+	  buf = buf || [];
+	  s.toLowerCase().replace(/[0-9a-f]{2}/g, function(oct) {
+	    if (ii < 16) { // Don't overflow!
+	      buf[i + ii++] = _hexToByte[oct];
+	    }
+	  });
+	
+	  // Zero out remaining bytes if string was short
+	  while (ii < 16) {
+	    buf[i + ii++] = 0;
+	  }
+	
+	  return buf;
+	}
+	
+	// **`unparse()` - Convert UUID byte array (ala parse()) into a string**
+	function unparse(buf, offset) {
+	  var i = offset || 0, bth = _byteToHex;
+	  return  bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]];
+	}
+	
+	// **`v1()` - Generate time-based UUID**
+	//
+	// Inspired by https://github.com/LiosK/UUID.js
+	// and http://docs.python.org/library/uuid.html
+	
+	// random #'s we need to init node and clockseq
+	var _seedBytes = _rng();
+	
+	// Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
+	var _nodeId = [
+	  _seedBytes[0] | 0x01,
+	  _seedBytes[1], _seedBytes[2], _seedBytes[3], _seedBytes[4], _seedBytes[5]
+	];
+	
+	// Per 4.2.2, randomize (14 bit) clockseq
+	var _clockseq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3fff;
+	
+	// Previous uuid creation time
+	var _lastMSecs = 0, _lastNSecs = 0;
+	
+	// See https://github.com/broofa/node-uuid for API details
+	function v1(options, buf, offset) {
+	  var i = buf && offset || 0;
+	  var b = buf || [];
+	
+	  options = options || {};
+	
+	  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
+	
+	  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
+	  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
+	  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
+	  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
+	  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
+	
+	  // Per 4.2.1.2, use count of uuid's generated during the current clock
+	  // cycle to simulate higher resolution clock
+	  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
+	
+	  // Time since last uuid creation (in msecs)
+	  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
+	
+	  // Per 4.2.1.2, Bump clockseq on clock regression
+	  if (dt < 0 && options.clockseq === undefined) {
+	    clockseq = clockseq + 1 & 0x3fff;
+	  }
+	
+	  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
+	  // time interval
+	  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
+	    nsecs = 0;
+	  }
+	
+	  // Per 4.2.1.2 Throw error if too many uuids are requested
+	  if (nsecs >= 10000) {
+	    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
+	  }
+	
+	  _lastMSecs = msecs;
+	  _lastNSecs = nsecs;
+	  _clockseq = clockseq;
+	
+	  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
+	  msecs += 12219292800000;
+	
+	  // `time_low`
+	  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
+	  b[i++] = tl >>> 24 & 0xff;
+	  b[i++] = tl >>> 16 & 0xff;
+	  b[i++] = tl >>> 8 & 0xff;
+	  b[i++] = tl & 0xff;
+	
+	  // `time_mid`
+	  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
+	  b[i++] = tmh >>> 8 & 0xff;
+	  b[i++] = tmh & 0xff;
+	
+	  // `time_high_and_version`
+	  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
+	  b[i++] = tmh >>> 16 & 0xff;
+	
+	  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
+	  b[i++] = clockseq >>> 8 | 0x80;
+	
+	  // `clock_seq_low`
+	  b[i++] = clockseq & 0xff;
+	
+	  // `node`
+	  var node = options.node || _nodeId;
+	  for (var n = 0; n < 6; n++) {
+	    b[i + n] = node[n];
+	  }
+	
+	  return buf ? buf : unparse(b);
+	}
+	
+	// **`v4()` - Generate random UUID**
+	
+	// See https://github.com/broofa/node-uuid for API details
+	function v4(options, buf, offset) {
+	  // Deprecated - 'format' argument, as supported in v1.2
+	  var i = buf && offset || 0;
+	
+	  if (typeof(options) == 'string') {
+	    buf = options == 'binary' ? new Array(16) : null;
+	    options = null;
+	  }
+	  options = options || {};
+	
+	  var rnds = options.random || (options.rng || _rng)();
+	
+	  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+	  rnds[6] = (rnds[6] & 0x0f) | 0x40;
+	  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+	
+	  // Copy bytes to buffer, if provided
+	  if (buf) {
+	    for (var ii = 0; ii < 16; ii++) {
+	      buf[i + ii] = rnds[ii];
+	    }
+	  }
+	
+	  return buf || unparse(rnds);
+	}
+	
+	// Export public API
+	var uuid = v4;
+	uuid.v1 = v1;
+	uuid.v4 = v4;
+	uuid.parse = parse;
+	uuid.unparse = unparse;
+	
+	module.exports = uuid;
+
+
+/***/ },
+/* 247 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {
+	var rng;
+	
+	if (global.crypto && crypto.getRandomValues) {
+	  // WHATWG crypto-based RNG - http://wiki.whatwg.org/wiki/Crypto
+	  // Moderately fast, high quality
+	  var _rnds8 = new Uint8Array(16);
+	  rng = function whatwgRNG() {
+	    crypto.getRandomValues(_rnds8);
+	    return _rnds8;
+	  };
+	}
+	
+	if (!rng) {
+	  // Math.random()-based (RNG)
+	  //
+	  // If all else fails, use Math.random().  It's fast, but is of unspecified
+	  // quality.
+	  var  _rnds = new Array(16);
+	  rng = function() {
+	    for (var i = 0, r; i < 16; i++) {
+	      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
+	      _rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+	    }
+	
+	    return _rnds;
+	  };
+	}
+	
+	module.exports = rng;
+	
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 248 */
@@ -29370,7 +29420,7 @@
 
 	var MODULE = 'cerebral-module-router'
 	var isObject = __webpack_require__(252)
-	var get = __webpack_require__(201)
+	var get = __webpack_require__(199)
 	
 	var Mapper = __webpack_require__(253)
 	var addressbar
@@ -30338,7 +30388,7 @@
 	/* WEBPACK VAR INJECTION */(function(global) {/* global history */
 	
 	var URL = __webpack_require__(259)
-	var EventEmitter = __webpack_require__(183).EventEmitter
+	var EventEmitter = __webpack_require__(181).EventEmitter
 	var instance = null
 	
 	var location = window.location
