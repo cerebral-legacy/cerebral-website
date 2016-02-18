@@ -38,7 +38,7 @@ function postTodo({state, output, services}) {
 
 postTodo.async = true;
 
-export default getUser;
+export default postTodo;
 ```
 
 The service returns a promise. Results of the http requests will be passed on an object: `{result, statusCode}`. That means you can easily output to `success` or `error` and grab those values off the input on the next action.
@@ -73,6 +73,6 @@ export default [
   // The array builds up the url, the last argument grabs
   // the data to be passed on the patch request
   httpPatch(['/users/', 'input:/id'], 'state:/updatedUser'),
-  httpDelete(['/todos/', 'input:/id']) 
+  httpDelete(['/todos/', 'input:/id'])
 ]
 ```
