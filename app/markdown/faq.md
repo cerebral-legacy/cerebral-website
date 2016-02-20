@@ -23,18 +23,17 @@ signedOut = [
 ```
 Each of these actions resets their specific module. There are so many benefits to this approach:
 
-1. When a signout occurs "the next developer" will know exactly what is happening inside your app
-2. The debugger also knows exactly what happens on a signout and will display all that
+1. When a signout occurs "the next developer" will know exactly what is happening inside your app when a signout occurs
+2. The debugger also knows exactly what happens on a signout and will display all that as one signal
 3. You can reuse any of these actions at a later point, in other signals, if you want to reset the state of the modules
-4. You choose the order of things happening, with events you can not control the order
-5. You can at any time just add some action in between, at beginning or end of this signal
-6. You can add something asynchronous anywhere you want
+4. You choose the order of things happening, with flux actions you can not control the order, except with `waitFor`, which adds a lot of mind load
+5. You can at any time just add some action in between, at beginning or end of this signal. You can even add asynchronous actions, which traditional flux/redux is not able to do
 
 ### Why isn't the debugger working?
 Cerebral depends on multiple projects and it is important the you update to the latest version of all of them. NPM can be a bit problematic when changing to a new 0.x.x version, rather than 0.1.x, so please be sure you have the very latest versions.
 
 ### Why aren't my signals registering?
-When moving back in time with the debugger ignores any signals fired. The reason for this is that you can not "change the past". You have to move back to the current signal, "current time", to continue moving forward.
+When moving back in time with the debugger ignores any signals fired. The reason for this is that you can not "change the past". You have to move back to the current signal, "current time", to continue moving forward. You can also clear out signals from current position and move on from there.
 
 ### How do I handle non-serializable state?
 Normally you will only use plain objects, arrays, strings etc., but sometimes you also need to handle files or other non-serializable state. You will need to handle these inside components. For example uploading some files will have to be done inside the component handling it. That said, you can still use signals to notify your application about files being dropped, being uploaded and successfully uploaded.
