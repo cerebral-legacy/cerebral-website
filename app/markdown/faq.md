@@ -23,8 +23,8 @@ signedOut = [
 ```
 Each of these actions resets their specific module. There are so many benefits to this approach:
 
-1. When a signout occurs "the next developer" will know exactly what is happening inside your app when a signout occurs
-2. The debugger also knows exactly what happens on a signout and will display all that as one signal
+1. When a signout occurs "the next developer" will know exactly what is happening inside your app by looking at this one signal, instead of going into multiple files and try to compose this flow inside their head
+2. The debugger also knows exactly what happens on a signout and will display all that as one flow
 3. You can reuse any of these actions at a later point, in other signals, if you want to reset the state of the modules
 4. You choose the order of things happening, with flux actions you can not control the order, except with `waitFor`, which adds a lot of mind load
 5. You can at any time just add some action in between, at beginning or end of this signal. You can even add asynchronous actions, which traditional flux/redux is not able to do
