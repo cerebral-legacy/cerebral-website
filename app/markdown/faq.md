@@ -1,7 +1,7 @@
 ### With Flux I can listen to multiple actions, can I listen to signals?
 This is how Cerebral is different. Flux is "inside out" and Cerebral is "outside in". You compose signals together instead of listening to multiple "actions". This makes your code much more readable because your one signal describes everything that is happening, instead of you looking into every piece of state and try to compose in your head what all of them reacts to. This is the same for stores and reducers in Redux.
 
-So lets imagine a scenario where you want to reset the state of your modules when the user signs out. In traditional flux/redux you would:
+So lets imagine a scenario where you want to reset the state of your modules when the user signs out. In traditional flux/redux you would do this in every store/redux:
 
 ```js
 function myReducer(state, action) {
@@ -21,7 +21,7 @@ signedOut = [
   resetModuleC
 ]
 ```
-Each of these actions resets their specific module. There are so many benefits to this approach:
+Each of these actions resets their specific module. There are many benefits to this approach:
 
 1. When a signout occurs "the next developer" will know exactly what is happening inside your app by looking at this one signal, instead of going into multiple files and try to compose this flow inside their head
 2. The debugger also knows exactly what happens on a signout and will display all that as one flow
