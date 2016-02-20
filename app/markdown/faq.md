@@ -1,5 +1,5 @@
 ### With Flux I can react to multiple actions, can I react to signals?
-This is how Cerebral is different. Flux is "inside out" and Cerebral is "outside in". You compose signals together instead of reacting to multiple actions. This makes your code much more readable because your one signal describes everything that is happening, instead of you looking into every piece of state and try to compose in your head what all of them reacts to. This is the same for stores and reducers in Redux.
+This is how Cerebral is different. Flux is "inside out" and Cerebral is "outside in". You compose actions together instead of reacting to multiple actions. This makes your code much more readable because your one signal describes everything that is happening, instead of you looking into every piece of state and try to compose in your head what all of them reacts to
 
 So lets imagine a scenario where you want to reset the state of your modules (stores/reducers) when the user signs out. In traditional flux/redux you would do this in every store/reducer:
 
@@ -23,7 +23,7 @@ signedOut = [
 ```
 Each of these actions resets their specific module. There are many benefits to this approach:
 
-1. When a signout occurs "the next developer" will know exactly what is happening inside your app by looking at this one signal, instead of going into multiple files and try to compose this flow in their head
+1. When a signout occurs "the next developer" will know exactly what is happening inside your app when the user signs out by looking at this one signal, instead of going into multiple files and try to compose this flow in their head
 2. The debugger also knows exactly what happens on a signout and will display all that as one flow
 3. You can reuse any of these actions at a later point, in other signals, if you want to reset the state of the modules
 4. You choose the order of things happening, with flux actions you can not control the order, except with `waitFor`, which adds a lot of mind load
