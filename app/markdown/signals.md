@@ -45,7 +45,7 @@ class App extends React.Component {
 }
 ```
 
-All signals have a `.sync()` method. Use this when you want to trigger a signal and a UI update completely synchronous. You can also set this on signal definition:
+All signals have a `.sync()` method. Use this when you want to trigger a signal and a UI update completely synchronously. You can also set this on signal definition:
 
 ```javascript
 const inputChanged = [
