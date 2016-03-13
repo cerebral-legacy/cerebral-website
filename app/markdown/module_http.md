@@ -18,7 +18,7 @@ controller.addModules({
   // Can pass any default options which
   // will be used on all requests
   http: Http({
-    baseUrl: '/api'
+    baseURL: '/api'
   })
 })
 ```
