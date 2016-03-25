@@ -58,6 +58,13 @@
 	font-weight: normal;
 }
 
+.menu > li i {
+  position: relative;
+  display: inline-block;
+  top: 1px;
+  width: 25px;
+}
+
 .menu li.active i {
   color: #EAEAEA;
 }

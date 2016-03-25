@@ -91,25 +91,36 @@
 
   .search-results {
     position: absolute;
-    top: 28px;
-    left: 45px;
+    height: auto;
+    top: 36px;
+    left: 30px;
     background-color: #FFF;
     border: 1px solid #DDD;
     border-radius: 3px;
     min-width: 140px;
     box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+    margin: 0;
   }
 
   .search-results li {
     padding: 5px;
     font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
     margin: 0;
-    height: 25px;
-    line-height: 25px;
+    height: 30px;
+    line-height: 20px;
   }
 
   .search-results li:hover {
     background-color: #FAFAFA;
+  }
+
+  .search-no-results {
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
   }
 
 }

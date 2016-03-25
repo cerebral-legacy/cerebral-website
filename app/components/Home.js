@@ -1,5 +1,4 @@
 var React = require('react');
-var Header = require('./Header.js');
 
 var Home = React.createClass({
   render: function () {
@@ -11,7 +10,7 @@ var Home = React.createClass({
           <h3 className="center">Express your application flow with signals</h3>
           <div className="row">
             <div className="twelve columns">
-              <Header>What is Cerebral?</Header>
+              <h4 style={{textAlign: 'center'}}>What is Cerebral?</h4>
               <div className="clip" onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/kx8XoX_hV5s')}>
                 <i className="icon icon-play-circle-o"/>
               </div>
@@ -46,7 +45,7 @@ var Home = React.createClass({
         <section className="packages">
           <div className="row">
             <div className="six columns">
-              <Header>Packages</Header>
+              <h4>Packages</h4>
               <div className="row">
                 <div className="six columns">
                   <ul className="divided cerebral-list">
@@ -66,7 +65,7 @@ var Home = React.createClass({
               </div>
             </div>
             <div className="six columns">
-              <Header>Introductions</Header>
+              <h4>Introductions</h4>
               <ul className="cerebral-list">
               <li>
                 <i

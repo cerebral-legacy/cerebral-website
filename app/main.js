@@ -5,98 +5,52 @@ import './styles/style.scss';
 
 import React from 'react';
 import {render} from 'react-dom';
-import App from './App';
-import {Container} from 'cerebral-react';
-import Router from 'cerebral-router';
-import controller from './controller';
+import App from './components/App';
+import {Container} from 'cerebral-view-react';
+import Router from 'cerebral-module-router';
+import Devtools from 'cerebral-module-devtools';
+import Http from 'cerebral-module-http';
+import Model from 'cerebral-model-baobab';
+import Controller from 'cerebral';
 
-function isSmallScreen() {
-  return window.innerWidth <= 700;
-}
+import homeOpened from './signals/homeOpened';
+import menuClicked from './signals/menuClicked';
+import submenuClicked from './signals/submenuClicked';
+import menuToggled from './signals/menuToggled';
+import videoOpened from './signals/videoOpened';
+import videoClosed from './signals/videoClosed';
+import searchQueryChanged from './signals/searchQueryChanged';
+import appClicked from './signals/appClicked';
+import githubPageOpened from './signals/githubPageOpened';
 
-controller.signal('homeOpened', [
-  function setContent({state}) {
-    const options = {
-      content: 'cerebral',
-      subContent: null
-    };
+const controller = Controller(Model(window.BOOTSTRAP_STATE));
 
-    if (isSmallScreen()) {
-      options.displayMenu = false;
-    }
-
-    state.merge(options);
-  }
-]);
-
-controller.signal('menuClicked', [
-  function setContent({input, state}) {
-    const options = {
-      content: input.content,
-      subContent: null
-    };
-
-    if (isSmallScreen()) {
-      options.displayMenu = false;
-    }
-
-    state.merge(options);
-  }
-]);
-
-controller.signal('submenuClicked', [
-  function setContent({input, state}) {
-    const options = {
-      content: input.content,
-      subContent: input.subContent
-    };
-
-    if (isSmallScreen()) {
-      options.displayMenu = false;
-    }
-
-    state.merge(options);
-  }
-]);
-
-controller.signal('menuToggled', [
-  function toggleMenu({state}) {
-    state.set(['displayMenu'], !state.get('displayMenu'));
-  }
-]);
-
-controller.signal('videoOpened', [
-  function openVideo({input, state}) {
-    state.merge({
-      videoSrc: input.videoSrc,
-      showOverlay: true
-    });
+controller.addSignals({
+  homeOpened,
+  menuClicked,
+  submenuClicked,
+  menuToggled,
+  videoOpened,
+  videoClosed,
+  searchQueryChanged: {
+    chain: searchQueryChanged,
+    immediate: true
   },
-  [
-    function timeout({output}) {
-      setTimeout(output, 50);
-    }
-  ],
-  function transition({state}) {
-    state.set(['transitionVideo'], true);
-  }
-]);
+  appClicked,
+  githubPageOpened
+});
 
-controller.signal('videoClosed', [
-  function closeVideo({state}) {
-    state.merge({
-      videoSrc: null,
-      showOverlay: false,
-      transitionVideo: false
-    });
-  }
-]);
-
-Router(controller, {
-  '/': 'homeOpened',
-  '/:content': 'menuClicked',
-  '/:content/:subContent': 'submenuClicked'
-}).trigger();
+controller.addModules({
+  http: Http(),
+  router: Router({
+    '/': 'homeOpened',
+    '/:content': 'menuClicked',
+    '/:content/:subContent': 'submenuClicked'
+  }, {
+    autostart: false
+  }),
+  devtools: Devtools()
+});
 
 render(
   <Container controller={controller} style={{height: '100vh'}}>

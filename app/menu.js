@@ -1,6 +1,6 @@
+import React from 'react';
 import MTRC from 'markdown-to-react-components';
-import Home from './Home.js';
-import Contributors from './Contributors.js';
+import Contributors from './components/Contributors.js';
 import install from './markdown/install.md';
 import react from './markdown/react.md';
 import angular from './markdown/angular.md';
@@ -56,11 +56,14 @@ import theDebugger from './markdown/debugger.md';
 import sharedModules from './markdown/shared_modules.md';
 import angular2 from './markdown/angular2.md';
 
+import Home from './components/Home.js';
+import GithubPage from './components/GithubPage';
+
 export default [
   {
     label: 'Cerebral',
     icon: 'home',
-    content: Home
+    content: props => <Home {...props}/>
   },
   {
     label: 'Get Started',
@@ -143,15 +146,15 @@ export default [
     }, {
       label: 'Router',
       text: moduleRouter.toLowerCase(),
-      content: MTRC(moduleRouter).tree
+      content: props => <GithubPage {...props} url="https://cdn.rawgit.com/cerebral/cerebral-module-router/master/README.md"/>
     }, {
       label: 'Http',
       text: moduleHttp.toLowerCase(),
-      content: MTRC(moduleHttp).tree
+      content: props => <GithubPage {...props} url="https://cdn.rawgit.com/cerebral/cerebral-module-http/master/README.md"/>
     }, {
       label: 'Recorder',
       text: moduleRecorder.toLowerCase(),
-      content: MTRC(moduleRecorder).tree
+      content: props => <GithubPage {...props} url="https://cdn.rawgit.com/cerebral/cerebral-module-recorder/master/README.md"/>
     }]
   },
   {
@@ -234,32 +237,7 @@ export default [
     label: 'Addons',
     icon: 'briefcase',
     text: addons.toLowerCase(),
-    content: MTRC(addons).tree,
-    subContent: [{
-      label: 'Copy',
-      text: addonsCopy.toLowerCase(),
-      content: MTRC(addonsCopy).tree
-    }, {
-      label: 'Debounce',
-      text: addonsDebounce.toLowerCase(),
-      content: MTRC(addonsDebounce).tree
-    }, {
-      label: 'Set',
-      text: addonsSet.toLowerCase(),
-      content: MTRC(addonsSet).tree
-    }, {
-      label: 'Unset',
-      text: addonsUnset.toLowerCase(),
-      content: MTRC(addonsUnset).tree
-    }, {
-      label: 'Toggle',
-      text: addonsToggle,
-      content: MTRC(addonsToggle).tree
-    }, {
-      label: 'When',
-      text: addonsWhen.toLowerCase(),
-      content: MTRC(addonsWhen).tree
-    }]
+    content: props => <GithubPage {...props} url="https://cdn.rawgit.com/cerebral/cerebral-addons/master/README.md"/>
   },
   {
     label: 'Routing',
@@ -357,6 +335,6 @@ export default [
   }, {
     label: 'Contributors',
     icon: 'users',
-    content: Contributors
+    content: props => <Contributors {...props}/> 
   }
 ];
