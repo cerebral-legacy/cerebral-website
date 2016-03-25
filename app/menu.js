@@ -146,15 +146,15 @@ export default [
     }, {
       label: 'Router',
       text: moduleRouter.toLowerCase(),
-      content: props => <GithubPage {...props} url="https://cdn.rawgit.com/cerebral/cerebral-module-router/master/README.md"/>
+      content: props => <GithubPage {...props} url="https://raw.githubusercontent.com/cerebral/cerebral-module-router/master/README.md"/>
     }, {
       label: 'Http',
       text: moduleHttp.toLowerCase(),
-      content: props => <GithubPage {...props} url="https://cdn.rawgit.com/cerebral/cerebral-module-http/master/README.md"/>
+      content: props => <GithubPage {...props} url="https://raw.githubusercontent.com/cerebral/cerebral-module-http/master/README.md"/>
     }, {
       label: 'Recorder',
       text: moduleRecorder.toLowerCase(),
-      content: props => <GithubPage {...props} url="https://cdn.rawgit.com/cerebral/cerebral-module-recorder/master/README.md"/>
+      content: props => <GithubPage {...props} url="https://raw.githubusercontent.com/cerebral/cerebral-module-recorder/master/README.md"/>
     }]
   },
   {
@@ -237,7 +237,7 @@ export default [
     label: 'Addons',
     icon: 'briefcase',
     text: addons.toLowerCase(),
-    content: props => <GithubPage {...props} url="https://cdn.rawgit.com/cerebral/cerebral-addons/master/README.md"/>
+    content: props => <GithubPage {...props} url="https://raw.githubusercontent.com/cerebral/cerebral-addons/master/README.md"/>
   },
   {
     label: 'Routing',
@@ -335,6 +335,6 @@ export default [
   }, {
     label: 'Contributors',
     icon: 'users',
-    content: props => <Contributors {...props}/> 
+    content: props => <Contributors {...props}/>
   }
 ];
