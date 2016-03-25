@@ -42,6 +42,7 @@
     "cerebral-module-devtools": "^0.5.4",
     "cerebral-module-http": "^0.1.1",
     "cerebral-module-router": "^0.13.1",
+    "cerebral-url-scheme-compiler": "^0.4.1",
     "cerebral-view-react": "^0.11.8",
     "classnames": "^2.2.3",
     "css-loader": "^0.19.0",
