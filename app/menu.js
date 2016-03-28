@@ -159,6 +159,10 @@ export default [
       label: 'Forms',
       text: moduleRecorder.toLowerCase(),
       content: props => <GithubPage {...props} url="https://raw.githubusercontent.com/cerebral/cerebral-module-forms/master/README.md"/>
+    }, {
+      label: 'Useragent',
+      text: moduleRecorder.toLowerCase(),
+      content: props => <GithubPage {...props} url="https://raw.githubusercontent.com/cerebral/cerebral-module-useragent/master/README.md"/>
     }]
   },
   {
