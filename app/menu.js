@@ -140,7 +140,7 @@ export default [
     content: MTRC(modules).tree,
     video: 'https://www.youtube.com/embed/FNB0uIQtGrw',
     subContent: [{
-      label: 'Creating a module',
+      label: 'Creating shared module',
       text: sharedModules.toLowerCase(),
       content: MTRC(sharedModules).tree
     }, {
