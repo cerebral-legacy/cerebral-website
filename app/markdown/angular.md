@@ -2,7 +2,7 @@
 `$ npm install cerebral-view-angular`
 
 ### Repo
-[cerebral-view-angular](https://github.com/christianalfoni/cerebral-view-angular)
+[cerebral-view-angular](https://github.com/cerebral/cerebral-view-angular)
 
 ### Get started
 
