@@ -53,7 +53,7 @@ class UserModal extends React.Component {
 
 So our component here is the modal to be displayed. It will receive two props from our *ModalsController* and that is `userId` and `index`. So lets see how this will work.
 
-First of all, somewhere in our application we trigger a user modal. And this is the important thing. We want to be trigger any modal from anywhere in our app:
+First of all, somewhere in our application we trigger a user modal. And this is the important thing. We want to trigger any modal from anywhere in our app:
 
 ```javascript
 this.props.signals.modalOpened({type: 'user', props: {userId: '123'}})
@@ -91,7 +91,7 @@ class ModalsController extends React.Component {
   render() {
     return (
       <div>
-        {this.props.modals.map(modal => this.renderModal(modal))}
+        {this.props.modals.map((modal, index) => this.renderModal(modal, index))}
       </div>
     )
   }
@@ -105,5 +105,4 @@ So what have we gained specifically here now?:
 1. We can show as many modals on top of each other as we want
 2. Our modals are specific to their content and they have their own behaviour. Maybe one modal closes on saving, maybe some other has the close button on a different position in the UI. It does not matter. You can just trigger the signal with the index
 3. You can close and open modals from anywhere in your app
-
-And it is all serializable to be passed to debugger, saved on server or sent over websockets.
+4. It is all serializable to be passed to debugger, saved on server or sent over websockets.
