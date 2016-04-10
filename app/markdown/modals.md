@@ -42,7 +42,15 @@ class UserModal extends React.Component {
     return (
       <Modal>
         <h1>{user.name}</h1>
-        <button onClick={() => this.props.signals.modalClosed({index})}>
+        <button onClick={() => this.props.signals.userSaved({
+          userId: user.id,
+          modalIndex: index
+        })}>
+          Save
+        </button>
+        <button onClick={() => this.props.signals.modalClosed({
+          modalIndex: index
+        })}>
           Close
         </button>
       </Modal>
@@ -51,7 +59,7 @@ class UserModal extends React.Component {
 }
 ```
 
-So our component here is the modal to be displayed. It will receive two props from our *ModalsController* and that is `userId` and `index`. So lets see how this will work.
+So our component here is the modal to be displayed. It will receive two props from our *ModalsController* and that is `userId` and `index`. So lets see how this will work, and then we will look at how our *userSaved* and *modalClosed* signal will work.
 
 First of all, somewhere in our application we trigger a user modal. And this is the important thing. We want to trigger any modal from anywhere in our app:
 
@@ -99,6 +107,62 @@ class ModalsController extends React.Component {
 ```
 
 This is very similar to how you would handle a component controlling what page to be displayed. But instead of mapping `currentPage` to a component, we map the `modal.type` to a component and pass props. We also pass the `index` property to allow the component to close itself.
+
+So lets take a look at our component again:
+
+```javascript
+@Cerebral({
+  users: ['users']
+})
+class UserModal extends React.Component {
+  render() {
+    const user = this.props.users[this.props.userId];
+    const index = this.props.index;
+
+    return (
+      <Modal>
+        <h1>{user.name}</h1>
+        <button onClick={() => this.props.signals.userSaved({
+          userId: user.id,
+          modalIndex: index
+        })}>
+          Save
+        </button>
+        <button onClick={() => this.props.signals.modalClosed({
+          modalIndex: index
+        })}>
+          Close
+        </button>
+      </Modal>
+    );
+  }
+}
+```
+
+Our *userSaved* signal can now work something like this:
+
+```javascript
+[
+  set('state:/isSavingUser', true),
+  saveUser, {
+    success: [
+      closeModal,
+      set('state:/isSavingUser', false)
+    ],
+    error: []
+  }
+]
+```
+
+Our *closeModal* action here just removes the modal from our array:
+
+```javascript
+function closeModal({input, state}) {
+  state.splice(['modals'], input.modalIndex, 1);
+}
+```
+
+And as you might have guessed, this is the exact same action that the *modalClosed* signal uses :-)
 
 So what have we gained specifically here now?:
 
