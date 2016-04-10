@@ -55,6 +55,7 @@ import moduleHttp from './markdown/module_http.md';
 import theDebugger from './markdown/debugger.md';
 import sharedModules from './markdown/shared_modules.md';
 import angular2 from './markdown/angular2.md';
+import modals from './markdown/modals.md';
 
 import Home from './components/Home.js';
 import GithubPage from './components/GithubPage';
@@ -299,6 +300,10 @@ export default [
       label: 'Server requests',
       text: serverRequests,
       content: MTRC(serverRequests).tree
+    }, {
+      label: 'Modals',
+      text: modals,
+      content: MTRC(modals).tree
     }]
   },
   {
