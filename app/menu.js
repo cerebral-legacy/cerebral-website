@@ -56,6 +56,7 @@ import theDebugger from './markdown/debugger.md';
 import sharedModules from './markdown/shared_modules.md';
 import angular2 from './markdown/angular2.md';
 import modals from './markdown/modals.md';
+import context from './markdown/context.md';
 
 import Home from './components/Home.js';
 import GithubPage from './components/GithubPage';
@@ -229,6 +230,11 @@ export default [
         label: 'Type checking',
         text: typeChecking.toLowerCase(),
         content: MTRC(typeChecking).tree
+      },
+      {
+        label: 'Context',
+        text: context.toLowerCase(),
+        content: MTRC(context).tree
       },
       {
         label: 'Events',
