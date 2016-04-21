@@ -23,7 +23,7 @@ function (context) {
 The way Cerebral populates this context is using **Context Providers**:
 
 ```javascript
-function myContextProvider(context, execution.controller) {
+function myContextProvider(context, execution, controller) {
   context.foo = 'bar';
   return context;
 }
@@ -51,7 +51,7 @@ function myModule(module) {
 
 So a module can also have a specific context provider. That means any actions part of this specific modules signals will have their context manipulated by this provider.
 
-### Creating your own context provider
+### Creating context providers
 Typically you will not create your own context providers. These are built to provide new patterns or share modules. So lets take a look at how it works:
 
 ```javascript
