@@ -49,17 +49,17 @@ var Home = React.createClass({
               <div className="row">
                 <div className="six columns">
                   <ul className="divided cerebral-list">
-                    <li><i className="icon icon-television"/> React</li>
-                    <li><i className="icon icon-television"/> Angular</li>
-                    <li><i className="icon icon-television"/> Angular2</li>
-                    <li><i className="icon icon-television"/> Inferno</li>
-                    <li><i className="icon icon-television"/> Snabbdom</li>
+                    <li><i className="icon icon-television"/> <a href='/install/react'>React</a></li>
+                    <li><i className="icon icon-television"/> <a href='/install/angular'>Angular</a></li>
+                    <li><i className="icon icon-television"/> <a href='/install/angular2'>Angular2</a></li>
+                    <li><i className="icon icon-television"/> <a href='/install/inferno'>Inferno</a></li>
+                    <li><i className="icon icon-television"/> <a href='/install/snabbdom'>Snabbdom</a></li>
                   </ul>
                 </div>
                 <div className="six columns">
                   <ul className="divided cerebral-list">
-                    <li><i className="icon icon-database"/> Baobab</li>
-                    <li><i className="icon icon-database"/> ImmutableJS</li>
+                    <li><i className="icon icon-database"/> <a href='/install/baobab'>Baobab</a></li>
+                    <li><i className="icon icon-database"/> <a href='/install/immutablejs'>ImmutableJS</a></li>
                   </ul>
                 </div>
               </div>
