@@ -2,7 +2,7 @@ When you develop a Cerebral application you separate your application from your 
 
 You think of your UI differently. You do not think of your UI as parts, but as a complete user experience. With Cerebral you can hook any part of your UI into any part of your application to extract state and trigger state changes. This is a really important point in Cerebrals design. The UI of your application will often change and merge different domains and concepts. That should not be a painful process. With modern applications we also want to reach native devices. When your UI is a completely separate concept it is a lot easier to build multiple UIs for the same application.
 
-You application structure and your UI structure will often look similar, but they will never be restricted by each other.
+Your application structure and your UI structure will often look similar, but they will never be restricted by each other.
 
 ### Modules setup
 
