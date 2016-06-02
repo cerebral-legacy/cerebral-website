@@ -76,7 +76,7 @@ function myContextProvider(context, execution, controller) {
 So let us imagine that we want to create a provider that exposes all the modules on the context of all actions.
 
 ```javascript
-controller.addContextProvider((context, execution, controller) {
+controller.addContextProvider((context, execution, controller) => {
   context.modules = controller.getModules();
 
   return context;
