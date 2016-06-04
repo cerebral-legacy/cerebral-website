@@ -19,6 +19,11 @@ module.exports = {
     filename: 'server_build.js'
   },
   externals: nodeModules,
+  resolve: {
+    alias: {
+      'base': path.resolve('app', 'base')
+    }
+  },
   module: {
     loaders: [{
       test: /\.js?$/,

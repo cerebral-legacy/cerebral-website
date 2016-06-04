@@ -28,7 +28,12 @@ module.exports = {
         entryOnly: false
       }
     )
- ],
+  ],
+  resolve: {
+    alias: {
+      'base': path.resolve('app', 'base')
+    }
+  },
   module: {
     loaders: [{
       test: /\.js?$/,

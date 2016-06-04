@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+}
+
+.wrapper {
+  display: flex;
+  font-family: 'Roboto', sans-serif;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

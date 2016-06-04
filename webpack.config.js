@@ -24,6 +24,11 @@ module.exports = {
     }),
     new ExtractTextPlugin('styles.css')
   ],
+  resolve: {
+    alias: {
+      'base': path.resolve('app', 'base')
+    }
+  },
   module: {
     loaders: [{
       test: /\.css$/,

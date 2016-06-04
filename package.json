@@ -39,6 +39,7 @@
     "cerebral-module-http": "^0.2.0",
     "cerebral-module-router": "^0.14.4",
     "cerebral-view-react": "^0.11.17",
+    "classnames": "^2.2.5",
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
     "extract-text-webpack-plugin": "^1.0.1",
