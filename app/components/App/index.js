@@ -9,7 +9,8 @@ class App extends React.Component {
   render() {
     return (
       <div className={styles.wrapper}>
-        <Header>New Cerebral site coming soon!</Header>
+        <img width="300" src="/cerebral.png" />
+        <Header>new Cerebral site coming soon</Header>
       </div>
     );
   }
