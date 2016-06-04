@@ -23,13 +23,10 @@
   },
   "homepage": "http://www.cerebraljs.com/",
   "scripts": {
-    "test": "",
     "start": "node server_build",
     "serverbuild": "NODE_ENV=server webpack --config webpack.server.config.js --watch",
     "build": "rimraf dist && NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
-    "postinstall": "node heroku",
-    "eslint": "eslint .",
-    "jscs": "jscs ."
+    "postinstall": "node heroku"
   },
   "dependencies": {
     "babel-loader": "^6.2.4",
@@ -50,6 +47,7 @@
     "raw-loader": "^0.5.1",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
+    "stats-webpack-plugin": "^0.3.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",

@@ -16,7 +16,7 @@ module.exports = {
   devtool: 'eval-source-map',
   target: 'node',
   output: {
-    path: __dirname,
+    path: path.resolve(),
     filename: 'server_build.js'
   },
   externals: nodeModules,
