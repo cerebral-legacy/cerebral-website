@@ -1,5 +1,3 @@
-'use strict';
-
 var path = require('path');
 var webpack = require('webpack');
 var StatsPlugin = require('stats-webpack-plugin');
@@ -7,10 +5,10 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: [
-    path.join(__dirname, 'app/main.js')
+    path.resolve('app', 'main.js')
   ],
   output: {
-    path: path.join(__dirname, '/dist/'),
+    path: path.resolve('dist'),
     filename: 'main.js'
   },
   plugins: [
@@ -28,29 +26,19 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
-    new ExtractTextPlugin("styles.css")
+    new ExtractTextPlugin('styles.css')
   ],
   module: {
     loaders: [{
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract("style-loader", "css-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]")
-    },
-    {
-      test: /\.scss$/,
-      loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader")
+      loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]')
     }, {
       test: /\.js?$/,
       exclude: /node_modules/,
       loader: 'babel'
     }, {
-      test: /\.json?$/,
-      loader: 'json'
-    }, {
       test: /\.md$/,
       loader: 'raw'
     }]
-  },
-  postcss: [
-    require('autoprefixer')
-  ]
+  }
 };

@@ -1,4 +1,3 @@
-/* eslint no-console: 0 */
 import express from 'express';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
