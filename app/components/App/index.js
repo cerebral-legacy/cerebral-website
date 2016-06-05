@@ -3,6 +3,7 @@ import {Decorator as Cerebral} from 'cerebral-view-react';
 import styles from './styles.css';
 
 import Header from 'base/Header';
+import Tabs from '../Tabs';
 import Markdown from '../Markdown';
 
 @Cerebral()
@@ -24,6 +25,13 @@ class App extends React.Component {
         </div>
         <div className={styles.content}>
           <Markdown filename="test.md" />
+          <Tabs tabs={[{
+            label: 'React',
+            render: () => <Markdown filename="mah.md" />
+          }, {
+            label: 'Angular',
+            render: () => <Markdown filename="hest.md" />
+          }]} />
         </div>
       </div>
     );

@@ -14,6 +14,15 @@ class Markdown extends React.Component {
       cb(require('../../markdown/' + filename));
     });
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.filename !== this.props.filename) {
+      this.getMarkdown(nextProps.filename, markdown => {
+        this.setState({
+          markdown
+        });
+      });
+    }
+  }
   componentDidMount() {
     this.getMarkdown(this.props.filename, markdown => {
       this.setState({
