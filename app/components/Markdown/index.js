@@ -5,7 +5,7 @@ class Markdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {markdown: null};
-    if (process.env.IS_NODE) {
+    if (global.IS_NODE) {
       this.state = {markdown: require('../../markdown/' + props.filename)}
     }
   }

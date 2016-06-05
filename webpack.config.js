@@ -19,9 +19,9 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('development'),
-        'IS_NODE': JSON.stringify('false')
-      }
+        'NODE_ENV': JSON.stringify('development')
+      },
+      'IS_NODE': JSON.stringify('false')
     }),
     new ExtractTextPlugin('styles.css')
   ],

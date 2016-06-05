@@ -22,10 +22,7 @@ module.exports = {
   externals: nodeModules,
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('development'),
-        'IS_NODE': JSON.stringify('false')
-      }
+      'global.IS_NODE': JSON.stringify('false')
     }),
     new webpack.BannerPlugin(
       'require("source-map-support").install();',
