@@ -24,7 +24,8 @@ module.exports = {
       modules: false
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'IS_NODE': JSON.stringify('false')
     }),
     new ExtractTextPlugin('styles.css')
   ],
@@ -37,6 +38,12 @@ module.exports = {
     loaders: [{
       test: /\.css$/,
       loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]')
+    }, {
+      test: /\.scss$/,
+      loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
+    }, {
+      test: /\.json?$/,
+      loader: 'json'
     }, {
       test: /\.js?$/,
       exclude: /node_modules/,

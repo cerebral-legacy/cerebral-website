@@ -24,11 +24,23 @@ module.exports = {
       'base': path.resolve('app', 'base')
     }
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production'),
+        'IS_NODE': JSON.stringify('true')
+      }
+    })
+  ],
   module: {
     loaders: [{
       test: /\.js?$/,
       exclude: /node_modules/,
       loader: 'babel'
+    },
+    {
+      test: /\.json?$/,
+      loader: 'json'
     }, {
       test: /\.md$/,
       loader: 'raw'

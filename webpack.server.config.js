@@ -21,6 +21,12 @@ module.exports = {
   },
   externals: nodeModules,
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('development'),
+        'IS_NODE': JSON.stringify('false')
+      }
+    }),
     new webpack.BannerPlugin(
       'require("source-map-support").install();',
       {
@@ -39,6 +45,10 @@ module.exports = {
       test: /\.js?$/,
       exclude: /node_modules/,
       loader: 'babel'
+    },
+    {
+      test: /\.json?$/,
+      loader: 'json'
     }, {
       test: /\.md$/,
       loader: 'raw'

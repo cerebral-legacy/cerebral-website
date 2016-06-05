@@ -1,6 +1,13 @@
-.header1 {
+.header1, h1 {
   font-size: 72px;
   line-height: 82px;
+  font-weight: 600;
+  color: #00A1C9;
+}
+
+.header2, h2 {
+  font-size: 48px;
+  line-height: 56px;
   font-weight: 600;
   color: #00A1C9;
 }
