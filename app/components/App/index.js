@@ -18,7 +18,7 @@ class App extends React.Component {
         <div className={styles.mainHeader}>
           <img height="50%" src="/cerebral.png" />
           <div className={styles.title}>Cerebral</div>
-          <div className={styles.subTitle}>makes sense of complex apps</div>
+          <div className={styles.subTitle}>make sense of complex apps</div>
           <div className={styles.buttonContainer}>
             <div className={styles.button}>TRY THE DEMO</div>
             <div className={styles.button}>GET STARTED</div>
@@ -38,13 +38,26 @@ class App extends React.Component {
           </div>
           <div className={styles.row}>
             <Tabs tabs={[{
-              label: 'appMounted.js',
-              render: () => <Markdown filename="front_controller_code.md" />
+              label: 'main.js',
+              render: () => <Markdown filename="front_controller_main.md" />
+            }, {
+              label: 'signal.js',
+              render: () => <Markdown filename="front_controller_signal.md" />
             }, {
               label: 'Debugger',
               render: () => <Markdown filename="front_controller_debugger.md" />
             }]} />
             <Markdown filename="front_controller.md" />
+          </div>
+          <div className={styles.row}>
+            <Markdown filename="front_view.md" />
+            <Tabs tabs={[{
+              label: 'React',
+              render: () => <Markdown filename="front_view_react.md" />
+            }, {
+              label: 'Debugger',
+              render: () => <Markdown filename="front_view_debugger.md" />
+            }]} />
           </div>
         </div>
       </div>

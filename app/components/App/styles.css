@@ -73,6 +73,9 @@ body {
 .row {
   display: flex;
   padding: 40px 0;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
 }
 
 .row > div {

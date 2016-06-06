@@ -1,5 +1,5 @@
 ### Controller
 
-The Cerebral controller is where you define all the logic that wants to change the state of your application. This being a user interaction or some other event. The change is defined using **signals**. These signals defines a flow of **actions** that will be performed much like a behaviour tree.
+The Cerebral controller is where you define all the logic that wants to change the state of your application. This being a user interaction or some other event. The logic to run is defined as a **signal**. These signals looks and behaves much like a decision tree. Like the model you can divide signals into modules.
 
-The debugger knows about all the signals, when they trigger and what data goes through them, giving you really great insight into what happens when users are interacting with your application.
+The debugger knows when signals trigger and what data goes through them. This gives you great insight into what is actually going on inside your application.
