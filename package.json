@@ -53,6 +53,7 @@
     "sass-loader": "^3.2.0",
     "stats-webpack-plugin": "^0.3.1",
     "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0"

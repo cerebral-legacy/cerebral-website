@@ -48,6 +48,9 @@ module.exports = {
     }, {
       test: /\.md$/,
       loader: 'raw'
+    }, {
+      test: /\.woff$/,
+      loader: 'url?limit=100000'
     }]
   }
 };

@@ -1,3 +1,0 @@
-```javascript
-// Some angular code
-```
