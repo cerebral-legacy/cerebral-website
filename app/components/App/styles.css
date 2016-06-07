@@ -67,7 +67,11 @@ body {
 .content img {
   border: 2px solid #223338;
   border-radius: 4px;
-    width: 100%;
+  width: 100%;
+}
+
+.content p {
+  text-align: justify;
 }
 
 .row {
@@ -83,9 +87,9 @@ body {
 }
 
 .row > div:first-child {
-  margin-right: 10px;
+  margin-right: 40px;
 }
 
 .row > div:last-child {
-  margin-left: 10px;
+  margin-left: 40px;
 }
