@@ -1,7 +1,7 @@
 ```javascript
 import Model from 'cerebral-model'
 import Controller from 'cerebral'
-import signal from './signal'
+import appMounted from './appMounted'
 
 const model = Model({
   isLoading: false,
@@ -11,6 +11,6 @@ const model = Model({
 const controller = Controller(model)
 
 controller.addSignals({
-  signal
+  appMounted
 })
 ```

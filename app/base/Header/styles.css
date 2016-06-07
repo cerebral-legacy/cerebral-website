@@ -7,6 +7,7 @@
   line-height: 82px;
   font-weight: 600;
   color: #00A1C9;
+  margin: 0;
 }
 
 .header2, h2 {
@@ -14,6 +15,7 @@
   line-height: 56px;
   font-weight: 600;
   color: #00A1C9;
+  margin: 0;
 }
 
 .header2, h2 {
@@ -21,6 +23,7 @@
   line-height: 56px;
   font-weight: 600;
   color: #00A1C9;
+  margin: 0;
 }
 
 .header3, h3 {
@@ -35,4 +38,5 @@
   line-height: 32px;
   font-weight: 600;
   color: #223338;
+  margin: 0;
 }

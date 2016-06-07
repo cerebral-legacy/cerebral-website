@@ -41,7 +41,7 @@ class App extends React.Component {
               label: 'main.js',
               render: () => <Markdown filename="front_controller_main.md" />
             }, {
-              label: 'signal.js',
+              label: 'appMounted.js',
               render: () => <Markdown filename="front_controller_signal.md" />
             }, {
               label: 'Debugger',

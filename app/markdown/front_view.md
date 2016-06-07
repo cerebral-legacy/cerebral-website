@@ -1,4 +1,4 @@
-### View
+## View
 
 A component registers to one or more state paths. When a change occurs in your model Cerebral will notify the view layer about what paths has changed. That way only the components that needs to re-render does so.
 
