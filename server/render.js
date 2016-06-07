@@ -12,19 +12,11 @@ export default (app) => {
   const getIndex = () => {
     return isDeveloping ? index : fs.readFileSync('./server/index.html', 'utf-8').toString();
   };
-  const render = (content, subContent) => {
-    const state = {
-      content: content,
-      subContent: subContent || null,
-      displayMenu: true,
-      showOverlay: false,
-      videoSrc: null,
-      transitionVideo: false,
-      searchQuery: '',
-      searchResults: [],
-      showSearchResult: false,
-      githubPages: {}
-    };
+  const render = (newState) => {
+    const state = Object.assign({
+      currentPage: 'front',
+      currentDocument: 'get_started'
+    }, newState);
     const controller = ServerController(state);
 
     return {
@@ -35,19 +27,15 @@ export default (app) => {
 
   app.get('/', (req, res) => {
     res.type('html');
-    const view = render('cerebral');
+    const view = render();
     res.send(getIndex().replace('${body}', view.html).replace('${BOOTSTRAP_STATE}', view.state));
   });
 
-  app.get('/:content', (req, res) => {
+  app.get('/documentation', (req, res) => {
     res.type('html');
-    const view = render(req.params.content);
-    res.send(getIndex().replace('${body}', view.html).replace('${BOOTSTRAP_STATE}', view.state));
-  });
-
-  app.get('/:content/:subContent', (req, res) => {
-    res.type('html');
-    const view = render(req.params.content, req.params.subContent);
+    const view = render({
+      currentPage: 'documentation'
+    });
     res.send(getIndex().replace('${body}', view.html).replace('${BOOTSTRAP_STATE}', view.state));
   });
 };

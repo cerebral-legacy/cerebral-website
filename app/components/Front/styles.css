@@ -1,0 +1,84 @@
+.wrapper {
+
+}
+
+.mainHeader {
+  display: flex;
+  background-color: #00A1C9;
+  height: 75vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mainHeader img {
+  margin: 20px 0;
+}
+
+.title {
+  font-size: 48px;
+  line-height: 56px;
+  font-weight: 600;
+  color: #92DFF0;
+}
+
+.subTitle {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  color: #FFF;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+}
+
+.button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #007299;
+  color: #FFF;
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+}
+
+.content {
+  margin: 0 auto;
+  width: 960px;
+  padding: 40px;
+}
+
+.content img {
+  border: 2px solid #223338;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.content p {
+  text-align: justify;
+}
+
+.row {
+  display: flex;
+  padding: 40px 0;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+}
+
+.row > div {
+    flex: 0 0 50%;
+}
+
+.row > div:first-child {
+  margin-right: 40px;
+}
+
+.row > div:last-child {
+  margin-left: 40px;
+}
