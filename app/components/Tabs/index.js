@@ -33,7 +33,13 @@ class Tabs extends React.Component {
         <div className={styles.tabs}>
           {this.props.tabs.map(this.renderTab.bind(this))}
         </div>
-        {this.props.tabs[this.state.activeTabIndex].render()}
+        {this.props.tabs.map((tab, index) => {
+          return (
+            <div style={{display: index === this.state.activeTabIndex ? 'block' : 'none'}}>
+              {tab.render()}
+            </div>
+          )
+        })}
       </div>
     );
   }
