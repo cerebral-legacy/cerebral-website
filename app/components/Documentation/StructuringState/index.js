@@ -7,7 +7,7 @@ export default function StructuringState() {
   return (
     <div>
       <Markdown filename="doc_structuring_state.md" />
-      <NextDocument name="adding_signals" />
+      <NextDocument name="defining_signals" />
     </div>
   );
 }
