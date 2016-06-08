@@ -7,24 +7,9 @@ import {
   toUrlName
 } from '../../utils';
 
-import GetStarted from '../GetStarted';
-
-const menu = {
-  'Get started': {
-    'Get started': GetStarted,
-    'Structuring state': null,
-    'Adding signals': null,
-    'Creating components': null
-  },
-  'Next steps': {
-    'Adding modules': null
-  },
-  'Advanced': {},
-  'Api': {}
-};
-
 @Cerebral({
-  currentDocument: 'currentDocument'
+  currentDocument: 'currentDocument',
+  menu: 'menu'
 })
 class Menu extends React.Component {
   constructor(props) {
@@ -44,8 +29,8 @@ class Menu extends React.Component {
       <div
         key={itemIndex}
         className={className}
-        onClick={() => this.props.signals.menuItemClicked({
-          name: docUrlName
+        onClick={() => this.props.signals.documentClicked({
+          doc: docUrlName
         })}
       >
         {itemKey}
@@ -54,17 +39,24 @@ class Menu extends React.Component {
   }
   renderMenuSection(sectionKey, section, sectionIndex) {
     const doc = fromUrlName(this.props.currentDocument);
-    const sectionHasDocument = Boolean(section[doc]);
+    const sectionHasDocument = section.indexOf(doc) >= 0;
     const className = classnames(styles.section, {
       [styles.activeSection]: sectionHasDocument
     });
+
     return (
       <div key={sectionIndex} className={className}>
-        <div>{sectionKey}</div>
+        <div
+          onClick={() => this.props.signals.documentClicked({
+            doc: toUrlName(section[0])
+          })}
+        >
+          {sectionKey}
+        </div>
 
         {
           sectionHasDocument ?
-            Object.keys(section).map((key, index) => (
+            section.map((key, index) => (
               this.renderMenuItem(key, index)
             ))
           :
@@ -76,8 +68,8 @@ class Menu extends React.Component {
   render() {
     return (
       <div>
-        {Object.keys(menu).map((key, index) => (
-          this.renderMenuSection(key, menu[key], index)
+        {Object.keys(this.props.menu).map((key, index) => (
+          this.renderMenuSection(key, this.props.menu[key], index)
         ))}
       </div>
     );

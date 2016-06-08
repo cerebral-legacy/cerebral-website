@@ -15,7 +15,20 @@ export default (app) => {
   const render = (newState) => {
     const state = Object.assign({
       currentPage: 'front',
-      currentDocument: 'get_started'
+      currentDocument: 'get_started',
+      menu: {
+        'Get started': [
+          'Get started',
+          'Structuring state',
+          'Adding signals',
+          'Creating components'
+        ],
+        'Next steps': [
+          'Adding modules'
+        ],
+        'Advanced': [],
+        'Api': []
+      }
     }, newState);
     const controller = ServerController(state);
 
@@ -35,6 +48,15 @@ export default (app) => {
     res.type('html');
     const view = render({
       currentPage: 'documentation'
+    });
+    res.send(getIndex().replace('${body}', view.html).replace('${BOOTSTRAP_STATE}', view.state));
+  });
+
+  app.get('/documentation/:doc', (req, res) => {
+    res.type('html');
+    const view = render({
+      currentPage: 'documentation',
+      currentDocument: req.params.doc
     });
     res.send(getIndex().replace('${body}', view.html).replace('${BOOTSTRAP_STATE}', view.state));
   });

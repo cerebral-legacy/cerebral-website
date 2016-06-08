@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Markdown from '../Markdown';
-import NextDocument from '../NextDocument';
+import Markdown from '../../Markdown';
+import NextDocument from '../../NextDocument';
 
 export default function GetStarted() {
   return (

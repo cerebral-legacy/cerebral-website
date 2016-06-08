@@ -1,5 +1,5 @@
-import set from 'cerebral-addons/set';
+import { redirect } from 'cerebral-module-router';
 
 export default [
-  set('currentPage', 'documentation')
+  redirect('/documentation/get_started')
 ];

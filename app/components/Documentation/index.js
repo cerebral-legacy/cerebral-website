@@ -3,10 +3,12 @@ import {Decorator as Cerebral} from 'cerebral-view-react';
 import styles from './styles.css';
 
 import Menu from '../Menu';
-import GetStarted from '../GetStarted';
+import GetStarted from './GetStarted';
+import StructuringState from './StructuringState';
 
 const pages = {
-  'get_started': GetStarted
+  'get_started': GetStarted,
+  'structuring_state': StructuringState
 };
 
 @Cerebral({
