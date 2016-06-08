@@ -14,6 +14,11 @@ const pages = {
   currentPage: 'currentPage'
 })
 class App extends React.Component {
+  componentDidUpdate(prevProps) {
+    if (prevProps.currentPage !== this.props.currentPage) {
+      document.body.scrollTop = 0;
+    }
+  }
   render() {
     const Page = pages[this.props.currentPage];
 

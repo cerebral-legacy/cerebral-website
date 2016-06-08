@@ -20,7 +20,7 @@ export default (app) => {
         'Get started': [
           'Get started',
           'Structuring state',
-          'Adding signals',
+          'Defining signals',
           'Creating components'
         ],
         'Next steps': [
