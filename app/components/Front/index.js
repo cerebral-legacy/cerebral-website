@@ -81,6 +81,7 @@ class App extends React.Component {
           <div className={styles.referenceSplitterWrapper}>
             <div className={styles.referenceLine} />
             <div className={styles.crazyAbout}>They are all pretty excited about Cerebral</div>
+            <div className={styles.companies}><img src="/company_ducky.png" /></div>
           </div>
         </div>
       </div>

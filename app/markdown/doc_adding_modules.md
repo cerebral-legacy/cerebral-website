@@ -54,6 +54,7 @@ When you use modules you should also structure your files and directories in the
 
 ```javascript
 /src
+  /components
   /modules
     /actions
     /signals
