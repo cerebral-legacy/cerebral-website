@@ -8,13 +8,15 @@ import StructuringState from './StructuringState';
 import DefiningSignals from './DefiningSignals';
 import CreatingComponents from './CreatingComponents';
 import AddingModules from './AddingModules';
+import CreatingActions from './CreatingActions';
 
 const pages = {
   'get_started': GetStarted,
   'structuring_state': StructuringState,
   'defining_signals': DefiningSignals,
   'creating_components': CreatingComponents,
-  'adding_modules': AddingModules
+  'adding_modules': AddingModules,
+  'creating_actions': CreatingActions
 };
 
 @Cerebral({

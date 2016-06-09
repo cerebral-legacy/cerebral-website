@@ -24,7 +24,8 @@ export default (app) => {
           'Creating components'
         ],
         'Next steps': [
-          'Adding modules'
+          'Adding modules',
+          'Creating actions'
         ],
         'Advanced': [],
         'Api': [],

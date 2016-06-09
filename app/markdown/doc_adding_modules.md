@@ -1,6 +1,6 @@
 ## Adding modules
 
-It does not take long before you need to split up your state and signals. In Cerebral you can use modules to handle that. Modules are a very simple concept, it basically just namespaces your state and your signals. Let us revert our existing model and signals:
+It does not take long before you need to split up your state and signals. In Cerebral you can use modules to handle that. Modules are a very simple concept, it basically just namespaces to structure your application. Let us move our code around a bit:
 
 ```javascript
 import App from './modules/App'
@@ -56,15 +56,14 @@ When you use modules you should also structure your files and directories in the
 /src
   /components
   /modules
-    /actions
-    /signals
-    index.js
+    /App
+      /actions
+      /signals
+      index.js
   main.js
 ```
 
 #### Best practices
-Creating modules helps you decouple and structure your application. Modules are really nothing more than namespacing, but you will see later what other benefits we can also get from modules.
-
-Components pointing to state paths should be as specific as possible. In the example above we could have pointed only to **app** as the state path, but then the component will rerender on any change to any part of the state path, which might not be what you want.
+Creating modules helps you decouple and structure your application. Modules are really nothing more than namespacing, but you will see later what other benefits we can also get from modules. A challenge decoupling code is isolation. In Cerebral that does not happen. Any module has access to any state in your model, also signals and actions can be reused across modules.
 
 And yes, modules can have submodules ;-)

@@ -58,3 +58,8 @@ a {
   color: #00A1C9;
   text-decoration: none;
 }
+
+ul li {
+  padding: 4px;
+  margin-left: 16px;
+}

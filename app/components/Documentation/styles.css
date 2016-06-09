@@ -50,4 +50,6 @@
 .document {
   flex: 0 1 960px;
   padding: 0 40px 40px 0;
+  min-height: calc(100vh - 100px - 222px);
+  box-sizing: border-box;
 }
