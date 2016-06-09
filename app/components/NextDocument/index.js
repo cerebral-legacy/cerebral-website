@@ -1,10 +1,13 @@
 import React from 'react';
 import styles from './styles.css';
 import {Decorator as Cerebral} from 'cerebral-view-react';
+import classnames from 'classnames';
 
 import {
   fromUrlName
 } from '../../utils';
+
+import icons from '../../common/icons.css';
 
 @Cerebral()
 class NextDocument extends React.Component {
@@ -20,8 +23,13 @@ class NextDocument extends React.Component {
             })
           }}
         >
-          <div className={styles.next}>Next</div>
-          <div className={styles.doc}>{fromUrlName(this.props.name)}</div>
+          <div className={styles.contentWrapper}>
+            <div>
+              <div className={styles.next}>next</div>
+              <div className={styles.doc}>{fromUrlName(this.props.name)}</div>
+            </div>
+            <div className={classnames(icons.next, styles.icon)} />
+          </div>
         </div>
       </div>
     );

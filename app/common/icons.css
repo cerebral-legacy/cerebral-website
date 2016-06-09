@@ -54,3 +54,8 @@
 .menu:before {
     content: "\f0c9";
 }
+
+.next { composes: font; }
+.next:before {
+    content: "\f061";
+}

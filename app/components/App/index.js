@@ -4,6 +4,7 @@ import styles from './styles.css';
 
 import Front from '../Front';
 import Documentation from '../Documentation';
+import Footer from '../Footer';
 
 const pages = {
   front: Front,
@@ -25,6 +26,7 @@ class App extends React.Component {
     return (
       <div className={styles.wrapper}>
         <Page />
+        <Footer />
       </div>
     );
   }

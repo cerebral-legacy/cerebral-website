@@ -43,5 +43,5 @@ As you can see a signal is an array. An array that describes what should happen 
 
 This **copy** function is something we call an action factory. So when we call this function it will return an action that the signal executes. We will look more into these actions in [the next steps]() section.
 
-#### Summary
-Signals is where you define the *business logic* of your application. They are at the core of Cerebral and makes it possible for you and your team members to quickly understand how state changes run in your application. Signals can become very complex, but they are still easy to read and understand. As you work on larger application you are free to create your own action factories and even chain factories, as we will look more into later.
+#### Best practices
+Signals is where you define the *business logic* of your application. You should avoid having business logic in your views. Signals are at the core of Cerebral and makes it possible for you and your team members to quickly understand how state changes run in your application. Signals can become very complex, but they are still easy to read and understand. As you work on larger application you are free to create your own action factories and even chain factories, as we will look more into later.

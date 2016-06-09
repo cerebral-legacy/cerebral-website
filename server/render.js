@@ -27,7 +27,9 @@ export default (app) => {
           'Adding modules'
         ],
         'Advanced': [],
-        'Api': []
+        'Api': [],
+        'Modules': [],
+        'Providers': []
       }
     }, newState);
     const controller = ServerController(state);

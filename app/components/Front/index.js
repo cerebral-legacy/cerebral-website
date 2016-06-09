@@ -5,9 +5,17 @@ import styles from './styles.css';
 import Tabs from '../Tabs';
 import Markdown from '../Markdown';
 
+const quotes = [{
+  name: 'Nathan Bird',
+  company: 'Ducky',
+  text: 'Woop woop, it works like a charm!'
+}];
+
 @Cerebral()
 class App extends React.Component {
   render() {
+    const quote = quotes[Math.floor(Math.random() * (quotes.length - 1))];
+
     return (
       <div className={styles.wrapper}>
         <div className={styles.mainHeader}>
@@ -58,6 +66,21 @@ class App extends React.Component {
               label: 'Debugger',
               render: () => <Markdown filename="front_view_debugger.md" />
             }]} />
+          </div>
+        </div>
+        <div className={styles.references}>
+          <div className={styles.quote}>
+            <div className={styles.quoteText}>
+              "{quote.text}"
+            </div>
+            <div className={styles.quoteNameWrapper}>
+              <span className={styles.quoteName}>- {quote.name},</span>
+              <span className={styles.quoteCompany}> {quote.company}</span>
+            </div>
+          </div>
+          <div className={styles.referenceSplitterWrapper}>
+            <div className={styles.referenceLine} />
+            <div className={styles.crazyAbout}>They are all pretty excited about Cerebral</div>
           </div>
         </div>
       </div>

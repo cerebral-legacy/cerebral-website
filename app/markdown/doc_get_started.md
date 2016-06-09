@@ -28,5 +28,5 @@ The Cerebral debugger is a Chrome extension. You can install it from the [chrome
 
 Have a look around in the debugger and play around with the demo application to see what is going on inside before moving on.
 
-#### Summary
-In this section we fired up the Cerebral demo. The **cerebral-cli** tool helps you set up a basic project with Webpack. You can choose to run a webpack development server or use a Node express server to serve your application. The CLI will also help you build and prepare your application for production.
+#### Best practices
+In this section we fired up the Cerebral demo. The **cerebral-cli** tool helps you set up a basic project with Webpack. You can choose to run a webpack development server or use a Node express server to serve your application. The CLI will also help you build and prepare your application for production. Using the **cerebral-cli** is considered a best practice to get a project going, but you are of course completely free to do whatever you want from that point.

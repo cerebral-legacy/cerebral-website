@@ -6,11 +6,15 @@ import Menu from '../Menu';
 import GetStarted from './GetStarted';
 import StructuringState from './StructuringState';
 import DefiningSignals from './DefiningSignals';
+import CreatingComponents from './CreatingComponents';
+import AddingModules from './AddingModules';
 
 const pages = {
   'get_started': GetStarted,
   'structuring_state': StructuringState,
-  'defining_signals': DefiningSignals
+  'defining_signals': DefiningSignals,
+  'creating_components': CreatingComponents,
+  'adding_modules': AddingModules
 };
 
 @Cerebral({

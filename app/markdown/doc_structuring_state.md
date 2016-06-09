@@ -39,5 +39,5 @@ const model = Model({
 
 We are going to use this **isSaving** state to indicate in the UI that we are saving the new item to the server.
 
-#### Summary
+#### Best practices
 It can often be a good idea to start any implementation by defining state structure. If you think of a design mock of a user interface you can translate this into state using strings, numbers, booleans, objects and arrays. It is a good team exercise that ensures that your chosen conventions on naming state properties and overall structure is nurtured.

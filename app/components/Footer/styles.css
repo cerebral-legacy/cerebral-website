@@ -1,0 +1,30 @@
+.wrapper {
+  background-color: #004A66;
+  padding: 40px;
+}
+
+.columns {
+  display: flex;
+  margin: 0 auto;
+  width: 960px;
+  justify-content: center;
+}
+
+.column {
+  flex: 1;
+  margin: 0px 20px;
+  color: #FFF;
+}
+
+.header {
+  color: #92DFF0;
+  font-size: 12px;
+  line-height: 38px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.link {
+  margin: 5px 0;
+  cursor: pointer;
+}

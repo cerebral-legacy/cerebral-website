@@ -36,14 +36,15 @@
 }
 
 .button {
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 0px 24px;
+  border-radius: 4px;
   background-color: #007299;
+  margin: 0 8px;
   color: #FFF;
-  margin: 0 5px;
   cursor: pointer;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 48px;
+  text-transform: uppercase;
   font-weight: 400;
 }
 
@@ -66,9 +67,7 @@
 .row {
   display: flex;
   padding: 40px 0;
-  font-size: 18px;
   line-height: 28px;
-  font-weight: 500;
 }
 
 .row > div {
@@ -81,4 +80,56 @@
 
 .row > div:last-child {
   margin-left: 40px;
+}
+
+.references {
+  background-color: #E1EDF0;
+  text-align: center;
+  padding: 60px 40px;
+  color: #779DA6;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+}
+
+.quote {
+  display: flex;
+  flex-direction: column;
+}
+
+.quoteText {
+  font-size: 24px;
+  line-height: 32px;
+  font-style: italic;
+}
+
+.quoteNameWrapper {
+
+}
+
+.quoteName {
+  font-weight: 500;
+}
+
+.referenceSplitterWrapper {
+  padding: 40px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.referenceLine {
+  height: 1px;
+  width: 50%;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.crazyAbout {
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+  background-color: #E1EDF0;
+  padding: 0 10px;
+  margin-top: -10px;
 }
