@@ -5,5 +5,5 @@ What you will quickly notice in a Cerebral application is how easy it is to move
 
 You might be familiar with state containers and presentation containers, or the like, but that is not how Cerebral works. In Cerebral you are encouraged to define the state dependencies as close as possible to the component that needs them. This also makes it a lot easier to reason about your application.
 
-### Lets add the new state
-We added a new **isSaving** state to our model previously. Lets us insert that into our component. We want to disable the input when we are saving a new item. 
+### Rendering the application
+The components of your view layer needs to know about Cerebral. This has some different approaches based on the view package you decide upon, but the basic idea is the same. Expose Cerebral state and signals to the components.

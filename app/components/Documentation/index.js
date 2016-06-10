@@ -9,6 +9,7 @@ import DefiningSignals from './DefiningSignals';
 import CreatingComponents from './CreatingComponents';
 import AddingModules from './AddingModules';
 import CreatingActions from './CreatingActions';
+import AddingASharedModule from './AddingASharedModule';
 
 const pages = {
   'get_started': GetStarted,
@@ -16,7 +17,8 @@ const pages = {
   'defining_signals': DefiningSignals,
   'creating_components': CreatingComponents,
   'adding_modules': AddingModules,
-  'creating_actions': CreatingActions
+  'creating_actions': CreatingActions,
+  'adding_a_shared_module': AddingASharedModule
 };
 
 @Cerebral({

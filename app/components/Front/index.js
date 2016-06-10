@@ -24,12 +24,12 @@ class App extends React.Component {
           <div className={styles.subTitle}>make sense of complex apps</div>
           <div className={styles.buttonContainer}>
             <div className={styles.button}>TRY THE DEMO</div>
-            <div className={styles.button}>GET STARTED</div>
+            <div className={styles.button}>INTRODUCTION</div>
             <div
               className={styles.button}
               onClick={() => this.props.signals.documentationClicked()}
             >
-              DOCUMENTATION
+              GET STARTED
             </div>
           </div>
         </div>

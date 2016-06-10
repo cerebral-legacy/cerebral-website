@@ -1,0 +1,6 @@
+As you can see a signal is an array. An array that describes what should happen when the signal triggers. By using the [cerebral-addons]() package we get some helpers that you will most definitely use to make changes to the state amongst other things. In this signal we are copying the title from the input of the signal over to the path **newItemTitle** in our model. This is the most straight forward state change you can do. Your UI has passed in a payload to the signal which is available on the input and we copy it into our model.
+
+This **copy** function is something we call an action factory. So when we call this function it will return an action that the signal executes. We will look more into these actions in [the next steps]() section.
+
+#### Best practices
+Signals is where you define the *business logic* of your application. You should avoid having business logic in your views. Signals are at the core of Cerebral and makes it possible for you and your team members to quickly understand how state changes run in your application. Signals can become very complex, but they are still easy to read and understand. As you work on larger application you are free to create your own action factories and even chain factories, as we will look more into later.

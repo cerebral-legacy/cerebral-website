@@ -3,6 +3,7 @@ import React from 'react';
 import Markdown from '../../Markdown';
 import NextDocument from '../../NextDocument';
 import Tabs from '../../Tabs';
+import GithubCode from '../../GithubCode';
 
 export default function CreatingComponents() {
   return (
@@ -10,7 +11,7 @@ export default function CreatingComponents() {
       <Markdown filename="doc_creating_components.md" />
       <Tabs tabs={[{
         label: 'React',
-        render: () => <Markdown filename="doc_creating_components_react.md" />
+        render: () => <GithubCode url="https://raw.githubusercontent.com/cerebral/cerebral-website-tutorial/react/src/components/App/index.js" />
       }, {
         label: 'Inferno',
         render: () => <Markdown filename="doc_creating_components_inferno.md" />
@@ -18,7 +19,7 @@ export default function CreatingComponents() {
       <Markdown filename="doc_creating_components2.md" />
       <Tabs tabs={[{
         label: 'React',
-        render: () => <Markdown filename="doc_creating_components_react2.md" />
+        render: () => <GithubCode url="https://raw.githubusercontent.com/cerebral/cerebral-website-tutorial/react/src/main.js" />
       }]} />
       <Markdown filename="doc_creating_components3.md" />
       <NextDocument name="adding_modules" />

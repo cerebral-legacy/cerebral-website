@@ -17,7 +17,7 @@ export default (app) => {
       currentPage: 'front',
       currentDocument: 'get_started',
       menu: {
-        'Get started': [
+        'Introduction': [
           'Get started',
           'Structuring state',
           'Defining signals',
@@ -25,7 +25,8 @@ export default (app) => {
         ],
         'Next steps': [
           'Adding modules',
-          'Creating actions'
+          'Creating actions',
+          'Adding a shared module'
         ],
         'Advanced': [],
         'Api': [],
