@@ -25,7 +25,7 @@ export default function CreatingComponents() {
         render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-basic/blob/snabbdom/src/main.js" />
       }]} />
       <Markdown filename="doc_creating_components3.md" />
-      <NextDocument name="adding_modules" />
+      <NextDocument name="next_step" />
     </div>
   );
 }

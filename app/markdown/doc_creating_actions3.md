@@ -1,0 +1,1 @@
+Here we are using the **state** API of Cerebral to put our a new item at the top of our items list. Since our title is already in the state tree we can just grab that. To use this action simply reference it in a signal:

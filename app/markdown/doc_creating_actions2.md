@@ -1,0 +1,1 @@
+**copy** is a function you can use from *cerebral-addons* to change the state of the app. We call this function an **action factory**. It means that when you call the function it will return an action for you. You can also create action factories, but let us first look at an example of an action:
