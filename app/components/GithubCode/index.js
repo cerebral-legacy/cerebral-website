@@ -11,13 +11,22 @@ class GithubCode extends React.Component {
     this.getCode();
   }
   getCode(url) {
+    const rawUrl = this.props.url
+      .replace(
+        'https://github.com/cerebral/cerebral-website-tutorial-basic/blob',
+        'https://raw.githubusercontent.com/cerebral/cerebral-website-tutorial-basic'
+      )
+      .replace(
+        'https://github.com/cerebral/cerebral-website-tutorial-next/blob',
+        'https://raw.githubusercontent.com/cerebral/cerebral-website-tutorial-next'
+      )
     const oReq = new XMLHttpRequest();
     oReq.addEventListener('load', (event) => {
       this.setState({
         code: event.target.responseText
       });
     });
-    oReq.open('GET', this.props.url);
+    oReq.open('GET', rawUrl);
     oReq.send();
   }
   render() {
@@ -28,12 +37,14 @@ class GithubCode extends React.Component {
         </div>
       );
     }
-    let filename = this.props.url.replace('https://raw.githubusercontent.com/cerebral/cerebral-website-tutorial/', '');
+    let filename = this.props.url
+      .replace('https://github.com/cerebral/cerebral-website-tutorial-basic/blob/', '')
+      .replace('https://github.com/cerebral/cerebral-website-tutorial-next/blob/', '');
     filename = filename.split('/').slice(1).join('/');
 
     return (
       <div>
-        {MTRC('*' + filename + '*\n\`\`\`javascript\n' + this.state.code + '\n\`\`\`').tree}
+        {MTRC('[' + filename + '](' + this.props.url + ')\n\`\`\`javascript\n' + this.state.code + '\n\`\`\`').tree}
       </div>
     );
   }

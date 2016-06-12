@@ -18,17 +18,21 @@ export default (app) => {
       currentDocument: 'get_started',
       menu: {
         'Introduction': [
-          'Get started',
+          'Introduction',
           'Structuring state',
           'Defining signals',
           'Creating components'
         ],
-        'Next steps': [
+        'Next step': [
+          'Next step',
           'Adding modules',
           'Creating actions',
           'Adding a shared module'
         ],
         'Advanced': [],
+        'Get started': [
+          'Project setup'
+        ],
         'Api': [],
         'Modules': [],
         'Providers': []

@@ -1,0 +1,1 @@
+A module is just a function that receives the module. We can now attach our state and the signals to the module instead of directly on the controller. When we now have namespaced our state we must also make sure our components points to the complete state path:

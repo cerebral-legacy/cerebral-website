@@ -3,22 +3,24 @@ import {Decorator as Cerebral} from 'cerebral-view-react';
 import styles from './styles.css';
 
 import Menu from '../Menu';
-import GetStarted from './GetStarted';
+import Introduction from './Introduction';
 import StructuringState from './StructuringState';
 import DefiningSignals from './DefiningSignals';
 import CreatingComponents from './CreatingComponents';
 import AddingModules from './AddingModules';
 import CreatingActions from './CreatingActions';
 import AddingASharedModule from './AddingASharedModule';
+import NextStep from './NextStep';
 
 const pages = {
-  'get_started': GetStarted,
+  'introduction': Introduction,
   'structuring_state': StructuringState,
   'defining_signals': DefiningSignals,
   'creating_components': CreatingComponents,
   'adding_modules': AddingModules,
   'creating_actions': CreatingActions,
-  'adding_a_shared_module': AddingASharedModule
+  'adding_a_shared_module': AddingASharedModule,
+  'next_step': NextStep
 };
 
 @Cerebral({

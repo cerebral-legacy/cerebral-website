@@ -11,15 +11,18 @@ export default function CreatingComponents() {
       <Markdown filename="doc_creating_components.md" />
       <Tabs tabs={[{
         label: 'React',
-        render: () => <GithubCode url="https://raw.githubusercontent.com/cerebral/cerebral-website-tutorial/react/src/components/App/index.js" />
+        render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-basic/blob/react/src/components/App/index.js" />
       }, {
-        label: 'Inferno',
-        render: () => <Markdown filename="doc_creating_components_inferno.md" />
+        label: 'Snabbdom',
+        render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-basic/blob/snabbdom/src/components/App/index.js" />
       }]} />
       <Markdown filename="doc_creating_components2.md" />
       <Tabs tabs={[{
         label: 'React',
-        render: () => <GithubCode url="https://raw.githubusercontent.com/cerebral/cerebral-website-tutorial/react/src/main.js" />
+        render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-basic/blob/react/src/main.js" />
+      }, {
+        label: 'Snabbdom',
+        render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-basic/blob/snabbdom/src/main.js" />
       }]} />
       <Markdown filename="doc_creating_components3.md" />
       <NextDocument name="adding_modules" />

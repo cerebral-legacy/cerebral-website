@@ -6,20 +6,20 @@ Make sure you fulfill these requirements:
 * You are comfortable with the new ES2015 syntax
 * You have a coffee or a beer, ready to learn something new
 
-This tutorial will take you through the demo application of Cerebral. If you want to look through the source code and run the project with the debugger you can clone a repo based on your favorite view layer: **react, snabbdom, inferno, angular** or **angular2**.
+This tutorial will take you through the first demo application of Cerebral. If you want to look through the source code and run the project with the debugger you can clone a repo based on your favorite view layer: **react, snabbdom, inferno, angular** or **angular2**.
 
-`$ git clone -b {VIEW-LAYER} https://github.com/cerebral/cerebral-website-tutorial.git`
+`$ git clone -b {VIEW-LAYER} https://github.com/cerebral/cerebral-website-tutorial-basic.git`
 
 ### Starting the project
 You have to install the dependencies of the project first:
 
 `$ npm install`
 
-After you are done you can fire up the Node express server doing:
+After you are done you can fire up the webpack dev server using:
 
 `$ npm start`
 
-Go to *localhost:3000* in your browser and the Cerebral demo application will appear.
+Go to *localhost:8080* in your browser and the Cerebral demo application will appear.
 
 ### Installing the debugger
 The Cerebral debugger is a Chrome extension. You can install it from the [chrome store](https://chrome.google.com/webstore/detail/cerebral-debugger/ddefoknoniaeoikpgneklcbjlipfedbb). Once the debugger is installed your Chrome devtools will have a new tab called **cerebral**. Go to the demo app an refresh to start the debugger.
