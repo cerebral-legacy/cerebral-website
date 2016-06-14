@@ -14,7 +14,7 @@ export default function AddingASharedModule() {
       <Markdown filename="doc_adding_a_shared_module3.md" />
       <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-next/blob/master/src/modules/App/signals/newTitleSubmitted.js" />
       <Markdown filename="doc_adding_a_shared_module4.md" />
-      <NextDocument name="creating_actions" />
+      <NextDocument name="advanced" />
     </div>
   );
 }

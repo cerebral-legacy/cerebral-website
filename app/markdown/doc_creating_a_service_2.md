@@ -1,0 +1,3 @@
+We use these two services to store and get the latest items in the browser. This will allow the application to instantly show the latest items when the application loads up. This introduces a complexity though. These local items might be out of sync with the server. There are many approaches to solve this and in this application we simply do not allow any changes until the server has responded with the correct list of items. This is a simple approach, but it gives some value to the user.
+
+The module also exposes an action that uses this service to do the actual storing and fetching from localStorage. Looking at the **storeItems** action we can see that it just grabs the current items and stores them. That means we can reuse this action in multiple signals.

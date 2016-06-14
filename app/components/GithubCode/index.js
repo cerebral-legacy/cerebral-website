@@ -20,6 +20,10 @@ class GithubCode extends React.Component {
         'https://github.com/cerebral/cerebral-website-tutorial-next/blob',
         'https://raw.githubusercontent.com/cerebral/cerebral-website-tutorial-next'
       )
+      .replace(
+        'https://github.com/cerebral/cerebral-website-tutorial-advanced/blob',
+        'https://raw.githubusercontent.com/cerebral/cerebral-website-tutorial-advanced'
+      );
     const oReq = new XMLHttpRequest();
     oReq.addEventListener('load', (event) => {
       this.setState({
@@ -39,7 +43,8 @@ class GithubCode extends React.Component {
     }
     let filename = this.props.url
       .replace('https://github.com/cerebral/cerebral-website-tutorial-basic/blob/', '')
-      .replace('https://github.com/cerebral/cerebral-website-tutorial-next/blob/', '');
+      .replace('https://github.com/cerebral/cerebral-website-tutorial-next/blob/', '')
+      .replace('https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/', '');
     filename = filename.split('/').slice(1).join('/');
 
     return (

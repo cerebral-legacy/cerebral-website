@@ -1,0 +1,2 @@
+#### Best practices
+The Cerebral router just maps urls to signals. Signals executes actions. Actions changes the state of your app. When a url just makes a change to the state of your application you are free from thinking that a url has to be linked to your view layer. What is going to happen in the view layer is decided after the state has changed. And this state change can be more than just what page to display, it can really be anything!

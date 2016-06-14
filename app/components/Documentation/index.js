@@ -11,6 +11,9 @@ import AddingModules from './AddingModules';
 import CreatingActions from './CreatingActions';
 import AddingASharedModule from './AddingASharedModule';
 import NextStep from './NextStep';
+import Advanced from './Advanced';
+import Routing from './Routing';
+import CreatingAService from './CreatingAService';
 
 const pages = {
   'introduction': Introduction,
@@ -20,7 +23,10 @@ const pages = {
   'adding_modules': AddingModules,
   'creating_actions': CreatingActions,
   'adding_a_shared_module': AddingASharedModule,
-  'next_step': NextStep
+  'next_step': NextStep,
+  'advanced': Advanced,
+  'routing': Routing,
+  'creating_a_service': CreatingAService
 };
 
 @Cerebral({

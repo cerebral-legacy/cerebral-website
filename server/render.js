@@ -29,9 +29,19 @@ export default (app) => {
           'Creating actions',
           'Adding a shared module'
         ],
-        'Advanced': [],
+        'Advanced': [
+          'Advanced',
+          'Routing',
+          'Creating a service',
+          'Providers',
+          'Data complexity'
+        ],
         'Get started': [
-          'Project setup'
+          'Get started',
+          'Choosing a project type',
+          'Choosing a model',
+          'Structuring your project',
+          'Enable the debugger'
         ],
         'Api': [],
         'Modules': [],
