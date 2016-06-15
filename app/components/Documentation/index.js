@@ -14,6 +14,9 @@ import NextStep from './NextStep';
 import Advanced from './Advanced';
 import Routing from './Routing';
 import CreatingAService from './CreatingAService';
+import ContextProviders from './ContextProviders';
+import DataAndUX from './DataAndUX';
+import Computed from './Computed';
 
 const pages = {
   'introduction': Introduction,
@@ -26,7 +29,10 @@ const pages = {
   'next_step': NextStep,
   'advanced': Advanced,
   'routing': Routing,
-  'creating_a_service': CreatingAService
+  'creating_a_service': CreatingAService,
+  'context_providers': ContextProviders,
+  'data_and_ux': DataAndUX,
+  'computed': Computed
 };
 
 @Cerebral({

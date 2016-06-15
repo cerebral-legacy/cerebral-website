@@ -33,8 +33,9 @@ export default (app) => {
           'Advanced',
           'Routing',
           'Creating a service',
-          'Providers',
-          'Data complexity'
+          'Context providers',
+          'Data and ux',
+          'Computed'
         ],
         'Get started': [
           'Get started',
@@ -45,7 +46,7 @@ export default (app) => {
         ],
         'Api': [],
         'Modules': [],
-        'Providers': []
+        'Context providers': []
       }
     }, newState);
     const controller = ServerController(state);

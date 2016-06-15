@@ -1,0 +1,1 @@
+This computed definition depends on two different state paths to figure out what items should be returned. This function can now be used by any component in your application to grab the filtered list of items.
