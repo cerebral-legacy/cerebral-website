@@ -1,6 +1,6 @@
 ## Context providers
 
-There are two different ways Cerebral can be enhanced. We have already talked about the shared modules, like **cerebral-module-http**, but there is also a concept of providers. As already mentioned all actions executed by signals has a context:
+There are two different ways Cerebral can be enhanced. We have already talked about the shared modules, like **cerebral-module-http**, but there is also a concept of context providers. As already mentioned all actions executed by signals has a context:
 
 ```javascript
 function myAction(context) {

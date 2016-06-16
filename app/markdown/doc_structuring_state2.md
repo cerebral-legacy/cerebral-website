@@ -12,7 +12,7 @@ const model = Model({
 })
 ```
 
-But there are not limits to this. You structure your state in a way that makes sense to you and your team.
+But there are no limits to this. You structure your state in a way that makes sense to you and your team.
 
 Cerebral has a concept of **modules** which helps you do this namespacing for your state and your signals. We will look more at this later.
 

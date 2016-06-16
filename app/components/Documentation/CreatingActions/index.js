@@ -13,7 +13,7 @@ export default function CreatingComponents() {
       <Markdown filename="doc_creating_actions2.md" />
       <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-next/blob/master/src/modules/App/actions/addItem.js" />
       <Markdown filename="doc_creating_actions3.md" />
-      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-next/blob/master/src/modules/App/signals/newTitleSubmitted.js" />
+      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-next/blob/master/src/modules/App/signals/newItemTitleSubmitted.js" />
       <Markdown filename="doc_creating_actions4.md" />
       <NextDocument name="adding_a_shared_module" />
     </div>

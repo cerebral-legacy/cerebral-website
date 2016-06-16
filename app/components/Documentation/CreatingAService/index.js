@@ -13,9 +13,9 @@ export default function Advanced() {
       <Markdown filename="doc_creating_a_service_2.md" />
       <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/master/src/modules/LocalStorage/actions/storeItems.js" />
       <Markdown filename="doc_creating_a_service_3.md" />
-      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/master/src/modules/App/signals/newTitleSubmitted.js" />
+      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/master/src/modules/App/signals/newItemTitleSubmitted.js" />
       <Markdown filename="doc_creating_a_service_4.md" />
-      <NextDocument name="providers" />
+      <NextDocument name="context_providers" />
     </div>
   );
 }
