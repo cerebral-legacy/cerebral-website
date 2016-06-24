@@ -1,1 +1,1 @@
-What we have done now is add a namespace to our application called **app** and we reference our App module. Let us take a closer look at that:
+What we have done now is add a namespace to our application called **app** and we reference our App module. We also have two other modules, **devtools** and **http**. That means there is not difference creating an application specific module or a module you want to share with others. Let us take a closer look at our **App** module:

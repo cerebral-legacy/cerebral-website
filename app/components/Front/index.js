@@ -42,7 +42,7 @@ class App extends React.Component {
           <div className={styles.row}>
             <Markdown filename="front_model.md" />
             <Tabs tabs={[{
-              label: 'main.js',
+              label: 'controller.js',
               render: () => <Markdown filename="front_model_code.md" />
             }, {
               label: 'Debugger',
@@ -51,11 +51,11 @@ class App extends React.Component {
           </div>
           <div className={styles.row}>
             <Tabs tabs={[{
-              label: 'main.js',
-              render: () => <Markdown filename="front_controller_main.md" />
-            }, {
               label: 'appMounted.js',
               render: () => <Markdown filename="front_controller_signal.md" />
+            }, {
+              label: 'controller.js',
+              render: () => <Markdown filename="front_controller_controller.md" />
             }, {
               label: 'Debugger',
               render: () => <Markdown filename="front_controller_debugger.md" />
@@ -67,6 +67,9 @@ class App extends React.Component {
             <Tabs tabs={[{
               label: 'React',
               render: () => <Markdown filename="front_view_react.md" />
+            }, {
+              label: 'Snabbdom',
+              render: () => <Markdown filename="front_view_snabbdom.md" />
             }, {
               label: 'Debugger',
               render: () => <Markdown filename="front_view_debugger.md" />

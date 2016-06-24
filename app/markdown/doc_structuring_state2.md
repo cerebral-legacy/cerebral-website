@@ -17,4 +17,4 @@ But there are no limits to this. You structure your state in a way that makes se
 Cerebral has a concept of **modules** which helps you do this namespacing for your state and your signals. We will look more at this later.
 
 #### Best practices
-It can often be a good idea to start any implementation by defining state structure. If you think of a design mock of a user interface you can translate this into state using strings, numbers, booleans, objects and arrays. It is a good team exercise that ensures that your chosen conventions on naming state properties and overall structure is nurtured.
+It can often be a good idea to start any implementation by defining state structure. If you think of a design mock of a user interface you can translate this into state of strings, numbers, booleans, objects and arrays. It is a good team exercise that ensures that your chosen conventions on naming state properties and overall structure is aligned.

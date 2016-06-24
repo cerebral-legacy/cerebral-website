@@ -13,4 +13,6 @@ const controller = Controller(model)
 controller.addSignals({
   appMounted
 })
+
+export default controller
 ```

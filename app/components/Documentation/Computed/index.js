@@ -9,7 +9,7 @@ export default function Computed() {
   return (
     <div>
       <Markdown filename="doc_computed.md" />
-      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/master/src/computed/filteredItems.js" />
+      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/master/src/computed/filteredAndSortedItemKeys.js" />
       <Markdown filename="doc_computed_2.md" />
       <Tabs tabs={[{
         label: 'React',

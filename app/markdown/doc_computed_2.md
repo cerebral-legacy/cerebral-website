@@ -1,1 +1,3 @@
-This computed definition depends on two different state paths to figure out what items should be returned. This function can now be used by any component in your application to grab the filtered list of items.
+This computed definition depends on two different state paths to figure out what items should be returned. This function can now be used by any component in your application to grab the filtered list of items. But notice here that we are not returning the items themselves, but only their keys.
+
+The reason we do this is because we want each component we render to grab the actual item they are interested in. This ensures that all the components in our list is optimized and will only render again if the specific item it is interested in changes. The alternative approach here would be to return the items and pass each item into its own component, but that would render the whole list every time something in the list changed.

@@ -12,4 +12,6 @@ const model = Model({
 })
 
 const controller = Controller(model)
+
+export default controller
 ```
