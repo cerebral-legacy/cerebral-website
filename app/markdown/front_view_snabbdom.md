@@ -1,11 +1,13 @@
 ```javascript
 import {Component, h} from 'cerebral-view-snabbdom'
 
-export default Component('App', {
-  title: 'app.title'
+export default Component('Items', {
+  items: 'items'
 }, props => (
-  h('div',
-    h('h1', props.title)
-  )
+  h('ul', props.items.map(item, index) => (
+    h('li', {
+      key: index
+    }, item.title)
+  ))
 ))
 ```

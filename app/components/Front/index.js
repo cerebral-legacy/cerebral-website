@@ -51,11 +51,8 @@ class App extends React.Component {
           </div>
           <div className={styles.row}>
             <Tabs tabs={[{
-              label: 'appMounted.js',
+              label: 'newItemTitleSubmitted.js',
               render: () => <Markdown filename="front_controller_signal.md" />
-            }, {
-              label: 'controller.js',
-              render: () => <Markdown filename="front_controller_controller.md" />
             }, {
               label: 'Debugger',
               render: () => <Markdown filename="front_controller_debugger.md" />

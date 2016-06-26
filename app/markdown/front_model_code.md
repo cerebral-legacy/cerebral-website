@@ -3,12 +3,10 @@ import Model from 'cerebral-model'
 import Controller from 'cerebral'
 
 const model = Model({
+  newItemTitle: '',
   isLoading: false,
   items: [],
-  filter: 'all',
-  user: {
-    name: 'Bob'
-  }
+  error: null
 })
 
 const controller = Controller(model)

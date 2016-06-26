@@ -3,7 +3,7 @@ What to take notice of here is how dumb this component is. It only knows what st
 ### Decoupling app and UI
 What you will quickly notice in a Cerebral application is how easy it is to move components around. Since all of them define their own state dependencies you can just move them wherever you want and they will still work.
 
-You might be familiar with state containers and presentation containers, or the like, but that is not how Cerebral works. In Cerebral you are encouraged to define the state dependencies as close as possible to the component that needs them, not pass state down as properties to nested components. This makess it a lot easier to reason about your application.
+You might be familiar with state containers and presentation containers, or the like, but that is not how Cerebral works. In Cerebral you are encouraged to define the state dependencies as close as possible to the component that needs them, not pass state down as properties to nested components. This makes it a lot easier to reason about your application.
 
 ### Rendering the application
 The components of your view layer needs to know about Cerebral. This has different approaches based on the view package you decide upon, but the basic idea is the same. Expose Cerebral state and signals to the components.

@@ -1,7 +1,7 @@
 Our application should just show a list of items and allow us to add new items with a title. Thinking about what state your application needs before you implement logic and UI is a very good exercise that can be done with multiple developers. Basically you describe what state is needed to produce the UI you want to build for your users.
 
 ### Namespaces
-Typically you create namespaces for your state to structure it. Typically in an application with multiple pages you would namespace by page:
+Typically you create namespaces for your state to structure it. In an application with multiple pages you might namespace by page:
 
 ```javascript
 const model = Model({

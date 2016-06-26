@@ -1,19 +1,18 @@
 ```javascript
-import setLoading from '../actions/setLoading'
-import getItems from '../actions/getItems'
-import setItems from '../actions/setItems'
-import setError from '../actions/setError'
+import addItem from '../actions/addItem'
 
 export default [
-  setLoading(true),
-  getItems, {
+  addItem,
+  set('state:/newItemTitle', ''),
+  set('state:/isSaving', true),
+  postItem, {
     success: [
-      setItems
+      updateItem
     ],
     error: [
-      setError
+      removeFailedItem
     ]
   },
-  setLoading(false)
+  set('state:/isSaving', false)
 ]
 ```

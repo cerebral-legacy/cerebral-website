@@ -1,1 +1,1 @@
-![debugger](/debugger_model.png)
+![debugger](/model.gif)
