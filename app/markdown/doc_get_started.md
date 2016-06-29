@@ -1,10 +1,6 @@
 ## Get started
 
-To give you a good experience starting new Cerebral projects we have created a **CLI** tool. You will use this tool for three things:
-
-1. Create a project structure
-2. Run the workflow
-3. Build a production version of your app
+To give you a good experience starting new Cerebral projects we have created a **CLI** tool. You will use this tool for one simple thing: **Create a project!**.
 
 First install the CLI:
 
