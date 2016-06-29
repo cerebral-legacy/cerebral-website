@@ -1,10 +1,11 @@
 ```javascript
+import {set} from 'cerebral/operators'
 import addItem from '../actions/addItem'
 
 export default [
   addItem,
-  set('state:/newItemTitle', ''),
-  set('state:/isSaving', true),
+  set('state:newItemTitle', ''),
+  set('state:isSaving', true),
   postItem, {
     success: [
       updateItem
@@ -13,6 +14,6 @@ export default [
       removeFailedItem
     ]
   },
-  set('state:/isSaving', false)
+  set('state:isSaving', false)
 ]
 ```

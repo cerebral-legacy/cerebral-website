@@ -41,12 +41,35 @@ export default (app) => {
           'Get started',
           'Choosing a project type',
           'Choosing a model',
+          'Choosing a view',
           'Structuring your project',
-          'Enable the debugger'
+          'The debugger',
+          'Going to production'
         ],
-        'Api': [],
-        'Modules': [],
-        'Context providers': []
+        'Api': [
+          'Controller',
+          'Actions',
+          'Signals',
+          'Operators',
+          'Modules',
+          'Chains',
+          'Factories',
+          'Computed',
+          'Context providers'
+        ],
+        'Modules': [
+          'cerebral-module-http',
+          'cerebral-module-forms',
+          'cerebral-module-useragent',
+          'cerebral-module-router',
+          'cerebral-module-recorder',
+          'cerebral-module-fuse',
+          'cerebral-module-firebase',
+          'cerebral-module-falcor'
+        ],
+        'Context providers': [
+          'cerebral-provider-modules'
+        ]
       }
     }, newState);
     const controller = ServerController(state);

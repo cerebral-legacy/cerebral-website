@@ -17,6 +17,13 @@ import CreatingAService from './CreatingAService';
 import ContextProviders from './ContextProviders';
 import DataAndUX from './DataAndUX';
 import Computed from './Computed';
+import GetStarted from './GetStarted';
+import ChoosingAProjectType from './ChoosingAProjectType';
+import ChoosingAModel from './ChoosingAModel';
+import ChoosingAView from './ChoosingAView';
+import StructuringYourProject from './StructuringYourProject';
+import TheDebugger from './TheDebugger';
+import GoingToProduction from './GoingToProduction';
 
 const pages = {
   'introduction': Introduction,
@@ -32,7 +39,14 @@ const pages = {
   'creating_a_service': CreatingAService,
   'context_providers': ContextProviders,
   'data_and_ux': DataAndUX,
-  'computed': Computed
+  'computed': Computed,
+  'get_started': GetStarted,
+  'choosing_a_project_type': ChoosingAProjectType,
+  'choosing_a_model': ChoosingAModel,
+  'choosing_a_view': ChoosingAView,
+  'structuring_your_project': StructuringYourProject,
+  'the_debugger': TheDebugger,
+  'going_to_production': GoingToProduction
 };
 
 @Cerebral({
