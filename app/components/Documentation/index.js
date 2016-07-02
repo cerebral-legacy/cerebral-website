@@ -24,6 +24,7 @@ import ChoosingAView from './ChoosingAView';
 import StructuringYourProject from './StructuringYourProject';
 import TheDebugger from './TheDebugger';
 import GoingToProduction from './GoingToProduction';
+import Sticky from 'react-stickynode';
 
 const pages = {
   'introduction': Introduction,
@@ -70,11 +71,9 @@ class Documentation extends React.Component {
           </div>
         </div>
         <div className={styles.content}>
-          <div className={styles.menu}>
-            <div className={styles.fixedMenuWrapper}>
-              <Menu />
-            </div>
-          </div>
+          <Sticky top={`.${styles.header}`} bottomBoundary={`.${styles.content}`} className={styles.menu}>
+            <Menu />
+          </Sticky>
           <div className={styles.document}>
             {
               Page ?
