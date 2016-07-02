@@ -8,16 +8,17 @@ Even though signals helps you build mental images of complexities in your applic
 - Gives insight into signal execution with all input, outputs, actions, paths and services affected
 - Click actions to go to source code
 - Double click signals to time travel (cerebral-model-immutable)
-- Live update of state tree
+- Keep state of application on refresh (cerebral-model-immutable)
+- Live update of state tree visualizer
 - Edit state tree directly from debugger
-- See active the paths in the application
+- See the active paths in the application
 - Log of renders, showing what state paths changed and what components were affected
 - Copy signals data for debugging purposes
 
 ### Install
 The Cerebral debugger is a Chrome extension. You can install it from the [chrome store](https://chrome.google.com/webstore/detail/cerebral-debugger/ddefoknoniaeoikpgneklcbjlipfedbb). Once the debugger is installed your Chrome devtools will have a new tab called **cerebral**.
 
-### Instantiate manually
+#### Instantiate manually
 ```javascript
 import Controller from 'cerebral'
 import Model from 'cerebral-model-immutable'

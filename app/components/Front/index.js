@@ -8,7 +8,7 @@ import Markdown from '../Markdown';
 const quotes = [{
   name: 'Nathan Bird',
   company: 'Ducky',
-  text: 'Woop woop, it works like a charm!'
+  text: 'The debugger gives me really great insight into how our application works, also the stuff my team mates has implemented'
 }];
 
 @Cerebral()
@@ -86,7 +86,11 @@ class App extends React.Component {
           <div className={styles.referenceSplitterWrapper}>
             <div className={styles.referenceLine} />
             <div className={styles.crazyAbout}>They are all pretty excited about Cerebral</div>
-            <div className={styles.companies}><img src="/company_ducky.png" /></div>
+            <div className={styles.companies}>
+              <img src="/company_ducky.png" />
+              <img src="/company_kbd.png" />
+              <img src="/company_salespreso.png" />
+            </div>
           </div>
         </div>
       </div>

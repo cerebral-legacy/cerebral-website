@@ -24,6 +24,10 @@ import ChoosingAView from './ChoosingAView';
 import StructuringYourProject from './StructuringYourProject';
 import TheDebugger from './TheDebugger';
 import GoingToProduction from './GoingToProduction';
+import Controller from './Controller';
+import Signals from './Signals';
+import Actions from './Actions';
+import Operators from './Operators';
 
 const pages = {
   'introduction': Introduction,
@@ -46,7 +50,11 @@ const pages = {
   'choosing_a_view': ChoosingAView,
   'structuring_your_project': StructuringYourProject,
   'the_debugger': TheDebugger,
-  'going_to_production': GoingToProduction
+  'going_to_production': GoingToProduction,
+  'controller': Controller,
+  'signals': Signals,
+  'actions': Actions,
+  'operators': Operators
 };
 
 @Cerebral({
