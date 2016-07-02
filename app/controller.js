@@ -6,6 +6,9 @@ import rootRouted from './signals/rootRouted';
 import introductionClicked from './signals/introductionClicked';
 import documentClicked from './signals/documentClicked';
 import getStartedClicked from './signals/getStartedClicked';
+import menuButtonClicked from './signals/menuButtonClicked';
+import closeMenuButtonClicked from './signals/closeMenuButtonClicked';
+import appClicked from './signals/appClicked';
 
 const controller = Controller(Model(window.BOOTSTRAP_STATE));
 
@@ -13,7 +16,10 @@ controller.addSignals({
   rootRouted,
   introductionClicked,
   getStartedClicked,
-  documentClicked
+  documentClicked,
+  menuButtonClicked,
+  closeMenuButtonClicked,
+  appClicked
 });
 
 controller.addModules({

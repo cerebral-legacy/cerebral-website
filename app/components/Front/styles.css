@@ -1,11 +1,8 @@
-.wrapper {
-
-}
-
 .mainHeader {
   display: flex;
   background-color: #00A1C9;
   height: 75vh;
+  min-height: 435px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -90,6 +87,7 @@
   font-size: 18px;
   line-height: 28px;
   font-weight: 400;
+  box-sizing: border-box;
 }
 
 .quote {
@@ -135,5 +133,49 @@
 }
 
 .companies {
-  padding: 40px 40px 0 40px;
+  padding: 40px 0 0 0;
+}
+
+@media (max-width: 1181px) {
+  .content {
+    width: auto;
+  }
+  .row {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .row > div {
+      flex: 1;
+      width: 100%;
+  }
+
+  .row > div:first-child {
+    margin-right: 0
+  }
+
+  .row > div:last-child {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .mainHeader img {
+    height: 200px;
+  }
+  .mainHeader {
+    min-height: 100vh;
+    height: auto;
+    width: 100%;
+  }
+  .buttonContainer {
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .button {
+    text-align: center;
+    margin: 5px 0;
+  }
 }

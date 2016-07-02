@@ -1,8 +1,10 @@
 import React from 'react';
 import {Decorator as Cerebral} from 'cerebral-view-react';
 import styles from './styles.css';
+import classNames from 'classnames';
 
 import Menu from '../Menu';
+import MenuMobile from '../MenuMobile';
 import Introduction from './Introduction';
 import StructuringState from './StructuringState';
 import DefiningSignals from './DefiningSignals';
@@ -24,6 +26,8 @@ import ChoosingAView from './ChoosingAView';
 import StructuringYourProject from './StructuringYourProject';
 import TheDebugger from './TheDebugger';
 import GoingToProduction from './GoingToProduction';
+import icons from '../../common/icons.css';
+import Sticky from 'react-stickynode';
 
 const pages = {
   'introduction': Introduction,
@@ -50,7 +54,8 @@ const pages = {
 };
 
 @Cerebral({
-  currentDocument: 'currentDocument'
+  currentDocument: 'currentDocument',
+  menuIsOpen: 'menuIsOpen'
 })
 class Documentation extends React.Component {
   componentDidUpdate(prevProps) {
@@ -63,18 +68,23 @@ class Documentation extends React.Component {
 
     return (
       <div className={styles.wrapper}>
+        {this.props.menuIsOpen ? <MenuMobile /> : null}
         <div className={styles.header}>
-          <div className={styles.logoWrapper} onClick={() => this.props.signals.rootRouted()}>
-            <img src="/cerebral.png" />
-            <div className={styles.title}>Cerebral</div>
+          <button className={classNames(styles.menuButton, icons.menu)} onClick={(e) => {
+            e.stopPropagation();
+            this.props.signals.menuButtonClicked();
+          }}></button>
+          <div className={styles.logoWrapper}>
+            <div className={styles.logo} onClick={() => this.props.signals.rootRouted()}>
+              <img src="/cerebral.png" />
+              <div className={styles.title}>Cerebral</div>
+            </div>
           </div>
         </div>
         <div className={styles.content}>
-          <div className={styles.menu}>
-            <div className={styles.fixedMenuWrapper}>
-              <Menu />
-            </div>
-          </div>
+          <Sticky top={`.${styles.header}`} bottomBoundary={`.${styles.content}`} className={styles.menu}>
+            <Menu />
+          </Sticky>
           <div className={styles.document}>
             {
               Page ?

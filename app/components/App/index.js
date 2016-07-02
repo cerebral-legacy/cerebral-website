@@ -24,7 +24,7 @@ class App extends React.Component {
     const Page = pages[this.props.currentPage];
 
     return (
-      <div className={styles.wrapper}>
+      <div className={styles.wrapper} onClick={() => this.props.signals.appClicked()}>
         <Page />
         <Footer />
       </div>

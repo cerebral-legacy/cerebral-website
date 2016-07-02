@@ -6,8 +6,9 @@
 .columns {
   display: flex;
   margin: 0 auto;
-  width: 960px;
+  max-width: 960px;
   justify-content: center;
+  min-width: 760px;
 }
 
 .column {
@@ -27,4 +28,18 @@
 .link {
   margin: 5px 0;
   cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .columns {
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: 0;
+    justify-content: flex-start;
+  }
+
+  .column {
+    margin: 20px;
+    flex: 1 1 auto;
+  }
 }

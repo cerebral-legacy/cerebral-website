@@ -16,6 +16,7 @@ export default (app) => {
     const state = Object.assign({
       currentPage: 'front',
       currentDocument: 'get_started',
+      menuIsOpen: false,
       menu: {
         'Introduction': [
           'Introduction',

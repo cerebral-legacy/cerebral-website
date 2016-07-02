@@ -9,7 +9,13 @@
   flex: 1 1 auto;
   justify-content: center;
   align-items: center;
+}
+
+.logo {
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .logoWrapper img {
@@ -25,6 +31,7 @@
   top: 0;
   left: 0;
   box-shadow: 0px 5px 20px 5px rgba(0,0,0,0.15);
+  z-index: 2;
 }
 
 .title {
@@ -52,4 +59,33 @@
   padding: 0 40px 40px 0;
   min-height: calc(100vh - 100px - 222px);
   box-sizing: border-box;
+}
+
+.menuButton {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 24px;
+  padding: 0 20px;
+  cursor: pointer;
+  outline: none;
+}
+
+.menuButton:hover {
+  opacity: 0.8;
+}
+
+@media (min-width: 901px) {
+  .menuButton {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .document {
+    padding: 40px;
+  }
+  .menu {
+    display: none;
+  }
 }
