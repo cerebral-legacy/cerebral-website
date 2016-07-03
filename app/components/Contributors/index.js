@@ -40,6 +40,16 @@ const contributors = [{
   description: 'Adam has solved some core issues with the Chrome Extension and generally involves himself in supporting developers of Cerebral and other discussions on new modules and the core project. He also made the website mobile friendly!',
   imageLink: 'adam.png',
   githubLink: 'https://github.com/NervosaX'
+}, {
+  name: 'Mattias',
+  description: '',
+  imageLink: '',
+  githubLink: null
+}, {
+  name: 'Saul',
+  description: '',
+  imageLink: '',
+  githubLink: null
 }]
 
 @Cerebral()
@@ -54,7 +64,9 @@ class Contributors extends React.Component {
             <div className={styles.description}>
               <h3 className={styles.name}>{contributor.name}</h3>
               <div dangerouslySetInnerHTML={{__html: contributor.description}}></div>
-              <a className={styles.githubLink} target="_blank" href={contributor.githubLink}>Github Profile</a>
+              {contributor.githubLink ?
+                  <a className={styles.githubLink} target="_blank" href={contributor.githubLink}>Github Profile</a>
+              : null}
             </div>
           </div>
         </div>
