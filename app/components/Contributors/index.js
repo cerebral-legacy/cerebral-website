@@ -50,6 +50,11 @@ const contributors = [{
   description: '',
   imageLink: '',
   githubLink: null
+}, {
+  name: 'Max',
+  description: '',
+  imageLink: '',
+  githubLink: null
 }]
 
 @Cerebral()
