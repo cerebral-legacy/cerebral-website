@@ -13,7 +13,7 @@ class Footer extends React.Component {
               Organization
             </div>
             <div className={styles.link}>About</div>
-            <div className={styles.link}>Contributors</div>
+            <div className={styles.link} onClick={() => this.props.signals.contributorsClicked()}>Contributors</div>
             <div className={styles.link}>Hire a Cerebral consultant</div>
           </div>
           <div className={styles.column}>
