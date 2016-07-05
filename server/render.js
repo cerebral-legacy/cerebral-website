@@ -4,6 +4,7 @@ import {ServerController} from 'cerebral';
 import {Container} from 'cerebral-view-react';
 import App from '../app/components/App';
 import fs from 'fs';
+import externalDocs from './externalDocs';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 
@@ -57,19 +58,8 @@ export default (app) => {
           'Computed',
           'Context providers'
         ],
-        'Modules': [
-          'cerebral-module-http',
-          'cerebral-module-forms',
-          'cerebral-module-useragent',
-          'cerebral-module-router',
-          'cerebral-module-recorder',
-          'cerebral-module-fuse',
-          'cerebral-module-firebase',
-          'cerebral-module-falcor'
-        ],
-        'Context providers': [
-          'cerebral-provider-modules'
-        ]
+        'Modules': Object.keys(externalDocs.modules),
+        'Context providers': Object.keys(externalDocs.providers),
       }
     }, newState);
     const controller = ServerController(state);

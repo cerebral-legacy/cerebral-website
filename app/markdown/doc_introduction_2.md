@@ -5,7 +5,7 @@ You have to install the dependencies of the project first:
 
 After you are done you can fire up the webpack dev server using:
 
-`$ npm run client`
+`$ npm start`
 
 Go to *localhost:8080* in your browser and the Cerebral demo application will appear.
 

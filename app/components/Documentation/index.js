@@ -34,6 +34,15 @@ import Services from './Services';
 import Modules from './Modules';
 import Computed from './Computed';
 import ContextProviders from './ContextProviders';
+import CerebralModuleHttp from './CerebralModuleHttp';
+import CerebralModuleForms from './CerebralModuleForms';
+import CerebralModuleUseragent from './CerebralModuleUseragent';
+import CerebralModuleRouter from './CerebralModuleRouter';
+import CerebralModuleRecorder from './CerebralModuleRecorder';
+import CerebralModuleFuse from './CerebralModuleFuse';
+import CerebralModuleFirebase from './CerebralModuleFirebase';
+import CerebralModuleFalcor from './CerebralModuleFalcor';
+import CerebralProviderModules from './CerebralProviderModules';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -67,7 +76,16 @@ const pages = {
   'services': Services,
   'modules': Modules,
   'computed': Computed,
-  'context_providers': ContextProviders
+  'context_providers': ContextProviders,
+  'cerebral-module-http': CerebralModuleHttp,
+  'cerebral-module-forms': CerebralModuleForms,
+  'cerebral-module-useragent': CerebralModuleUseragent,
+  'cerebral-module-router': CerebralModuleRouter,
+  'cerebral-module-recorder': CerebralModuleRecorder,
+  'cerebral-module-fuse': CerebralModuleFuse,
+  'cerebral-module-firebase': CerebralModuleFirebase,
+  'cerebral-module-falcor': CerebralModuleFalcor,
+  'cerebral-provider-modules': CerebralProviderModules,
 };
 
 @Cerebral({

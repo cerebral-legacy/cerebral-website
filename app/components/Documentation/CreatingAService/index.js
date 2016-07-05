@@ -2,7 +2,6 @@ import React from 'react';
 
 import Markdown from '../../Markdown';
 import NextDocument from '../../NextDocument';
-import Tabs from '../../Tabs';
 import GithubCode from '../../GithubCode';
 
 export default function Advanced() {
@@ -15,7 +14,7 @@ export default function Advanced() {
       <Markdown filename="doc_creating_a_service_3.md" />
       <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/master/src/modules/App/signals/newItemTitleSubmitted.js" />
       <Markdown filename="doc_creating_a_service_4.md" />
-      <NextDocument name="context_providers" />
+      <NextDocument name="enhancing_the_context" />
     </div>
   );
 }

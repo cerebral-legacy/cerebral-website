@@ -7,7 +7,7 @@ export default function GetStarted() {
   return (
     <div>
       <Markdown filename="doc_get_started.md" />
-      <NextDocument name="modules" />
+      <NextDocument name="the_workflow" />
     </div>
   );
 }
