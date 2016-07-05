@@ -13,7 +13,7 @@ export default function CreatingComponents() {
       <Markdown filename="doc_data_and_ux_2.md" />
       <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/master/src/modules/App/actions/updateItem.js" />
       <Markdown filename="doc_data_and_ux_3.md" />
-      <NextDocument name="computed" />
+      <NextDocument name="view_specific_state" />
     </div>
   );
 }

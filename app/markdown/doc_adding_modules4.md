@@ -10,13 +10,13 @@ With this structure in place you start to see how larger applications scale in t
   /modules
     /App
       /actions
-      /signals
+      /chains
       index.js
   controller.js
   main.js
 ```
 
 #### Best practices
-Creating modules helps you decouple and structure your application. Modules are really nothing more than namespacing, but you will see later what other benefits we can also get from modules. A challenge decoupling code is isolation. In Cerebral that does not happen. Any module has access to any state in your model, also signals and actions can be reused across modules. Since components are completely decoupled from your application they have access to any state and any signal.
+Creating modules helps you decouple and structure your application. Modules are really nothing more than namespacing, but you will see later what other benefits we can also get from modules. A challenge decoupling code is isolation. In Cerebral that does not happen. Any module has access to any state in your model, also chains and actions can be reused across modules. Since components are completely decoupled from your application they have access to any state and any signal.
 
 And yes, modules can have submodules ;-)

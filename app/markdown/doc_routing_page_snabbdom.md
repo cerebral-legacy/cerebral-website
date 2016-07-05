@@ -1,6 +1,6 @@
 *src/components/App/index.js*
 ```javascript
-import {Component, h} from 'cerebral-view-snabbdom'
+import {connect, h} from 'cerebral-view-snabbdom'
 import Home from '../Home'
 import Admin from '../Admin'
 
@@ -9,9 +9,9 @@ const pages = {
   admin: Admin
 }
 
-export default Component('App', {
+export default connect({
   currentPage: 'app.currentPage'
-}, props => {
+}, function App(props) {
   const Page = pages[props.currentPage]
   return Page()
 })

@@ -27,12 +27,12 @@ And inside a module directory you will have:
 ```javascript
 /modules
   /App
-    /signals
+    /chains
     /actions
     index.js
 ```
 
-The **index.js** file is where you define your module. The directories **/signals** and **/actions** of course holds the signals and actions files, and you might also add **/chains** and **/factories** depending on how complex your signals are.
+The **index.js** file is where you define your module. The directories **/chains** and **/actions** of course holds the chains and actions files, and you might also add **/chainFactories** and **/actionFactories** depending on the level of complexity and reusability.
 
 ### Common stuff
 Sometimes you create a very generic action, chain or factory. These should be stored in its own **/common** folder:
@@ -41,7 +41,8 @@ Sometimes you create a very generic action, chain or factory. These should be st
 /modules
   /common
     /chains
-    /factories
+    /actionFactories
+    /chainFactories
   /App
   /Items
 ```
@@ -60,16 +61,18 @@ Sometimes you create a very generic action, chain or factory. These should be st
     /actions
       addItem.js
       removeFailedItem.js
-    /signals
-      newItemTitleChanged.js
-      newItemTitleSubmitted.js
+    /chains
+      changeItemTitle.js
+      submitItemTitle.js
     index.js
   /Items
     /actions
-      toggleCompleted.js
-    /signals
-      itemCompletedToggled.js
+      toggleItemCompleted.js
+    /chains
+      toggleItemCompleted.js
     index.js
 controller.js
 main.js
 ```
+
+You might wonder why we have a chain and an action with the same name, **toggleItemCompleted** The point here is that the chain represents the flow of changes needed to toggle the item completion and the action is where it actually flips the completed state. The chain just happens to have one action, which often results in the same name. At a later point though the chain might get other actions or be composed with other chains, as we want to do more related to toggling completed on an item. It is perfectly okay that they have the same name, the important thing is to know that chains expresses a flow of changes and an action does one specific change :)

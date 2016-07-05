@@ -1,6 +1,6 @@
 ## Controller
 
-Cerebral is primarily a controller. The part of your application that controls requests for state change. To handle a specific request for state change you register a **signal** definition to the controller. Signals controls the execution of **actions**. To actually hold on to the state that will change through the lifecycle of your application you pass a model to the controller when instantiating. This allows Cerebral to get full control of any changes of state and notify the view layer when something has changed.
+Cerebral is primarily a controller. The part of your application that controls requests for state change. To handle a specific request for state change you register a **signal**. You do this by naming it and pointing to the **chain** to execute. Signals controls the execution of **chains** and **actions**. To actually hold on to the state that will change through the lifecycle of your application you pass a model to the controller when instantiating. This allows Cerebral to get full control of any changes of state and notify the view layer when it should update.
 
 Typically you will create a *controller.js* file in your project:
 

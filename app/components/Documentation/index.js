@@ -16,21 +16,24 @@ import NextStep from './NextStep';
 import Advanced from './Advanced';
 import Routing from './Routing';
 import CreatingAService from './CreatingAService';
-import ContextProviders from './ContextProviders';
+import EnhancingTheContext from './EnhancingTheContext';
 import DataAndUX from './DataAndUX';
-import Computed from './Computed';
+import ViewSpecificState from './ViewSpecificState';
 import GetStarted from './GetStarted';
-import ChoosingAProjectType from './ChoosingAProjectType';
+import TheWorkflow from './TheWorkflow';
 import ChoosingAModel from './ChoosingAModel';
 import ChoosingAView from './ChoosingAView';
 import StructuringYourProject from './StructuringYourProject';
 import TheDebugger from './TheDebugger';
 import GoingToProduction from './GoingToProduction';
-
 import Controller from './Controller';
 import Signals from './Signals';
 import Actions from './Actions';
 import Operators from './Operators';
+import Services from './Services';
+import Modules from './Modules';
+import Computed from './Computed';
+import ContextProviders from './ContextProviders';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -47,11 +50,11 @@ const pages = {
   'advanced': Advanced,
   'routing': Routing,
   'creating_a_service': CreatingAService,
-  'context_providers': ContextProviders,
+  'enhancing_the_context': EnhancingTheContext,
   'data_and_ux': DataAndUX,
-  'computed': Computed,
+  'view_specific_state': ViewSpecificState,
   'get_started': GetStarted,
-  'choosing_a_project_type': ChoosingAProjectType,
+  'the_workflow': TheWorkflow,
   'choosing_a_model': ChoosingAModel,
   'choosing_a_view': ChoosingAView,
   'structuring_your_project': StructuringYourProject,
@@ -60,7 +63,11 @@ const pages = {
   'controller': Controller,
   'signals': Signals,
   'actions': Actions,
-  'operators': Operators
+  'operators': Operators,
+  'services': Services,
+  'modules': Modules,
+  'computed': Computed,
+  'context_providers': ContextProviders
 };
 
 @Cerebral({

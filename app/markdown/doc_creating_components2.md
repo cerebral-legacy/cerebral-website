@@ -1,4 +1,4 @@
-What to take notice of here is how dumb this component is. It only knows what state it is interested in and it triggers signals representing what happened in your application. That, in addition to UI description, is ideally all the responsibility your views should have.
+What to take notice of here is how dumb this component is. It only knows what state it is interested in and it triggers signals representing what happened in your application. That, in addition to UI description, is ideally all the responsibility your view should have.
 
 ### Decoupling app and UI
 What you will quickly notice in a Cerebral application is how easy it is to move components around. Since all of them define their own state dependencies you can just move them wherever you want and they will still work.

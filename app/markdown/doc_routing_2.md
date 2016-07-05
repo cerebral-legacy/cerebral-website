@@ -9,14 +9,14 @@ Router({
 })
 ```
 
-These signals can, among other things, set the current page:
+These signals can for example execute actions that changes the current page:
 
 *src/modules/App/signals/homeClicked.js*
 ```javascript
-import set from 'cerebral-addons'
+import {set} from 'cerebral/operators'
 
 export default [
-  set('state:/app.currentPage', 'home')
+  set('state:app.currentPage', 'home')
 ]
 ```
 

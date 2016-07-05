@@ -1,5 +1,30 @@
 ## Computed
 
-How your state looks in the state tree and how your view layer wants to display that data is not always the same. In many situations your state tree just represents the current state of the app in multiple parts and it is up to your view layer to combine different states to produce a sensible UI for the user. With the demo application for this section we have an example of that. Showing a filtered list.
+Computed lives in a separate package and you can install it with:
 
-So computed in Cerebral works much like a component. You define what state paths it is interested in, but instead of returning a UI description, you return a value.
+`$ npm install cerebral-computed`
+
+You use computed when you want to combine state from your model and structure it in a view friendly way. A simple example would be a filter.
+
+```javascript
+import computed from 'cerebral-computed'
+
+export default computed({
+  filter: 'app.filter',
+  users: 'users.list'
+}, state => {
+  return state.users.map(user => {
+    if (state.filter === 'all') {
+      return user
+    }
+    if (state.filter === 'awesome') {
+      return user.isAwesome
+    }
+    if (state.filter === 'notAwesome') {
+      return !user.isAwesome
+    }
+  })
+})
+```
+
+You use the computed instead of a state dependency path on your components. The state paths of the computed is now merged with any other state paths already on the component. That way they are automatically optimized to only render the component when any of the state paths actually change.

@@ -1,6 +1,6 @@
 ## Actions
 
-Signals executes actions. When you develop a Cerebral application you will create actions to change the state of your application, run side effects like talking to the server and also run other business logic.
+When you develop a Cerebral application you will create actions to change the state of your application, run side effects like talking to the server and also run other business logic.
 
 An action is just a function that receives a context:
 

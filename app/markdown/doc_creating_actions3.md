@@ -1,1 +1,1 @@
-Here we are using the **state** API of Cerebral to put our a new item at the top of our items list. Since our title is already in the state tree we can just grab that. To use this action simply reference it in a signal, which now shows more complexity as we are talking to the server and handling state related to that:
+Here we are using the **state** API of Cerebral to put our a new item at the top of our items list. Since our title is already in the model we can just grab that. To use this action simply reference it in a chain, like we do here:

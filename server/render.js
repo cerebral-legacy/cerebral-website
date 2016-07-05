@@ -34,13 +34,13 @@ export default (app) => {
           'Advanced',
           'Routing',
           'Creating a service',
-          'Context providers',
+          'Enhancing the context',
           'Data and ux',
-          'Computed'
+          'View specific state'
         ],
         'Get started': [
           'Get started',
-          'Choosing a project type',
+          'The workflow',
           'Choosing a model',
           'Choosing a view',
           'Structuring your project',
@@ -54,8 +54,6 @@ export default (app) => {
           'Actions',
           'Operators',
           'Services',
-          'Chains',
-          'Factories',
           'Computed',
           'Context providers'
         ],

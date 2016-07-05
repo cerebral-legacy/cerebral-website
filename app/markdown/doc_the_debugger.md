@@ -18,7 +18,7 @@ Even though signals helps you build mental images of complexities in your applic
 ### Install
 The Cerebral debugger is a Chrome extension. You can install it from the [chrome store](https://chrome.google.com/webstore/detail/cerebral-debugger/ddefoknoniaeoikpgneklcbjlipfedbb). Once the debugger is installed your Chrome devtools will have a new tab called **cerebral**.
 
-#### Instantiate manually
+#### Instantiate
 ```javascript
 import Controller from 'cerebral'
 import Model from 'cerebral-model-immutable'

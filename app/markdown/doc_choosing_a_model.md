@@ -13,11 +13,11 @@ The following features are only available with the immutable model:
 #### When should I choose this model layer?
 Are you unsure which one to choose? Choose this one. Also if your app needs functionality related to recording or storing state externally this is the way to go.
 
-#### Install without CLI
+#### Install
 
 `$ npm install cerebral-model-immutable`
 
-#### Instantiate without CLI
+#### Instantiate
 
 ```javascript
 import Controller from 'Cerebral'
@@ -37,11 +37,11 @@ The following features are only available with the mutable model:
 #### When should I choose this model layer?
 One thing about immutability is that you can not reference objects or arrays. Every object and array is unique, even though they represent the same data. That means you can not do things like create a post and attach a user from the state tree on that post. It will not be the same user object when the post is inserted. If you are working with a lot of relational data this package will allow you to handle referencing.
 
-#### Install without CLI
+#### Install
 
 `$ npm install cerebral-model`
 
-#### Instantiate without CLI
+#### Instantiate
 
 ```javascript
 import Controller from 'Cerebral'
