@@ -9,9 +9,9 @@ export default function DefiningSignals() {
   return (
     <div>
       <Markdown filename="doc_adding_modules.md" />
-      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-next/blob/master/src/controller.js" />
+      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-next/blob/react/src/controller.js" />
       <Markdown filename="doc_adding_modules2.md" />
-      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-next/blob/master/src/modules/App/index.js" />
+      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-next/blob/react/src/modules/App/index.js" />
       <Markdown filename="doc_adding_modules3.md" />
       <Tabs tabs={[{
         label: 'React',

@@ -9,7 +9,7 @@ export default function EnhancingTheContext() {
   return (
     <div>
       <Markdown filename="doc_enhancing_the_context.md" />
-      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/master/src/modules/App/actions/addItem.js" />
+      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/react/src/modules/App/actions/addItem.js" />
       <Markdown filename="doc_enhancing_the_context_2.md" />
       <NextDocument name="data_and_ux" />
     </div>

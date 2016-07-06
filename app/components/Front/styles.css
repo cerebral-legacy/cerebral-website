@@ -138,6 +138,11 @@
   padding: 40px 0 0 0;
 }
 
+.companies img {
+  margin: 20px;
+  width: 250px;
+}
+
 @media (max-width: 1181px) {
   .content {
     width: auto;

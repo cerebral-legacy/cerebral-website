@@ -9,7 +9,7 @@ export default function ViewSpecificState() {
   return (
     <div>
       <Markdown filename="doc_view_specific_state.md" />
-      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/master/src/computed/filteredAndSortedItemKeys.js" />
+      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/react/src/computed/filteredAndSortedItemKeys.js" />
       <Markdown filename="doc_view_specific_state_2.md" />
       <Tabs tabs={[{
         label: 'React',

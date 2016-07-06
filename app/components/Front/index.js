@@ -9,12 +9,16 @@ const quotes = [{
   name: 'Nathan Bird',
   company: 'Ducky',
   text: 'The debugger gives me really great insight into how our application works, also the stuff my team mates has implemented'
+}, {
+  name: 'Chris Fricke',
+  company: 'Stem',
+  text: 'As a core part of our stack, Cerebral was integral in modularizing and scaling our complex application to adapt to our growing user base'
 }];
 
 @Cerebral()
 class App extends React.Component {
   render() {
-    const quote = quotes[Math.floor(Math.random() * (quotes.length - 1))];
+    const quote = quotes[Math.floor(Math.random() * (quotes.length))];
 
     return (
       <div className={styles.wrapper}>
@@ -51,7 +55,7 @@ class App extends React.Component {
           </div>
           <div className={styles.row}>
             <Tabs tabs={[{
-              label: 'newItemTitleSubmitted.js',
+              label: 'submitNewItemTitle.js',
               render: () => <Markdown filename="front_controller_signal.md" />
             }, {
               label: 'Debugger',
@@ -90,6 +94,7 @@ class App extends React.Component {
               <img src="/company_ducky.png" />
               <img src="/company_kbd.png" />
               <img src="/company_salespreso.png" />
+              <img src="/company_stem.png" />
             </div>
           </div>
         </div>

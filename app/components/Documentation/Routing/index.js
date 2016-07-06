@@ -9,7 +9,7 @@ export default function Introduction() {
   return (
     <div>
       <Markdown filename="doc_routing.md" />
-      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/master/src/controller.js" />
+      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/react/src/controller.js" />
       <Markdown filename="doc_routing_2.md" />
       <Tabs tabs={[{
         label: 'React',

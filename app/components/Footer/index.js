@@ -12,9 +12,7 @@ class Footer extends React.Component {
             <div className={styles.header}>
               Organization
             </div>
-            <div className={styles.link}>About</div>
             <div className={styles.link}>Contributors</div>
-            <div className={styles.link}>Hire a Cerebral consultant</div>
           </div>
           <div className={styles.column}>
             <div className={styles.header}>

@@ -11,7 +11,7 @@ Router({
 
 These signals can for example execute actions that changes the current page:
 
-*src/modules/App/signals/homeClicked.js*
+*src/modules/App/chains/openHome.js*
 ```javascript
 import {set} from 'cerebral/operators'
 

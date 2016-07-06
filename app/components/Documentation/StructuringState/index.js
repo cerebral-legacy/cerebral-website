@@ -8,7 +8,7 @@ export default function StructuringState() {
   return (
     <div>
       <Markdown filename="doc_structuring_state.md" />
-      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-basic/blob/master/src/model.js" />
+      <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-basic/blob/react/src/model.js" />
       <Markdown filename="doc_structuring_state2.md" />
       <NextDocument name="defining_signals" />
     </div>
