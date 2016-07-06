@@ -16,8 +16,8 @@ body {
 }
 
 h1 {
-  font-size: 72px;
-  line-height: 82px;
+  font-size: 48px;
+  line-height: 56px;
   font-weight: 600;
   color: #00A1C9;
   margin: 0;
@@ -47,7 +47,7 @@ h4 {
 }
 
 code {
-  padding: 8px 16px;
+  padding: 4px 8px;
   font-family: 'Roboto Mono', Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   font-size: 14px;
   color: #FFF;

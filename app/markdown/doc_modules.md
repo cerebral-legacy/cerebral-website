@@ -5,7 +5,7 @@ Primarily you use modules to organize your code. They create namespaces for your
 Modules are registered to the controller:
 
 ```javascript
-import Controller from 'cerebral'
+import {Controller} from 'cerebral'
 import Model from 'cerebral-model-immutable'
 
 import Home from './modules/Home'

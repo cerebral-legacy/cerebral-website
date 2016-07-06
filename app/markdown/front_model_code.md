@@ -1,6 +1,6 @@
 ```javascript
 import Model from 'cerebral-model'
-import Controller from 'cerebral'
+import {Controller} from 'cerebral'
 
 const model = Model({
   newItemTitle: '',

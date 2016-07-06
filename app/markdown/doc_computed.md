@@ -1,15 +1,11 @@
 ## Computed
 
-Computed lives in a separate package and you can install it with:
-
-`$ npm install cerebral-computed`
-
 You use computed when you want to combine state from your model and structure it in a view friendly way. A simple example would be a filter.
 
 ```javascript
-import computed from 'cerebral-computed'
+import {Computed} from 'cerebral'
 
-export default computed({
+export default Computed({
   filter: 'app.filter',
   users: 'users.list'
 }, state => {

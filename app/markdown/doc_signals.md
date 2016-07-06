@@ -18,7 +18,7 @@ export default [
 
 *controller.js*
 ```javascript
-import Controller from 'cerebral'
+import {Controller} from 'cerebral'
 import Model from 'cerebral-model-immutable'
 import doSomething from './chains/doSomething'
 
@@ -131,7 +131,7 @@ export default [
 
 *controller.js*
 ```js
-import Controller from 'cerebral'
+import {Controller} from 'cerebral'
 import Model from 'cerebral-model-immutable'
 import loadInitialData from './chains/loadInitialData'
 import updateItems from './chains/updateItems'

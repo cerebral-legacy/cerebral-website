@@ -5,7 +5,7 @@ Cerebral is primarily a controller. The part of your application that controls r
 Typically you will create a *controller.js* file in your project:
 
 ```javascript
-import Controller from 'cerebral'
+import {Controller} from 'cerebral'
 import Model from 'cerebral-model-immutable'
 
 const controller = Controller(Model({
@@ -35,14 +35,13 @@ controller.addModules({
 #### controller.addSignals(signals)
 Typically you will use modules to add signals, but you can attach signals directly to the controller as well.
 ```javascript
-import appMounted from './signals/appMounted'
-import buttonClicked from './signals/buttonClicked'
+import loadData from './chains/loadData'
 
 ...
 
 controller.addSignals({
-  appMounted,
-  buttonClicked
+  appMounted: loadData,
+  buttonClicked: loadData
 })
 ```
 
