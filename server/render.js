@@ -11,7 +11,7 @@ const isDeveloping = process.env.NODE_ENV !== 'production';
 export default (app) => {
   const index = fs.readFileSync('./server/index.html', 'utf-8').toString();
   const getIndex = () => {
-    return isDeveloping ? index : fs.readFileSync('./server/index.html', 'utf-8').toString();
+    return isDeveloping ? fs.readFileSync('./server/index.html', 'utf-8').toString() : index;
   };
   const render = (newState) => {
     const state = Object.assign({
@@ -19,19 +19,19 @@ export default (app) => {
       currentDocument: 'get_started',
       menuIsOpen: false,
       menu: {
-        'Introduction': [
+        'Tutorial: Introduction': [
           'Introduction',
           'Structuring state',
           'Defining signals',
           'Creating components'
         ],
-        'Next step': [
+        'Tutorial: Next step': [
           'Next step',
           'Adding modules',
           'Creating actions',
           'Adding a shared module'
         ],
-        'Advanced': [
+        'Tutorial: Advanced': [
           'Advanced',
           'Routing',
           'Creating a service',
@@ -58,8 +58,9 @@ export default (app) => {
           'Computed',
           'Context providers'
         ],
+        'Views': Object.keys(externalDocs.views),
         'Modules': Object.keys(externalDocs.modules),
-        'Context providers': Object.keys(externalDocs.providers),
+        'Context providers': Object.keys(externalDocs.providers)
       }
     }, newState);
     const controller = ServerController(state);

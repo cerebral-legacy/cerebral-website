@@ -28,7 +28,7 @@ class App extends React.Component {
               className={styles.button}
               onClick={() => this.props.signals.introductionClicked()}
             >
-              INTRODUCTION
+              TUTORIAL
             </div>
             <div
               className={styles.button}

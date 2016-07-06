@@ -11,5 +11,9 @@ export default {
   },
   providers: {
     'cerebral-provider-modules': 'https://raw.githubusercontent.com/cerebral/cerebral-provider-modules/fb84e4fedd084b4b11d6b8e654cb0c8d26fc503d/README.md'
+  },
+  views: {
+    'cerebral-view-react': 'https://raw.githubusercontent.com/cerebral/cerebral-view-react/c2ecb671c7bc012fa72fc8e1a18e67ad70d0b460/README.md',
+    'cerebral-view-snabbdom': 'https://raw.githubusercontent.com/cerebral/cerebral-view-snabbdom/7467d3c2b2b0da6ba5f921b32afe30795fefef14/README.md'
   }
 };
