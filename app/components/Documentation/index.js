@@ -45,6 +45,7 @@ import CerebralModuleFalcor from './CerebralModuleFalcor';
 import CerebralProviderModules from './CerebralProviderModules';
 import CerebralViewReact from './CerebralViewReact';
 import CerebralViewSnabbdom from './CerebralViewSnabbdom';
+import Servercontroller from './Servercontroller';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -89,7 +90,8 @@ const pages = {
   'cerebral-module-falcor': CerebralModuleFalcor,
   'cerebral-provider-modules': CerebralProviderModules,
   'cerebral-view-react': CerebralViewReact,
-  'cerebral-view-snabbdom': CerebralViewSnabbdom
+  'cerebral-view-snabbdom': CerebralViewSnabbdom,
+  'servercontroller': Servercontroller
 };
 
 @Cerebral({

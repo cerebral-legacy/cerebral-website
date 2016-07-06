@@ -56,6 +56,7 @@ export default (app) => {
           'Operators',
           'Services',
           'Computed',
+          'Servercontroller',
           'Context providers'
         ],
         'Views': Object.keys(externalDocs.views),

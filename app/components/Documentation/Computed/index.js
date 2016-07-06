@@ -7,7 +7,7 @@ export default function Computed() {
   return (
     <div>
       <Markdown filename="doc_computed.md" />
-      <NextDocument name="context_providers" />
+      <NextDocument name="servercontroller" />
     </div>
   );
 }

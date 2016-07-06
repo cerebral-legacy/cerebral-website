@@ -2,6 +2,8 @@
 
 Cerebral uses a single state tree to represent the state of your application. This state tree can be used in two different modes. Immutable and mutable. In the demo applications we use the default immutable version as it is "safer", meaning there is no way to make a state change outside of an action. Immutability also allows for some nifty features, but also has limitations, depending on how you look at it.
 
+Choosing a model layer really comes down to experience and type of application. If you usually work with classes and develop an application where entities has relationships with other entities you should not choose immutability. That said in Cerebral we default to immutability and you should choose that if you are unsure.
+
 ### cerebral-model-immutable
 The following features are only available with the immutable model:
 
@@ -35,7 +37,7 @@ The following features are only available with the mutable model:
 - Improved performance on large datasets
 
 #### When should I choose this model layer?
-One thing about immutability is that you can not reference objects or arrays. Every object and array is unique, even though they represent the same data. That means you can not do things like create a post and attach a user from the state tree on that post. It will not be the same user object when the post is inserted. If you are working with a lot of relational data this package will allow you to handle referencing.
+When working with immutable data everything has to be core javascript value types like, objects, arrays, strings, booleans and numbers. But you might favor creating classes and creating relationships between instances of classes. If you relate this model layer is for you. You can create classes and use referencing, Cerebral will make sure that relational changes are updated in the UI.
 
 #### Install
 
