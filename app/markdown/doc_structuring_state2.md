@@ -18,3 +18,6 @@ Cerebral has a concept of **modules** which helps you do this namespacing for yo
 
 #### Best practices
 It can often be a good idea to start any implementation by defining state structure. If you think of a design mock of a user interface you can translate this into state of strings, numbers, booleans, objects and arrays. It is a good team exercise that ensures the conventions on naming state properties and overall structure is aligned.
+
+#### Challenge
+Try to add a new state called **title** with some text. Then try to display that in the component.

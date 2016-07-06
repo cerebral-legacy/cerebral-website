@@ -2,3 +2,6 @@ A chain is an array. An array that describes how the actions should be executed.
 
 #### Best practices
 Signals executes the *state changing flow* of your application using chains. Signals are at the core of Cerebral and makes it possible for you and your team members to quickly understand how state changes run in your application. These chains can become very complex, but they are still easy to read and understand. As you work on larger applications you will use concepts like composition and factories to create these chains.
+
+#### Challenge
+Replace the **copy** with your own action, doing the same thing, but also uppercasing the title.

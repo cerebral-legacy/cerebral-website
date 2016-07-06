@@ -14,3 +14,6 @@ As you can see this way of thinking is very much reflected in the chain above. T
 You have now gotten insight into how you can define your actions from scratch. When developing applications you will depend heavily on the **operators** to avoid creating new actions for every little state change. You will also start to create your own action factories and even chain factories to be reused in different signals. You will be surprised how quickly Cerebral becomes more like describing behaviour with legoblocks, rather than implementing logic.
 
 Since chains are declarative, meaning that they do not have implementation logic, it is possible to describe them without thinking implementation. With your team or colleague you can talk about what should happen in your application when a signal triggers. Sometimes you can use **operators** to describe it, other times you just name an action that you will implement later. But most importantly a chain description will make it very easy for "the next developer", that also being you, to build a mental image of what is going on.
+
+#### Challenge
+Give new items an **$isNew** property which defaults to a true value. Use the operator **delay** in the **success** path and change the **$isNew** property of the first item in the list to *false* after 1 second. Then use this property in the UI to indicate when the item is new.
