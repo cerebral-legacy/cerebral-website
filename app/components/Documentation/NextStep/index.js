@@ -14,6 +14,9 @@ export default function NextStep() {
       }, {
         label: 'Snabbdom',
         render: () => <Markdown filename="doc_next_step_clone_snabbdom.md" />
+      }, {
+        label: 'Inferno',
+        render: () => <Markdown filename="doc_next_step_clone_inferno.md" />
       }]} />
       <Markdown filename="doc_next_step_2.md" />
       <NextDocument name="adding_modules" />

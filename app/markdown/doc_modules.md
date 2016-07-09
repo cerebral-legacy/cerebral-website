@@ -44,7 +44,7 @@ export default module => {
 ### Methods
 
 #### module
-You create a module with a function. This function receives the instance of the model and also the controller in case you need to allow your services to trigger signals etc.
+You create a module with a function. This function receives the instance of the module and also the controller in case you need to allow your services to trigger signals etc.
 
 ```javascript
 export default (module, controller) => {

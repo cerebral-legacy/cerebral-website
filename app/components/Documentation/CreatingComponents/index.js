@@ -15,6 +15,9 @@ export default function CreatingComponents() {
       }, {
         label: 'Snabbdom',
         render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-basic/blob/snabbdom/src/components/App/index.js" />
+      }, {
+        label: 'Inferno',
+        render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-basic/blob/inferno/src/components/App/index.js" />
       }]} />
       <Markdown filename="doc_creating_components2.md" />
       <Tabs tabs={[{
@@ -23,6 +26,9 @@ export default function CreatingComponents() {
       }, {
         label: 'Snabbdom',
         render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-basic/blob/snabbdom/src/main.js" />
+      }, {
+        label: 'Inferno',
+        render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-basic/blob/inferno/src/main.js" />
       }]} />
       <Markdown filename="doc_creating_components3.md" />
       <NextDocument name="next_step" />

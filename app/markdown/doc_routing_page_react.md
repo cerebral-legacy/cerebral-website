@@ -12,8 +12,10 @@ const pages = {
 
 export default connect({
   currentPage: 'app.currentPage'
-})(function App(props) {
-  const Page = pages[props.currentPage]
-  return <Page />
-})
+},
+  function App(props) {
+    const Page = pages[props.currentPage]
+    return <Page />
+  }
+)
 ```

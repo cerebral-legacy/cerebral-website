@@ -17,6 +17,9 @@ export default function Introduction() {
       }, {
         label: 'Snabbdom',
         render: () => <Markdown filename="doc_routing_page_snabbdom.md" />
+      }, {
+        label: 'Inferno',
+        render: () => <Markdown filename="doc_routing_page_inferno.md" />
       }]} />
       <Markdown filename="doc_routing_3.md" />
       <NextDocument name="creating_a_service" />

@@ -1,6 +1,7 @@
 *src/components/App/index.js*
 ```javascript
-import {connect, h} from 'cerebral-view-snabbdom'
+import Inferno from 'inferno'
+import {connect} from 'cerebral-view-inferno'
 import Home from '../Home'
 import Admin from '../Admin'
 
@@ -14,7 +15,7 @@ export default connect({
 },
   function App(props) {
     const Page = pages[props.currentPage]
-    return Page()
+    return <Page />
   }
 )
 ```

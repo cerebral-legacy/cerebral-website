@@ -11,7 +11,8 @@ import {
   when,
   throttle,
   debounce,
-  filter
+  filter,
+  delay
 } from 'cerebral/operators'
 
 export default [
@@ -54,6 +55,8 @@ export default [
     accepted: [],
     discarded: []
   },
+  // Short version, only accepted chain
+  ...throttle(200, [])
 
   // This action holds until
   // A: 200ms has passed
@@ -65,6 +68,8 @@ export default [
     accepted: [],
     discarded: []
   },
+  // Short version, only accepted chain
+  ...debounce(200, [])
 
   // Go down "accepted" when value matches filter
   // or "discarded" when it does not match
@@ -74,5 +79,14 @@ export default [
     accepted: [],
     discarded: []
   },
+  // Short version, only accepted chain
+  ...filter('input:foo', function minLength3(value) {
+    return value.length >= 3
+  }, []),
+
+  // Wait 200ms and run chain
+  ...delay(200, [
+
+  ])
 ]
 ```

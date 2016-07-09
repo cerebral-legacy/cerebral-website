@@ -19,6 +19,9 @@ export default function DefiningSignals() {
       }, {
         label: 'Snabbdom',
         render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-next/blob/snabbdom/src/components/App/index.js" />
+      }, {
+        label: 'Inferno',
+        render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-next/blob/inferno/src/components/App/index.js" />
       }]} />
       <Markdown filename="doc_adding_modules4.md" />
       <NextDocument name="creating_actions" />

@@ -14,6 +14,9 @@ export default function Advanced() {
       }, {
         label: 'Snabbdom',
         render: () => <Markdown filename="doc_advanced_clone_snabbdom.md" />
+      }, {
+        label: 'Inferno',
+        render: () => <Markdown filename="doc_advanced_clone_inferno.md" />
       }]} />
       <Markdown filename="doc_advanced_2.md" />
       <NextDocument name="routing" />

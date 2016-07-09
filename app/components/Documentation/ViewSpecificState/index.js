@@ -17,6 +17,9 @@ export default function ViewSpecificState() {
       }, {
         label: 'Snabbdom',
         render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/snabbdom/src/components/Items/index.js" />
+      }, {
+        label: 'Inferno',
+        render: () => <GithubCode url="https://github.com/cerebral/cerebral-website-tutorial-advanced/blob/inferno/src/components/Items/index.js" />
       }]} />
       <Markdown filename="doc_view_specific_state_3.md" />
       <NextDocument name="get_started" />
