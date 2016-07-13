@@ -36,8 +36,8 @@ const contributors = [{
   imageLink: 'adam.png',
   githubLink: 'https://github.com/NervosaX'
 }, {
-  name: 'Mattias',
-  description: 'Mattias has worked a lot on the forms module and helped out with a lot of the documentation and releases of Cerebral',
+  name: 'Mathias',
+  description: 'Mathias has worked a lot on the forms module and helped out with the documentation and releases of Cerebral',
   imageLink: 'matthias.jpeg',
   githubLink: null
 }, {
