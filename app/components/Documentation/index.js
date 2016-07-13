@@ -47,7 +47,6 @@ import CerebralViewReact from './CerebralViewReact';
 import CerebralViewSnabbdom from './CerebralViewSnabbdom';
 import Servercontroller from './Servercontroller';
 import Modals from './Modals';
-import Events from './Events';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -94,8 +93,7 @@ const pages = {
   'cerebral-view-react': CerebralViewReact,
   'cerebral-view-snabbdom': CerebralViewSnabbdom,
   'servercontroller': Servercontroller,
-  'modals': Modals,
-  'events': Events
+  'modals': Modals
 };
 
 @Cerebral({
