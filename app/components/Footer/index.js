@@ -12,7 +12,12 @@ class Footer extends React.Component {
             <div className={styles.header}>
               Organization
             </div>
-            <div className={styles.link}>Contributors</div>
+            <div
+              className={styles.link}
+              onClick={() => this.props.signals.contributorsClicked()}
+            >
+              Contributors
+            </div>
           </div>
           <div className={styles.column}>
             <div className={styles.header}>

@@ -98,4 +98,12 @@ export default (app) => {
     });
     res.send(getIndex().replace('${body}', view.html).replace('${BOOTSTRAP_STATE}', view.state));
   });
+
+  app.get('/contributors', (req, res) => {
+    res.type('html');
+    const view = render({
+      currentPage: 'contributors'
+    });
+    res.send(getIndex().replace('${body}', view.html).replace('${BOOTSTRAP_STATE}', view.state));
+  });
 };
