@@ -48,6 +48,9 @@ export default (app) => {
           'The debugger',
           'Going to production'
         ],
+        'How do I handle...': [
+          'Modals'
+        ],
         'Api': [
           'Controller',
           'Modules',
@@ -57,7 +60,8 @@ export default (app) => {
           'Services',
           'Computed',
           'Servercontroller',
-          'Context providers'
+          'Context providers',
+          'Events'
         ],
         'Views': Object.keys(externalDocs.views),
         'Modules': Object.keys(externalDocs.modules),
