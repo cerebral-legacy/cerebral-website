@@ -27,7 +27,12 @@ class App extends React.Component {
           <div className={styles.title}>Cerebral</div>
           <div className={styles.subTitle}>make sense of complex apps</div>
           <div className={styles.buttonContainer}>
-            <div className={styles.button}>TRY THE DEMO</div>
+            <div
+              className={styles.button}
+              onClick={() => window.open('/todomvc')}
+            >
+              TRY THE DEMO
+            </div>
             <div
               className={styles.button}
               onClick={() => this.props.signals.introductionClicked()}
