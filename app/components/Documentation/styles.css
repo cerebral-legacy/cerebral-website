@@ -48,6 +48,8 @@
 
 .menu {
   flex: 0 1 400px;
+  min-width: 300px;
+  padding-right: 10px;
 }
 
 .fixedMenuWrapper {
@@ -59,6 +61,7 @@
   padding: 0 40px 40px 0;
   min-height: calc(100vh - 100px - 222px);
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .menuButton {
