@@ -17,6 +17,7 @@ The important thing to note is that *components* and *modules* are separated. Th
 So inside your modules folder you will have multiple directories representing different modules:
 
 ```javascript
+/components
 /modules
   /App
   /Items
@@ -25,6 +26,7 @@ So inside your modules folder you will have multiple directories representing di
 And inside a module directory you will have:
 
 ```javascript
+/components
 /modules
   /App
     /chains

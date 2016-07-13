@@ -28,7 +28,7 @@ Now we effectively use a module to hold the options passed in on instantiation o
 
 ```javascript
 import {Controller} from 'cerebral'
-import Model from 'cerebral-model-immutable'
+import Model from 'cerebral/models/immutable'
 
 import MyServiceModule from './modules/MyServiceModule'
 

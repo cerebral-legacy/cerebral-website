@@ -60,8 +60,7 @@ export default (app) => {
           'Services',
           'Computed',
           'Servercontroller',
-          'Context providers',
-          'Events'
+          'Context providers'
         ],
         'Views': Object.keys(externalDocs.views),
         'Modules': Object.keys(externalDocs.modules),

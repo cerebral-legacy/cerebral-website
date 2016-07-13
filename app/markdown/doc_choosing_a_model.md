@@ -15,15 +15,11 @@ The following features are only available with the immutable model:
 #### When should I choose this model layer?
 Are you unsure which one to choose? Choose this one. Also if your app needs functionality related to recording or storing state externally this is the way to go.
 
-#### Install
-
-`$ npm install cerebral-model-immutable`
-
 #### Instantiate
 
 ```javascript
 import Controller from 'Cerebral'
-import Model from 'cerebral-model-immutable'
+import Model from 'cerebral/models/immutable'
 
 const controller = Controller(Model({}))
 
@@ -39,15 +35,11 @@ The following features are only available with the mutable model:
 #### When should I choose this model layer?
 When working with immutable data everything has to be core javascript value types like, objects, arrays, strings, booleans and numbers. But you might favor creating classes and creating relationships between instances of classes. If you relate this model layer is for you. You can create classes and use referencing, Cerebral will make sure that relational changes are updated in the UI.
 
-#### Install
-
-`$ npm install cerebral-model`
-
 #### Instantiate
 
 ```javascript
 import Controller from 'Cerebral'
-import Model from 'cerebral-model'
+import Model from 'cerebral/models/mutable'
 
 const controller = Controller(Model({}))
 

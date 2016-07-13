@@ -47,7 +47,7 @@ import user from '../computed/filteredItems'
 export default connect(({userKey}) => ({
   items: user({userKey})
 }),
-  function Comp(props) {
+  function Items(props) {
     props.items // [{isAwesome: true, name: "bob"}]
   }
 )

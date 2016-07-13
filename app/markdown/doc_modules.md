@@ -6,7 +6,7 @@ Modules are registered to the controller:
 
 ```javascript
 import {Controller} from 'cerebral'
-import Model from 'cerebral-model-immutable'
+import Model from 'cerebral/models/immutable'
 
 import Home from './modules/Home'
 import Admin from './modules/Admin'

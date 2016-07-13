@@ -148,6 +148,8 @@ export default connect({
 What is good about this approach is that you can very easily handle grabbing more information about the user if needed.
 
 ```javascript
+import {set, copy} from 'cerebral/operators'
+
 const openUserModal = [
   copy('input:userId', 'app.userModal.userId'),
   userDataExists, {

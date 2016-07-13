@@ -23,16 +23,41 @@ class Footer extends React.Component {
             <div className={styles.header}>
               Articles and useful links
             </div>
-            <div className={styles.link}>Real life Cerebral project</div>
-            <div className={styles.link}>Redux and Cerebral</div>
-            <div className={styles.link}>www.christianalfoni.com</div>
+            <div
+              className={styles.link}
+              onClick={() => window.open('https://github.com/cerebral/cerebral-reference-app')}
+            >
+              Real life Cerebral project
+            </div>
+            <div
+              className={styles.link}
+              onClick={() => window.open('https://gist.github.com/christianalfoni/e8dc5bfa79e7289a6258')}
+            >
+              Redux and Cerebral
+            </div>
+            <div
+              className={styles.link}
+              onClick={() => window.open('www.christianalfoni.com')}
+            >
+              www.christianalfoni.com
+            </div>
           </div>
           <div className={styles.column}>
             <div className={styles.header}>
               Help
             </div>
-            <div className={styles.link}>Cerebral Github Repo</div>
-            <div className={styles.link}>Discord chat</div>
+            <div
+              className={styles.link}
+              onClick={() => window.open('https://github.com/cerebral/cerebral')}
+            >
+              Cerebral Github Repo
+            </div>
+            <div
+              className={styles.link}
+              onClick={() => window.open('https://discord.gg/0kIweV4bd2bwwsvH')}
+            >
+              Discord chat
+            </div>
           </div>
         </div>
       </div>

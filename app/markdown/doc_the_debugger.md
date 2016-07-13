@@ -21,7 +21,7 @@ The Cerebral debugger is a Chrome extension. You can install it from the [chrome
 #### Instantiate
 ```javascript
 import Controller from 'cerebral'
-import Model from 'cerebral-model-immutable'
+import Model from 'cerebral/model/immutable'
 import DevtoolsModule from 'cerebral-module-devtools'
 
 const controller = Controller(Model({}))
