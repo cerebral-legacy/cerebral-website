@@ -45,6 +45,7 @@ import CerebralModuleFalcor from './CerebralModuleFalcor';
 import CerebralProviderModules from './CerebralProviderModules';
 import CerebralViewReact from './CerebralViewReact';
 import CerebralViewSnabbdom from './CerebralViewSnabbdom';
+import CerebralViewInferno from './CerebralViewInferno';
 import Servercontroller from './Servercontroller';
 import Modals from './Modals';
 
@@ -93,7 +94,8 @@ const pages = {
   'cerebral-view-react': CerebralViewReact,
   'cerebral-view-snabbdom': CerebralViewSnabbdom,
   'servercontroller': Servercontroller,
-  'modals': Modals
+  'modals': Modals,
+  'cerebral-view-inferno': CerebralViewInferno
 };
 
 @Cerebral({
