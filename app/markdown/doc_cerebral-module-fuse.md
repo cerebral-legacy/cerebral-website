@@ -29,24 +29,24 @@ controller.modules({
 from your component.js
 
 ```js
-import React from 'react';
-import { Decorator as Cerebral } from 'cerebral-view-react';
-import fuse from 'cerebral-module-fuse/compute';
+import React from 'react'
+import {connect} from 'cerebral-view-react'
+import fuse from 'cerebral-module-fuse/compute'
 
-@Cerebral({
-  users: fuse(['findUsers']) // where fuse is given the path to the module state
-})
-class App extends React.Component {
-  render() {
+export default connect(
+  {
+    users: fuse(['findUsers']) // where fuse is given the path to the module state
+  },
+  function App (props)  {
     return (
       <ul>
-        {this.props.users.map(user => (
+        {props.users.map(user => (
           <li>{`${user.firstName} ${user.lastName}`}</li>
         ))}
       </ul>
-    );
+    )
   }
-}
+)
 ```
 
 to execute the search simply call the `search` signal and the view will automatically update
