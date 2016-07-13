@@ -14,6 +14,7 @@ export default {
   },
   views: {
     'cerebral-view-react': 'https://raw.githubusercontent.com/cerebral/cerebral-view-react/master/README.md',
-    'cerebral-view-snabbdom': 'https://raw.githubusercontent.com/cerebral/cerebral-view-snabbdom/master/README.md'
+    'cerebral-view-snabbdom': 'https://raw.githubusercontent.com/cerebral/cerebral-view-snabbdom/master/README.md',
+    'cerebral-view-inferno': 'https://raw.githubusercontent.com/cerebral/cerebral-view-inferno/master/README.md'
   }
 };

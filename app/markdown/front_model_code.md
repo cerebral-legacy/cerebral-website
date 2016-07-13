@@ -1,5 +1,5 @@
 ```javascript
-import Model from 'cerebral-model'
+import Model from 'cerebral/models/immutable'
 import {Controller} from 'cerebral'
 
 const model = Model({
