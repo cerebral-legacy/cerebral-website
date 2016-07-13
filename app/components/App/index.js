@@ -5,10 +5,12 @@ import styles from './styles.css';
 import Front from '../Front';
 import Documentation from '../Documentation';
 import Footer from '../Footer';
+import Contributors from '../Contributors';
 
 const pages = {
   front: Front,
-  documentation: Documentation
+  documentation: Documentation,
+  contributors: Contributors
 };
 
 @Cerebral({

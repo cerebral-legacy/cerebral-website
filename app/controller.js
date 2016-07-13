@@ -8,6 +8,7 @@ import documentClicked from './signals/documentClicked';
 import getStartedClicked from './signals/getStartedClicked';
 import menuButtonClicked from './signals/menuButtonClicked';
 import closeMenuButtonClicked from './signals/closeMenuButtonClicked';
+import contributorsClicked from './signals/contributorsClicked';
 import appClicked from './signals/appClicked';
 
 const controller = Controller(Model(window.BOOTSTRAP_STATE));
@@ -19,7 +20,8 @@ controller.addSignals({
   documentClicked,
   menuButtonClicked,
   closeMenuButtonClicked,
-  appClicked
+  appClicked,
+  contributorsClicked
 });
 
 controller.addModules({
@@ -27,7 +29,8 @@ controller.addModules({
   router: Router({
     '/': 'rootRouted',
     '/documentation': 'introductionClicked',
-    '/documentation/:doc': 'documentClicked'
+    '/documentation/:doc': 'documentClicked',
+    '/contributors': 'contributorsClicked'
   })
 });
 

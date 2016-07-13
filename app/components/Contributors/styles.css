@@ -1,0 +1,123 @@
+.header {
+  position: fixed;
+  display: flex;
+  height: 60px;
+  width: 100%;
+  background-color: #00A1C9;
+  top: 0;
+  left: 0;
+  box-shadow: 0px 5px 20px 5px rgba(0,0,0,0.15);
+  z-index: 2;
+}
+
+.logoWrapper {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.logoWrapper img {
+  height: 50px;
+}
+
+.title {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 500;
+  color: #92DFF0;
+  margin-left: 20px;
+}
+
+.pageTitle {
+  margin-bottom: 40px;
+}
+
+.content {
+  margin: 60px auto 0 auto;
+  width: 960px;
+  padding: 40px;
+}
+
+.contributor {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 70px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.name {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.image {
+  width: 150px;
+  height: 150px;
+  border-radius: 4px;
+  background-size: cover;
+  background-position: center;
+  margin-right: 50px;
+}
+
+.description {
+  flex: 1;
+}
+
+.githubLink {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.everybodyElseWrapper {
+  margin: 60px 0 30px 0;
+}
+
+.everybodyElseWrapper h3 {
+  margin-bottom: 15px;
+}
+
+@media (max-width: 1181px) {
+  .content {
+    width: auto;
+  }
+}
+
+@media (min-width: 721px) {
+  .nameMobile {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .pageTitle {
+    margin-bottom: 10px;
+  }
+  .contributor {
+    margin-bottom: 30px;
+  }
+  .name {
+    display: none;
+  }
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .image {
+    margin-top: -15px;
+    margin-bottom: 5px;
+  }
+}
