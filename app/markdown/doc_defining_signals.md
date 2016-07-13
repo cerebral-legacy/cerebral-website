@@ -1,5 +1,5 @@
-## Defining signals
+## Signals and actions
 
-The signals of Cerebral is where you define what should happen when a user interacts with the application, or some other event like a received websocket message. You can think of signals as executing a decision or behaviour tree. It allows you to express complex flows without thinking about implementation. This is much like we think about complexity in real life. We label things that needs to be done without thinking about the details. These labels are called actions in Cerebral. So a signal will execute a flow of actions to be executed. We will talk more about these actions, but for now just think of them as labels for what should be done.
+Signals can be seen as events - a user clicks, the address bar changes, a web socket pushes data and so on. Each signal you define will trigger exactly one signal chain. A signal chain allows you to express complex flows (business logic) without thinking about implementation. This is much like we think about complexity in real life. We label things that needs to be done without thinking about the details. These labels are called actions in Cerebral. So a signal will trigger an action chain, which will execute a flow of actions. We will talk more about these actions, but for now just think of them as labels for what should be done.
 
 In the demo application there are already two signals defined. Lets have a look:
