@@ -72,6 +72,9 @@ class App extends React.Component {
               label: 'Snabbdom',
               render: () => <Markdown filename="front_view_snabbdom.md" />
             }, {
+              label: 'Inferno',
+              render: () => <Markdown filename="front_view_inferno.md" />
+            }, {
               label: 'Debugger',
               render: () => <Markdown filename="front_view_debugger.md" />
             }]} />
