@@ -1,7 +1,7 @@
 export default {
   modules: {
     'cerebral-module-http': 'https://raw.githubusercontent.com/cerebral/cerebral-module-http/96d4034b9da6dc2ccf83c484b293b56367c2e398/README.md',
-    'cerebral-module-forms': 'https://raw.githubusercontent.com/cerebral/cerebral-module-forms/5c4b72fd690c7abcc38ed8518ac359bcc22b455d/README.md',
+    'cerebral-module-forms': 'https://raw.githubusercontent.com/cerebral/cerebral-module-forms/master/README.md',
     'cerebral-module-useragent': 'https://raw.githubusercontent.com/cerebral/cerebral-module-useragent/ea0bcd8b889633f64afcbc5020d2de4c44d3cb20/README.md',
     'cerebral-module-router': 'https://raw.githubusercontent.com/cerebral/cerebral-module-router/83cb28fa6543ef67a21b41de710fba405a9a1b05/README.md',
     'cerebral-module-recorder': 'https://raw.githubusercontent.com/cerebral/cerebral-module-recorder/45acad2322a766243b53549fd4b63de46977da6a/README.md',
