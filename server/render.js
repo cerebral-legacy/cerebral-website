@@ -50,7 +50,8 @@ export default (app) => {
           'Boilerplates'
         ],
         'How do I handle...': [
-          'Modals'
+          'Modals',
+          'Storing server data'
         ],
         'Api': [
           'Controller',

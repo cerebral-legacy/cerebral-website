@@ -49,6 +49,7 @@ import CerebralViewInferno from './CerebralViewInferno';
 import Servercontroller from './Servercontroller';
 import Modals from './Modals';
 import Boilerplates from './Boilerplates';
+import StoringServerData from './StoringServerData';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -97,7 +98,8 @@ const pages = {
   'servercontroller': Servercontroller,
   'modals': Modals,
   'cerebral-view-inferno': CerebralViewInferno,
-  'boilerplates': Boilerplates
+  'boilerplates': Boilerplates,
+  'storing_server_data': StoringServerData
 };
 
 @Cerebral({

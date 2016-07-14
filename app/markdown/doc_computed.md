@@ -32,7 +32,7 @@ import filteredItems from '../computed/filteredItems'
 export default connect({
   items: filteredItems()
 },
-  function Comp(props) {
+  function Items(props) {
     props.items // [{isAwesome: true, name: "bob"}]
   }
 )
@@ -70,7 +70,7 @@ export default Computed(props => ({
 ```
 
 ### Using computed with classes
-If you are using the mutable model package and classes you can define the computed with those classes to conditionally extract relational state. For example if you let all entities have a client side id (uid) to handle optimistic updates, you could write a class something like this to extract the posts of that user wherever you need them:
+If you are using the mutable model package and classes you can define the computed with those classes to conditionally extract relational state. For example if you let all entities have a client side id to handle optimistic updates, you could write a class something like this to extract the posts of that user wherever you need them:
 
 ```javascript
 import {Computed} from 'cerebral'
@@ -96,17 +96,27 @@ class User {
 }
 ```
 
-Now you can use this with components.
+So lets say in some action you have instantiated a user:
+
+```javascript
+import User from 'entities/User'
+
+function addUser({input, state}) {
+  state.push('app.users', new User(input.userData))  
+}
+```
+
+
+In a **User** component we pass the current user to a child component **UserPosts** to grab its computed posts:
 
 ```javascript
 connect(props => ({
-  // We connect the user as a state dependency
-  // directly because we want this component to
-  // update when the user has an update
-  user: `users.${props.user.uid}`,
-
   // We use the method for computed to rerender
   // this component whenever the posts change
   posts: props.user.computedPosts()
-}))
+}),
+  function UserPosts(props) {
+    // Render the posts
+  }
+)
 ```
