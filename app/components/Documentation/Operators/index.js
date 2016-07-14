@@ -7,7 +7,7 @@ export default function Controller() {
   return (
     <div>
       <Markdown filename="doc_operators.md" />
-      <NextDocument name="modules" />
+      <NextDocument name="services" />
     </div>
   );
 }

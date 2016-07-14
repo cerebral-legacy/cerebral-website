@@ -37,6 +37,12 @@ class Footer extends React.Component {
             </div>
             <div
               className={styles.link}
+              onClick={() => window.open('http://www.webpackbin.com')}
+            >
+              www.webpackbin.com <small>(Cerebral app)</small>
+            </div>
+            <div
+              className={styles.link}
               onClick={() => window.open('http://www.christianalfoni.com')}
             >
               www.christianalfoni.com

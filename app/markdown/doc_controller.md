@@ -45,6 +45,25 @@ controller.addSignals({
 })
 ```
 
+#### controller.addServices(services)
+You can add services directly on the controller if you want to. The will be available directly on `services` provider in all actions.
+```javascript
+...
+
+controller.addServices({
+  getLocalStorage,
+  setLocalStorage
+})
+```
+
+#### controller.addContextProvider(contextProvider)
+By adding a context provider to the controller you add it globally to all actions in your application.
+```javascript
+...
+
+controller.addContextProvider(contextProvider)
+```
+
 #### controller.get(?path)
 Returns the current state of the model.
 ```javascript
@@ -105,4 +124,7 @@ controller.on('signalPrevented', ({signal}) => ())
 
 // When some error has happened during execution of a signal.
 controller.on('signalError', ({signal, action}) => ())
+
+// When all modules have loaded
+controller.on('modulesLoaded', () => ())
 ```

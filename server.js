@@ -31,9 +31,6 @@ if (isDeveloping) {
 
 app.use(express.static('./dist'));
 app.use(express.static('./public'));
-app.use('/todomvc', express.static('./todomvc', {
-  index: 'index.html'
-}));
 render(app);
 
 docsFetcher()

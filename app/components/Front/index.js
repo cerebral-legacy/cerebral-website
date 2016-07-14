@@ -29,7 +29,7 @@ class App extends React.Component {
           <div className={styles.buttonContainer}>
             <div
               className={styles.button}
-              onClick={() => window.open('/todomvc')}
+              onClick={() => window.open('http://cerebral.github.io/cerebral-todomvc/')}
             >
               TRY THE DEMO
             </div>
