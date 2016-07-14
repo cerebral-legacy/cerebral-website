@@ -70,7 +70,7 @@ controller.getModules('app') // {path: ["app"], meta: {}}
 Returns the services registered on the controller
 ```javascript
 controller.getServices() // {myService: {get: function () {}, set: function () {}}}
-controller.getModules('myService') // {get: function () {}, set: function () {}}
+controller.getServices('myService') // {get: function () {}, set: function () {}}
 ```
 
 #### controller.on(event, callback)

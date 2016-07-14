@@ -16,7 +16,7 @@ function SomeAction({module, modules}) {
   module.services.foo();
 
   modules.someOtherModule.meta // returned value from module declaration
-  modules.someOtherModule.state('foo', 'bar');
+  modules.someOtherModule.state.set('foo', 'bar');
   modules.someOtherModule.services.foo();
 }
 ```
