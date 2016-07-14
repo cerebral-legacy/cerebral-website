@@ -37,7 +37,7 @@ class Footer extends React.Component {
             </div>
             <div
               className={styles.link}
-              onClick={() => window.open('www.christianalfoni.com')}
+              onClick={() => window.open('http://www.christianalfoni.com')}
             >
               www.christianalfoni.com
             </div>
