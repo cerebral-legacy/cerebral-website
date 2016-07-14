@@ -46,7 +46,8 @@ export default (app) => {
           'Choosing a view',
           'Structuring your project',
           'The debugger',
-          'Going to production'
+          'Going to production',
+          'Boilerplates'
         ],
         'How do I handle...': [
           'Modals'
@@ -63,7 +64,7 @@ export default (app) => {
           'Context providers'
         ],
         'Views': Object.keys(externalDocs.views),
-        'Modules': Object.keys(externalDocs.modules),
+        'Modules by community': Object.keys(externalDocs.modules),
         'Context providers': Object.keys(externalDocs.providers)
       }
     }, newState);

@@ -7,7 +7,7 @@ After you are done you can fire up the webpack dev server using:
 
 `$ npm start`
 
-Go to *localhost:8080* in your browser and the Cerebral demo application will appear.
+Go to *localhost:3000* in your browser and the Cerebral demo application will appear.
 
 ### Installing the debugger
 The Cerebral debugger is a Chrome extension. You can install it from the [chrome store](https://chrome.google.com/webstore/detail/cerebral-debugger/ddefoknoniaeoikpgneklcbjlipfedbb). Once the debugger is installed your Chrome devtools will have a new tab called **cerebral**. Go to the demo app an refresh to start the debugger.

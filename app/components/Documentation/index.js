@@ -48,6 +48,7 @@ import CerebralViewSnabbdom from './CerebralViewSnabbdom';
 import CerebralViewInferno from './CerebralViewInferno';
 import Servercontroller from './Servercontroller';
 import Modals from './Modals';
+import Boilerplates from './Boilerplates';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -95,7 +96,8 @@ const pages = {
   'cerebral-view-snabbdom': CerebralViewSnabbdom,
   'servercontroller': Servercontroller,
   'modals': Modals,
-  'cerebral-view-inferno': CerebralViewInferno
+  'cerebral-view-inferno': CerebralViewInferno,
+  'boilerplates': Boilerplates
 };
 
 @Cerebral({
