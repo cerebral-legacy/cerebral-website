@@ -1,5 +1,5 @@
 ## View
 
-A component registers to one or more state paths. When a change occurs in your model Cerebral will notify the view layer about what paths has changed. That way the view layer can be optimized to only render the components interested in the state paths that actually changed.
+Components get data from one or more state paths. When a change occurs in the model, Cerebral notifies the view layer about what paths have changed. Rendering is highly optimized since components only re-render if their registered state paths have actually changed.
 
-The debugger lets you know all the current active state paths and what components are rendered when these state paths has a change.
+The debugger lets you know all the current active state paths and what components are rendered when these state paths change.

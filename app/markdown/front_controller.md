@@ -1,5 +1,7 @@
 ## Controller
 
-The Cerebral controller is where you define all the logic that wants to change the state of your application. This being a user interaction or some other event. The logic to run is controlled by a **signal**. The signal executes **chains** with **actions**. This behaviour is much like a decision tree. Like the model you can divide signals into modules.
+The Cerebral controller is where you define all state changing logic in your application-- code that runs after a button click or a received websocket message, for example.
 
-The debugger knows when signals trigger and what data goes through them. This gives you great insight into what is actually going on inside your application.
+State changes are modeled using **signals**. Signals execute **chains** with **actions**. Actions are simply Javascript functions; Chains are groupings of one or more functions, executed in order, and signals bind application events to chains.
+
+The debugger knows when signals trigger and what data goes through them, giving you great insight into your application.
