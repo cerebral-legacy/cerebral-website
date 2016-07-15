@@ -1,5 +1,5 @@
 import React from 'react';
-import {Decorator as Cerebral, Link} from 'cerebral-view-react';
+import {Decorator as Cerebral} from 'cerebral-view-react';
 import styles from './styles.css';
 import classnames from 'classnames';
 import {
@@ -26,16 +26,13 @@ class Menu extends React.Component {
     const docUrlName = toUrlName(itemKey);
 
     return (
-      <Link
+      <a
         key={itemIndex}
         className={className}
-        signal="documentClicked"
-        params={{
-          doc: docUrlName
-        }}
+        href={`/documentation/${docUrlName}`}
       >
         {itemKey}
-      </Link>
+      </a>
     );
   }
   renderMenuSection(sectionKey, section, sectionIndex) {

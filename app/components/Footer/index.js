@@ -1,5 +1,5 @@
 import React from 'react';
-import {Decorator as Cerebral, Link} from 'cerebral-view-react';
+import {Decorator as Cerebral} from 'cerebral-view-react';
 import styles from './styles.css';
 
 @Cerebral()
@@ -12,12 +12,12 @@ class Footer extends React.Component {
             <div className={styles.header}>
               Organization
             </div>
-            <Link
+            <a
               className={styles.link}
-              signal="contributorsClicked"
+              href="/contributors"
             >
               Contributors
-            </Link>
+            </a>
           </div>
           <div className={styles.column}>
             <div className={styles.header}>
