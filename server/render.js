@@ -65,7 +65,7 @@ export default (app) => {
           'Context providers'
         ],
         'Views': Object.keys(externalDocs.views),
-        'Modules by community': Object.keys(externalDocs.modules),
+        'Community modules': Object.keys(externalDocs.modules),
         'Context providers': Object.keys(externalDocs.providers)
       }
     }, newState);
