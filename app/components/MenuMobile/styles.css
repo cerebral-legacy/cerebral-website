@@ -40,6 +40,10 @@
   box-shadow: 5px 0px 40px 0px rgba(0,0,0,0.55);
 }
 
+.wrapper a {
+  display: block;
+}
+
 .closeButtonWrapper {
   display: flex;
   align-items: center;

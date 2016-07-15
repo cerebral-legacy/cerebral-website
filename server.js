@@ -38,6 +38,10 @@ docsFetcher()
     console.log('Docs are fetched and ready!');
   })
 
+app.get('*', function (req, res) {
+  res.redirect('http://www.cerebraljs.com');
+});
+
 app.listen(port, '0.0.0.0', (err) => {
   if (err) {
     console.log(err);

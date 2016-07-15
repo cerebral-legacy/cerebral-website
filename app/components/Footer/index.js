@@ -1,5 +1,5 @@
 import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-view-react';
+import {Decorator as Cerebral, Link} from 'cerebral-view-react';
 import styles from './styles.css';
 
 @Cerebral()
@@ -12,58 +12,62 @@ class Footer extends React.Component {
             <div className={styles.header}>
               Organization
             </div>
-            <div
+            <Link
               className={styles.link}
-              onClick={() => this.props.signals.contributorsClicked()}
+              signal="contributorsClicked"
             >
               Contributors
-            </div>
+            </Link>
           </div>
           <div className={styles.column}>
             <div className={styles.header}>
               Articles and useful links
             </div>
-            <div
+            <a
               className={styles.link}
-              onClick={() => window.open('https://github.com/cerebral/cerebral-reference-app')}
+              href="https://github.com/cerebral/cerebral-reference-app"
+              target="_new"
             >
               Real life Cerebral project
-            </div>
-            <div
+            </a>
+            <a
               className={styles.link}
-              onClick={() => window.open('https://gist.github.com/christianalfoni/e8dc5bfa79e7289a6258')}
+              href="https://gist.github.com/christianalfoni/e8dc5bfa79e7289a6258"
+              target="_new"
             >
               Redux and Cerebral
-            </div>
-            <div
+            </a>
+            <a
               className={styles.link}
-              onClick={() => window.open('http://www.webpackbin.com')}
+              href="http://www.webpackbin.com"
+              target="_new"
             >
               www.webpackbin.com <small>(Cerebral app)</small>
-            </div>
-            <div
+            </a>
+            <a
               className={styles.link}
-              onClick={() => window.open('http://www.christianalfoni.com')}
+              href="http://www.christianalfoni.com"
+              target="_new"
             >
               www.christianalfoni.com
-            </div>
+            </a>
           </div>
           <div className={styles.column}>
             <div className={styles.header}>
               Help
             </div>
-            <div
+            <a
               className={styles.link}
-              onClick={() => window.open('https://github.com/cerebral/cerebral')}
+              href="https://github.com/cerebral/cerebral"
             >
               Cerebral Github Repo
-            </div>
-            <div
+            </a>
+            <a
               className={styles.link}
-              onClick={() => window.open('https://discord.gg/0kIweV4bd2bwwsvH')}
+              href="https://discord.gg/0kIweV4bd2bwwsvH"
             >
               Discord chat
-            </div>
+            </a>
           </div>
         </div>
       </div>

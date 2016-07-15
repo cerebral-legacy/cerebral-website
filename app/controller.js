@@ -5,7 +5,6 @@ import Router from 'cerebral-module-router';
 import rootRouted from './signals/rootRouted';
 import introductionClicked from './signals/introductionClicked';
 import documentClicked from './signals/documentClicked';
-import getStartedClicked from './signals/getStartedClicked';
 import menuButtonClicked from './signals/menuButtonClicked';
 import closeMenuButtonClicked from './signals/closeMenuButtonClicked';
 import contributorsClicked from './signals/contributorsClicked';
@@ -16,7 +15,6 @@ const controller = Controller(Model(window.BOOTSTRAP_STATE));
 controller.addSignals({
   rootRouted,
   introductionClicked,
-  getStartedClicked,
   documentClicked,
   menuButtonClicked,
   closeMenuButtonClicked,

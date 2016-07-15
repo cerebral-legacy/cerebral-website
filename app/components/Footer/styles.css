@@ -3,6 +3,10 @@
   padding: 40px;
 }
 
+.wrapper a {
+  display: block;
+}
+
 .columns {
   display: flex;
   margin: 0 auto;
@@ -28,6 +32,7 @@
 .link {
   margin: 5px 0;
   cursor: pointer;
+  color: #FFF;
 }
 
 @media (max-width: 800px) {

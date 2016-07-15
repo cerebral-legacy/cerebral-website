@@ -1,3 +1,6 @@
+.wrapper a {
+  display: block;
+}
 .section {
   border-left: 5px solid transparent;
   font-size: 24px;

@@ -41,7 +41,9 @@ class App extends React.Component {
             </div>
             <div
               className={styles.button}
-              onClick={() => this.props.signals.getStartedClicked()}
+              onClick={() => this.props.signals.documentClicked({
+                doc: 'get_started'
+              })}
             >
               GET STARTED
             </div>
