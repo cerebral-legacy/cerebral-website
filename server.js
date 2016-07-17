@@ -31,6 +31,8 @@ if (isDeveloping) {
 
 app.use(express.static('./dist'));
 app.use(express.static('./public'));
+app.use('/oldsite', express.static('./oldsite'));
+
 render(app);
 
 docsFetcher()
