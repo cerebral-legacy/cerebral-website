@@ -123,10 +123,13 @@ export default Computed({
   users: 'app.users',
   sortOrder: 'app.sortOrder'
 }, props => {
-  return Object.keys(props.users).sort((a, b) => {
-    if (a.name.toLowerCase() > b.name.toLowerCase()) {
+  return Object.keys(props.users).sort((userAKey, userBKey) => {
+    const userA = props.users[userAKey]
+    const userB = props.users[userBKey]
+
+    if (userA.name.toLowerCase() > userB.name.toLowerCase()) {
       return props.sortOrder === 'asc' ? -1 : 1
-    } else if (a.name.toLowerCase() < b.name.toLowerCase()) {
+    } else if (userA.name.toLowerCase() < userB.name.toLowerCase()) {
       return props.sortOrder === 'asc' ? 1 : -1
     }
 
@@ -172,3 +175,5 @@ function addUser({input, state, output}) {
 ```
 
 We also output the userKey to the signal so that actions after it can use it to update the user with an ID when the server responds etc.
+
+If you look at the [cerebral-todomvc](https://github.com/cerebral/cerebral-todomvc) project you can see this pattern in action.
