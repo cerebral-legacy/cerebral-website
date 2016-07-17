@@ -50,6 +50,7 @@ import Servercontroller from './Servercontroller';
 import Modals from './Modals';
 import Boilerplates from './Boilerplates';
 import StoringServerData from './StoringServerData';
+import FeedbackMessages from './FeedbackMessages';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -99,7 +100,8 @@ const pages = {
   'modals': Modals,
   'cerebral-view-inferno': CerebralViewInferno,
   'boilerplates': Boilerplates,
-  'storing_server_data': StoringServerData
+  'storing_server_data': StoringServerData,
+  'feedback_messages': FeedbackMessages
 };
 
 @Cerebral({

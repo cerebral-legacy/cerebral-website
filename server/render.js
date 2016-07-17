@@ -51,7 +51,8 @@ export default (app) => {
         ],
         'How do I handle...': [
           'Modals',
-          'Storing server data'
+          'Storing server data',
+          'Feedback messages'
         ],
         'Api': [
           'Controller',

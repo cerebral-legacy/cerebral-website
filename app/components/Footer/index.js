@@ -68,6 +68,12 @@ class Footer extends React.Component {
             >
               Discord chat
             </a>
+            <a
+              className={styles.link}
+              href="/oldsite"
+            >
+              Old Cerebral website
+            </a>
           </div>
         </div>
       </div>
