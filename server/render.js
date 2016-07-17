@@ -47,6 +47,7 @@ export default (app) => {
           'Structuring your project',
           'The debugger',
           'Going to production',
+          'Testing',
           'Boilerplates'
         ],
         'How do I handle...': [
