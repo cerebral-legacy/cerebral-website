@@ -98,33 +98,33 @@ Cerebral will emit events regarding instantiation, execution of signals and stat
 ```javascript
 // When a state change has happened and the UI needs to update,
 // passing the signal that caused the change
-controller.on('change', ({signal}) => ())
+controller.on('change', ({signal}) => {})
 
 // When a state change has happened and the UI needs to update,
 // passing the state paths that has changed.
-controller.on('flush', (changes) => ())
+controller.on('flush', (changes) => {})
 
 // When some error has happened
-controller.on('error', (error) => ())
+controller.on('error', (error) => {})
 
 // When a signal is being executed
-controller.on('signalStart', ({signal}) => ())
+controller.on('signalStart', ({signal}) => {})
 
 // When a signal is done executing
-controller.on('signalEnd', ({signal}) => ())
+controller.on('signalEnd', ({signal}) => {})
 
 // When an action is being executed
-controller.on('actionStart', ({signal, action}) => ())
+controller.on('actionStart', ({signal, action}) => {})
 
 // When an action is done executing
-controller.on('actionEnd', ({signal, action}) => ())
+controller.on('actionEnd', ({signal, action}) => {})
 
 // When a signal has been prevented from executing
-controller.on('signalPrevented', ({signal}) => ())
+controller.on('signalPrevented', ({signal}) => {})
 
 // When some error has happened during execution of a signal.
-controller.on('signalError', ({signal, action}) => ())
+controller.on('signalError', ({signal, action}) => {})
 
 // When all modules have loaded
-controller.on('modulesLoaded', () => ())
+controller.on('modulesLoaded', () => {})
 ```
