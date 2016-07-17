@@ -70,7 +70,7 @@ class Footer extends React.Component {
             </a>
             <a
               className={styles.link}
-              href="/oldsite"
+              onClick={() => window.open('/oldsite')}
             >
               Old Cerebral website
             </a>
