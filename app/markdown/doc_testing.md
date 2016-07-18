@@ -12,9 +12,9 @@ The examples here are using [mocha](https://mochajs.org/), [chai](http://chaijs.
 
 ### Test Mode
 
-Some features of cerebral have been designed with a "test mode". This "test mode" will help by directly exposing your pure functions and bypassing the parts of cerebral that would otherwise make testing more difficult.
+Some features of cerebral have been designed with a "test mode". This test mode will help by directly exposing your pure functions and bypassing the parts of cerebral that would otherwise make testing more difficult.
 
-To enable test mode simply ensure that your `NODE_ENV` is set to `'test'`. Without this some of the examples below may not work as described.
+To enable test mode you need to ensure that `NODE_ENV` is set to `'test'`. Without this some of the examples below may not work as described.
 
 Be sure not to set `NODE_ENV` to `'test'` when making development or production builds of your app.
 
@@ -30,7 +30,7 @@ export default connect({
 ))
 ```
 
-When `NODE_ENV === 'test'` cerebral-view-react/connect will not be called, instead your pure component will be returned, making it easy to test.
+When `NODE_ENV === 'test'` cerebral-view-react/connect will not be called, instead your pure component will be returned, making it easy to test. In the case of using stateful react classes, the class will be returned, so no excuses not write those tests.
 
 Example mocha test using [enzyme](http://airbnb.io/enzyme/) and [chai-enzyme](https://github.com/producthunt/chai-enzyme)
 ```js
@@ -77,11 +77,13 @@ describe('upperUser() Computed', () => {
 
 ### Action Testing
 
-Since actions are pure functions, they are easy to test.
+Since actions are pure functions, they are easy to test. Most actions will call `output(result)` or `output.somePath(result)` and may also call some state functions, so you'll need to pass in some stubs to replicate these functions.
 
 ```js
-export default ({ input, output }) => {
-  output({ value: input.value + 1 })
+export default ({ input, state, output }) => {
+  const value = input.value + 1
+  state.set('currentValue', value)
+  output({ value })
 }
 ```
 
@@ -92,23 +94,61 @@ import { expect } from 'chai'
 // module to test
 import increment from '../actions/increment'
 
-describe('increment action', () => {
+describe('increment() action', () => {
   it('adds one to input.value', () => {
     increment({
       input: { value: 10 },
+      state: {
+        set (key, value) {
+          expect(key).to.equal('currentValue')
+          expect(value).to.equal(11)
+        }
+      },
       output ({ value }) {
-        expect(value).to.eql(11)
+        expect(value).to.equal(11)
       }
     })
   })
 })
 ```
 
-Where your action may be using additional inputs or outputs (e.g. state or services), you may need to pass in those values. For async actions you will need to call done in the `output` function(s).
+If your action is using services, you will also need to pass in stubs for those functions. For async actions you will need to call `done()` in the `output` function(s).
+
+Example async test with service call
+```js
+import { expect } from 'chai'
+
+// module to test
+import getDataFromServer from '../actions/getDataFromServer'
+
+describe('getDataFromServer() action', () => {
+  it('gets data from the server', (done) => {
+    getDataFromServer({
+      services: {
+        http: fetch(url) {
+          return new promise((resolve) => {
+            setTimeout(() => resolve({ something: 'from the server' }), 100)
+          })
+        }
+      },
+      output: {
+        success: ({ data }) {
+          try {
+            expect(data).to.eql({ something: 'from the server' })
+            done()
+          } catch (e) {
+            done(e)
+          }
+        },
+        error: done
+    })
+  })
+})
+```
 
 ### Signal Testing
 
-Cerebral provides a package to help with testing your apps modules.
+Cerebral provides a package to help with testing your application's modules and signals.
 
 ```
 npm install --save-dev cerebral-testable
