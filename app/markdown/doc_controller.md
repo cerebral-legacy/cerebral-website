@@ -18,7 +18,7 @@ export default controller
 ### Methods
 
 #### controller.addModules(modules)
-Attaches modules to the controller. The key is the namespace you choose for your module. Any state, signals and services added to module will be avilable on that chosen namespace.
+Attaches modules to the controller. The key is the namespace you choose for your module. Any state, signals and services added to module will be available on that chosen namespace.
 ```javascript
 import App from './modules/App'
 import Devtools from 'cerebral-module-devtools'
