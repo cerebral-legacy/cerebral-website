@@ -8,7 +8,6 @@ Even though signals helps you build mental images of complexities in your applic
 - Gives insight into signal execution with all input, outputs, actions, paths and services affected
 - Click actions to go to source code
 - Double click signals to time travel (cerebral-model-immutable)
-- Keep state of application on refresh (cerebral-model-immutable)
 - Live update of state tree visualizer
 - Edit state tree directly from debugger
 - See the active paths in the application

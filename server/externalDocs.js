@@ -1,5 +1,6 @@
 export default {
   modules: {
+    'cerebral-addons': 'https://raw.githubusercontent.com/cerebral/cerebral-addons/master/README.md',
     'cerebral-module-http': 'https://raw.githubusercontent.com/cerebral/cerebral-module-http/master/README.md',
     'cerebral-module-forms': 'https://raw.githubusercontent.com/cerebral/cerebral-module-forms/master/README.md',
     'cerebral-module-useragent': 'https://raw.githubusercontent.com/cerebral/cerebral-module-useragent/master/README.md',
