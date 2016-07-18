@@ -18,7 +18,7 @@ Are you unsure which one to choose? Choose this one. Also if your app needs func
 #### Instantiate
 
 ```javascript
-import Controller from 'Cerebral'
+import {Controller} from 'Cerebral'
 import Model from 'cerebral/models/immutable'
 
 const controller = Controller(Model({}))
@@ -38,7 +38,7 @@ When working with immutable data everything has to be core javascript value type
 #### Instantiate
 
 ```javascript
-import Controller from 'Cerebral'
+import {Controller} from 'Cerebral'
 import Model from 'cerebral/models/mutable'
 
 const controller = Controller(Model({}))
