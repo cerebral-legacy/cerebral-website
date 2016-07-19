@@ -88,7 +88,8 @@ export default (app) => {
   app.get('/documentation', (req, res) => {
     res.type('html');
     const view = render({
-      currentPage: 'documentation'
+      currentPage: 'documentation',
+      currentDocument: 'get_started'
     });
     res.send(getIndex().replace('${body}', view.html).replace('${BOOTSTRAP_STATE}', view.state));
   });
