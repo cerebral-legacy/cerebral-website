@@ -1,6 +1,6 @@
 ## Popups
 
-Popups are different than modals. They are more in the realm of popups, popup menus and even tooltips. What they share in behaviour is that if you open one of them, the others should close. There are two approaches to this. You can create a stateful component handler for it, or you can use Cerebral and make it very explicit. Let us look at the Cerebral approach.
+Popups are different than modals. They are more in the realm of dropdowns, popup menus and even tooltips. What they share in behaviour is that if you open one of them, the others should close. There are two approaches to this. You can create a stateful component handler for it, or you can use Cerebral and make it very explicit. There is no right answer, it depends on your application. But let us look at the Cerebral approach.
 
 ### Closing everything
 First we need to close all these popup when we click our application. Let us create a chain that closes them:
@@ -30,7 +30,7 @@ export default module => {
 }
 ```
 
-And then in our root component we trigger the signal whenever the we click our application, using React as an example:
+And then in our root component we trigger the signal whenever we click our application, using React as an example:
 
 ```javascript
 import {connect} from 'cerebral-view-react'
@@ -50,7 +50,7 @@ export default connect({
 
 Whenever we now click our application all our popups will close and we can see that behaviour in the debugger as well.
 
-### Preventing it closing
+### Prevent closing
 So when we now click a button to show a popover we have to ensure that our application does not trigger the click event on the root component, because then they will just close again.
 
 ```javascript
@@ -80,7 +80,7 @@ export default connect({
 )
 ```
 
-Now we prevent any click on the button and the popover itself to propagate up to or application root component. So when our chain handling the popover click runs:
+Using **event.stopPropagation()** we prevent any click on the button and the popover itself to propagate up to or application root component. So when our chain handling the popover click runs:
 
 ```javascript
 import {set} from 'cerebral/operators';
