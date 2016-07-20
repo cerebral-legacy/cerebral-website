@@ -53,7 +53,8 @@ export default (app) => {
         'How do I handle...': [
           'Modals',
           'Storing server data',
-          'Feedback messages'
+          'Feedback messages',
+          'Popups'
         ],
         'Api': [
           'Controller',
@@ -89,7 +90,7 @@ export default (app) => {
     res.type('html');
     const view = render({
       currentPage: 'documentation',
-      currentDocument: 'get_started'
+      currentDocument: 'introduction'
     });
     res.send(getIndex().replace('${body}', view.html).replace('${BOOTSTRAP_STATE}', view.state));
   });

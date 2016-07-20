@@ -47,6 +47,10 @@ function myAction({input, state, output, services}) {
   state.get('foo') // {bar: "value"}
   state.get('foo.bar') // "value"
 
+  // If you have computed functions they can
+  // also be used inside an actions
+  state.computed(getMyComputedValue())
+
   // Before: {foo: "bar"}
   state.set('foo', 'newBar')
   // After: {foo: "newBar"}

@@ -52,6 +52,8 @@ import Boilerplates from './Boilerplates';
 import StoringServerData from './StoringServerData';
 import FeedbackMessages from './FeedbackMessages';
 import Testing from './Testing';
+import Popups from './Popups';
+import CerebralAddons from './CerebralAddons';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -103,7 +105,9 @@ const pages = {
   'boilerplates': Boilerplates,
   'storing_server_data': StoringServerData,
   'feedback_messages': FeedbackMessages,
-  'testing': Testing
+  'testing': Testing,
+  'popups': Popups,
+  'cerebral-addons': CerebralAddons
 };
 
 @Cerebral({
