@@ -55,7 +55,8 @@ export default (app) => {
           'Storing server data',
           'Feedback messages',
           'Popups',
-          'Factories'
+          'Factories',
+          'Long Running Actions'
         ],
         'Api': [
           'Controller',
