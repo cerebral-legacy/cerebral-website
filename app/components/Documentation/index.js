@@ -54,6 +54,7 @@ import FeedbackMessages from './FeedbackMessages';
 import Testing from './Testing';
 import Popups from './Popups';
 import CerebralAddons from './CerebralAddons';
+import Factories from './Factories';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -107,7 +108,8 @@ const pages = {
   'feedback_messages': FeedbackMessages,
   'testing': Testing,
   'popups': Popups,
-  'cerebral-addons': CerebralAddons
+  'cerebral-addons': CerebralAddons,
+  'factories': Factories
 };
 
 @Cerebral({

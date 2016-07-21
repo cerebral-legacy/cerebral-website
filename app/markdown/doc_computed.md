@@ -9,9 +9,9 @@ export default Computed({
   filter: 'app.filter',
   users: 'users.list'
 }, props => {
-  return props.users.map(user => {
+  return props.users.filter(user => {
     if (props.filter === 'all') {
-      return user
+      return true
     }
     if (props.filter === 'awesome') {
       return user.isAwesome

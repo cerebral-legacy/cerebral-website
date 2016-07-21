@@ -54,7 +54,8 @@ export default (app) => {
           'Modals',
           'Storing server data',
           'Feedback messages',
-          'Popups'
+          'Popups',
+          'Factories'
         ],
         'Api': [
           'Controller',
