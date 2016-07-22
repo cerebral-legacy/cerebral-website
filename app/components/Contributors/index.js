@@ -95,6 +95,17 @@ class Contributors extends React.Component {
               Running open source projects can often feel unmanageable and honestly Cerebral is no different,
               but the great feedback and the enthusiasm makes it all worth it!
             </div>
+            <br />
+            <h4>And one last very special person...</h4>
+            <div>
+              ...my pregnant girlfriend, Ragne. It is not easy competing with a macbook for attention, I spend
+              a lot of time with it. On the couch, on vacation, in the kitchen, at the dinner table... though in bed
+              is completely off limits. Thus allowing the pregnancy to happen I suppose :-)
+              <br /><br />
+              Anyways, she is always supportive and encouraging. Even when I get irrationally angry tracking bugs or
+              my whole day is ruined because of one bad comment on GitHub (I have to work on that). Thanks to you I eat
+              my vegetables and fish, I keep in touch with the real world and I feel loved. Thank you!
+            </div>
           </div>
         </div>
       </div>
