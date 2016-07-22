@@ -6,19 +6,18 @@ In Cerebral, these processes are encapsulated using the *module* interface and a
 
 #### An HTTP Polling Module
 
-Imagine you have a Navigation bar at the top of your app that needs to display the unread message count for the current user. It queries an `/api/message_counts/:id` endpoint every 10 seconds to fetch the current `newMessageCount` for the user and display in a component.
+Imagine you have a Navigation bar at the top of your app that needs to display the unread message count for the current user. It queries an `/api/message_counts/:id` endpoint every 10 seconds to fetch the current `newMessageCount` and display in a component.
 
 First, let's set up a skeleton with the expected *module* interface. This hooks our code into cerebral and gives us access to the controller's `services`, `state`, and `signals` and also lets us define our own services, signals, and state:
 
 ```js
 // ./modules/http-poller/index.js
 
-export default (options = {}) => {
-  return (module, controller) => {
-  }
+export default (module, controller) => {
 }
 ```
-The *module* interface is a higher order function returning another function that is passed the cerebral `controller` and the `module` instance as arguments. It optionally accepts configuration `options`.
+
+The *module* interface is a function that is passed the cerebral `controller` and the `module` instance as arguments.
 
 Modules hook into the `addModules` method of the controller:
 
@@ -37,7 +36,7 @@ controller.addServices({
 });
 
 controller.addModules({
-  httpPoller: HttpPoller()
+  httpPoller
 });
 ```
 
@@ -46,7 +45,7 @@ This makes the module available in your actions:
 ```js
 // ./navbar/actions/poll-message-counts.js
 
-function pollMessageCounts({state, services, output}) {
+function pollMessageCounts({state, services}) {
   const {httpPoller} = services;
 
   // do cool stuff when we implement the httpPoller
@@ -61,9 +60,9 @@ Let's write it out:
 
 - When the Navbar is mounted, we should trigger a `mounted` signal
 - The `mounted` signal should call a `pollMessageCounts` action
-- The `pollMessageCounts` action needs to call our `/message_counts` API every 10 seconds for the new message count.
+- The `pollMessageCounts` action then calls our `/message_counts` API every 10 seconds for the new message count.
 - On *success* we should trigger a *new* `messageCountsFetched` signal
-- The `messageCountsFetched` signal should take care of setting the new counts in the state tree.
+- The `messageCountsFetched` signal takes care of setting the new counts in the state tree.
 
 Nice! Let's implement the `httpPoller`:
 
@@ -71,29 +70,27 @@ Nice! Let's implement the `httpPoller`:
 
 const TEN_SECONDS = 10000;
 
-export default (options = {}) => {
-  return (module, controller) => {
+export default (module, controller) => {
 
-    const ajax = controller.getServices('ajax');
+  const ajax = controller.getServices('ajax');
 
-    module.addServices({
-      atInterval: (url, signals, interval = TEN_SECONDS) => {
-        const {success, error} = signals;
+  module.addServices({
+    atInterval: (url, signals, interval = TEN_SECONDS) => {
+      const {success, error} = signals;
 
-        return window.setInterval(() => {
-          ajax.get(url)
-            .then(response => {
-              controller.getSignals(success)({
-                data: response.data
-              });
-            })
-            .catch(response => {
-              controller.getSignals(error)({response});
+      return window.setInterval(() => {
+        ajax.get(url)
+          .then(response => {
+            controller.getSignals(success)({
+              data: response.data
             });
-        }, interval);
-      }
-    });
-  }
+          })
+          .catch(response => {
+            controller.getSignals(error)({response});
+          });
+      }, interval);
+    }
+  });
 }
 
 ```
@@ -106,7 +103,7 @@ Using `window.setInterval` we query our endpoint once every 10 seconds. In the `
 Lets use the `httpPoller` service in our action:
 
 ```js
-function pollMessageCounts({state, services, output}) {
+function pollMessageCounts({state, services}) {
   const {httpPoller} = services;
   const id = state.get('currentUser.id');
 
@@ -126,21 +123,19 @@ Now we can implement our signals and their corresponding action chains in our `N
 ```js
 // ./modules/navbar/index.js
 
-export default (options = {}) => {
-  return (module) => {
+export default module => {
 
-    module.addSignals({
-      mounted: [
-        pollMessageCounts
-      ],
-      messageCountsFetched: [
-        copy('input:data', 'state:navbar.messageCounts')
-      ],
-      errorFetchingMessageCounts: [
-        // handle error here
-      ]
-    })
-  }
+  module.addSignals({
+    mounted: [
+      pollMessageCounts
+    ],
+    messageCountsFetched: [
+      copy('input:data', 'state:navbar.messageCounts')
+    ],
+    errorFetchingMessageCounts: [
+      // handle error here
+    ]
+  })
 }
 ```
 
@@ -157,7 +152,7 @@ export default connect({
     const newCount = props.messageCounts.new_count
 
     return (
-      <div>{newCount ? newCount : '--'}</div>
+      <div>{newCount || '--'}</div>
     )
   }
 )
@@ -169,4 +164,5 @@ And we're done!
 
 - Use Cerebral's *module* interface to expose inputs from the "outside" world as *signals* in your application.
 - Services are passed to *actions* and *actions* can trigger **new** signals from long running, possibly async processes
+- Unlike common ajax calls that fire once, these processes often trigger *signals* that happen multiple times (repeatedly) throughout your app's execution
 - Since all inputs to your app are explicitly listed in your signal definition you can easily understand their behavior and view them in the debugger

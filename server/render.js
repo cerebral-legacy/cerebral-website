@@ -56,7 +56,7 @@ export default (app) => {
           'Feedback messages',
           'Popups',
           'Factories',
-          'Long Running Actions'
+          'Long Running Services'
         ],
         'Api': [
           'Controller',
