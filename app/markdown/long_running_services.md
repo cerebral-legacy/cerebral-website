@@ -60,9 +60,9 @@ Let's write it out:
 
 - When the Navbar is mounted, we should trigger a `mounted` signal
 - The `mounted` signal should call a `pollMessageCounts` action
-- The `pollMessageCounts` action then calls our `/message_counts` API every 10 seconds for the new message count.
+- The `pollMessageCounts` action should call our `/message_counts` API every 10 seconds for the new message count.
 - On *success* we should trigger a *new* `messageCountsFetched` signal
-- The `messageCountsFetched` signal takes care of setting the new counts in the state tree.
+- The `messageCountsFetched` signal should take care of setting the new counts in the state tree.
 
 Nice! Let's implement the `httpPoller`:
 
@@ -139,7 +139,7 @@ export default module => {
 }
 ```
 
-Now we display the `messageCounts` in our component:
+Then we can display the `messageCounts` in our component:
 
 ```js
 import React,{Component} from 'react';
