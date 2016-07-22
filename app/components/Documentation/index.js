@@ -55,6 +55,7 @@ import Testing from './Testing';
 import Popups from './Popups';
 import CerebralAddons from './CerebralAddons';
 import Factories from './Factories';
+import LongRunningServices from './LongRunningServices';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -109,7 +110,8 @@ const pages = {
   'testing': Testing,
   'popups': Popups,
   'cerebral-addons': CerebralAddons,
-  'factories': Factories
+  'factories': Factories,
+  'long_running_services': LongRunningServices
 };
 
 @Cerebral({

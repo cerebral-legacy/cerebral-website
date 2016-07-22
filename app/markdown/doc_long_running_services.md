@@ -1,4 +1,4 @@
-## Managing Long Running Processes with Services
+## Long running services
 
 Most *signals* in your application are triggered by users interacting with the UI-- typing in an input, submitting a form, or closing a modal window. But, many times your application needs to respond to events from the "outside" world. These could be websocket messages from services like Firebase, chat messages from your backend, or even simple HTTP long polling for data.
 
@@ -6,9 +6,9 @@ In Cerebral, these processes are encapsulated using the *module* interface and a
 
 #### An HTTP Polling Module
 
-Imagine you have a Navigation bar at the top of your app that needs to display the unread message count for the current user. It queries an `/api/message_counts/:id` endpoint every 10 seconds to fetch the current `newMessageCount` and display in a component.
+Imagine you have a Navigation bar at the top of your app that needs to display the unread message count for the current user. It queries an **/api/message_counts/:id** endpoint every 10 seconds to fetch the current **newMessageCount** and display in a component.
 
-First, let's set up a skeleton with the expected *module* interface. This hooks our code into cerebral and gives us access to the controller's `services`, `state`, and `signals` and also lets us define our own services, signals, and state:
+First, let's set up a skeleton with the expected *module* interface. This hooks our code into Cerebral by registering **state**, **services** and **signals**. It also gives us access to the controller which allows us to extract information about it inside our services to, for example to trigger a signal.
 
 ```js
 // ./modules/http-poller/index.js
@@ -17,9 +17,9 @@ export default (module, controller) => {
 }
 ```
 
-The *module* interface is a function that is passed the cerebral `controller` and the `module` instance as arguments.
+The *module* interface is a function that is passed the **module** instance and the cerebral **controller** as arguments.
 
-Modules hook into the `addModules` method of the controller:
+Modules hook into the **addModules** method of the controller:
 
 ```js
 // ./main.js
@@ -58,11 +58,11 @@ Now that we have the basic pieces in place, how do we actually wire all this up?
 
 Let's write it out:
 
-- When the Navbar is mounted, we should trigger a `mounted` signal
-- The `mounted` signal should call a `pollMessageCounts` action
-- The `pollMessageCounts` action should call our `/message_counts` API every 10 seconds for the new message count.
-- On *success* we should trigger a *new* `messageCountsFetched` signal
-- The `messageCountsFetched` signal should take care of setting the new counts in the state tree.
+- When the Navbar is mounted, we should trigger a **mounted** signal
+- The **mounted** signal should call a **pollMessageCounts** action
+- The **pollMessageCounts** action should call our **/message_counts** API every 10 seconds for the new message count.
+- On *success* we should trigger a *new* **messageCountsFetched** signal
+- The **messageCountsFetched** signal should take care of setting the new counts in the state tree.
 
 Nice! Let's implement the `httpPoller`:
 
@@ -94,13 +94,13 @@ export default (module, controller) => {
 }
 
 ```
-`httpPoller` uses the `controller.addServices()` function to expose an `atInterval` method to the `services` argument in your actions. `atInterval` takes a `url` to poll and an object defining `success` and `error` signal names.
+**httpPoller** uses the **controller.addServices()** function to expose an **atInterval** method to the **services** argument in your actions. **atInterval** takes a **url** to poll and an object defining **success** and **error** signal names.
 
-Using `window.setInterval` we query our endpoint once every 10 seconds. In the `then()` callback we use the `controller.getSignals()` method to get our signal by name and call it with the returned `message_counts` data. Same goes for our `catch()` callback.
+Using **window.setInterval** we query our endpoint once every 10 seconds. In the **then()** callback we use the **controller.getSignals()** method to get our signal by name and call it with the returned **message_counts** data. Same goes for our **catch()** callback.
 
 #### Defining the Action
 
-Lets use the `httpPoller` service in our action:
+Lets use the **httpPoller** service in our action:
 
 ```js
 function pollMessageCounts({state, services}) {
@@ -114,11 +114,11 @@ function pollMessageCounts({state, services}) {
 }
 ```
 
-We grab our `httpPoller` service from the `services` key passed to our action. Then, we pass in *success* and *error* signals to be triggered every 10 seconds.
+We grab our **httpPoller** service from the **services** key passed to our action. Then, we pass in *success* and *error* signals to be triggered every 10 seconds.
 
 #### Tying it Together with Signals
 
-Now we can implement our signals and their corresponding action chains in our `Navbar` module and define our component:
+Now we can implement our signals and their corresponding action chains in our **Navbar** module and define our component:
 
 ```js
 // ./modules/navbar/index.js
@@ -139,7 +139,7 @@ export default module => {
 }
 ```
 
-Then we can display the `messageCounts` in our component:
+Then we can display the **messageCounts** in our component:
 
 ```js
 import React,{Component} from 'react';
@@ -162,7 +162,7 @@ And we're done!
 
 #### Summary
 
-- Use Cerebral's *module* interface to expose inputs from the "outside" world as *signals* in your application.
-- Services are passed to *actions* and *actions* can trigger **new** signals from long running, possibly async processes
-- Unlike common ajax calls that fire once, these processes often trigger *signals* that happen multiple times (repeatedly) throughout your app's execution
-- Since all inputs to your app are explicitly listed in your signal definition you can easily understand their behavior and view them in the debugger
+- Cerebral's *module* interface allows you to create a service (process) that gives input to Cerebral by firing off signals
+- Services are accessible in the *actions*, so at any point in a flow you can control the behaviour of a service. Start and stop subscriptions, open and close connections etc.
+- Unlike common ajax calls that has only one response, returning a promise, you may use the approach explained here to handle processes that will give multiple responses over time
+- Since all inputs to your app are explicitly listed in your signal definition you can easily understand their behavior and view these processes in the debugger
