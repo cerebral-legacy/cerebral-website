@@ -37,10 +37,12 @@ import {connect} from 'cerebral-view-react'
 
 export default connect({
   someState: 'app.someState'
+}, {
+  clicked: 'app.clicked'
 },
   function App(props) {
     return (
-      <div onClick={() => props.signals.app.clicked()}>
+      <div onClick={() => props.clicked()}>
         ...
       </div>
     )
@@ -58,12 +60,14 @@ import {connect} from 'cerebral-view-react'
 
 export default connect({
   showPopover: 'app.showPopover'
+}, {
+  showPopoverClicked: 'app.showPopoverClicked'
 },
   function MyPopover(props) {
     return (
       <div onClick={(event) => {
         event.stopPropagation()
-        props.signals.app.showPopoverClicked()
+        props.showPopoverClicked()
       }}>
         <div>
           Show popover
@@ -136,14 +140,16 @@ import {connect} from 'cerebral-view-react'
 export default connect(props => ({
   item: `app.items.${props.itemKey}`
   currentItemPopover: 'app.currentItemPopover'
-}),
+}), {
+  itemPopoverClicked: 'app.itemPopoverClicked'
+},
   function Item(props) {
     return (
       <div>
         <div>{props.item.title}</div>
         <div onClick={(event) => {
           event.stopPropagation()
-          props.signals.app.itemPopoverClicked({
+          props.itemPopoverClicked({
             itemKey: props.itemKey
           })
         }}>
@@ -183,10 +189,12 @@ import {connect} from 'cerebral-view-react'
 
 export default connect({
   someState: 'app.someState'
+}, {
+  clicked: 'app.clicked'
 },
   class App extends React.Component {
     componentDidMount() {
-      window.addEventListener('click', () => this.props.signals.app.clicked())
+      window.addEventListener('click', () => this.props.clicked())
     }
     render() {
       return (
@@ -206,12 +214,14 @@ import {connect} from 'cerebral-view-react'
 
 export default connect({
   showPopover: 'app.showPopover'
+}, {
+  showPopoverClicked: 'app.showPopoverClicked'
 },
   function MyPopover(props) {
     return (
       <div onClick={(event) => {
         event.nativeEvent.stopPropagation()
-        props.signals.app.showPopoverClicked()
+        props.showPopoverClicked()
       }}>
         <div>
           Show popover

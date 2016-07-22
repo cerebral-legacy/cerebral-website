@@ -68,6 +68,8 @@ import ModalContainer from './ModalContainer'
 
 export default connect({
   modal: 'app.myModal'
+}, {
+  myModalToggled: 'app.myModalToggled'
 },
   function MyModal(props) {
     if (!props.modal.show) {
@@ -75,7 +77,7 @@ export default connect({
     }
 
     return (
-      <ModalContainer onClose={props.signals.app.myModalToggled}>
+      <ModalContainer onClose={props.myModalToggled}>
         Hello modal!
       </ModalContainer>
     )
@@ -130,6 +132,8 @@ const userModal = Computed({
 
 export default connect({
   modal: userModal()
+}, {
+  myModalToggled: 'app.myModalToggled'
 },
   function UserModal(props) {
     if (!props.modal.show) {
@@ -137,7 +141,7 @@ export default connect({
     }
 
     return (
-      <ModalContainer onClose={props.signals.app.myModalToggled}>
+      <ModalContainer onClose={props.myModalToggled}>
         Hello {props.modal.user.name}
       </ModalContainer>
     )

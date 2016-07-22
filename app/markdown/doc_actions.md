@@ -51,6 +51,10 @@ function myAction({input, state, output, services}) {
   // also be used inside an actions
   state.computed(getMyComputedValue())
 
+  // If the value is an array you can do this
+  // to match first object in list
+  state.findWhere('app.list', {id: 3})
+
   // Before: {foo: "bar"}
   state.set('foo', 'newBar')
   // After: {foo: "newBar"}
