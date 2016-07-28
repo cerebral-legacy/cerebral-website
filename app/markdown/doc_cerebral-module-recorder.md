@@ -113,54 +113,34 @@ controller.addModules({
 *RecorderButton.js*
 ```javascript
 import React from 'react'
-import { connect } from 'cerebral-view-react'
+import {connect} from 'cerebral-view-react'
+import styles from './style.css'
 
 export default connect({
-  recorder: 'recorder'
-}, function (props) {
-  let style = {
-    border: '1px solid black',
-    borderRadius: '2px',
-    height: '25px',
-    backgroundColor: '#EAEAEA',
-    padding: '5px',
-    lineHeight: '15px',
-    boxSizing: 'border-box'
+    recorder: 'recorder'
+  }, {
+    clicked: 'recorder'
+  },
+  function RecorderButton({recorder, clicked}) {
+    let action
+    if (recorder.isPlaing) {
+      action = {name: 'paused', label: 'Pause playback'}
+    } else if (recorder.isPaused) {
+      action = {name: 'resumed', label: 'Play'}
+    } else if (recorder.isRecording) {
+      action = {name: 'stopped', label: 'Stop recording'}
+    } else if (recorder.hasRecorded) {
+      action = {name: 'played', label: 'Play'}
+    } else {
+      action = {name: 'recorded', label: 'Record'}
+    }
+    return (
+      <button className={styles.recorder} onClick={() => clicked[action.name]()}>
+        {action.label}
+      </button>
+    )
   }
-  var signals = props.signals
-  if (props.recorder.isPlaying) {
-    return React.createElement('button', {
-      style: style,
-      onClick: function () {
-        signals.recorder.paused({}, {
-          isRecorded: true
-        })
-      }
-    }, 'Pause playback')
-  }
-  if (props.recorder.isPaused) {
-    return React.createElement('button', {
-      style: style,
-      onClick: function () { signals.recorder.resumed() }
-    }, 'Play')
-  }
-  if (props.recorder.isRecording) {
-    return React.createElement('button', {
-      style: style,
-      onClick: function () { signals.recorder.stopped() }
-    }, 'Stop recording')
-  }
-  if (props.recorder.hasRecorded) {
-    return React.createElement('button', {
-      style: style,
-      onClick: function () { signals.recorder.played() }
-    }, 'Play')
-  }
-  return React.createElement('button', {
-    style: style,
-    onClick: function () { signals.recorder.recorded() }
-  }, 'Record')
-})
+)
 ```
 
 You would create your own signals for grabbing the current recording and saving it.
