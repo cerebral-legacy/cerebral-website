@@ -179,11 +179,18 @@ describe('application module', () => {
     })
   })
 
-  it('redirects to "home" on unknown url', (done) => {
+  it('redirects to "home" on unknown url (callback)', (done) => {
     controller.test((output) => {
       expect(controller.get('application.page')).to.equal('home')
     }, done)
     signals.application.unknownUrlReceived()
+  })
+
+  // same test as before but using a promise
+  it('redirects to "home" on unknown url (promise)', () => {
+    return controller.test(() => signals.application.unknownUrlReceived()).then((output) => {
+      expect(controller.get('application.page')).to.equal('home')
+    })
   })
 })
 ```
