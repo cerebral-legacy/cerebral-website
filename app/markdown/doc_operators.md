@@ -2,6 +2,8 @@
 
 Most state changes are quite simple. Usually you want to set some new state, toggle it or maybe copy a value from the input of the signal into the model. With the included operators you can do this directly in the chain definition, and more.
 
+Note that operators are static, meaning that when the arguments you pass needs to be dynamic of some sorts you rather want to create an action instead.
+
 ```javascript
 import {
   set,

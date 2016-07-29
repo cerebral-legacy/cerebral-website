@@ -148,15 +148,16 @@ searchItems.outputs = ['success', 'error', 'abort']
 ```
 
 ### Uploading files
-The HTTP service gives you a tool to upload files as well. Since Cerebral signals can only handle serializable data files needs to be handled at the view layer. Typically you would do:
+The HTTP service gives you a tool to upload files as well. Since Cerebral signals can only handle serializable data any files needs to be handled at the view layer. Typically you would do:
 
 ```javascript
 ...
 import {fileUpload} from 'cerebral-module-http'
 
 export default connect({
-  files: 'app.files'
+  fileNames: 'app.fileNames'
 }, {
+  filesAdded: 'app.filesAdded',
   uploadStarted: 'app.uploadStarted',
   uploadProgressed: 'app.uploadProgressed',
   uploadFinished: 'app.uploadFinished',
@@ -165,16 +166,17 @@ export default connect({
   class FileUpload extends Component {
     constructor (props) {
       super(props);
-      this.files = [];
+      this.filesToUpload = [];
     }
     onFilesChange (event) {
-      this.files = event.target.files;
+      this.filesToUpload = event.target.files;
+      this.props.filesAdded({
+        fileNames: this.fileToUpload.map(file => file.name)
+      })
     }
     upload () {
-      this.props.uploadStarted({
-        files: this.files.map(file => file.name)
-      })
-      fileUpload(this.files, {
+      this.props.uploadStarted()
+      fileUpload(this.fileToUpload, {
      	  url: '/upload',
         headers: {},
         onProgress: this.props.uploadProgressed
@@ -187,7 +189,7 @@ export default connect({
         <h4>Please choose a file.</h4>
         <div>
           <input type="" onChange={(event) => this.onFilesChange(event)}/><br/><br/>
-          <button disabled={this.files.length === 0} onClick={() => this.upload()}>Upload</button>
+          <button disabled={this.fileToUpload.length === 0} onClick={() => this.upload()}>Upload</button>
         </div>
       )
     }

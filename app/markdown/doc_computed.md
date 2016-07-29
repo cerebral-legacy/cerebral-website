@@ -38,6 +38,8 @@ export default connect({
 )
 ```
 
+When calling a computed it will return an object which allows Cerebral to grab its dependencies, update its value when changes occur and also extract the current value.
+
 #### Dynamic computed
 Sometimes you need some existing state or prop to produce a computed. Since the computed works pretty much like **connect** you can also pass props to it. Typically you would pass a property from the connect to the computed:
 
