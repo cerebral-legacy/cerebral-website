@@ -69,8 +69,20 @@ export default (app) => {
           'Servercontroller',
           'Context providers'
         ],
-        'Views': Object.keys(externalDocs.views),
-        'Community modules': Object.keys(externalDocs.modules),
+        'Views': [
+          'cerebral-view-react',
+          'cerebral-view-snabbdom',
+          'cerebral-view-inferno'
+        ],
+        'Community modules': [
+          'cerebral-module-router',
+          'cerebral-module-http',
+          'cerebral-module-forms',
+          'cerebral-module-useragent',
+          'cerebral-module-recorder',
+          'cerebral-module-devtools',
+          'cerebral-addons'
+        ],
         'Context providers': Object.keys(externalDocs.providers)
       }
     }, newState);

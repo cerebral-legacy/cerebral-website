@@ -1,82 +1,113 @@
-# cerebral-view-inferno
-The Inferno view package for Cerebral
+## cerebral-view-inferno
 
-## The Cerebral Webpage is now launched
-You can access the webpage at [http://cerebraljs.com/](http://cerebraljs.com/)
+Go to official [README](https://github.com/cerebral/cerebral-view-inferno/blob/master/README.md) to read more technical details and contribute to the project.
 
-## Debugger
-You can download the Chrome debugger [here](https://chrome.google.com/webstore/detail/cerebral-debugger/ddefoknoniaeoikpgneklcbjlipfedbb?hl=no).
+### Concept
+The Inferno view package lets you connect Cerebral to your components.
 
-## Install
-`npm install cerebral-view-inferno`
-
-## API
-All examples are shown with ES6 syntax.
-
-### Render the app
-```js
-import Inferno from 'inferno'
+### Instantiate
+```javascript
+import controller from './controller.js'
+import React from 'inferno'
 import {render} from 'inferno-dom'
 import {Container} from 'cerebral-view-inferno'
 
-// Your controller instance
-import controller from './controller'
+// Your main application component
 import App from './components/App'
 
-render((
+render(
   <Container controller={controller}>
-    <App />
+    <App/>
   </Container>
-), document.querySelector('#app'))
+, document.querySelector('#app'))
 ```
 
-### Get state in components
-```js
-import Inferno from 'inferno'
-import {connect} from 'cerebral-view-inferno'
+### Stateless components
+You should prefer stateless components over classes, because they perform better. With inferno you can even get access to lifecycle hooks in stateless components. Look more into [hooks](https://github.com/trueadm/inferno#hooks) on the Inferno repo.
+
+```javascript
+import React from 'react';
+import {connect} from 'cerebral-view-react';
 
 export default connect({
-  newItemTitle: 'newItemTitle',
-  items: 'items'
+  isLoading: 'app.isLoading',
 },
   function App(props) {
-
-    const onFormSubmit = event => {
-      event.preventDefault()
-      props.signals.newItemTitleSubmitted()
-    }
-
-    const onInputChange = event => {
-      props.signals.newItemTitleChanged({
-        title: event.target.value
-      })
-    }
-
     return (
-      <div>
-        <form onSubmit={onFormSubmit}>
-          <input
-            type="text"
-            value={props.newItemTitle}
-            onChange={onInputChange}
-          />
-        </form>
-        <ul>
-          {props.items.map((item, index) => (
-            <li key={index}>
-              {item}
-            </li>
-          ))}
-        </ul>
+      <div onCreated={() => console.log('I was created!')}>
+        {props.isLoading ? 'loading...' : null}
       </div>
     )
   }
 )
 ```
 
-You can use passed props in path definition by passing a function:
-```js
-connect((props) => ({
-  item: `items.${props.itemRef}`
-}), Component)
+### Stateful components
+When you need access to internal state.
+
+```javascript
+import Inferno from 'inferno';
+import Component from 'inferno-component';
+import {connect} from 'cerebral-view-inferno';
+
+export default connect({
+  isLoading: 'app.isLoading',
+},
+  class App extends Component {
+    constructor(props) {
+      super(props)
+      this.state = {foo: 'bar'}
+    }
+    render() {
+      return (
+        <div>
+          {props.isLoading ? 'loading...' : null}
+        </div>
+      )
+    }
+  }
+)
+```
+
+### Expose signals
+By default all signals are available on **props.signals**, but you can expose specific signals to the component.
+
+```javascript
+import Inferno from 'inferno';
+import {connect} from 'cerebral-view-inferno';
+
+export default connect({
+  isLoading: 'app.isLoading',
+}, {
+  buttonClicked: 'app.buttonClicked'
+},
+  function App({isLoading, buttonClicked}) {
+    return (
+      <div>
+        {props.isLoading ? 'loading...' : null}
+        <button onClick={() => buttonClicked()}>click me</button>
+      </div>
+    )
+  }
+)
+```
+
+### Dynamically grabbing paths
+It is also possible to use a function to define the state dependencies. The function will receive the passed props to the component, allowing you to dynamically grab the state you need.
+
+```javascript
+import Inferno from 'inferno';
+import {connect} from 'cerebral-view-inferno';
+
+export default connect(props => {
+  user: `app.users.${props.userId}`,
+},
+  function App({user}) {
+    return (
+      <div>
+        Hello {user.name}!
+      </div>
+    )
+  }
+)
 ```

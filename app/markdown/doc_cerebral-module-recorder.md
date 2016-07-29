@@ -1,183 +1,93 @@
-# cerebral-module-recorder
-The recorder module for Cerebral
+## cerebral-module-recorder
 
-[![NPM version][npm-image]][npm-url]
-[![Build status][travis-image]][travis-url]
-[![Test coverage][coveralls-image]][coveralls-url]
-[![bitHound Score][bithound-image]][bithound-url]
-[![Commitizen friendly][commitizen-image]][commitizen-url]
-[![Semantic Release][semantic-release-image]][semantic-release-url]
-[![js-standard-style][standard-image]][standard-url]
-[![Discord][discord-image]][discord-url]
+Go to official [README](https://github.com/cerebral/cerebral-module-recorder/blob/master/README.md) to read more technical details and contribute to the project.
 
-## Description
-The Cerebral Recorder allows you to record signals in your application, effectively doing playback of interaction. When you start a recording the recorder will by default extract all the state of the application and use that as "the initial state", when doing the playback. This can be configured to avoid extracting state not related to the recording.
+### Concept
+With the **immutable** model of Cerebral you can record interactions in the browser. The TodoMVC shows you have this is done.
 
-When playing back a recording the signals of Cerebral will actually run exactly as they did during the recording. That means async actions will actually run again, unlike time traveling. This is something to consider when creating a recording. In a later version this might be configurable.
-
-### Install
-`$ npm install cerebral-module-recorder`
-
-### Use
+### Instantiate the module
 ```javascript
-import controller from './controller'
-import RecorderModule from 'cerebral-module-recorder'
+...
+
+import Recorder from 'cerebral-module-recorder'
+
+...
 
 controller.addModules({
-  recorder: RecorderModule({
-    state: {foo: 'bar'} // Merge in additional state
-  })
-})
+  recorder: Recorder()
+)
 ```
 
-#### State
+The state created by the recorder looks something like this:
+
 ```javascript
 {
-  isRecording: Bool,
-  isPlaying: Bool,
-  isPaused: Bool,
-  hasRecorded: Bool,
-  preventSignals: Bool
+  isRecording: false,
+  isPlaying: false,
+  isPaused: false,
+  hasRecorded: false
 }
 ```
 
-#### Signals
-```javascript
-// Will start the recorder. Optionally choose what specific paths in the state
-// tree to use as initial state when playing back recording
-signals.{namespace}.recorded({
-  paths: [
-    ['namespace1'],
-    ['namespace2', 'specificStateBranch']
-  ]
-})
-
-// Stop recording
-signals.{namespace}.stopped()
-
-// Start playback of current recording
-signals.{namespace}.played()
-
-// Pause playback of current recording
-signals.{namespace}.paused()
-
-// Resume playback of current recording
-signals.{namespace}.resumed()
-```
-
-#### Services
+### Creating a recording
+To quickly get going with recording you can use the exposed signals.
 
 ```javascript
-// Gives you the current recording
-services.{namespace}.getRecording()
-
-// Loads up a recording
-services.{namespace}.loadRecording()
-
-// Manually start recording
-services.{namespace}.record({
-  paths: [
-    ['namespace1'],
-    ['namespace2', 'specificStateBranch']
-  ]
-})
-
-// Manually stop recording
-services.{namespace}.stop()
-
-// Manually seek recording
-services.{namespace}.seek(0)
-
-// Manually play recording
-services.{namespace}.play()
-
-// Manually pause playback
-services.{namespace}.pause()
-
-// Manually resume playback
-services.{namespace}.resume()
-```
-
-### Example
-
-*main.js*
-```javascript
-import controller from './controller'
-import RecorderModule from 'cerebral-module-recorder'
-
-controller.addModules({
-  recorder: RecorderModule()
-})
-```
-
-*RecorderButton.js*
-```javascript
-import React from 'react'
-import { connect } from 'cerebral-view-react'
-
 export default connect({
-  recorder: 'recorder'
-}, function (props) {
-  let style = {
-    border: '1px solid black',
-    borderRadius: '2px',
-    height: '25px',
-    backgroundColor: '#EAEAEA',
-    padding: '5px',
-    lineHeight: '15px',
-    boxSizing: 'border-box'
+  recorder: 'recorder'  
+}, {
+  recordClicked: 'recorder.recorded',
+  stopClicked: 'recorder.stopped',
+  playClicked: 'recorder.played',
+  pauseClicked: 'recorder.paused',
+},
+  function RecordButton(props) {
+    ...
   }
-  var signals = props.signals
-  if (props.recorder.isPlaying) {
-    return React.createElement('button', {
-      style: style,
-      onClick: function () {
-        signals.recorder.paused({}, {
-          isRecorded: true
-        })
-      }
-    }, 'Pause playback')
-  }
-  if (props.recorder.isPaused) {
-    return React.createElement('button', {
-      style: style,
-      onClick: function () { signals.recorder.resumed() }
-    }, 'Play')
-  }
-  if (props.recorder.isRecording) {
-    return React.createElement('button', {
-      style: style,
-      onClick: function () { signals.recorder.stopped() }
-    }, 'Stop recording')
-  }
-  if (props.recorder.hasRecorded) {
-    return React.createElement('button', {
-      style: style,
-      onClick: function () { signals.recorder.played() }
-    }, 'Play')
-  }
-  return React.createElement('button', {
-    style: style,
-    onClick: function () { signals.recorder.recorded() }
-  }, 'Record')
-})
+)
 ```
+You can now use the state from the recorder and the signals to control what and when you can click a record/play button.
 
-You would create your own signals for grabbing the current recording and saving it.
+### Using services for more control
+The same functionality, and more, is available through the recorder service.
 
-[npm-image]: https://img.shields.io/npm/v/cerebral-module-recorder.svg?style=flat
-[npm-url]: https://npmjs.org/package/cerebral-module-recorder
-[travis-image]: https://img.shields.io/travis/cerebral/cerebral-module-recorder.svg?style=flat
-[travis-url]: https://travis-ci.org/cerebral/cerebral-module-recorder
-[coveralls-image]: https://img.shields.io/coveralls/cerebral/cerebral-module-recorder.svg?style=flat
-[coveralls-url]: https://coveralls.io/r/cerebral/cerebral-module-recorder?branch=master
-[bithound-image]: https://www.bithound.io/github/cerebral/cerebral-module-recorder/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/cerebral/cerebral-module-recorder
-[commitizen-image]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
-[commitizen-url]: http://commitizen.github.io/cz-cli/
-[semantic-release-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square
-[semantic-release-url]: https://github.com/semantic-release/semantic-release
-[standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
-[standard-url]: http://standardjs.com/
-[discord-image]: https://img.shields.io/badge/discord-join%20chat-blue.svg
-[discord-url]: https://discord.gg/0kIweV4bd2bwwsvH
+```javascript
+function myAction({services}) {
+  // Gives you the current recording.
+  // Useful to store on the server
+  services.recorder.getRecording()
+
+  // Loads up a recording
+  services.recorder.loadRecording(someRecording)
+
+  // Start recording
+  services.recorder.record({
+    // By default the whole model is copied
+    // and replaced when you play back a recording,
+    // but you can rather point to specific paths
+    // in the model that should be copied and replaced
+    // when recording is played back
+    paths: [
+      ['somePath'],
+      ['someOtherPath', 'subPath']
+    ]
+  })
+
+  // Stop recording
+  services.recorder.stop()
+
+  // Seek recording
+  services.recorder.seek(0)
+
+  // Play back recording
+  services.recorder.play()
+
+  // Pause playback
+  services.recorder.pause()
+
+  // Resume playback
+  services.recorder.resume()
+}
+
+export default myAction
+```

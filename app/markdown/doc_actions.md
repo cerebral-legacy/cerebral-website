@@ -98,7 +98,7 @@ function myAction({input, state, output, services}) {
 ```
 
 ### Output
-Any action can output values to the signal. The outputted values will be merged with the current input and be passed into any actions executed next.
+Any action can output values to the signal. The outputted values will be merged with the current input and be passed into any actions executed next. Note that you always output an object to the output and this object has to be **serializable**. That means any functions, prototypes etc. you output will be lost. This is not really a limitation, it is a constraint to make Cerebral more interoperable.
 
 ```javascript
 function myAction({input, state, output, services}) {

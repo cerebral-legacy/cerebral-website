@@ -56,6 +56,7 @@ import Popups from './Popups';
 import CerebralAddons from './CerebralAddons';
 import Factories from './Factories';
 import LongRunningServices from './LongRunningServices';
+import CerebralModuleDevtools from './CerebralModuleDevtools';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -101,6 +102,7 @@ const pages = {
   'cerebral-provider-modules': CerebralProviderModules,
   'cerebral-view-react': CerebralViewReact,
   'cerebral-view-snabbdom': CerebralViewSnabbdom,
+  'cerebral-module-devtools': CerebralModuleDevtools,
   'servercontroller': Servercontroller,
   'modals': Modals,
   'cerebral-view-inferno': CerebralViewInferno,
