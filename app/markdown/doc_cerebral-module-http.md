@@ -5,6 +5,9 @@ Go to official [README](https://github.com/cerebral/cerebral-module-http/blob/ma
 ### Concept
 The http module of Cerebral exposes a service that allows you to do http requests to a backend. By default it expects you to use **json**, but the module is highly configurable to meet your needs.
 
+### Install
+`npm install cerebral-module-http --save`
+
 ### Instantiate the module
 ```javascript
 ...

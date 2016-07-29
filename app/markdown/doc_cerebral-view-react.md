@@ -5,6 +5,9 @@ Go to official [README](https://github.com/cerebral/cerebral-view-react/blob/mas
 ### Concept
 The React view package lets you connect Cerebral to your components.
 
+### Install
+`npm install cerebral-view-react --save`
+
 ### Instantiate
 ```javascript
 import controller from './controller.js'

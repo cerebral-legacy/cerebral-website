@@ -7,6 +7,9 @@ Since Cerebral is completely detaches your view from your application we get a l
 
 You are still completely free to manually change any state of any field, use any kind of value and even add your own validation state to fields. All the form state is also available in the debugger for easy review.
 
+### Install
+`npm install cerebral-module-forms --save`
+
 ### Instantiate the module
 ```javascript
 ...

@@ -5,6 +5,9 @@ Go to official [README](https://github.com/cerebral/cerebral-module-recorder/blo
 ### Concept
 With the **immutable** model of Cerebral you can record interactions in the browser. The TodoMVC shows you have this is done.
 
+### Install
+`npm install cerebral-module-recorder --save`
+
 ### Instantiate the module
 ```javascript
 ...

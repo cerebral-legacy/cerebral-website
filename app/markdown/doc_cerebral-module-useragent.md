@@ -11,6 +11,9 @@ The useragent module puts information about the browser into your model, and it 
 - Feature detection
 - Internet connectivity
 
+### Install
+`npm install cerebral-module-useragent --save`
+
 ### Instantiate the module
 ```javascript
 ...

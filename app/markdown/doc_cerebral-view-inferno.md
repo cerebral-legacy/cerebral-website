@@ -5,6 +5,9 @@ Go to official [README](https://github.com/cerebral/cerebral-view-inferno/blob/m
 ### Concept
 The Inferno view package lets you connect Cerebral to your components.
 
+### Install
+`npm install cerebral-view-inferno --save`
+
 ### Instantiate
 ```javascript
 import controller from './controller.js'

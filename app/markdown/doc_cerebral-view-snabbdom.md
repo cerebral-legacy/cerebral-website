@@ -5,6 +5,9 @@ Go to official [README](https://github.com/cerebral/cerebral-view-snabbdom/blob/
 ### Concept
 The Snabbdom view package uses the [Snabbdom](https://github.com/paldepind/snabbdom) project to render. It is very fast, but does not have the same "render at specific point in component tree" optimization React and Inferno has. That means Snabbdom will always recalculate render on your whole app on any state change. That said, it is still extremely fast!
 
+### Install
+`npm install cerebral-view-snabbdom --save`
+
 ### Instantiate
 ```javascript
 import { Component, render } from 'cerebral-view-snabbdom'

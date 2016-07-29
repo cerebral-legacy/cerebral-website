@@ -7,6 +7,9 @@ The Cerebral router works a bit differently than traditional routers. Traditiona
 
 With the Cerebral router you can actually build your whole application without thinking about the router and later attach url to specific signals. It does not matter if it is a url change or the signal being triggered directly, the url will be kept in sync automatically.
 
+### Install
+`npm install cerebral-module-router --save`
+
 ### Instantiate the router
 ```javascript
 ...

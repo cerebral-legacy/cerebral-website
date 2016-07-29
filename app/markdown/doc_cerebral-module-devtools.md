@@ -5,6 +5,9 @@ Go to official [README](https://github.com/cerebral/cerebral-module-devtools/blo
 ### Concept
 The module that handles communication with the debugger and time travel debugging. This module slows down your code so be sure to not run it in production!
 
+### Install
+`npm install cerebral-module-devtools --save-dev`
+
 ### Instantiate the module
 ```javascript
 ...
