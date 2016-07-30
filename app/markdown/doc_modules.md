@@ -114,7 +114,7 @@ export default module => {
 }
 ```
 
-#### controller.addContextProvider(contextProvider)
+#### module.addContextProvider(contextProvider)
 You can add a context provider locally to a module, so only actions run by signals on this module will have this provider.
 ```javascript
 import moduleContextProvider from './providers/moduleContextProvider'

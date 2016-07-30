@@ -57,6 +57,7 @@ import CerebralAddons from './CerebralAddons';
 import Factories from './Factories';
 import LongRunningServices from './LongRunningServices';
 import CerebralModuleDevtools from './CerebralModuleDevtools';
+import InternetExplorer from './InternetExplorer';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -113,7 +114,8 @@ const pages = {
   'popups': Popups,
   'cerebral-addons': CerebralAddons,
   'factories': Factories,
-  'long_running_services': LongRunningServices
+  'long_running_services': LongRunningServices,
+  'internet_explorer': InternetExplorer
 };
 
 @Cerebral({
