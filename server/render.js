@@ -126,4 +126,12 @@ export default (app) => {
     });
     res.send(getIndex().replace('${body}', view.html).replace('${BOOTSTRAP_STATE}', view.state));
   });
+
+  app.get('/launch', (req, res) => {
+    res.type('html');
+    const view = render({
+      currentPage: 'launch'
+    });
+    res.send(getIndex().replace('${body}', view.html).replace('${BOOTSTRAP_STATE}', view.state));
+  });
 };

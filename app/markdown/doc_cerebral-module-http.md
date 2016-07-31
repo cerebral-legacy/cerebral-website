@@ -73,10 +73,15 @@ controller.addModules({
     },
 
     // You can change how the request is sent to the
-    // server, by default we JSON stringify, but you
-    // might want to encode for x-www-form-urlencoded
+    // server, by default we handle JSON and
+    // x-www-form-urlencoded
     onRequest: function (xhr, options) {
-      xhr.send(JSON.stringify(options.body))
+      if (options.headers['Content-Type'] === 'application/x-www-form-urlencoded') {
+        options.body = urlEncode(options.body)
+      } else {
+        options.body = JSON.stringify(options.body)
+      }
+      xhr.send(options.body)
     },
 
     // Configure how responses are resolved and rejected
@@ -195,21 +200,4 @@ export default connect({
     }
   }
 )
-```
-
-### Get factory
-Since get requests often does not have a dynamic url the module exposes a get factory you can use directly in your chains:
-
-```javascript
-import {httpGet} from 'cerebral-module-http'
-import {copy} from 'cerebral/operators'
-
-export default [
-  httpGet('/posts'), {
-    success: [
-      copy('input:result', 'state:app.posts')
-    ],
-    error: []
-  }
-]
 ```

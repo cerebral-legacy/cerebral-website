@@ -3,7 +3,9 @@
 Go to official [README](https://github.com/cerebral/cerebral-view-react/blob/master/README.md) to read more technical details and contribute to the project.
 
 ### Concept
-The React view package lets you connect Cerebral to your components.
+The React view package lets you connect Cerebral to your components. It is encouraged that you connect your state as close as possible to the component that needs it. That will make your components more flexible to move around and it is easier to reason about where your components properties are coming from.
+
+Cerebral does **not** use "shallow checking" to figure out what components needs to render. Since all state changes are made to paths and all state dependencies are defined as paths it is possible for Cerebral to match changed paths to "subscribed" paths. This process keeps the components completely out of the picture when a new render is due, only changed paths to registered paths are checked.
 
 ### Install
 `npm install cerebral-view-react --save`

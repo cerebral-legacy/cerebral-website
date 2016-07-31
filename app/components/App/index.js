@@ -6,11 +6,13 @@ import Front from '../Front';
 import Documentation from '../Documentation';
 import Footer from '../Footer';
 import Contributors from '../Contributors';
+import Launch from '../Launch';
 
 const pages = {
   front: Front,
   documentation: Documentation,
-  contributors: Contributors
+  contributors: Contributors,
+  launch: Launch
 };
 
 @Cerebral({
