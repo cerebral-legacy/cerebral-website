@@ -4,7 +4,7 @@ Cerebral uses a single state tree to represent the state of your application. Th
 
 Choosing a model layer really comes down to experience and type of application. If you usually work with classes and develop an application where entities has relationships with other entities you should not choose immutability. That said in Cerebral we default to immutability and you should choose that if you are unsure.
 
-### cerebral-model-immutable
+### Immutable
 The following features are only available with the immutable model:
 
 - Time travel debugging
@@ -26,7 +26,7 @@ const controller = Controller(Model({}))
 export default controller
 ```
 
-### cerebral-model
+### Mutable
 The following features are only available with the mutable model:
 
 - Reference objects in the state tree
