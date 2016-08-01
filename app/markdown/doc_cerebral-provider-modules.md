@@ -6,7 +6,10 @@ Modules pattern for Cerebral
 ```js
 import ModulesProvider from 'cerebral-provider-modules';
 
-(controller || module).addContextProvider(ModulesProvider);
+controller.addModules({})
+
+// Add it after modules are registered 
+controller.addContextProvider(ModulesProvider);
 ```
 
 ```js

@@ -47,10 +47,10 @@ export default (app) => {
           'Structuring your project',
           'The debugger',
           'Going to production',
-          'Testing',
           'Boilerplates'
         ],
         'How do I handle...': [
+          'Testing',
           'Modals',
           'Storing server data',
           'Feedback messages',
@@ -82,6 +82,7 @@ export default (app) => {
           'cerebral-module-useragent',
           'cerebral-module-recorder',
           'cerebral-module-devtools',
+          'cerebral-testable',
           'cerebral-addons'
         ],
         'Context providers': Object.keys(externalDocs.providers)
