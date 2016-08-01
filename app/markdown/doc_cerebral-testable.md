@@ -11,21 +11,20 @@ When **NODE_ENV** is set to **test** cerebral will return your pure react compon
 
 This means that you can easily test your components and computed functions just as if they were simple stateless/pure functions.
 
-### React Components
+### Components
+All the view packages supports this feature.
 
 ```js
-import { connect } from 'cerebral-view-react'
-
 export default connect({
-  name: 'user.name'
-}, ({ name = 'test user' }) => (
-  <div>{name}</div>
+  foo: 'app.foo'
+}, (props) => (
+  ...
 ))
 ```
 
 **connect** will just return the component, no wrapping. This makes it easy for you to test it.
 
-#### Example mocha test
+#### Example mocha test with React
 ```js
 import React from 'react'
 import { shallow } from 'enzyme'
