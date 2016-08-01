@@ -7,7 +7,7 @@ Even though signals helps you build mental images of complexities in your applic
 - Lists and groups signals executed
 - Gives insight into signal execution with all input, outputs, actions, paths and services affected
 - Click actions to go to source code
-- Double click signals to time travel (cerebral-model-immutable)
+- Double click signals to time travel (immutable model)
 - Live update of state tree visualizer
 - Edit state tree directly from debugger
 - See the active paths in the application
@@ -21,17 +21,12 @@ The Cerebral debugger is a Chrome extension. You can install it from the [chrome
 ```javascript
 import Controller from 'cerebral'
 import Model from 'cerebral/model/immutable'
-import DevtoolsModule from 'cerebral-module-devtools'
+import Devtools from 'cerebral-module-devtools'
 
 const controller = Controller(Model({}))
 
 controller.addModules({
-  devtools: (
-    process.env.NODE_ENV === 'production' ?
-      function () {}
-    :
-      DevtoolsModule()
-  )
+  devtools: process.env.NODE_ENV === 'production' ? () => {} : Devtools()
 })
 
 export default controller

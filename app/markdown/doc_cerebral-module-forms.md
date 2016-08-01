@@ -105,9 +105,9 @@ You are completely free to create your own component abstractions to handle erro
 The input could be defined as:
 
 ```javascript
-export default connect(props => {
+export default connect(props => ({
   field: props.path
-}, {
+}), {
   fieldChanged: 'forms.fieldChanged'
 },
   function MyInput({label, field, fieldChanged, path}) {
@@ -179,9 +179,9 @@ function SomeAction({state}) {
 ```javascript
 import isValidForm from 'cerebral-module-forms/helpers/isValidForm'
 
-export default connect(props => {
+export default connect(props => ({
   form: 'app.myForm'
-},
+}),
   function MyForm({form}) {
     const isValid = isValidForm(form)
     ...
@@ -211,9 +211,9 @@ Or you can grab all invalid fields:
 ```javascript
 import getInvalidFormFields from 'cerebral-module-forms/helpers/getInvalidFormFields'
 
-export default connect(props => {
+export default connect(props => ({
   form: 'app.myForm'
-},
+}),
   function MyForm({form}) {
     const invalidFormFields = getInvalidFormFields(form)
     ...
