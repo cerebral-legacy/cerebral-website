@@ -1,5 +1,7 @@
 ## cerebral-testable
 
+Go to official [README](https://github.com/cerebral/cerebral-testable/blob/master/README.md) to read more technical details and contribute to the project.
+
 ### Concept
 A package to help testing signals, modules, computed etc.
 
