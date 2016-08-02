@@ -305,7 +305,6 @@ Sometimes you want more fine grained control of how validation is performed. All
 
 ```javascript
 import resetForm from 'cerebral-module-forms/factories/resetForm'
-import shouldValidate from 'cerebral-module-forms/factories/shouldValidate'
 import touchField from 'cerebral-module-forms/factories/touchField'
 import validateField from 'cerebral-module-forms/factories/validateField'
 import validateForm from 'cerebral-module-forms/factories/validateForm'
@@ -324,12 +323,6 @@ export default [
 
   // Touches a field, passing true/false
   touchField('some.form.field', true),
-
-  // Outputs true/false if the field has validation rules and a value
-  shouldValidate('some.form.field'), {
-    true: [],
-    false: []
-  },
 
   // Runs validation on the field, changes "isValid"
   validateField('some.form.field'),
