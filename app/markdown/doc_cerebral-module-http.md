@@ -65,6 +65,14 @@ controller.addModules({
     // f.ex. "/api"
     baseUrl: '',
 
+    // Sends cookies to cross domain request
+    withCredentials: false,
+
+    // Allow cross domain request. It adjusts the
+    // request headers to allowed. Note that server
+    // has to allow this request as well
+    cors: false,
+
     // Headers will be merged with existing headers,
     // these are the default ones
     headers: {
@@ -76,27 +84,15 @@ controller.addModules({
     // server, by default we handle JSON and
     // x-www-form-urlencoded
     onRequest: function (xhr, options) {
-      if (options.headers['Content-Type'] === 'application/x-www-form-urlencoded') {
-        options.body = urlEncode(options.body)
-      } else {
-        options.body = JSON.stringify(options.body)
-      }
-      xhr.send(options.body)
+      // Default implementation taking care of cors, credentials,
+      // headers and the data to be passed
     },
 
     // Configure how responses are resolved and rejected
     onResponse: function (response, resolve, reject) {
-      if (response.status >= 200 && response.status < 300) {
-        resolve({
-          status: response.status,
-          result: JSON.parse(response.responseText || '""')
-        })
-      } else {
-        reject({
-          status: response.status,
-          result: response.responseText
-        })
-      }
+      // Default implementation which resolves status code
+      // 200 - 299, and rejects the others. It also parses
+      // to JSON or x-www-form-urlencoded based on header
     }
   })
 )
@@ -132,6 +128,9 @@ saveUser.async = true
 saveUser.outputs = ['success', 'error']
 ```
 
+### Progress
+The service allows you to react to progress events when downloading data.
+
 ### Aborting requests
 You can abort requests at any time by pointing to the url you want to abort. That means if you for example do a search you can abort any existing searches before running a new search. Any aborted requests will give the error **isAborted** which you use to output to an "abort" chain, or similar.
 
@@ -153,7 +152,7 @@ searchItems.outputs = ['success', 'error', 'abort']
 ```
 
 ### Uploading files
-The HTTP service gives you a tool to upload files as well. Since Cerebral signals can only handle serializable data any files needs to be handled at the view layer. Typically you would do:
+The HTTP service gives you a tool to upload files as well. The **onProgress** option takes typically a signal which triggers on the upload of the file. Since Cerebral signals can only handle serializable data any files needs to be handled at the view layer. Typically you would do:
 
 ```javascript
 ...
@@ -184,6 +183,7 @@ export default connect({
       fileUpload(this.fileToUpload, {
      	  url: '/upload',
         headers: {},
+        // Triggers with object {progress: '54'}
         onProgress: this.props.uploadProgressed
       })
           .then(this.props.uploadFinished)
