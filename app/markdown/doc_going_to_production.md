@@ -23,12 +23,11 @@ controller.addModules({
 ```
 
 #### Immutable model
-The immutable model can get some pretty huge optimizations when in production.
+The immutable model can get some pretty huge optimizations when in production by turning off immutability. Since the view does not use shallow checking this is perfectly fine, except if you use the **cerebral-module-recorder** package which depends on immutability.
 
 ```javascript
 const modelOptions = process.env.NODE_ENV === 'production' ? {
-  immutable: false, // Do not set this to false when using the Recorder
-  persistent: false  
+  immutable: false // Do not set this to false when using the Recorder
 } : {}
 const controller = Controller(Model({}, modelOptions))
 ```
