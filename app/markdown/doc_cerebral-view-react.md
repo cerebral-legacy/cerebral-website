@@ -116,7 +116,7 @@ export default connect(props => {
 )
 ```
 
-### Strict render mode (experimental)
+### Strict render mode
 It is possible to optimize rendering by going into strict mode.
 
 ```javascript
@@ -129,7 +129,7 @@ render(
 
 The strict mode will be more strict on matching changes to paths with what components depend on. That means typically a change to: **app.users.123** will render all components depending on either **app**, **app.users** and **app.users.123**. With strict mode only the component depending specifically on **app.users.123** will rerender.
 
-With strict mode you can define interest in nested paths though, so for example a an **Items** component interested in the adding and removal of keys on **app.items** could do:
+With strict mode you can define interest in nested paths though, so for example an **Items** component interested in the adding and removal of keys on **app.items** could do:
 
 ```javascript
 connect({
@@ -137,7 +137,7 @@ connect({
 })
 ```
 
-If it was interested in all changes, also on items and any deeply nested property you could do:
+If it was also interested in changes on the actual values of they keys, and any other nested values:
 
 ```javascript
 connect({
