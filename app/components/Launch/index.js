@@ -28,7 +28,7 @@ class App extends React.Component {
               <strong>Read a success story</strong>
             </div>
             <div>
-              <a href="https://gist.github.com/christianalfoni/b08a99faa09df054afe87528a2134730" target="_new">Making the impossible... achievable</a>
+              <a href="https://gist.github.com/christianalfoni/b08a99faa09df054afe87528a2134730" target="_new">Cerebral - Made the impossible achievable</a>
             </div>
           </div>
           <div>
