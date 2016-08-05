@@ -71,6 +71,21 @@ export default Computed(props => ({
 })
 ```
 
+### Computed in computed
+You nest computed inside each other:
+
+```javascript
+import {Computed} from 'cerebral'
+import CompletedList from './CompletedList'
+
+export default Computed({
+  list: CompletedList(),
+  limit: 'app.listLimit'
+}, props => {
+  return list.slice(0, props.listLimit)
+})
+```
+
 ### Using computed with classes
 If you are using the mutable model package and classes you can define the computed with those classes to conditionally extract relational state. For example if you let all entities have a client side id to handle optimistic updates, you could write a class something like this to extract the posts of that user wherever you need them:
 
