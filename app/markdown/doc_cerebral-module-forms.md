@@ -273,13 +273,12 @@ module.addState({
   myForm: Form({
     list: {
       value: [],
-      isValue: ['minLength:3'],
-      isRequired: true
+      isValue: ['minLength:3']
     }
   })
 });
 ```
-This field will not have a value (hasValue=true) if the length below 3, because we require it to have a value and the rule for having a value is minimum length of 3. Now this is different than normal validation. Now the `hasValue` property will only be true when there is at least three items in the list. Meaning that you can check **isRequired** with **hasValue** to give an indication of a missing required value, which does not necessarily have any validation on it.
+This field will not have a value (**hasValue** will be *false*) if the length is below 3. Now this is different than normal validation. Now the **hasValue** property will only be true when there is at least three items in the list. If you add **isRequired** as well the field will be invalid when the length is below 3. Typically you combine **hasValue** with **isValid** to figure out if you want to show a *required* indication or *error*.
 
 ### Combine rules
 Sometimes you want multiple rules to produce one error message. You can do that using an object instead of a string.
@@ -302,6 +301,8 @@ myForm: Form({
 
 ### Action factories
 Sometimes you want more fine grained control of how validation is performed. All the actions that runs with the `fieldChanged` signal is available to you as well. That means you can compose these with other actions or maybe skip some of them if you do not see any need.
+
+This is a list of all possible actions you can do in a chain:
 
 ```javascript
 import resetForm from 'cerebral-module-forms/factories/resetForm'

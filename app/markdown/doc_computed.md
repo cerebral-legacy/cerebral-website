@@ -1,6 +1,6 @@
 ## Computed
 
-You use computed when you want to combine state from your model and structure it in a view friendly way. A simple example would be a filter.
+You use computed when you want to combine **multiple** state path dependencies from your model and structure it in a view friendly way. A simple example would be a filter.
 
 ```javascript
 import {Computed} from 'cerebral'
