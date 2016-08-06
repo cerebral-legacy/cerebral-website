@@ -78,6 +78,7 @@ export default (app) => {
         'Community modules': [
           'cerebral-module-router',
           'cerebral-module-http',
+          'cerebral-module-firebase',
           'cerebral-module-forms',
           'cerebral-module-useragent',
           'cerebral-module-recorder',

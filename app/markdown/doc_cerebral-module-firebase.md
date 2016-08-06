@@ -1,58 +1,50 @@
-# cerebral-module-firebase
-Official module to handle Firebase with Cerebral
+## cerebral-module-firebase
 
-#### Note!
-This project is currently in its **ALPHA** stage!
+Go to official [README](https://github.com/cerebral/cerebral-module-firebase/blob/master/README.md) to read more technical details and contribute to the project.
+
+**Note!** This project is in BETA and will move into production soon.
+
+### Concept
+The module that handles communication with firebase. It supports talking to [firebase-queue](https://github.com/firebase/firebase-queue) using the **task** API.
 
 ### Install
-Install both firebase and the Cerebral module:
+`npm install cerebral-module-firebase --save`
 
-`npm install firebase cerebral-module-firebase`
-
-### Get started
-```js
+### Instantiate the module
+```javascript
 import FirebaseModule from 'cerebral-module-firebase';
 
 ...
 
 controller.addModules({
   firebase: FirebaseModule({
-    valuesKey: 'key', // What property name to use on "values" method
-    queuePath: 'queue', // Path to Firebase Queue
     config: {
       apiKey: '{apiKey}',
       authDomain: '{authDomain}',
       databaseURL: '{databaseURL}',
       storageBucket: '{storageBucket}'
-    }
+    },
+    // When using tasks and firebase queue you can prefix
+    // the specs triggered. This is useful in development
+    // when multiple developers are working against the
+    // same instance
+    specPrefix: 'CJ'
   })
 })
 ```
 
 ### Retrieve data
+The Cerebral firebase module uses **dot** notation to keep consistency with Cerebral itself.
 
-#### Single value
+#### Value
 ```js
 function someAction({ services, output }) {
-  services.firebase.value('posts/someKey/foo')
+  services.firebase.value('someKey.foo')
     .then(output.success)
     .catch(output.error);
 }
 ```
-The result will be available as `{ value: 'bar' }`.
-
-#### List of entities
-Extracts and converts into an array where the key of each post is attached as a `_key` property.
-
-```js
-function someAction({ services, output }) {
-  services.firebase.values('posts')
-    .then(output.success)
-    .catch(output.error);
-}
-someAction.async = true;
-```
-The result will be available as `{ values: [{_key: 'someKey', foo: 'bar'}] }`.
+The result will be available as `{ key: 'foo', value: 'bar' }`.
 
 ### Retrieve data with updates
 When you also want to know when your queried data updates you have the following methods:
@@ -60,7 +52,7 @@ When you also want to know when your queried data updates you have the following
 #### onValue
 ```js
 function someAction({ services, output }) {
-  services.firebase.onValue('posts/someKey/foo', 'someModule.fooUpdated');
+  services.firebase.onValue('someKey.foo', 'someModule.fooUpdated');
 }
 ```
 This will immediately grab the value and trigger the signal passed. Any other updates to the value will trigger the same signal.
@@ -68,7 +60,7 @@ This will immediately grab the value and trigger the signal passed. Any other up
 To stop listening for updates to the value:
 ```js
 function someAction({ services, output }) {
-  services.firebase.off('posts/someKey/foo', 'someModule.fooUpdated');
+  services.firebase.off('someKey.foo', 'someModule.fooUpdated');
 }
 ```
 
@@ -140,26 +132,93 @@ function someAction({ services, output, state }) {
     uid: state.get('app.user.uid'),
     text: state.get('posts.newPostText')
   })
-  .then(output.success)
-  .catch(output.error);
+    .then(output.success)
+    .catch(output.error);
 }
 someAction.async = true;
 ```
 
 This will add a task at `queue/tasks`. There is no output from a resolved task.
 
-### Login
+### Authentication
 
-#### Anonymous login
-This login will method will resolve to existing anonymous or create a new one for you.
+#### Get user
+Will resolve to `{user: {}}` if user exists. If user was redirected from Facebook/Google etc. as part of first sign in, this method will handle the confirmed registration of the user.
 
 ```js
 function someAction({ services, output, state }) {
-  services.firebase.signInAnonymously()
-  .then(output.success)
-  .catch(output.error);
+  services.firebase.getUser()
+    .then(output.success)
+    .catch(output.error);
 }
 someAction.async = true;
 ```
 
-... more coming
+#### Anonymous login
+This login will method will resolve to existing anonymous or create a new one for you. Resolves to `{user: {}}`.
+
+```js
+function someAction({ services, output, state }) {
+  services.firebase.signInAnonymously()
+    .then(output.success)
+    .catch(output.error);
+}
+someAction.async = true;
+```
+
+#### Create user with email and password
+Register a new user with email and password. Resolves to `{user: {}}`.
+
+```js
+function someAction({ services, output, state }) {
+  const email = state.get('register.email')
+  const password = state.get('register.password')
+
+  services.firebase.createUserWithEmailAndPassword(email, password)
+    .then(output.success)
+    .catch(output.error);
+}
+someAction.async = true;
+```
+
+#### Sign in user with email and password
+Sign in a user with email and password. Resolves to `{user: {}}`.
+
+```js
+function someAction({ services, output, state }) {
+  const email = state.get('register.email')
+  const password = state.get('register.password')
+
+  services.firebase.signInWithEmailAndPassword(email, password)
+    .then(output.success)
+    .catch(output.error);
+}
+someAction.async = true;
+```
+
+#### Sign in with Facebook
+Sign in a user with Facebook. Resolves to `{user: {}}`, or redirects.
+
+```js
+function someAction({ services, output, state }) {
+  services.firebase.signInWithFacebook({
+    redirect: false,
+    scopes: [] // Facebook scopes to access
+  })
+    .then(output.success)
+    .catch(output.error);
+}
+someAction.async = true;
+```
+
+#### Sign out
+Sign in a user with Facebook. Resolves to `{user: {}}`, or redirects.
+
+```js
+function someAction({ services, output, state }) {
+  services.firebase.signOut()
+    .then(output.success)
+    .catch(output.error);
+}
+someAction.async = true;
+```
