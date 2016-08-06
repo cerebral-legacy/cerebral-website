@@ -15,34 +15,45 @@ import Fuse from 'cerebral-module-fuse'
 
 ...
 
-controller.addModules({
-  findUsers: Fuse({
-    // What state path to index and do the search on
-    statePath: ['app', 'users'],
-
-    // Options are passed directly into fuse
-    options: {keys: ['firstName', 'lastName']}
+controller.modules({
+  findUsers: fuse({
+    // statePath should point to either an object or array in the store
+    statePath: 'users',  
+    // options are passed on to fuse.js
+    options: { keys: ['firstName', 'lastName'] }
   })
-)
+})
 ```
 You can have multiple instances of fuse.
 
-### Grabbing fuse result
-```javascript
-...
-import fuse from 'cerebral-module-fuse/compute'
+### Use it in components
+
+```js
+import React from 'react'
+import { connect } from 'cerebral-view-react'
+import fuse from 'cerebral-module-fuse/computed'
 
 export default connect({
-  users: fuse(['findUsers'])
-},
-  function App (props)  {
-    return (
-      <ul>
-        {props.users.map(user => (
-          <li>{`${user.firstName} ${user.lastName}`}</li>
-        ))}
-      </ul>
-    )
-  }
-)
+  users: fuse({ modulePath: 'findUsers', statePath: 'users' })
+}, ({ users }) => (
+  <ul>
+    {users.map(user => (
+      <li>{`${user.firstName} ${user.lastName}`}</li>
+    ))}
+  </ul>
+))
+```
+
+to execute the search simply call the `search` signal and the view will automatically update
+
+```js
+signals.findUsers.search({ query: 'John' })
+```
+
+you can also access the filtered data from an action via the provided service
+
+```js
+export default myAction({ state, services: { findUsers } }) {
+  const users = findUsers.get(state)
+}
 ```

@@ -212,7 +212,7 @@ someAction.async = true;
 ```
 
 #### Sign out
-Sign in a user with Facebook. Resolves to `{user: {}}`, or redirects.
+Sign out user. **getUser** will now not resolve a user anymore.
 
 ```js
 function someAction({ services, output, state }) {
