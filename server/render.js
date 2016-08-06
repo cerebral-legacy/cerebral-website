@@ -39,7 +39,7 @@ export default (app) => {
           'Data and ux',
           'View specific state'
         ],
-        'Get started': [
+        'Tutorial: Get started': [
           'Get started',
           'The workflow',
           'Choosing a model',

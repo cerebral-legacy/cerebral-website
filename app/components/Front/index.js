@@ -42,10 +42,10 @@ class App extends React.Component {
             <div
               className={styles.button}
               onClick={() => this.props.signals.documentClicked({
-                doc: 'get_started'
+                doc: 'controller'
               })}
             >
-              GET STARTED
+              API
             </div>
           </div>
         </div>
