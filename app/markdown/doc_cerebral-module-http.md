@@ -119,6 +119,11 @@ function saveUser({state, services, output}) {
   services.http.post('/users', state.get('app.newUser'), {
     headers: {
       'Some-Header': 'SomeValue'
+    },
+
+    // Adds query string to url
+    query: {
+      foo: 'bar'
     }
   })
     .then(output.success)

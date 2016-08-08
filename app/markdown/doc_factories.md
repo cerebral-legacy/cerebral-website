@@ -28,6 +28,8 @@ function notifyError(errorMessage) {
 
   return action
 }
+
+export default notifyError
 ```
 
 ### Chains
@@ -98,4 +100,6 @@ function httpGet(url, successChain) {
     }
   ]
 }
+
+export default httpGet
 ```

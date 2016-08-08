@@ -222,3 +222,44 @@ function someAction({ services, output, state }) {
 }
 someAction.async = true;
 ```
+
+### Action factories
+
+#### signInAnonymously
+
+```javascript
+import {signInAnonymously} from 'cerebral-module-firebase'
+
+export default [
+  signInAnonymously(), {
+    success: [],
+    error: []
+  }
+]
+```
+
+#### getUser
+
+```javascript
+import {getUser} from 'cerebral-module-firebase'
+
+export default [
+  getUser(), {
+    success: [],
+    error: []
+  }
+]
+```
+
+#### signOut
+
+```javascript
+import {signOut} from 'cerebral-module-firebase'
+
+export default [
+  signOut(), {
+    success: [],
+    error: []
+  }
+]
+```
