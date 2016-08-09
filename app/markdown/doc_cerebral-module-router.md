@@ -236,6 +236,23 @@ export default [
 
 As you can see we can pretty much make anything happen when you go to a url. You are no longer constrained to think about what should happen in your view, you rather think "what state changes should occur?". Then your view layer will do its part based on this.
 
+### Optional params
+You are also able to define optional params, here taking a "url first" approach on naming the signals:
+
+```javascript
+...
+
+controller.addModules({
+  ...
+  router: Router({
+    '/': 'menu.homeRouted',
+    '/posts/:id?': 'menu.postsRouted'
+  })
+})
+```
+
+The **/posts** route will now match both **/posts** and **/posts/123**, where **123** would be passed in to the signal.
+
 ### Redirecting
 Often you need to redirect. With Cerebral you are able to do this redirect inside the chains. Let us imagine a chain handling the login routine of your application:
 

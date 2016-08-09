@@ -12,6 +12,7 @@ Even though signals helps you build mental images of complexities in your applic
 - Edit state tree directly from debugger
 - See the active paths in the application
 - Log of renders, showing what state paths changed and what components were affected
+- Count of how many times Cerebral has told a component to update
 - Copy signals data for debugging purposes
 
 ### Install
