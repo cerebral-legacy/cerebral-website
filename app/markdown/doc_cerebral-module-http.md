@@ -134,7 +134,22 @@ saveUser.outputs = ['success', 'error']
 ```
 
 ### Progress
-The service allows you to react to progress events when downloading data.
+The service allows you to react to progress events when **downloading** data.
+
+```javascript
+function getData({state, services, output}) {
+  services.http.get('/someData', {
+    // Point to a signal path
+    onProgress: 'app.data.downloadProgressed'
+  })
+    .then(output.success)
+    .catch(output.error)
+}
+saveUser.async = true
+saveUser.outputs = ['success', 'error']
+```
+
+It will pass the data: `{progress: '52'}`.
 
 ### Aborting requests
 You can abort requests at any time by pointing to the url you want to abort. That means if you for example do a search you can abort any existing searches before running a new search. Any aborted requests will give the error **isAborted** which you use to output to an "abort" chain, or similar.
