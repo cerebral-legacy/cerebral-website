@@ -75,16 +75,18 @@ export default [
 
   // Go down "accepted" when value matches filter
   // or "discarded" when it does not match
-  filter('input:foo', function minLength3(value) {
+  filter('input:foo', function minLength3(value/*, context*/) {
     return value.length >= 3
   }), {
     accepted: [],
     discarded: []
   },
   // Short version, only accepted chain
-  ...filter('input:foo', function minLength3(value) {
+  ...filter('input:foo', function minLength3(value/*, context*/) {
     return value.length >= 3
   }, []),
+  // or compare with a literal value
+  ...filter('input:foo', 'bar', []),
 
   // Wait 200ms and run chain
   ...delay(200, [
