@@ -71,6 +71,11 @@ function myAction({input, state, output, services}) {
   state.merge('foo', {bar2: 'bar2'})
   // After: {foo: {bar: "bar", bar2: "bar2"}}
 
+  // NOTE on merge! If you point to the path
+  // "foo.bar" in a component/computed and you
+  // merge on "foo", the component/computed will
+  // not update
+
   // Before: {foo: ["bar"]}
   state.push('foo', 'bar2')
   // After: {foo: ["bar", "bar2"]}

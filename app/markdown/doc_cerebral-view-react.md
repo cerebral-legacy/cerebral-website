@@ -116,6 +116,27 @@ export default connect(props => {
 )
 ```
 
+### Dynamically grabbing signals
+
+```javascript
+import React from 'react';
+import {connect} from 'cerebral-view-react';
+
+export default connect({
+  currentModule: 'app.currentModule',
+}, props => ({
+  buttonClicked: `${props.currentModule}.buttonClicked`
+}),
+  function App({buttonClicked}) {
+    return (
+      <div>
+        <button onClick={() => buttonClicked()}>click me</button>
+      </div>
+    )
+  }
+)
+```
+
 ### Strict render mode
 It is possible to optimize rendering by going into strict mode.
 

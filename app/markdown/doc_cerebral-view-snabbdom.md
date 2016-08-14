@@ -43,7 +43,7 @@ export default connect({
 }, {
   buttonClicked: 'app.buttonClicked'
 },
-  function App({title}) {
+  function App({title, buttonClicked}) {
     return (
       h('div', [
         h('h1', title),
@@ -69,6 +69,30 @@ export default connect(props => {
 },
   function App({user}) {
     return h('h1', `Hello ${user.name}!`)
+  }
+)
+```
+
+### Dynamically grabbing signals
+
+```javascript
+import { connect, h } from 'cerebral-view-snabbdom'
+
+export default connect({
+  currentModule: 'app.currentModule'
+}, props => ({
+  buttonClicked: `${props.currentModule}.buttonClicked`
+}),
+  function App({buttonClicked}) {
+    return (
+      h('div', [
+        h('button', {
+          on: {
+            click: () => buttonClicked()
+          }
+        })
+      ])
+    )
   }
 )
 ```
