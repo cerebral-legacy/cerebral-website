@@ -1,9 +1,7 @@
 ## cerebral-testable
 
-Go to official [README](https://github.com/cerebral/cerebral-testable/blob/master/README.md) to read more technical details and contribute to the project.
-
 ### Concept
-A package to help testing signals, modules, computed etc.
+A package to help testing signals, modules, computed, etc...
 
 ### Install
 `npm install cerebral-testable --save-dev`
@@ -85,12 +83,15 @@ describe('application module', () => {
   let controller, signals
 
   beforeEach(() => {
-    [ controller, signals ] = Controller({
-      // Any initial state
-    }, {
-      // The module(s) to test
-      application: application()
-    });
+    ({ controller, signals } = Controller({
+      state: {
+        // Any initial test state
+      },
+      modules: {
+        // The module(s) to test
+        application: application()
+      }
+    }))
 
     // if you need to mock services
     controller.mockServices('router', {
@@ -98,18 +99,8 @@ describe('application module', () => {
     })
   })
 
-  it('redirects to "home" on unknown url (callback)', (done) => {
-    controller.test((output) => {
-      expect(controller.get('application.page')).to.equal('home')
-    }, done)
-    signals.application.unknownUrlReceived()
-  })
-
-  // same test as before but using a promise
-  it('redirects to "home" on unknown url (promise)', () => {
-    return controller.test(() => signals.application.unknownUrlReceived()).then((output) => {
-      expect(controller.get('application.page')).to.equal('home')
-    })
-  })
+  it('redirects to "home" on unknown url', () => controller
+    .test(() => signals.application.unknownUrlReceived())
+    .then((output) => expect(controller.get('application.page')).to.equal('home')))
 })
 ```
