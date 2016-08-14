@@ -42,6 +42,10 @@
   margin-left: -210px;
 }
 
+.iframeWrapper {
+  height: 200px;
+}
+
 .mainHeader img {
   margin: 20px 0;
 }
@@ -88,7 +92,8 @@
     height: 200px;
   }
   .mainHeader {
-    min-height: 50vh;
+    min-height: 0;
+    padding: 20px 0;
     text-align: center;
     height: auto;
     width: 100%;
@@ -105,5 +110,15 @@
   .button {
     text-align: center;
     margin: 5px 0;
+  }
+
+  .wrapper iframe {
+    position: static;
+    margin: 0 auto;
+    max-width: calc(100% - 8px);
+  }
+
+  .iframeWrapper {
+    height: auto;
   }
 }

@@ -1,40 +1,34 @@
-## cerebral-module-fuse
+# cerebral-computed-fuse
 
-Go to official [README](https://github.com/cerebral/cerebral-module-fuse/blob/master/README.md) to read more technical details and contribute to the project.
+A cerebral computed function that adds fuzzy search to data in the store.
 
-### Concept
-The fuse module allows you to do fuzzy search on different parts of of your model.
+## Install
 
-It is based on [Fuse](https://github.com/krisk/Fuse).
-
-### Instantiate the module
-```javascript
-...
-
-import Fuse from 'cerebral-module-fuse'
-
-...
-
-controller.modules({
-  findUsers: fuse({
-    // statePath should point to either an object or array in the store
-    statePath: 'users',  
-    // options are passed on to fuse.js
-    options: { keys: ['firstName', 'lastName'] }
-  })
-})
 ```
-You can have multiple instances of fuse.
+npm install cerebral-computed-fuse
+```
 
-### Use it in components
+## Api
+
+`fuse(dataPath, queryPath, options)`
+
+where
+
+* `dataPath`: is the location in the state store of an array or hash of objects to search
+* `queryPath`: is the location in the state store of a string to search for
+* `options`: is an array of keys to search or an fuse options object
+
+> See [fuse docs](https://github.com/krisk/Fuse) for more information about search keys or other available options.
+
+## Usage
 
 ```js
 import React from 'react'
 import { connect } from 'cerebral-view-react'
-import fuse from 'cerebral-module-fuse/computed'
+import fuse from 'cerebral-computed-fuse'
 
 export default connect({
-  users: fuse({ modulePath: 'findUsers', statePath: 'users' })
+  users: fuse('users', 'query', ['firstName', 'lastName'])
 }, ({ users }) => (
   <ul>
     {users.map(user => (
@@ -44,16 +38,22 @@ export default connect({
 ))
 ```
 
-to execute the search simply call the `search` signal and the view will automatically update
+you can also access the filtered data from an action using the same computed function
 
 ```js
-signals.findUsers.search({ query: 'John' })
-```
+import fuse from 'cerebral-computed-fuse'
 
-you can also access the filtered data from an action via the provided service
-
-```js
-export default myAction({ state, services: { findUsers } }) {
-  const users = findUsers.get(state)
+export default myAction({ state }) {
+  const users = state.computed(fuse('users', 'query', ['firstName', 'lastName']))
 }
 ```
+
+## Contribute
+
+Fork repo
+
+* `npm install`
+* `npm start` runs dev mode which watches for changes and auto lints, tests and builds
+* `npm test` runs the tests
+* `npm run lint` lints the code
+* `npm run build` compiles es2015 to es5

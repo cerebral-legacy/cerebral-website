@@ -11,7 +11,7 @@ class App extends React.Component {
           <div className={styles.title}>Welcome to the launch!</div>
           <div className={styles.subTitle}>make sense of complex apps</div>
         </div>
-        <div style={{height: '200px'}}>
+        <div className={styles.iframeWrapper}>
           <iframe width="420" height="315" src="https://www.youtube.com/embed/rpKxVKGyVvs" frameBorder="0" allowFullScreen></iframe>
         </div>
         <div className={styles.content}>
