@@ -1,96 +1,31 @@
-## cerebral-module-recorder
+# cerebral-module-recorder
+The recorder module for Cerebral
 
-Go to official [README](https://github.com/cerebral/cerebral-module-recorder/blob/master/README.md) to read more technical details and contribute to the project.
+[![NPM version][npm-image]][npm-url]
+[![Build status][travis-image]][travis-url]
+[![Test coverage][coveralls-image]][coveralls-url]
+[![bitHound Score][bithound-image]][bithound-url]
+[![Commitizen friendly][commitizen-image]][commitizen-url]
+[![Semantic Release][semantic-release-image]][semantic-release-url]
+[![js-standard-style][standard-image]][standard-url]
+[![Discord][discord-image]][discord-url]
 
-### Concept
-With the **immutable** model of Cerebral you can record interactions in the browser. The TodoMVC shows you have this is done.
+### How to use
+Go to [http://www.cerebraljs.com/documentation/cerebral-module-recorder](http://www.cerebraljs.com/documentation/cerebral-module-recorder)
 
-### Install
-`npm install cerebral-module-recorder --save`
-
-### Instantiate the module
-```javascript
-...
-
-import Recorder from 'cerebral-module-recorder'
-
-...
-
-controller.addModules({
-  recorder: Recorder()
-)
-```
-
-The state created by the recorder looks something like this:
-
-```javascript
-{
-  isRecording: false,
-  isPlaying: false,
-  isPaused: false,
-  hasRecorded: false
-}
-```
-
-### Creating a recording
-To quickly get going with recording you can use the exposed signals.
-
-```javascript
-export default connect({
-  recorder: 'recorder'  
-}, {
-  recordClicked: 'recorder.recorded',
-  stopClicked: 'recorder.stopped',
-  playClicked: 'recorder.played',
-  pauseClicked: 'recorder.paused',
-},
-  function RecordButton(props) {
-    ...
-  }
-)
-```
-You can now use the state from the recorder and the signals to control what and when you can click a record/play button.
-
-### Using services for more control
-The same functionality, and more, is available through the recorder service.
-
-```javascript
-function myAction({services}) {
-  // Gives you the current recording.
-  // Useful to store on the server
-  services.recorder.getRecording()
-
-  // Loads up a recording
-  services.recorder.loadRecording(someRecording)
-
-  // Start recording
-  services.recorder.record({
-    // By default the whole model is copied
-    // and replaced when you play back a recording,
-    // but you can rather point to specific paths
-    // in the model that should be copied and replaced
-    // when recording is played back
-    paths: [
-      ['somePath'],
-      ['someOtherPath', 'subPath']
-    ]
-  })
-
-  // Stop recording
-  services.recorder.stop()
-
-  // Seek recording
-  services.recorder.seek(0)
-
-  // Play back recording
-  services.recorder.play()
-
-  // Pause playback
-  services.recorder.pause()
-
-  // Resume playback
-  services.recorder.resume()
-}
-
-export default myAction
-```
+[npm-image]: https://img.shields.io/npm/v/cerebral-module-recorder.svg?style=flat
+[npm-url]: https://npmjs.org/package/cerebral-module-recorder
+[travis-image]: https://img.shields.io/travis/cerebral/cerebral-module-recorder.svg?style=flat
+[travis-url]: https://travis-ci.org/cerebral/cerebral-module-recorder
+[coveralls-image]: https://img.shields.io/coveralls/cerebral/cerebral-module-recorder.svg?style=flat
+[coveralls-url]: https://coveralls.io/r/cerebral/cerebral-module-recorder?branch=master
+[bithound-image]: https://www.bithound.io/github/cerebral/cerebral-module-recorder/badges/score.svg
+[bithound-url]: https://www.bithound.io/github/cerebral/cerebral-module-recorder
+[commitizen-image]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
+[commitizen-url]: http://commitizen.github.io/cz-cli/
+[semantic-release-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square
+[semantic-release-url]: https://github.com/semantic-release/semantic-release
+[standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
+[standard-url]: http://standardjs.com/
+[discord-image]: https://img.shields.io/badge/discord-join%20chat-blue.svg
+[discord-url]: https://discord.gg/0kIweV4bd2bwwsvH
