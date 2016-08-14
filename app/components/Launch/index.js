@@ -36,7 +36,7 @@ class App extends React.Component {
               <strong>Dive into it!</strong>
             </div>
             <div>
-              <a href="http://www.cerebraljs.com">The Cerebral website</a>
+              <a href="/">The Cerebral website</a>
             </div>
           </div>
         </div>
