@@ -59,6 +59,7 @@ import LongRunningServices from './LongRunningServices';
 import CerebralModuleDevtools from './CerebralModuleDevtools';
 import InternetExplorer from './InternetExplorer';
 import CerebralTestable from './CerebralTestable';
+import CerebralComputedFuse from './CerebralComputedFuse';
 
 import icons from '../../common/icons.css';
 import Sticky from 'react-stickynode';
@@ -117,7 +118,8 @@ const pages = {
   'factories': Factories,
   'long_running_services': LongRunningServices,
   'internet_explorer': InternetExplorer,
-  'cerebral-testable': CerebralTestable
+  'cerebral-testable': CerebralTestable,
+  'cerebral-computed-fuse': CerebralComputedFuse
 };
 
 @Cerebral({

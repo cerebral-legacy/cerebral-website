@@ -83,6 +83,7 @@ export default (app) => {
           'cerebral-module-useragent',
           'cerebral-module-recorder',
           'cerebral-module-devtools',
+          'cerebral-computed-fuse',
           'cerebral-testable',
           'cerebral-addons'
         ],

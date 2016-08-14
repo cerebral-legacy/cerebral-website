@@ -18,6 +18,7 @@ class Footer extends React.Component {
             >
               Contributors
             </a>
+            <a href="https://twitter.com/cerebraljs" className="twitter-follow-button" data-show-count="false">Follow @cerebraljs</a>
           </div>
           <div className={styles.column}>
             <div className={styles.header}>
