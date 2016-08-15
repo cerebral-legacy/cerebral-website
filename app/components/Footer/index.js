@@ -18,12 +18,47 @@ class Footer extends React.Component {
             >
               Contributors
             </a>
+            <a
+              className={styles.link}
+              href="http://www.webpackbin.com"
+              target="_new"
+            >
+              www.webpackbin.com
+            </a>
+            <a
+              className={styles.link}
+              href="http://www.christianalfoni.com"
+              target="_new"
+            >
+              www.christianalfoni.com
+            </a>
             <a href="https://twitter.com/cerebraljs" className="twitter-follow-button" data-show-count="false">Follow @cerebraljs</a>
           </div>
           <div className={styles.column}>
             <div className={styles.header}>
               Articles and useful links
             </div>
+            <a
+              className={styles.link}
+              href="https://www.youtube.com/watch?v=-hKCYFPhUSs"
+              target="_new"
+            >
+              Launch introduction video
+            </a>
+            <a
+              className={styles.link}
+              href="https://medium.com/@christianalfoni/the-story-of-cerebral-5793c08db2cc"
+              target="_new"
+            >
+              The story of Cerebral
+            </a>
+            <a
+              className={styles.link}
+              href="https://gist.github.com/christianalfoni/b08a99faa09df054afe87528a2134730"
+              target="_new"
+            >
+              An unlikely success story
+            </a>
             <a
               className={styles.link}
               href="https://github.com/cerebral/cerebral-reference-app"
@@ -37,20 +72,6 @@ class Footer extends React.Component {
               target="_new"
             >
               Redux and Cerebral
-            </a>
-            <a
-              className={styles.link}
-              href="http://www.webpackbin.com"
-              target="_new"
-            >
-              www.webpackbin.com <small>(Cerebral app)</small>
-            </a>
-            <a
-              className={styles.link}
-              href="http://www.christianalfoni.com"
-              target="_new"
-            >
-              www.christianalfoni.com
             </a>
           </div>
           <div className={styles.column}>

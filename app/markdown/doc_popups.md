@@ -181,7 +181,7 @@ export default [
 
 Now you can again change this behaviour. You might use an array instead to allow opening multiple popovers. But this is pretty much how you go about.
 
-### What if Cerebral in inside other app?
+### What if Cerebral is inside other app?
 If your root component does not cover the whole browser you can rather listen to clicks on the window, using react as example:
 
 ```javascript
