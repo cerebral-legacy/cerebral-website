@@ -3,7 +3,7 @@
 Go to official [README](https://github.com/cerebral/cerebral-module-router/blob/master/README.md) to read more technical details and contribute to the project.
 
 ### Concept
-The Cerebral router works a bit differently than traditional routers. Traditional routers are attached directly to you view layer and has APIs for handling data fetching, transitions etc. The Cerebral router just maps url changes to signals.
+The Cerebral router works a bit differently than traditional routers. Traditional routers are attached directly to your view layer and has APIs for handling data fetching, transitions etc. The Cerebral router just maps url changes to signals.
 
 With the Cerebral router you can actually build your whole application without thinking about the router and later attach url to specific signals. It does not matter if it is a url change or the signal being triggered directly, the url will be kept in sync automatically.
 
