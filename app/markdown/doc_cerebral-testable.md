@@ -104,3 +104,9 @@ describe('application module', () => {
     .then((output) => expect(controller.get('application.page')).to.equal('home')))
 })
 ```
+
+The testable controller also supports setting state.
+
+```js
+controller.set('state.path', newTestState)
+```
