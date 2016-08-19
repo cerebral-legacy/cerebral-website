@@ -60,7 +60,7 @@ This will immediately grab the value and trigger the signal passed. Any other up
 To stop listening for updates to the value:
 ```js
 function someAction({ services, output }) {
-  services.firebase.off('someKey.foo', 'someModule.fooUpdated');
+  services.firebase.off('someKey.foo', 'onValue', 'someModule.fooUpdated');
 }
 ```
 
@@ -85,7 +85,7 @@ This will immediately grab and trigger the signal `posts.postAdded` for every po
 To stop listening for updates to the posts:
 ```js
 function someAction({ services, output }) {
-  services.firebase.off('posts', 'posts.postAdded');
+  services.firebase.off('posts', 'onChildAdded', 'posts.postAdded');
 }
 ```
 
@@ -102,7 +102,7 @@ This will trigger the signal `posts.postRemoved` whenever a post is removed from
 To stop listening:
 ```js
 function someAction({ services, output }) {
-  services.firebase.off('posts', 'posts.postRemoved');
+  services.firebase.off('posts', 'onChildRemoved', 'posts.postRemoved');
 }
 ```
 
@@ -119,7 +119,7 @@ This will trigger the signal `posts.postChanged` whenever a post is changed in t
 To stop listening:
 ```js
 function someAction({ services, output }) {
-  services.firebase.off('posts', 'posts.postChanged');
+  services.firebase.off('posts', 'onChildChanged', 'posts.postChanged');
 }
 ```
 

@@ -39,15 +39,6 @@ export default [
     true: [],
     false: []
   },
-  // Conditional value check
-  when('state:user.role', {
-    admin: 'admin',
-    user: 'user'
-  }), {
-    admin: [],
-    user: [],
-    otherwise: []
-  },
 
   // Go down "accepted" path the first time
   // or if 200ms has passed since last "accepted"
