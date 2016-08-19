@@ -96,3 +96,30 @@ export default connect({
   }
 )
 ```
+
+### Adding JSX support
+
+If you want to add support for JSX to your snabbdom components you will need to install the following packages
+
+```
+npm install --save snabbdom-jsx
+npm install --save transform-react-jsx
+```
+
+and update your .babelrc to tell it to use snabbdom-jsx
+
+```js
+{
+  "plugins": [
+    [ "transform-react-jsx", { "pragma": "html" } ]
+  ]
+}
+```
+
+then at the top of each your component js files you will need to import `html` from snabbdom-jsx
+
+```js
+import { html } from 'snabbdom-jsx'
+```
+
+Depending your setup, you may also need to configure your linter to ignore `html` as an unsed var.
