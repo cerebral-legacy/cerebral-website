@@ -32,3 +32,23 @@ controller.addModules({
 
 export default controller
 ```
+
+### Electron
+If you are running your Cerebral app in Electron you can use the [Electron Devtools Installer](https://github.com/GPMDP/electron-devtools-installer) to automatically install the latest Cerebral Debugger into your Electron instance every time your app is.
+
+`npm install --save electron-devtools-installer`
+
+Then insert the following code in your ```app.on('ready'...``` callback like below...
+
+```javascript
+app.on('ready', () => {
+  //TODO: Only install the extension when running in dev mode 
+	let installExtension = require('electron-devtools-installer').default
+	installExtension('ddefoknoniaeoikpgneklcbjlipfedbb')  //this is the ID of the Cerebral Debugger in the Chrome Web Store
+	  .then((name) => console.log(`Added Extension:  ${name}`)) //this should output 'Added Extension:  Cerebral Debugger'
+    .catch((err) => console.log('An error occurred: ', err));
+  
+  //now do your normal window creation
+}
+```
+See https://github.com/electron/electron/blob/master/docs/tutorial/devtools-extension.md if you'd like to manually install the Cerebral Debugger or for more information.
