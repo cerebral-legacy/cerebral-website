@@ -103,9 +103,9 @@ It is also possible to use a function to define the state dependencies. The func
 import React from 'react';
 import {connect} from 'cerebral-view-react';
 
-export default connect(props => {
+export default connect(props => ({
   user: `app.users.${props.userId}`,
-},
+}),
   function App({user}) {
     return (
       <div>
