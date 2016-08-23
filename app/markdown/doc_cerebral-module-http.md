@@ -203,6 +203,8 @@ export default connect({
       fileUpload(this.fileToUpload, {
      	  url: '/upload',
         headers: {},
+        // Additional data on form. Do not use "file", it is taken
+        data: {},
         // Triggers with object {progress: '54'}
         onProgress: this.props.uploadProgressed
       })
