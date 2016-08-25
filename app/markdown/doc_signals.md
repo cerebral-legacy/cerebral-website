@@ -128,7 +128,8 @@ export default [
   ...updateNotifications
 ]
 ```
-
+Note the [Spread...](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_operator) - Operator here from ES6.
+If we don't use or forget to use the ... - Operator the array gets added into this chain and therefore is treated as an async branch (as discussed in [Parallel execution][] in this Chapter).
 *controller.js*
 ```js
 import {Controller} from 'cerebral'
