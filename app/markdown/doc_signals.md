@@ -97,7 +97,7 @@ Even though nothing happens when the user is not logged in we explicitly say tha
 
 ### Composing chains
 With the  [Spread ... - Operator](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_operator) we can compose chains (arrays) into a new chain. 
-If we don't use the ... - Operator the array itself gets added into the new chain and therefore is treated as an async branch (as discussed in [Parallel execution](#parallel-execution) in this Chapter).
+If we don't use the ... - Operator the array itself gets added into the new chain and therefore is treated as an async branch (as discussed in [Parallel execution](#parallel-execution) before).
 
 As an example we want to fetch items when the application loads, but also have a button click that does the same thing.
 
