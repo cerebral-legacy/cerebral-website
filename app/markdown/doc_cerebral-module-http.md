@@ -176,7 +176,7 @@ The HTTP service gives you a tool to upload files as well. The **onProgress** op
 
 ```javascript
 ...
-import {fileUpload} from 'cerebral-module-http'
+import {FileUpload} from 'cerebral-module-http'
 
 export default connect({
   fileNames: 'app.fileNames'
@@ -187,7 +187,7 @@ export default connect({
   uploadFinished: 'app.uploadFinished',
   uploadFailed: 'app.uploadFailed'
 },
-  class FileUpload extends Component {
+  class UploadFile extends Component {
     constructor (props) {
       super(props);
       this.filesToUpload = [];
@@ -195,12 +195,11 @@ export default connect({
     onFilesChange (event) {
       this.filesToUpload = event.target.files;
       this.props.filesAdded({
-        fileNames: this.fileToUpload.map(file => file.name)
+        fileNames: this.filesToUpload.map(file => file.name)
       })
     }
     upload () {
-      this.props.uploadStarted()
-      fileUpload(this.fileToUpload, {
+      const fileUpload = new FileUpload({
      	  url: '/upload',
         headers: {},
         // Additional data on form. Do not use "file", it is taken
@@ -208,6 +207,9 @@ export default connect({
         // Triggers with object {progress: '54'}
         onProgress: this.props.uploadProgressed
       })
+
+      this.props.uploadStarted()
+      fileUpload.send(this.filesToUpload)
           .then(this.props.uploadFinished)
           .catch(this.props.uploadFailed)
     }
@@ -216,10 +218,12 @@ export default connect({
         <h4>Please choose a file.</h4>
         <div>
           <input type="" onChange={(event) => this.onFilesChange(event)}/><br/><br/>
-          <button disabled={this.fileToUpload.length === 0} onClick={() => this.upload()}>Upload</button>
+          <button disabled={this.filesToUpload.length === 0} onClick={() => this.upload()}>Upload</button>
         </div>
       )
     }
   }
 )
 ```
+
+You are also able to abort file uploads by calling **fileUpload.abort()**. This will result in a rejection of the **send** promise. The data passed will be: `{status: 0, result: null, isAborted: true}`.
