@@ -41,7 +41,7 @@ export default [
 ]
 ```
 
-#### Parallel execution ####
+#### Parallel execution
 Sometimes you want two, or more, asynchronous actions to run in parallel. You achieve that by putting the actions inside another array:
 
 ```javascript
