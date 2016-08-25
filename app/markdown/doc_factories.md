@@ -58,6 +58,7 @@ export default [
   ])
 ]
 ```
+Note the [Spread ... - Operator](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_operator)
 
 The factory could be implemented something like:
 
