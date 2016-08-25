@@ -128,6 +128,8 @@ export default [
   ...updateNotifications
 ]
 ```
+Note the [... - Operator](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_operator) here.
+If we don't use the ... - Operator the array itself gets added into this chain and therefore is treated as an async branch (as discussed in [Parallel execution](#parallel-execution) in this Chapter).
 
 *controller.js*
 ```js
