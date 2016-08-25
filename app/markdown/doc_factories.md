@@ -46,7 +46,7 @@ export default [
 ]
 ```
 
-Instead of defining all the outputs on all requests you can create a factory and [spread](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_operator) the result of the factory into the chain
+Instead of defining all the outputs on all requests you can create a factory and [spread](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_operator) the result of the factory into the chain (also check composing [signals](http://www.cerebraljs.com/documentation/signals))
 
 ```javascript
 import {copy} from 'cerebral/operators'
