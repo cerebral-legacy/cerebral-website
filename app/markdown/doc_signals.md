@@ -41,7 +41,7 @@ export default [
 ]
 ```
 
-#### Parallel execution
+#### Parallel execution ####
 Sometimes you want two, or more, asynchronous actions to run in parallel. You achieve that by putting the actions inside another array:
 
 ```javascript
@@ -129,7 +129,7 @@ export default [
 ]
 ```
 Note the [... - Operator](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_operator) here.
-If we don't use the ... - Operator the array itself gets added into this chain and therefore is treated as an async branch (as discussed in [Parallel execution](#arallel-execution) in this Chapter).
+If we don't use the ... - Operator the array itself gets added into this chain and therefore is treated as an async branch (as discussed in [Parallel execution](#parallel-execution) in this Chapter).
 
 *controller.js*
 ```js
