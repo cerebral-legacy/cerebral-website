@@ -1,6 +1,6 @@
 Notice here that we have also split our component into two parts. The **App** component and the **Items** component. Though modules often has a component with the same name you should not consider them "part of the same thing". As mentioned before components are completely separated from your actual application and you should not mix these two concepts together. You will have a lot more components than modules.
 
-With this structure in place you start to see how larger applications scale in terms of files and directories.
+With this structure in place you should start to see how larger applications scale in terms of files and directories.
 
 ```javascript
 /src
