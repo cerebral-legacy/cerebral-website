@@ -145,8 +145,8 @@ function getData({state, services, output}) {
     .then(output.success)
     .catch(output.error)
 }
-saveUser.async = true
-saveUser.outputs = ['success', 'error']
+getData.async = true
+getData.outputs = ['success', 'error']
 ```
 
 It will pass the data: `{progress: '52'}`.

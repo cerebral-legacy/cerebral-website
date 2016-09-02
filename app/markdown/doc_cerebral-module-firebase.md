@@ -223,6 +223,17 @@ function someAction({ services, output, state }) {
 someAction.async = true;
 ```
 
+#### Send reset password email
+
+```js
+function someAction({ services, output, state }) {
+  services.firebase.sendPasswordResetEmail(state.get('user.email'))
+    .then(output.success)
+    .catch(output.error);
+}
+someAction.async = true;
+```
+
 ### Action factories
 
 #### signInAnonymously
