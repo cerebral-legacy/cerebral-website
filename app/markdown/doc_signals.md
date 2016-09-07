@@ -96,7 +96,12 @@ export default [
 Even though nothing happens when the user is not logged in we explicitly say that nothing does happen using an empty array. This reads better because it tells "the next developer" that the user might not be logged in. It also makes it very easy to later extend this chain as all possible scenarios are defined.
 
 ### Composing chains
-With the spread operator we can compose these chains (arrays) together. As an example we want to fetch items when the application loads, but also have a button click that does the same thing. We first define a chain:
+With the  [Spread ... - Operator](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_operator) we can compose chains (arrays) into a new chain. 
+If we don't use the ... - Operator the array itself gets added into the new chain and therefore is treated as an async branch (as described in [Parallel execution](#parallel-execution) before).
+
+As an example we want to fetch items when the application loads, but also have a button click that does the same thing.
+
+We first define a chain:
 
 *chains/updateItems.js*
 ```javascript
