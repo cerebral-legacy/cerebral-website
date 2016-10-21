@@ -15,11 +15,13 @@ module.exports = {
   "debug": false,
   "server": {
     tunnel: false,
-    open: false
+    open: false,
+    port: 3010
   },
   "posthtmlPlugins": [].concat(
     require('mad-mark').posthtmlPlugins,
-    process.env.NODE_ENV === 'build' ? require('./plugins/posthtml-images') : () => {},
+    process.env.NODE_ENV === 'build' ? require('./plugins/posthtml-images') : () => {
+    },
     require('./plugins/posthtml-links'),
     require('./plugins/posthtml-prism'),
     require('./plugins/posthtml-youtube')
@@ -32,7 +34,9 @@ module.exports = {
       flex: 'flex'
     }),
     require('autoprefixer')(),
-    require('postcss-url')({ url: 'inline' }),
+    require('postcss-url')({
+      url: 'inline'
+    }),
     require('cssnano')()
   ]
 }
