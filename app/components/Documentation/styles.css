@@ -92,3 +92,16 @@
     display: none;
   }
 }
+
+.cerebral2 {
+  background-color: #F27596;
+  padding: 5px 10px;
+  border: 1px solid #FFF;
+  box-sizing: border-box;
+  border-radius: 3px;
+  float: right;
+  height: 40px;
+  margin: 10px;
+  cursor: pointer;
+  color: #FFF;
+}

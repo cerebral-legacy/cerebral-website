@@ -149,6 +149,12 @@ class Documentation extends React.Component {
               <div className={styles.title}>Cerebral</div>
             </div>
           </div>
+          <div
+            className={styles.cerebral2}
+            onClick={() => location.href = 'https://cerebral.github.io/cerebral-website/'}
+          >
+            Cerebral 2 <small>(WIP)</small>
+          </div>
         </div>
         <div className={styles.content}>
           <Sticky top={`.${styles.header}`} bottomBoundary={`.${styles.content}`} className={styles.menu}>
