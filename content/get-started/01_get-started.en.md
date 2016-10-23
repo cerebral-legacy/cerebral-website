@@ -36,10 +36,11 @@ Go to *localhost:3000* and you should see a blue button with some text in it.
 So yeah, congratulations you have mastered the first step in the tutorial.
 Our Goal now is to build up a very simple demo app showing off key features of cerebral:
 
-- controller
-- signals
-- providers
-- routing
+- **Controller**
+- **Signals**
+- **Actions**
+- **Providers**
+- **Routing**
 
 ### Structure and bootstrapping
 
