@@ -32,8 +32,8 @@ After npm did its job you can fire up the project with:
 
 `npm start`
 
-Go to *localhost:3000* and you should see an empty browser window.
-Amazing eh? Well thats because we've just installed the very basic barebone version of this tutorial.
+Go to *localhost:3000* and you should see a blue button with some text in it.
+So yeah, congratulations you have mastered the first step in the tutorial.
 Our Goal now is to build up a very simple demo app showing off key features of cerebral:
 
 - controller
@@ -50,8 +50,8 @@ Our Goal now is to build up a very simple demo app showing off key features of c
 |   
 ├── src
 |	├── components
-|	|	├── comp1
-|	|	├── comp2
+|	|	├── HeaderButton
+|	|	├── ...
 |	|	├── ...		
 |	|
 |	└── index.js
@@ -76,28 +76,38 @@ Our Goal now is to build up a very simple demo app showing off key features of c
 </html>
 
 ```
-Nothing special as you can see. But where does the magic start? Well first of all, there is not too much magic when working with cerebral. That means you will always feel in control when working with cerebral. The connection between the view and cerebral will be more obvious when checking out the index.js - file
+Nothing special as you can see. But where does the magic start? Well first of all, there is not too much magic when working with Cerebral. That means you will always feel in control when working with Cerebral. The connection between the View and Verebral will be more obvious when checking out the *index.js*
+
+#### The components - folder
+Currently holds a stateless HeaderButton - React Component which is responsible for the blue button you are seeing. 
+There will be more components in here as we move on in the tutorial.
+
+
 #### The index.js - file
 ```js
 import React from 'react'
 import { render } from 'react-dom'
 import { Controller } from 'cerebral'
+import HeaderButton from './components/HeaderButton'
 import { Container } from 'cerebral/react'
+import Devtools from 'cerebral/devtools'
 
 const controller = Controller({
+  devtools: process.env.NODE_ENV === 'production' ? null : Devtools()
 })
 
 render((
   <Container controller={ controller }>
+    <HeaderButton/>
   </Container>
   ), document.querySelector('#root'))
-
 ```
-Here all the goodness comes together. The viewengine, the statecontroller and a container which holds it all together. And as you can see we are hooking into an element with the id #root ergo our link to the index.html - file.
-
-#### The components - folder
-Will hold the viewcomponents for this tutorial. This structure is just a sample. Experience shows that a modules - folder comes in very handy to structure the controller itself. You may check out a sample project on github. (@todo link sample)
+Here all the goodness comes together. The Viewengine, the **Controller** and a **Container**. The HeaderButton - ViewComponent gets placed inside the **Container** which holds it all together and exposes the **Controller** to React. The **Container** itself gets placed inside the DOM into the element with the **id #root**, hence our link to the *index.html*.
+Well but what is this Devtools - Thingy good for?
+Prepare to enter the world of the **cerebral debugger**
 
 
 ### Installing the debugger
 The Cerebral debugger is a Chrome extension. You can install it from the [chrome store](https://chrome.google.com/webstore/detail/cerebral-debugger/ddefoknoniaeoikpgneklcbjlipfedbb). Once the debugger is installed your Chrome devtools will have a new tab called **cerebral2**. Open it.
+Not a lot to see right now. Well lets change that and add so called **State** to our application.
+
