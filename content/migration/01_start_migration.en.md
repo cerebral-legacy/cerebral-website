@@ -201,7 +201,7 @@ function myAction({axios}) {
 ```
 
 ### Views
-How you import view specific packages has changed due to that cerebral now is a monorepo. In 1.x you would import Container like this.
+How you import view specific packages has changed. In 1.x you would import Container like this.
 
 ```js
 import controller from './controller.js'
