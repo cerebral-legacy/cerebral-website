@@ -152,6 +152,19 @@ function myAction({state, path}) {
 }
 ```
 
+When doing async operations you would do something like this in 1.x
+
+```js
+function myAction({services}) {
+  // do something async
+}
+
+myAction.async = true
+
+```
+
+In Cerebral 2 you can leave that out and just resolve or reject a promise
+
 ### Providers (outdates services)
 
 In 1.x you could add services that would be available to you in the actions. Typically you would do something like this in 1.x
