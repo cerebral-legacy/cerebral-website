@@ -1,7 +1,7 @@
 ---
 title: Get started
 ---
-# !!! This tutorial is WIP !!!
+# !!! This tutorial is a WIP !!!
  
 ## Get started 
 
@@ -14,7 +14,7 @@ If you want to install Cerebral into an existing project please...
 If you want an introduction you can keep reading and go through a small demo project. Just make sure you fulfill these requirements:
 
 * You have installed [Node](https://nodejs.org/en/) version 4 or later
-* You are okay with learning Cerebral using React and JSX. You can choose something else like [Inferno](http://infernojs.org//) for your own project later though. 
+* You are okay with learning Cerebral using React and JSX. You can choose a different Viewlayer (like [Inferno](http://infernojs.org//)) for your own project later though. 
 * You have a coffee or a beer, ready to learn something new
 
 Okay, lets get going. First you need to clone the tutorial repo.
@@ -35,13 +35,16 @@ After npm did its job you can fire up the project with:
 
 Go to *localhost:3000* and you should see a blue button with some text in it.
 So yeah, congratulations you have mastered the first step in the tutorial.
-Our Goal now is to build up a very simple demo app showing off key features of cerebral:
+Our Goal now is to build up a very simple demo app showing off key features of Cerebral:
 
 - **Controller**
 - **Signals**
 - **Actions**
 - **Providers**
 - **Routing**
+
+They are all explained in depth in the [Concepts](../concepts/01_the-architecture.html) - Section.
+
 
 ### Structure and bootstrapping
 
@@ -78,7 +81,7 @@ Our Goal now is to build up a very simple demo app showing off key features of c
 </html>
 
 ```
-Nothing special as you can see. But where does the magic start? Well first of all, there is not too much magic when working with Cerebral. That means you will always feel in control when working with Cerebral. The connection between the View and Verebral will be more obvious when checking out the *index.js*
+Nothing special as you can see. But where does the magic start? Well first of all, there is not too much magic when working with Cerebral. That means you will always feel in control when working with Cerebral. The connection between the View and Cerebral will be more obvious when checking out the *index.js*
 
 #### The components - folder
 Currently holds a stateless HeaderButton - React Component which is responsible for the blue button you are seeing. 

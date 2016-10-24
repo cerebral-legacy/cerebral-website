@@ -51,4 +51,36 @@ function showToast(message, milliseconds) {
   return action
 }
 ```
-You have maybe recognised that we still reset the *toast.message* after the *showToast(..)* call. There is a reason for that. **Cerebral** is batching changes inside actions
+Now the tutorial should run using a bit less code.
+You have maybe recognised that we still reset the *toast.message* after the *showToast(..)* call. There is a reason for that. **Cerebral** is batching changes inside actions so it is not a good idea to change state from within an async-function.
+
+But we can again simplify it by adjusting the showToast-**Factory** to:
+```js
+...
+return [action,
+    set('state:toast.message', '')
+  ]
+...  
+```
+This means now the factory returns not only the action itself but also the subsequent **set**-action which means again less code to write.
+
+But to make it work correctly we need to [Spread...](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator) the result now into the **Signals** because elsewise we will end up with an array in a array which tells Cerebral to execute the actions in parallel which we don't want here.
+We need to adjust the *src/index.js* like:
+```js
+  ...
+  signals: {
+    buttonClicked: [
+      ...showToast('Button clicked!', 1000)
+    ],
+    saveButtonClicked: [
+      set('state:originalValue', 'input:value'),
+      myAction1,
+      myAction2,
+      myAction3,
+      ...showToast()
+    ]
+  }
+  ...
+```
+Congratulations! You have successfully included an async action into a **Signal** without breaking the flow!
+Now sometimes we would like to control the flow of async actions a bit more. To do so please head over to the next chapter were we introduce you to the world of **Path**
