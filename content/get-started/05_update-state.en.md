@@ -30,13 +30,13 @@ connect({
 },
 ...
 ```
-it will rerender accordingly.
+whereas 'appTitle' is a so called *state-path* it will rerender automatically.  Because we use operators like set(*state-path*,value) to change state at a specific *state-path* Cerebral just knows which components need to update and thus there is no dirtychecking or other value comparing needed (saves cpu and battery, think mobile)
 
 Have you checked the debugger yet? You will see the debugger list every execution of a signal, with information about what happened. This is also a tool the Cerebral debugger provides to give you insight into your application. Very handy for example when you need to dig into a **complex application** after not touching it for a long time.
 
 So now changing the appTitle is maybe not the right way to output check messages like we did. Let's introduce a very simple "Toast"-Component which will display our **buttonClicked** output.
 
-Because we need to touch a few files and add a new component paste the result from the **parts/05_update_state** folder.
+Because we need to touch a few files and add a new component we will cheat a little bit and use the files from the **parts/05_update_state** folder (copy them into your root and replace all).
 
 So our app should look like:
 

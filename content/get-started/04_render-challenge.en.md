@@ -2,7 +2,9 @@
 title: Render challenge
 ---
 
-## It's time for your first challenge
+## Render challenge
+
+It's time for your first challenge!
 
 - Add another state to the store called *appTitle*
 - Create a heading which displays *appTitle* before the existing HeaderButton-component using a new component and call it *App*
