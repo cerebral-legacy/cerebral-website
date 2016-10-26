@@ -8,6 +8,10 @@ Defining state and user interfaces is more about describing how something should
 Let us add a signal to our Controller in **src/index.js**:
 
 ```js
+import { state, set, input } from 'cerebral/operators'
+...
+...
+...
 const controller = Controller({
   devtools: process.env.NODE_ENV === 'production' ? null : Devtools(),
   state: {
@@ -16,7 +20,7 @@ const controller = Controller({
   },
   signals: {
     buttonClicked: [
-      set('state:appTitle', 'Yeah!')
+      set(state`appTitle`, 'Yeah!')
     ]
   }
 })
@@ -30,7 +34,7 @@ connect({
 },
 ...
 ```
-whereas 'appTitle' is a so called *state-path* it will rerender automatically.  Because we use operators like set(*state-path*,value) to change state at a specific *state-path* Cerebral just knows which components need to update and thus there is no dirtychecking or other value comparing needed (saves cpu and battery, think mobile)
+whereas 'appTitle' is a so called *state-path* it will rerender automatically.  Because we use operators like set(state`*state-path*`,value) to change state at a specific *state-path* Cerebral just knows which components need to update and thus there is no dirtychecking or other value comparing needed (saves cpu and battery, think mobile)
 
 Have you checked the debugger yet? You will see the debugger list every execution of a signal, with information about what happened. This is also a tool the Cerebral debugger provides to give you insight into your application. Very handy for example when you need to dig into a **complex application** after not touching it for a long time.
 

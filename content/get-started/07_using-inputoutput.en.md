@@ -11,12 +11,12 @@ To add another concept at this stage we also introduce custom **Actions** which 
 So let us have a look at a sample Signal which contains a chain like that:
 ```js
     saveButtonClicked: [
-      set('state:originalValue', 'input:value'),
+      set(state`originalValue`, input`value`),
       myAction1,
       myAction2,
-      set('state:toast.message', 'state:extendedValue'),
+      set(state`toast.message`, state`extendedValue`),
       wait(8000),
-      set('state:toast.message', '')
+      set(state`toast.message', '')
     ]
 ```
 We would like to access the input-object from within our action.
@@ -38,7 +38,7 @@ import { Controller } from 'cerebral'
 import App from './components/App'
 import { Container } from 'cerebral/react'
 import Devtools from 'cerebral/devtools'
-import { set, wait } from 'cerebral/operators'
+import { set, wait, state, input } from 'cerebral/operators'
 
 const controller = Controller({
   devtools: process.env.NODE_ENV === 'production' ? null : Devtools(),
@@ -53,15 +53,15 @@ const controller = Controller({
   },
   signals: {
     buttonClicked: [
-      set('state:toast.message', 'Button Clicked!'),
+      set(state`toast.message`, 'Button Clicked!'),
       wait(4000),
-      set('state:toast.message', '')
+      set(state`toast.message`, '')
     ],
     saveButtonClicked: [
-      set('state:originalValue', 'input:value'),
+      set(state`originalValue`, input`value`),
       myAction1,
       myAction2,
-      set('state:toast.message', 'state:extendedValue')
+      set(state`toast.message`, state`extendedValue`)
     ]
   }
 })
@@ -73,6 +73,9 @@ function myAction1({input}) {
 function myAction2({input, state}) {
   input.value += ' and also by myAction2'
   state.set('extendedValue', input.value)
+  return ({
+    aKeyAddedByMyAction2: 'testvalue'
+  })
 }
 
 render((
@@ -139,6 +142,6 @@ export default connect({
 }
 )
 ```
-Now we are ready to test drive our changes. Please keep an eye on the **debugger**. You can track now the flow of the input-values between the different actions after they got executed. Btw. another method to hand over objects from one action to another is to return an object from the action. This object will be merged then with the input which is used then for the next action.
+Now we are ready to test drive our changes. Please keep an eye on the **debugger**. You can track now the flow of the input-values between the different actions after they got executed. Another method to hand over objects from one action to another is to return an object from the action as done in *myAction2*. This object will be merged then with the input which is used then for the next action.
 Are you ready for async? Please stay with us and have a look at the next chapter.
 

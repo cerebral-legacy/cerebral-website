@@ -17,16 +17,16 @@ Because action2 depends on the outcome of action1, action1 needs to be finished 
 We will simplify:
 ```js
       ...
-      set('state:toast.message', 'Button Clicked!'),
+      set(state`toast.message`, 'Button Clicked!'),
       wait(4000),
-      set('state:toast.message', '')
+      set(state`toast.message`, '')
       ...
 ```
 to:
 ```js
       ...
       showToast('Button Clicked!',1000),
-      set('state:toast.message', '')
+      set(state`toast.message`, '')
       ...
 ```
 **showToast(..)** is a so called **Factory**. A simple Version of it could look like this:
@@ -58,7 +58,7 @@ But we can again simplify it by adjusting the showToast-**Factory** to:
 ```js
 ...
 return [action,
-    set('state:toast.message', '')
+    set(state`toast.message`, '')
   ]
 ...  
 ```
@@ -73,7 +73,7 @@ We need to adjust the *src/index.js* like:
       ...showToast('Button clicked!', 1000)
     ],
     saveButtonClicked: [
-      set('state:originalValue', 'input:value'),
+      set(state`originalValue`, input`value`),
       myAction1,
       myAction2,
       myAction3,

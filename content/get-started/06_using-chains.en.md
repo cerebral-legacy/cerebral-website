@@ -9,15 +9,15 @@ Let us add another preconfigured action named **wait** and another **set** to cl
 ```js
     ...
     buttonClicked: [
-      set('state:toast.message', 'Button Clicked!'),
+      set(state`toast.message`, 'Button Clicked!'),
       wait(4000),
-      set('state:toast.message', '')
+      set(state`toast.message`, '')
     ]
     ...
 ```
 And don't forget to import the **wait**-operator:
 ```js
-import { set, wait } from 'cerebral/operators'
+import { set, state, wait } from 'cerebral/operators'
 ```
 Now when we check again in the debugger you will see all the 3 actions executed when signal *buttonClicked* got triggered.
 
