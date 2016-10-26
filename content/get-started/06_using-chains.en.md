@@ -5,7 +5,7 @@ title: Using chains
 ## Using chains 
 
 A signal can trigger a chain of actions. For now we have seen it trigger the **set**-action.
-Let us add another preconfigured action named **wait** to close our toast message after a few seconds. So go ahead and change our **buttonClicked-Signal** in *src/index.js* to execute a 2 more actions:
+Let us add another preconfigured action named **wait** and another **set** to close our toast message after a few seconds. So go ahead and change our **buttonClicked-Signal** in *src/index.js* to execute a 2 more actions:
 ```js
     ...
     buttonClicked: [

@@ -139,6 +139,6 @@ export default connect({
 }
 )
 ```
-Now we are ready to test drive our changes. Please keep an eye on the **debugger**. You can track now the flow of the input-values between the different actions after they got executed.
+Now we are ready to test drive our changes. Please keep an eye on the **debugger**. You can track now the flow of the input-values between the different actions after they got executed. Btw. another method to hand over objects from one action to another is to return an object from the action. This object will be merged then with the input which is used then for the next action.
 Are you ready for async? Please stay with us and have a look at the next chapter.
 
