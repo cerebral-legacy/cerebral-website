@@ -188,7 +188,7 @@ function myAction({state}) {
 With 2.x this is no longer possible. It's easy to mistype paths and therefore this option is no longer available. Your paths need to be in place before setting values to them.
 
 When using computed data in an action you could call **state.computed(myComputed())** in the action. This has changed in 2.x in favor of
-**state.compute(myComputed())**. You can also pass props to the compute function.
+**state.compute(myComputed)**. You can also pass props to the compute function.
 
 ```js
 function myAction({state}) {
