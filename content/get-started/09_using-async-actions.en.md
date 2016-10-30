@@ -13,7 +13,7 @@ action2,
 ...
 ]
 ```
-Because action2 depends on the outcome of action1, action1 needs to be finished before action2 starts. Clear enough. But now what happens when action1 executes an async-task? Well let us see because we have a somewhat perfect candidate in our tutorial app to test exactly this scenario.
+Because action2 depends on the outcome of action1, action1 needs to be finished before action2 starts. Clear enough. But now what happens when action1 executes an async-task? Well let us see because we have a already a candidate in our tutorial app to test exactly this scenario.
 We will simplify:
 ```js
       ...
