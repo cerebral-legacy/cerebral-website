@@ -10,15 +10,15 @@ As we know now, the only correct way to write to state is to use **Signals**.
 To add another concept at this stage we also introduce custom **Actions** which can be used inside a signal. Those actions can make use of the input-object as well. Every modification to the input-object will be propagated to the next action.
 So let us have a look at a sample Signal which contains a chain like that:
 ```js
-    saveButtonClicked: [
+saveButtonClicked: [
       set(state`originalValue`, input`value`),
       myAction1,
       myAction2,
-      set(state`toast.message`, state`extendedValue`),
+      set(state`extendedValue`, input`value`),
+      set(state`toast.message`, input`value`),
       wait(8000),
-      set(state`toast.message', '')
-    ]
-```
+      set(state`toast.message`, '')
+    ]```
 We would like to access the input-object from within our action.
 So lets have a look at such a sample action:
 ```js
@@ -57,23 +57,26 @@ const controller = Controller({
       wait(4000),
       set(state`toast.message`, '')
     ],
-    saveButtonClicked: [
+      saveButtonClicked: [
       set(state`originalValue`, input`value`),
       myAction1,
       myAction2,
-      set(state`toast.message`, state`extendedValue`)
-    ]
-  }
+      set(state`extendedValue`, input`value`),
+      set(state`toast.message`, input`value`),
+      wait(8000),
+      set(state`toast.message`, '')
+    ]  }
 })
 
 function myAction1({input}) {
-  input.value += ' extended by myAction1'
+  return {
+    value: input.value + ' extended by myAction1'
+  }
 }
 
-function myAction2({input, state}) {
-  input.value += ' and also by myAction2'
-  state.set('extendedValue', input.value)
+function myAction2({input}) {
   return ({
+    value: input.value + ' and also by myAction2',
     aKeyAddedByMyAction2: 'testvalue'
   })
 }

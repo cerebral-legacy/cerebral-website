@@ -77,6 +77,7 @@ We need to adjust the *src/index.js* like:
       myAction1,
       myAction2,
       myAction3,
+      set(state`extendedValue`, input`value`),
       ...showToast()
     ]
   }
