@@ -1,8 +1,8 @@
 ---
-title: Store state
+title: Store State
 ---
 
-## Store State
+## 2: Store State
 
 All interactive user interfaces are using **state** in a way or another. Cerebral stores this state in a single model. The model holds the description of the state your application is in, and it also holds any data downloaded from the server. Since Cerebral uses a single model the debugger can visualize the whole state description of the application. 
 

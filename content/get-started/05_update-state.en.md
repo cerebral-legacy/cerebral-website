@@ -1,8 +1,8 @@
 ---
-title: Update state
+title: Update state (Signals)
 ---
 
-## Update state (Signals)
+## 5: Update state (Signals)
 
 Defining state and user interfaces is more about describing how something should look, rather than how it should update. Updates are the tricky part, this is where we usually introduce complexity in our application. Cerebral allows you to describe updates the same way you describe state and user interfaces. We call them **Signals** and they will help you handle complexity both in code and in your head, trying to reason about how your application works.
 Let us add a signal to our Controller in **src/index.js**:

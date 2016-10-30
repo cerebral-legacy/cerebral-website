@@ -2,7 +2,7 @@
 title: Render challenge
 ---
 
-## Render challenge
+## 4: Render challenge
 
 It's time for your first challenge!
 

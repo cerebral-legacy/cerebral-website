@@ -1,8 +1,8 @@
 ---
-title: Render state
+title: Exposing State to the View
 ---
 
-## Exposing State to the View
+## 3: Exposing State to the View
 
 Now lets get that state displayed on our webpage.
 First of all we need to tell our ViewComponent (HeaderButton) to **connect** to that state. Why is that? Well you'll get the enlightment a few lines further down, just believe and stay with us!

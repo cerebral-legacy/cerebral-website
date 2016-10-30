@@ -1,9 +1,9 @@
 ---
-title: Get started
+title: Get started 
 ---
 # !!! This tutorial is a WIP !!!
  
-## Get started 
+## 1: Get started 
 
 If you want to install Cerebral into an existing project please...
 
@@ -45,6 +45,15 @@ Our Goal now is to build up a very simple demo app showing off key features of C
 
 They are all explained in depth in the [Concepts](../concepts/01_the-architecture.html) - Section.
 
+### How does this tutorial work?
+If you check out the *./parts/ - folder*  you will see folders with numbers.
+And as you can see every chapter starts with a number like *1:* Get started.
+In this tutorial we will build up an application incrementally. That means after every chapter you should *copy* the contents from this *parts-folder* and overwrite your *root* - files. That also means if you did some cool sidesteps or adjustments **you should save them before**.
+Now when you start the tutorial it will be initialised with the content from parts/00 so you will be ready to start.
+For beginners in webdevelopment we have the following advice: Just follow the tutorial, don't get distracted too much by advanced concepts. So just go ahead if you encounter some advanced concepts, finish the tutorial and then read the other topics you can find on this page. You will have some enlightening moments then.
+
+
+
 
 ### Structure and bootstrapping
 
@@ -61,9 +70,17 @@ They are all explained in depth in the [Concepts](../concepts/01_the-architectur
 |	|
 |	└── index.js
 |
+├── parts
+| ├── 00
+| | ├── ...
+| ├── 01
+| | ├── ...
+| ├── ...
+|
 ├── package.json
 ├── ...
 ```
+
 #### The index.html - file
 ```html
 <!doctype html>

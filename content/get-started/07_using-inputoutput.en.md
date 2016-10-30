@@ -1,8 +1,8 @@
 ---
-title: Input and custom Actions
+title: Input and custom Actions 
 ---
 
-## Input and custom Actions 
+## 7: Input and custom Actions 
 
 Signals can take an input-object which then can be further processed by its actions.
 Let us say you have an user input which should get written to state.

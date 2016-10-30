@@ -2,7 +2,7 @@
 title: Using simple async actions
 ---
 
-## Using simple async actions 
+## 9: Using simple async actions
 
 Until now we were just using synchronous actions inside our **Signals** and the flow was therefore straightforward. Example:
 ```js
