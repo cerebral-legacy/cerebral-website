@@ -5,16 +5,16 @@ title: Control flow using Path
 ## 10: Control flow using Path
 
 In the chapter before we were introducing async actions and we have learned that we can write async actions that just behave like an sync action in the chain.
-But what about the following scenario: User gets data async from a server, server responds with an error, what now? To handle not only the so called **Happy Path** we should also allow our signals to branch out into a different flow (which is just another chain of actions and operators) depending on the result of the async action.
-So let us rebuild that scenario introducing *cerebral-http-provider* into our tutorial. *cerebral-http-provider* is a simple http-provider which enables you to request data from servers.  The concept of **Providers** will be covered in more detail in the next chapter. As well we took the chance to spice up the tutorial a bit and also include the http-provider plus an action already using it. 
-So please go ahead and replace your files with the content from *./parts/10_1* **before you dive into the following steps **.
+But what about the following scenario: User gets data async from a server, server responds with an error, what now? To handle not only the so called *Happy Path* we should also allow our signals to branch out into a different flow (which is just another chain of actions and operators) depending on the result of the async action.
+So let us build that scenario introducing *cerebral-http-provider*. *cerebral-http-provider* is a simple http-provider which enables you to request data from servers.  The concept of **Providers** will be covered in more detail in the next chapter. As well we took the chance to spice up the tutorial a bit and also include the http-provider plus an action already using it. 
+So please go ahead and **replace your files with the content from *./parts/10_1* before you dive into the following steps**.
 
 ### A few words about the work done
 
 If you check out the application now you will see another input-field and a button.
 By default this button will query the github api to get information about the cerebral-project.
 If you press this button you should see some information as a *Toast* -message.
-Nice but what if we change the input from *cerebral* to *doesnotexist* and again query the server by pressing the button? Well we still see a toast-message with now some misleading information (it looks at first sight as the query succeeded). But the console (or network tab in the devtools of your browser) will tell you that there was something going wrong.
+Nice but what if we change the input from *cerebral* to *doesnotexist* and again query the server by pressing the button? Well we still see a toast-message with now some misleading information (it looks ok at first sight). But the console (or network tab in the devtools of your browser) will reveal that something is going wrong.
 Lets call the concept of **Paths** to the rescue!
 
 
@@ -38,19 +38,23 @@ Well that would be cool, let us implement it into our existing *getRepoInfoClick
 ...
     getRepoInfoClicked: [
       set(state`repoName`, input`value`),
-      ...showToast('Loading Data for repo: @{repoName}', 2000),
-      GetData,
-      {
-        success: [
-          set(state`data`, input`result`),
-          ...showToast('How cool is that. @{repoName} has @{data.subscribers_count} subscribers and @{data.stargazers_count} stars!', 5000, "success")
-        ],
-        error: [set(state`data`, input`result`), ...showToast('Ooops something went wrong: @{data.message}', 5000, "error")]
-      }
-
+    
+       ...showToast('Loading Data for repo: @{repoName}', 2000),
+       GetData,
+       {
+          success: [
+            set(state`data`, input`result`),
+            ...showToast('How cool is that. @{repoName} has @{data.subscribers_count} subscribers and @{data.stargazers_count} stars!', 5000,  "success")
+         ],
+         error: [set(state`data`, input`result`), 
+         ...showToast('Ooops something went wrong: @{data.message}', 5000, "error")]
+        }
+      
     ]
 ...
 ```
+
+As you can see you can config as many paths as you like. Just make sure to add the *,{...}* - block after the async action which controls them.
 And in our GetData - action we need to output  to different **Paths** now as follows:
 
 ```js
@@ -69,7 +73,115 @@ function GetData({input, state, http, path}) {
 }
 ```
 
-As you can see we are using *path* from the context to use it to take ontrol over the flow!
+As you can see using *path* we can tell Cerebral which Path it should take next when the promise resolves.
+
+Now when you check out the application do you discover another candidate for using **Path** ?
+Did you recognise that the message *Loading Data for repo...* is blocking the full process for 2 secs?
+
+Wouldn't it be nice to have more fine grained control over toast-messages so they don't block the chain anymore?
+Let us say that you would like to do something like:
+
+```js
+...
+    getRepoInfoClicked: [
+      set(state`repoName`, input`value`),
+      ...showToast('Loading Data for repo: @{repoName}', 0),
+      GetData,
+      {
+        success: [
+          set(state`data`, input`result`),
+          ...showToast('How cool is that. @{repoName} has @{data.subscribers_count} subscribers and @{data.stargazers_count} stars!', 0, "success")
+        ],
+        error: [
+          set(state`data`, input`result`),
+          ...showToast('Ooops something went wrong: @{data.message}', 0, "error")
+        ]
+      }
+      ,
+      ...showToast('Load Data finished', 2000)
+    ]
+...
+
+```
+Whereas the 0 in ```...showToast('Loading Data for repo: @{repoName}', 0)``` tells the Factory to not use a promise (for removing the toast) so it leaves the toast there as long as for example ```...showToast('Load Data finished', 2000)``` gets called. So a 0 means: Hey i'm a grouped toast, leave me there and a value x > 0  means that it gets removed automatically by our async action after x milliseconds together with all the toasts before that where grouped by using the 0.
+This enables nice grouped messages which integrates seamless into the Cerebral Action flow without blocking it.
+
+To make this happen we need to adjust the *showToast(..)* - Factory to return a **Path-Chain** or just the action depending on the value of the function parameter *milliseconds*.
+Don't worry now if that code still looks a bit alien to you. It also shows off what can be achieved by using **Factories**
+
+```js
+function showToast(message, milliseconds, type) {
+  function action({input, state, path}) {
+    // api sugar to make showToast(2000) work
+    if (message && milliseconds === undefined) {
+      milliseconds = message
+      message = ''
+    }
+    let ms = milliseconds
+    let msg = message || input.message
+    // replace the @{...} matches with current state value
+    if (msg) {
+      let reg = new RegExp(/@{.*?}/g)
+      var matches = msg.match(reg)
+      if (matches) {
+        matches.forEach(m => {
+          let cleanedPath = m.replace("@{", "").replace("}", "")
+          msg = msg.replace(m, state.get(cleanedPath))
+        })
+      }
+    }
+    if (ms === undefined) {
+      ms = 8000
+    }
+    let newMsg = {
+      msg: msg,
+      type: type,
+      timestamp: Date.now(),
+      id: Date.now() + '_' + Math.floor(Math.random() * 10000),
+      grouped: ms === 0 ? true : false
+    }
+    state.unshift('toast.messages', newMsg)
+    if (!newMsg.grouped) {
+      return new Promise(function(resolve, reject) {
+        window.setTimeout(function() {
+          resolve(path.timeout({
+            id: newMsg.id
+          }))
+        }, ms)
+      })
+    }
+  }
+  action.displayName = 'showToast'
+  if (milliseconds === 0) {
+    return [action]
+  }
+  return [action, {
+    timeout: [
+      removeToast
+    ]
+  }
+  ]
+}
+
+```
+As you can see we return now either just the action, or to get back to our tutorial goal here, the **Path-Chain** which includes the *timeout*-key to which our promise resolves to.
+We have also included a *id* into our message-object which we use when we resolve the promise. Thats not only a good thing for the Viewengine (React needs a ```key={}``` for rendering lists for internal optimisations) but also for our *removeToast(...)* method which we need to add as well to our *./src/index.js*:
+```js
+function removeToast({input, state}) {
+
+  let res1 = state.get('toast.messages').filter(function(msg) {
+    return msg.id === input.id
+  })
+  let res = state.get('toast.messages').filter(function(msg) {
+    return !(msg.id === input.id || (msg.grouped && msg.timestamp <= res1[0].timestamp))
+  })
+  state.set('toast.messages', res)
+}
+
+```
+removeToast(..) will return a new array of messages which doesn't contain the toast which needs to be removed and also the grouped toasts if any. 
+
+What is happening here? Well whenever Cerebral encounters an Array in a Array  **[action1[action2,action3]]** it will start the actions within that array in parallel (action2 & action3). Really cool! We can control flow now and even tell Cerebral to execute Actions/Operators in parallel by just using JS-Arrays and Objects. So by just reading the Signals one can get a good understanding what the application will do. And don't forget, there is alos the debugger reflecting state-changes and even displaying the **Paths** which were chosen.
 
 
-Congratulations! Now you you know how to control your flow using **Path**
+Congratulations! Now you know how to control your flow using **Path**. And if you need **parallel Actions/Operators**, well just add the **[Brackets]**, thats it!
