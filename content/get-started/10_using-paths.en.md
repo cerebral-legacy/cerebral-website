@@ -111,14 +111,18 @@ Don't worry now if that code still looks a bit alien to you. It also shows off w
 
 ```js
 function showToast(message, milliseconds, type) {
+  var isBlocking = milliseconds || (message && milliseconds === undefined) ? true : false
   function action({input, state, path}) {
     // api sugar to make showToast(2000) work
+    let ms = 0
+    let msg = ''
     if (message && milliseconds === undefined) {
-      milliseconds = message
-      message = ''
+      ms = message
+      msg = ''
+    } else {
+      ms = milliseconds
+      msg = message || input.message
     }
-    let ms = milliseconds
-    let msg = message || input.message
     // replace the @{...} matches with current state value
     if (msg) {
       let reg = new RegExp(/@{.*?}/g)
@@ -130,18 +134,15 @@ function showToast(message, milliseconds, type) {
         })
       }
     }
-    if (ms === undefined) {
-      ms = 8000
-    }
     let newMsg = {
       msg: msg,
       type: type,
       timestamp: Date.now(),
       id: Date.now() + '_' + Math.floor(Math.random() * 10000),
-      grouped: ms === 0 ? true : false
+      grouped: !isBlocking
     }
     state.unshift('toast.messages', newMsg)
-    if (!newMsg.grouped) {
+    if (isBlocking) {
       return new Promise(function(resolve, reject) {
         window.setTimeout(function() {
           resolve(path.timeout({
@@ -152,7 +153,7 @@ function showToast(message, milliseconds, type) {
     }
   }
   action.displayName = 'showToast'
-  if (milliseconds === 0) {
+  if (!isBlocking) {
     return [action]
   }
   return [action, {
@@ -162,6 +163,7 @@ function showToast(message, milliseconds, type) {
   }
   ]
 }
+
 
 ```
 As you can see we return now either just the action, or to get back to our tutorial goal here, the **Path-Chain** which includes the *timeout*-key to which our promise resolves to.
