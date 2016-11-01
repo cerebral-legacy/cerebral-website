@@ -77,9 +77,39 @@ As you can see using *path* we can tell Cerebral which Path it should take next 
 
 Now when you check out the application do you discover another candidate for using **Path** ?
 Did you recognise that the message *Loading Data for repo...* is blocking the full process for 2 secs?
+Sometimes it would be quite cool to indicate to Cerebral that actions could get executed in parallel without waiting for eachother to finish. Relax and take a sip from your coffee or beer, Cerebral has you covered!
+Replace your Signal with the following snippet:
 
-Wouldn't it be nice to have more fine grained control over toast-messages so they don't block the chain anymore?
-Let us say that you would like to do something like:
+```js
+...
+  getRepoInfoClicked: [
+    set(state`repoName`, input`value`),
+    [
+      ...showToast('Loading Data for repo: @{repoName}', 2000),
+      GetData,
+      {
+        success: [
+          set(state`data`, input`result`),
+          ...showToast('How cool is that. @{repoName} has @{data.subscribers_count} subscribers and @{data.stargazers_count} stars!', 4000, "success")
+        ],
+        error: [
+          set(state`data`, input`result`),
+          ...showToast('Ooops something went wrong: @{data.message}', 4000, "error")
+        ]
+      }
+    ]
+  ]
+...
+
+```
+
+What is happening here? Did you recognise the additional **[** and **]** Well whenever Cerebral encounters an Array in a Array  **[action1,[action2,action3],action4]** it will start the actions within that array in parallel, so after action1 finishes action2 & action3 are executed in parallel. And after those two guys finsihed action4 will be executed.Really cool! We can control flow now and even tell Cerebral to execute Actions/Operators in parallel by just using JS-Arrays and Objects. So by just reading the Signals one can get a good understanding what the application will do. And don't forget, there is also the debugger reflecting state-changes and even displaying the **Paths** which were chosen.
+
+
+Well, now give a little bit more love to our showToast(...) - Factory.
+A little issue we have with the current toast-method we are using: If we ouput a toast like "Getting Data..." and set it to 4 secs, but the server is really slow and it takes 20 secs, the message would disappear way too early.
+
+Let us fix that:
 
 ```js
 ...
@@ -107,12 +137,12 @@ Whereas the 0 in ```...showToast('Loading Data for repo: @{repoName}', 0)``` tel
 This enables nice grouped messages which integrates seamless into the Cerebral Action flow without blocking it.
 
 To make this happen we need to adjust the *showToast(..)* - Factory to return a **Path-Chain** or just the action depending on the value of the function parameter *milliseconds*.
-Don't worry now if that code still looks a bit alien to you. It also shows off what can be achieved by using **Factories**
+Don't worry now if that code still looks a bit alien to you. It also shows off the power of using **Factories**
 
 ```js
-function showToast(message, milliseconds, type) {
-  var isBlocking = milliseconds || (message && milliseconds === undefined) ? true : false
-  function action({input, state, path}) {
+function showToast (message, milliseconds, type) {
+  var isAsync = milliseconds || (message && milliseconds === undefined)
+  function action ({input, state, path}) {
     // api sugar to make showToast(2000) work
     let ms = 0
     let msg = ''
@@ -129,7 +159,7 @@ function showToast(message, milliseconds, type) {
       var matches = msg.match(reg)
       if (matches) {
         matches.forEach(m => {
-          let cleanedPath = m.replace("@{", "").replace("}", "")
+          let cleanedPath = m.replace('@{', '').replace('}', '')
           msg = msg.replace(m, state.get(cleanedPath))
         })
       }
@@ -139,12 +169,12 @@ function showToast(message, milliseconds, type) {
       type: type,
       timestamp: Date.now(),
       id: Date.now() + '_' + Math.floor(Math.random() * 10000),
-      grouped: !isBlocking
+      grouped: !isAsync
     }
     state.unshift('toast.messages', newMsg)
-    if (isBlocking) {
-      return new Promise(function(resolve, reject) {
-        window.setTimeout(function() {
+    if (isAsync) {
+      return new Promise(function (resolve, reject) {
+        window.setTimeout(function () {
           resolve(path.timeout({
             id: newMsg.id
           }))
@@ -153,7 +183,7 @@ function showToast(message, milliseconds, type) {
     }
   }
   action.displayName = 'showToast'
-  if (!isBlocking) {
+  if (!isAsync) {
     return [action]
   }
   return [action, {
@@ -183,7 +213,4 @@ function removeToast({input, state}) {
 ```
 removeToast(..) will return a new array of messages which doesn't contain the toast which needs to be removed and also the grouped toasts if any. 
 
-What is happening here? Well whenever Cerebral encounters an Array in a Array  **[action1[action2,action3]]** it will start the actions within that array in parallel (action2 & action3). Really cool! We can control flow now and even tell Cerebral to execute Actions/Operators in parallel by just using JS-Arrays and Objects. So by just reading the Signals one can get a good understanding what the application will do. And don't forget, there is alos the debugger reflecting state-changes and even displaying the **Paths** which were chosen.
-
-
-Congratulations! Now you know how to control your flow using **Path**. And if you need **parallel Actions/Operators**, well just add the **[Brackets]**, thats it!
+Congratulations! Now you know how to control your flow using **Path**. And if you need **parallel Actions/Operators**, well just add another array**[]** to the chain, thats it!
