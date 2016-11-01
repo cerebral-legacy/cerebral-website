@@ -141,18 +141,20 @@ Don't worry now if that code still looks a bit alien to you. It also shows off t
 
 ```js
 function showToast (message, milliseconds, type) {
-  var isAsync = milliseconds || (message && milliseconds === undefined)
+  var isAsync = milliseconds || (message && milliseconds === undefined) || (message === undefined && milliseconds === undefined)
   function action ({input, state, path}) {
-    // api sugar to make showToast(2000) work
+    // api sugar to make showToast(2000), showToast() work
     let ms = 0
     let msg = ''
     if (message && milliseconds === undefined) {
       ms = message
       msg = ''
-    } else {
+    } else if (milliseconds) {
       ms = milliseconds
-      msg = message || input.message
+    } else if (message === undefined && milliseconds === undefined) {
+      ms = 5000
     }
+    msg = message || input.message
     // replace the @{...} matches with current state value
     if (msg) {
       let reg = new RegExp(/@{.*?}/g)
@@ -193,7 +195,6 @@ function showToast (message, milliseconds, type) {
   }
   ]
 }
-
 
 ```
 As you can see we return now either just the action, or to get back to our tutorial goal here, the **Path-Chain** which includes the *timeout*-key to which our promise resolves to.
