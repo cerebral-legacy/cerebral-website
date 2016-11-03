@@ -22,14 +22,16 @@ saveButtonClicked: [
 We would like to access the input-object from within our action.
 So lets have a look at such a sample action:
 ```js
-function myAction1({input}) {
-  input.value += ' extended by myAction1'
+function myAction1 ({input}) {
+  return {
+    value: input.value + ' extended by myAction1'
+  }
 }
 ```
 As you can see actions can receive some context if they want. In this case we are interested in the input object. You could also use ```function myAction1(context)``` to get the full context if needed.
-All we do here is to add a text to the existing value and save it back to the input object so the next action could as well pick it up and so on.
+All we do here is to add a text to the existing value and return it back to the next action which then can consume it.
 
-Let us create a working sample inside our app. First we need to change the *src/index.js* to this:
+Let us create a working sample inside our app using a few *Actions*. First we need to change the *src/index.js* to this:
 
 ```js
 import React from 'react'
@@ -145,6 +147,6 @@ export default connect({
 }
 )
 ```
-Now we are ready to test drive our changes. Please keep an eye on the **debugger**. You can track now the flow of the input-values between the different actions after they got executed. Another method to hand over objects from one action to another is to return an object from the action as done in *myAction2*. This object will be merged then with the input which is used then for the next action.
-Are you ready for async? Please stay with us and have a look at the next chapter.
+Now we are ready to test drive our changes. Please keep an eye on the **debugger**. You can track now the flow of the input-values between the different actions after they got executed. Keep in mind that the result object from an action will be merged with the input and handed over to the next action.
+
 

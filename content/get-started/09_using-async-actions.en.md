@@ -52,7 +52,7 @@ function showToast(message, milliseconds) {
 }
 ```
 Now the tutorial should run using a bit less code.
-You have maybe recognised that we still reset the *toast.message* after the *showToast(..)* call. There is a reason for that. **Cerebral** is batching changes inside actions so it is not a good idea to change state from within an async-function.
+You have maybe recognised that we still reset the *toast.message* after the *showToast(..)* call. There is a reason for that. **Cerebral** is batching changes inside chains of actions so it is not a good idea to change state from within an async-function.
 
 But we can again simplify it by adjusting the showToast-**Factory** to:
 ```js
