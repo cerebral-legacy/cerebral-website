@@ -48,8 +48,8 @@ They are all explained in depth in the [Concepts](../concepts/01_the-architectur
 ### How does this tutorial work?
 If you check out the *./parts/ - folder*  you will see folders with numbers.
 And as you can see every chapter starts with a number like *1:* Get started.
-In this tutorial we will build up an application incrementally. That means after every chapter you should *copy* the contents from this *parts-folder* and overwrite your *root* - files. That also means if you did some cool sidesteps or adjustments **you should save them before**.
-Now when you start the tutorial it will be initialised with the content from parts/00 so you will be ready to start.
+In this tutorial we will build up an application incrementally. That means after every chapter you should *copy* the contents from this *parts-folder* and overwrite your *root* - files (@todo: provide npm part script or so...). That also means if you did some cool sidesteps or adjustments **you should save them before**.
+Now when you start the tutorial it will be initialised with the content from parts/01 so you will be ready to start.
 For beginners in webdevelopment we have the following advice: Just follow the tutorial, don't get distracted too much by advanced concepts. So just go ahead if you encounter some advanced concepts, finish the tutorial and then read the other topics you can find on this page. You will have some enlightening moments then. Btw. what really helps to catch a lot of errors is a good linter. We recommend to use [Standard](http://standardjs.com/).
 
 
@@ -71,9 +71,9 @@ For beginners in webdevelopment we have the following advice: Just follow the tu
 |	└── index.js
 |
 ├── parts
-| ├── 00
-| | ├── ...
 | ├── 01
+| | ├── ...
+| ├── 02
 | | ├── ...
 | ├── ...
 |
