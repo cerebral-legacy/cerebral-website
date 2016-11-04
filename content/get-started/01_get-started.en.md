@@ -6,14 +6,15 @@ title: Get started
 
 **If you would like to contribute then please consider:**
 
- - This is a tutorial (from a beginner) for beginners. So please put your beginners-hat on before starting it
+  - This is a tutorial (from a beginner) for beginners. So please put your beginners-hat on before starting it
  - Go through the **whole** tutorial yourself before you change anything besides obious things (english grammar for example :)
  - Keep the "Lego" - Experience :)
  - No in depth Concepts explanations (No distractions)
  - It should work on all supported OS
  - Code changes in early chapter will result in a lot of work (Because it needs to be merged to the other chapters)
-  - If you need to run it on Windows, and the packages are not already on npm, ping me (fops aka fopsdev) i have a running setup
-
+ - If you need to run it on Windows, and the packages are not already on npm, ping me (fops aka fopsdev) i have a running setup
+ - You can find all the stuff in a branch called "tutorial"
+ 
  Thanks a lot and enjoy!
 
 
