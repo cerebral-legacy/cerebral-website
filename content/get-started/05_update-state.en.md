@@ -38,7 +38,7 @@ connect({
 },
 ...
 ```
-As you can sett the App-Component depends on this **appTitle** that means it will rerender automatically whenever **appTitle** changes.  Because we use operators like set(state\`**state-path**\`,value) to change state at a specific **state-path** Cerebral just knows which components need to update and thus there is no dirtychecking or other value comparing needed (saves cpu and battery, think mobile)
+As you can see the App-Component depends on this **appTitle** that means it will rerender automatically whenever **appTitle** changes.  Because we use operators like set(state\`**state-path**\`,value) to change state at a specific **state-path** Cerebral just knows which components need to update and thus there is no dirtychecking or other value comparing needed (saves cpu and battery, think mobile)
 
 You can check that yourself but we still need to wire up the click-handler on the button (*./src/components/HeaderButton/index.js*)
 ```js
