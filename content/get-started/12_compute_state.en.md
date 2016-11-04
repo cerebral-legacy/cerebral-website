@@ -14,7 +14,7 @@ function addStars ({state}) {
 }
 ```
 Hmmm...Now we always need to call addStars(...) before using the Result. We can do better!
-Let us look at TotalStarsCount like it would be a View (think Database-Views or Components we already did here)
+Let us look at TotalStarsCount like it would be a View (think Database-Views or Components like we already use)
 In our components we already used a pattern like:
 ```js
 import { connect } from 'cerebral/react'
@@ -36,12 +36,12 @@ export const getStars = Computed({
 })
 ```
 Wow, this looks pretty similar like the components-pattern from before. And it is doing quite a similar thing. We can see that this *Computed* is depending on two State Values and just returns the Sum of those two.
-Now whenever this *Computed* is accessed it is either using a cached value to return the result, or it will recalculate itself if one of the *state-paths* changed meanwhile (cerebralStarsCount or cerebralDebuggerStarsCount). Pretty cool! (Compare this to getters in other MVC-frameworks which will always recalculate the values or introduce complexity of handling and comparing changes)
+Now whenever this *Computed* is accessed it is either using a cached value to return the result, or it will recalculate itself if one of the *state-paths* changed meanwhile (cerebralStarsCount or cerebralDebuggerStarsCount). Pretty cool! (Compare this to concepts in other MVC-frameworks which will possibly always recalculate the values or introduce complexity because of handling and comparing changes)
 
 Let us finish this example. To do so please create a new folder named *./src/computeds* and save a file named *getStars.js* containing the snippet we just have looked at.
 
-Then we would like to access our computeds from within our showToast-Factory. We already have a simple "Convienience-Parser" - there which extracts State -Values whenever a *@{...}* is found in the text.
-So please just replace the existing parser part with:
+Then we would like to access our computeds from within our showToast-Factory. We already have a simple "Convenience-Parser" - there which extracts State-Values whenever a *@{...}* is found in the text.
+To do the same for *Computed*-Values we just need to replace the existing parser part with:
 
 ```js
 ...
@@ -80,6 +80,11 @@ Let us change our existing *starCountClicked* - Signal to make use of this new p
 Just replace the last showToast(...) with:
 ```js
 ...showToast(`Total Stars @C{getStars}`, 3000)
+```
+
+Now we can **get rid** off our addStars-Action. It is not needed anymore:
+```js
+addStars,
 ```
 
 As you can see now we can access computeds from within actions. Thats great, but what about our components in the view?

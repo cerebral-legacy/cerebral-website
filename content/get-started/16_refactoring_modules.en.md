@@ -7,7 +7,7 @@ title: Refactoring using Modules
 `npm run ch15`
 
 Glad you are still with us! Hopefully you have enjoyed our journey so far and hopefully you still have a sip left of your coffee or drink.
-It's time for cleaning up. After already clenaing up the UI a little bit for the User it is time to make life easier as well for us developers.
+It's time for cleaning up. After already cleaning up the UI a little bit for the User it is time to make life easier as well for us developers.
 Welcome to the world of **Modules**
 We will build the following structure:
 

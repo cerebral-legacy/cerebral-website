@@ -36,10 +36,8 @@ to:
 ```js
 function showToast(message, milliseconds) {
   function action({input, state, path}) {
-    let msg = message
+    let msg = message || input.value
     let ms = milliseconds
-    if (!msg && input)
-      msg = input.message
     if (!ms)
       ms = 8000
     state.set('toast.message', msg)

@@ -6,9 +6,9 @@ title: Routing
 
 `npm run ch13`
 
-Now that our tutorial gets bigger and bigger it is a good idea to separate our ui in different parts.
+Now that our tutorial UI gets more complex it is a good idea to separate it a little bit.
 Let us introduce some Tabs.
-Please change *./src/components/app.js* to:
+Please change *./src/components/App/index.js* to:
 ```js
 import React from 'react'
 import { connect } from 'cerebral/react'
@@ -80,7 +80,7 @@ Or just click the tab to achieve the same :)
 Nice! But what has this to do with Routing?
 Well thats Routing made easy. It is all about *Signals* and *State* and that is stuff we already know.
 
-Now imagine your browser addressbar is just an input. If that input changes it calls a signal that changes *activeTab* state.
+Now imagine your browsers addressbar is just an input. If that input changes it calls a signal that changes *activeTab* state.
 
 Yeah! That is basically what **cerebral-router** does! 
 
@@ -106,5 +106,5 @@ And go ahead by doing the router config as follows inside the controller:
 
 As you can see, defining *Routes* is as easy as linking them to *Signals*
 Now go to your browsers adressbar and enter localhost/#/*github* and voilà the gitHubRouted-Signal gets called.
-And also try out to click on the *State & Actions Tab* and check the addressbar.
-Thats it!
+And also watch the browsers addressbar while you are switching tabs!
+Thats it! 

@@ -2,16 +2,19 @@
 title: Get started 
 ---
 # !!! This tutorial is a WIP !!!
-### If you would like to contribute then please consider:
- - This is a tutorial (from a beginner) for beginners.
- - I would like to keep the "Lego" - Experience :)
- - No in depth Concepts explanations here.
+### Temporary Contribution Guidelines
+
+**If you would like to contribute then please consider:**
+
+ - This is a tutorial (from a beginner) for beginners. So please put your beginners-hat on before starting it
+ - Go through the **whole** tutorial yourself before you change anything besides obious things (english grammar for example :)
+ - Keep the "Lego" - Experience :)
+ - No in depth Concepts explanations (No distractions)
  - It should work on all supported OS
  - Code changes in early chapter will result in a lot of work (Because it needs to be merged to the other chapters)
- - Before doing any changes (beside "English Syntax" and obvious errors corrections) make sure **you have finished the tutorial first**
- - If you need to run it on Windows, and the packages are not already on npm, ping me (fops aka fopsdev) i have a running setup
+  - If you need to run it on Windows, and the packages are not already on npm, ping me (fops aka fopsdev) i have a running setup
 
- Thanks a lot
+ Thanks a lot and enjoy!
 
 
  
@@ -64,6 +67,7 @@ So you are right now looking at the endresult of this tutorial :)
 So running those scripts will overwrite your root *./src* and *./public* folders.That also means if you did some cool sidesteps or adjustments **you should save them before**.
 Since this is now Chapter 1 (as indicated in the title) we need to **init** this tutorial. Please execute `npm run ch01` in the console to get there.
 Whenever you see a `npm run chxy` in the following chapters, just execute this script and we will be in sync.
+If you just need to restart the development server use `npm run start` so you won't loose your changes!
 
 For beginners in webdevelopment we have the following advice: Just follow the tutorial, don't get distracted too much by advanced concepts. So just go ahead if you encounter some advanced concepts, finish the tutorial and then read the other topics you can find on this page. You will have some enlightening moments then. Btw. what really helps to catch a lot of errors is a good linter. We recommend to use [Standard](http://standardjs.com/).
 
@@ -95,7 +99,7 @@ For beginners in webdevelopment we have the following advice: Just follow the tu
 ```
 #### The components - folder
 Currently holds a stateless HeaderButton - React Component which is responsible for the blue button you are seeing. 
-There will be more components in here as we move on in the tutorial.
+There will be more components in here as we move on in the tutorial. Btw. we really encourage people to use stateless components (that is a react/inferno thingy). By just making them stateless and dependent on cerebral-state apps turn out to be much more predictable.
 
 #### The index.html - file
 ```html
@@ -104,9 +108,9 @@ There will be more components in here as we move on in the tutorial.
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://unpkg.com/blaze">
+    <link rel="stylesheet" href="blaze.min.css">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    <title>Cerebral Tutorial</title>
+    <title>Cerebral Chapter 01</title>
   </head>
   <body>
     <div id="root"></div>

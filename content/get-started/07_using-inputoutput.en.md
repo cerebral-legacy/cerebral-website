@@ -92,7 +92,7 @@ render((
   ), document.querySelector('#root'))
 ```
 
-Then we need an Input-Component. Please save this component into *src/components/Input*
+Then we need an Input-Component. Please save this component into *src/components/Input/index.js*
 
 ```js
 import React from 'react'
@@ -126,7 +126,7 @@ export default connect({
 )
 ```
 
-Then we add this new Component to our Parent App-Component as follows:
+Then we add this new Component to our existing Parent App-Component (*./src/components/App/index.js*) as follows:
 ```js
 import React from 'react'
 import { connect } from 'cerebral/react'

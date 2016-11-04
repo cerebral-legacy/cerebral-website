@@ -108,11 +108,10 @@ Replace your Signal with the following snippet:
 
 What is happening here? Did you recognise the additional **[** and **]** Well whenever Cerebral encounters an Array in a Array  **[action1,[action2,action3],action4]** it will start the actions within that array in parallel, so after action1 finishes action2 & action3 are executed in parallel. And after those two guys finsihed action4 will be executed.Really cool! We can control flow now and even tell Cerebral to execute Actions/Operators in parallel by just using JS-Arrays and Objects. So by just reading the Signals one can get a good understanding what the application will do. And don't forget, there is also the debugger reflecting state-changes and even displaying the **Paths** which were chosen.
 
+As you maybe have recognised the *Loading Data for repo ...*-Message doesn't appear anymore. Well we should be able to explain that already. It is because we have introduced the additional *[* and *]* so everything inside this chain gets executed in parallel. That is also true for resetting our messages. So our message now basically gets set and resetted immediately. You may check the debugger to see this as well.
+Another little issue with the current toast-method we are currently using: If we ouput "Loading Data..." and set it to 4 secs, but the server is really slow and it takes 20 secs, the message would disappear way too early.
 
-Well, now give a little bit more love to our showToast(...) - Factory.
-A little issue we have with the current toast-method we are using: If we ouput a toast like "Getting Data..." and set it to 4 secs, but the server is really slow and it takes 20 secs, the message would disappear way too early.
-
-Let us fix that:
+Let us fix both issues by using the following code:
 
 ```js
 ...
@@ -137,8 +136,8 @@ Let us fix that:
 
 ```
 Whereas the 0 in ```...showToast('Loading Data for repo: @{repoName}', 0)``` tells the Factory to not use a promise (for removing the toast) so it leaves the toast there as long as for example ```...showToast('Load Data finished', 2000)``` gets called. So a 0 means: Hey i'm a grouped toast, leave me there and a value x > 0  means that it gets removed automatically by our async action after x milliseconds together with all the toasts before that where grouped by using the 0.
-This enables nice grouped messages which integrates seamless into the Cerebral Action flow without blocking it.
-
+This enables nice grouped messages which integrates seamlessy into the Cerebral Action flow without blocking it.
+ 
 To make this happen we need to adjust the *showToast(..)* - Factory to return a **Path-Chain** or just the action depending on the value of the function parameter *milliseconds*.
 Don't worry now if that code still looks a bit alien to you. It also shows off the power of using **Factories**
 
@@ -157,7 +156,7 @@ function showToast (message, milliseconds, type) {
     } else if (message === undefined && milliseconds === undefined) {
       ms = 5000
     }
-    msg = message || input.message
+    msg = message || input.value
     // replace the @{...} matches with current state value
     if (msg) {
       let reg = new RegExp(/@{.*?}/g)
@@ -215,6 +214,6 @@ function removeToast({input, state}) {
 }
 
 ```
-removeToast(..) will return a new array of messages which doesn't contain the toast which needs to be removed and also the grouped toasts if any. 
+removeToast(..) will return a new array of messages which doesn't contain the toast which needs to be removed and also the grouped toasts if any. Your app is now ready to testdrive!
 
 Congratulations! Now you know how to control your flow using **Path**. And if you need **parallel Actions/Operators**, well just add another array**[]** to the chain, thats it!

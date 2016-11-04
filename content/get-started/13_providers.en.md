@@ -58,8 +58,8 @@ We have already installed the library using npm. So it was sitting there and wai
 Because we add a 3rd-party provider we need to wrap it up into a so called *ContextProvider* to get as well the benefits mentioned before.
 So please add the following imports to your *./src/index.js*
 ```js
-import ContextProvider from 'cerebral/providers/context'
 import logger from 'js-logger'
+import { ContextProvider } from 'cerebral/providers'
 ```
 
 Now we are ready to register it to our controller:
@@ -85,7 +85,7 @@ Somewhere at the beginning of our *./src/index.js*
 
 Now we have the logger in place so let us use it to track request times:
 ```js
-Function GetData (url, repoName) {
+function GetData (url, repoName) {
   function action ({input, state, http, path, logger}) {
     logger.time('request time')
     let repo = repoName || input.value
