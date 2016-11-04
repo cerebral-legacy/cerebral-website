@@ -4,6 +4,8 @@ title: Refactoring using Modules
 
 ## 16: Refactoring using Modules
 
+`npm run ch15`
+
 Glad you are still with us! Hopefully you have enjoyed our journey so far and hopefully you still have a sip left of your coffee or drink.
 It's time for cleaning up. After already clenaing up the UI a little bit for the User it is time to make life easier as well for us developers.
 Welcome to the world of **Modules**
@@ -31,7 +33,9 @@ We will build the following structure:
 ├── ...
 ```
 
-And our *./src/index.js* will look much cleaner:
+So do a final `npm run ch16` to pull in the final result!
+
+Our *./src/index.js* looks now much cleaner:
 ```js
 import React from 'react'
 import { render } from 'react-dom'
@@ -114,8 +118,6 @@ So you can see that we can nicely separate now *state* and *signals* into module
 And since this module gets pulled into our *Controller* in *./src/index.js* as **app**: AppModule we need to prefix all *state-paths* and *signal-names* in our operators,actions,components and computeds with **app.** as well.
 
 So there is no magic in **Modules** (and again, that is a good thing). It's all about namespacing *Signals* and *State* but that helps a lot to structure your Application.
-
-Please go ahead and replace your *./src* - folder will all the contents from *./parts/16* and enjoy!
 
 Congratulations! You have reached the end of our *Get Started* - tutorial.
 There is a lot of other good stuff on this website. So please check it out!

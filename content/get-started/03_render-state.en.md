@@ -4,6 +4,8 @@ title: Exposing State to the View
 
 ## 3: Exposing State to the View
 
+`npm run ch02`
+
 Now lets get that state displayed on our webpage.
 First of all we need to tell our ViewComponent (HeaderButton) to **connect** to that state. Why is that? Well you'll get the enlightment a few lines further down, just believe and stay with us!
 
@@ -41,4 +43,3 @@ we told Cerebral that this component is interested in the value on the path **ti
 Because this component now depends on the **title** state it gets rerendered whenever it changes. A cool fact about that is that there is **no dirty-checking or other value comparing needed**. You will understand this better after you have completed the **Signals** Chapter which is next.
 
 Congratulations, you have now created application state and exposed it to a view layer. You can now translate the state of the application into something a user can understand. You will notice with Cerebral that this is a very clear separation. You define your application state in Cerebral and a view layer of choice will use this state to produce a user interface.
-

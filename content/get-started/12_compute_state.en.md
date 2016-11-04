@@ -4,6 +4,8 @@ title: Compute State
 
 ## 12: Compute State
 
+`npm run ch11`
+
 Coming back to the challenge we did before. The solution we wanted you to go through was to use another action that just adds state values and save the result in a new state value.
 We are speaking of this
 ```js

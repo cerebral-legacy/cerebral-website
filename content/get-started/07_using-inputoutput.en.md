@@ -4,6 +4,8 @@ title: Input and custom Actions
 
 ## 7: Input and custom Actions 
 
+`npm run ch06`
+
 Signals can take an input-object which then can be further processed by its actions.
 Let us say you have an user input which should get written to state.
 As we know now, the only correct way to write to state is to use **Signals**.

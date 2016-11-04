@@ -4,6 +4,8 @@ title: Providers
 
 ## 13: Providers
 
+`npm run ch12`
+
 Good news, we have already used a provider before. Do you remember the *http-provider* we are using to get data from servers? 
 A provider basically adds itself to the context object of our actions. Let us check out our existing code in *./src/index.js*:
 ```js

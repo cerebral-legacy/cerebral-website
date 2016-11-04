@@ -21,3 +21,5 @@ const controller = Controller({
 Thats it!
 You can check the state now with the cerebral-debugger if you want.
 
+*Running into problems with the code? Then please just do a* `npm run ch02` *in your console*
+

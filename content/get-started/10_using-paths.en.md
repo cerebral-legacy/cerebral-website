@@ -4,10 +4,13 @@ title: Control flow using Path
 
 ## 10: Control flow using Path
 
+`npm run ch09`
+
+
 In the chapter before we were introducing async actions and we have learned that we can write async actions that just behave like an sync action in the chain.
 But what about the following scenario: User gets data async from a server, server responds with an error, what now? To handle not only the so called *Happy Path* we should also allow our signals to branch out into a different flow (which is just another chain of actions and operators) depending on the result of the async action.
 So let us build that scenario introducing *cerebral-http-provider*. *cerebral-http-provider* is a simple http-provider which enables you to request data from servers.  The concept of **Providers** will be covered in more detail in the next chapter. As well we took the chance to spice up the tutorial a bit and also include the http-provider plus an action already using it. 
-So please go ahead and **replace your files with the content from *./parts/10_1* before you dive into the following steps**.
+So please go ahead and **do a** `npm run ch10_1` **before you dive into the following steps**.
 
 ### A few words about the work done
 
