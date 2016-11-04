@@ -9,7 +9,7 @@ title: Input and custom Actions
 Signals can take an input-object which then can be further processed by its actions.
 Let us say you have an user input which should get written to state.
 As we know now, the only correct way to write to state is to use **Signals**.
-To add another concept at this stage we also introduce custom **Actions** which can be used inside a signal. Those actions can make use of the input-object as well. Every modification to the input-object will be propagated to the next action.
+To add another concept at this stage we also introduce custom **Actions** which can be used inside a signal. Those actions can make use of the input-object as well. Any returned object will be propagated to the next action.
 So let us have a look at a sample Signal which contains a chain like that:
 ```js
 saveButtonClicked: [
