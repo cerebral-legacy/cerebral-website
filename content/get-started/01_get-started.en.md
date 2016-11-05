@@ -4,14 +4,13 @@ title: Get started
 # !!! This tutorial is a WIP !!!
 ### Temporary Contribution Guidelines
 
-**If you would like to contribute then please consider:**
+**Some considerations if you would like to contribute:**
 
-  - This is a tutorial (from a beginner) for beginners. So please put your beginners-hat on before starting it
- - Go through the **whole** tutorial yourself before you change anything besides obious things (english grammar for example :)
+ - Please put your beginners-hat on
+ - It would be cool if you could go through the **whole** tutorial yourself before doing any changes
  - Keep the "Lego" - Experience :)
- - No in depth Concepts explanations (No distractions)
+ - No in depth explanations of Concepts (No distractions, User should find it very easy to work with Cerebral)
  - It should work on all supported OS
- - Code changes in early chapter will result in a lot of work (Because it needs to be merged to the other chapters)
  - If you need to run it on Windows, and the packages are not already on npm, ping me (fops aka fopsdev) i have a running setup
  - You can find all the stuff in a branch called "tutorial"
  
@@ -55,6 +54,7 @@ So yeah, congratulations you have mastered the first step in the tutorial.
 Our Goal now is to build up a very simple demo app showing off key features of Cerebral:
 
 - **Controller**
+- **State**
 - **Signals**
 - **Actions**
 - **Providers**
