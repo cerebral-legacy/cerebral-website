@@ -1,15 +1,5 @@
 # Cerebral Website
 
-## Contribute
+Current website for Cerebral v2+ moved to [monorepo](https://github.com/cerebral/cerebral/tree/master/packages/docs)
 
-You can contribute by just editing the files in the `content` folder.
-
-## Run project
-
-- Clone the repo
-- `npm install`
-- `npm start`
-
-Go to *localhost:3000*.
-
-It will watch for changes. Note that it has some downtime when rebuilding your changes.
+Website for Cerebral v1 is available [here](https://github.com/cerebral/cerebral-website/tree/v2).
