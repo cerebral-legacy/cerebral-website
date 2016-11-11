@@ -151,7 +151,7 @@ class Documentation extends React.Component {
           </div>
           <div
             className={styles.cerebral2}
-            onClick={() => location.href = 'https://cerebral.github.io/cerebral-website/'}
+            onClick={() => location.href = 'https://cerebral.github.io'}
           >
             Cerebral 2 <small>(WIP)</small>
           </div>
